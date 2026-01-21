@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMP- Sistema de Combustível do Motor e Medição de Combustível - Hangar MMA</title>
+    <style>
+        :root {
+            --primary: #1a3a5a;
+            --secondary: #f8f9fa;
+            --accent: #007bff;
+            --success: #28a745;
+            --danger: #dc3545;
+            --text: #333;
+            --warning: #ffc107;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: var(--text);
+            margin: 0;
+            padding: 10px;
+            overflow-x: hidden;
+        }
+
+        /* EFEITO POW NO CRÉDITO */
+        .credits-pow {
+            position: fixed;
+            top: 5px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            border-radius: 4px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 2000;
+            transform-origin: center;
+            animation: pow-appearance 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes pow-appearance {
+            0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+            80% { transform: scale(1.2) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .header-sticky {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 15px;
+            border-bottom: 3px solid var(--primary);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--danger);
+            background: #fff5f5;
+            padding: 5px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--danger);
+        }
+
+        .question-block {
+            margin: 25px 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fff;
+            transition: all 0.3s;
+        }
+
+        .pending {
+            border: 2px solid var(--danger) !important;
+            background-color: #fff8f8 !important;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-label:hover { background-color: #f0f7ff; }
+        input[type="radio"] { margin-right: 15px; transform: scale(1.2); }
+
+        .correct-answer { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724; font-weight: bold; }
+        .wrong-answer { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        .btn-finish { background: var(--primary); color: white; margin-top: 20px; }
+        .btn-restart { background: var(--success); color: white; display: none; margin-top: 20px; }
+
+        #results {
+            display: none;
+            padding: 20px;
+            text-align: center;
+            border: 3px solid var(--primary);
+            margin: 20px 0;
+            border-radius: 12px;
+            background-color: #ffffff;
+        }
+
+        .motivational-msg {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .score-box { font-size: 2.2rem; margin: 10px 0; font-weight: 800; }
+        
+        @media (max-width: 600px) {
+            .header-sticky { flex-direction: column; gap: 10px; }
+            .container { padding: 10px; }
+            .credits-pow { font-size: 0.6rem; padding: 2px 6px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="credits-pow">BY EWERTON</div>
+
+<div class="container">
+    <div class="header-sticky">
+        <div>
+            <h2 style="margin:0; color: var(--primary);">GMP - Sistema de Combustível do Motor e Medição de Combustível - Hangar MMA</h2>
+            <small id="q-counter">Questões: 1 a 37</small>
+        </div>
+        <div id="timer" class="timer">37:00</div>
+    </div>
+
+    <div id="results">
+        <span id="feedback-msg" class="motivational-msg"></span>
+        <div class="score-box" id="final-score"></div>
+        <div id="final-percent" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 15px;"></div>
+        <p style="color: #666; font-size: 1rem; font-weight: bold;">Confira abaixo o gabarito detalhado:</p>
+        <button id="restart-btn" class="btn btn-restart" onclick="location.reload()">Reiniciar Simulado</button>
+    </div>
+
+    <div id="quiz-content"></div>
+
+    <button id="finish-btn" class="btn btn-finish" onclick="finalizeQuiz()">Finalizar Simulado</button>
+</div>
+
+<script>
+    const masterBank = [
+    {q: "A combustão anormal e espontânea que ocorre no cilindro, denomina-se:", a: ["alijamento", "calço de vapor", "detonação", "volatilidade"], c: 2},
+    {q: "A finalidade da bomba de combustível auxiliar (booster) é:", a: ["alijar o combustível", "suprir combustível sob pressão para a bomba do motor", "retornar o combustível excedente do motor para o tanque", "suprir combustível após a aceleração do motor"], c: 1},
+    {q: "A finalidade do sistema de marcha lenta, na maioria dos carburadores, é:", a: ["aumentar o fluxo combustível na baixa rotação do motor", "suprir combustível nas baixas velocidades do motor", "fornecer combustível quando a pressão de combustível for muito baixa", "suprir combustível após o corte do motor"], c: 1},
+    {q: "A gasolina de aviação que possui o número de octana 100/130, indica os índices de antidetonância para:", a: ["mistura pobre e mistura rica, respectivamente", "mistura rica e mistura pobre, respectivamente", "motor frio e motor quente, respectivamente", "decolagem e cruzeiro, respectivamente"], c: 0},
+    {q: "A mistura ar/combustível de um motor convencional é controlada pelo(a):", a: ["fluxômetro", "economisador", "válvula de agulha", "manete de mistura"], c: 3},
+    {q: "A peça do carburador que tem a função de manter o nível de combustível constante na cuba é a:", a: ["bóia", "borboleta", "agulha do estilete", "válvula de aceleração"], c: 0},
+    {q: "A pressão de combustível medida na entrada do carburador é indicada no:", a: ["fluxômetro", "manômetro", "termômetro", "vacuômetro"], c: 1},
+    {q: "A relação de mistura ar/combustível, na qual todo o combustível é queimado e não sobra oxigênio, é chamada de:", a: ["mistura rica", "mistura pobre", "mistura ideal", "mistura estequiométrica"], c: 3},
+    {q: "A unidade do carburador responsável pela medição do fluxo de ar do sistema de indução denomina-se:", a: ["difusor", "venturi", "bocal de descarga", "válvula borboleta"], c: 1},
+    {q: "As aeronaves de grande porte, para reduzirem o tempo de reabastecimento de combustível, empregam o processo denominado:", a: ["abastecimento por gravidade", "reabastecimento por pressão", "transferência cruzada", "alijamento de combustível"], c: 1},
+    {q: "As bombas de combustível do tipo palheta deslocam o combustível através de:", a: ["pressão centrífuga", "movimento alternativo", "palhetas deslizantes", "engrenagens helicoidais"], c: 2},
+    {q: "Como precaução, a bomba de combustível auxiliar (booster) deverá ser ligada:", a: ["em todo o voo", "após a partida nos motores", "somente no táxi", "somente na decolagem e no pouso"], c: 3},
+    {q: "Dentre as alternativas abaixo, o procedimento a ser realizado antes de remover o carburador do motor é:", a: ["frená-lo", "ligar a bomba de combustível", "drenar todo o combustível do tanque", "fechar a válvula de corte do combustível"], c: 3},
+    {q: "Dentre os instrumentos abaixo, aquele que indica a massa de combustível consumida por hora é o:", a: ["fluxômetro", "manômetro", "totalizador", "indicador de pressão"], c: 0},
+    {q: "Em um carburador, a borboleta tem como função controlar diretamente o(a):", a: ["mistura dosada", "ar fornecido ao motor", "água metanol", "combustível fornecido ao motor"], c: 1},
+    {q: "Em um sistema de injeção de combustível, o combustível é injetado diretamente:", a: ["no venturi", "na cuba do carburador", "nos dutos de admissão ou cilindros", "no supercharger"], c: 2},
+    {q: "No carburador, o sistema responsável por fornecer combustível extra durante acelerações rápidas é o:", a: ["sistema de marcha lenta", "sistema de aceleração", "sistema de mistura", "sistema de corte"], c: 1},
+    {q: "O combustível de aviação deve ter como característica principal a:", a: ["baixa volatilidade", "alta viscosidade", "alta resistência à detonação", "baixa octanagem"], c: 2},
+    {q: "O dispositivo que mantém a pressão de combustível constante na saída da bomba de combustível é a:", a: ["válvula de corte", "válvula de alívio", "válvula seletora", "válvula de retenção"], c: 1},
+    {q: "O elemento do carburador que reduz a pressão do ar para aspirar o combustível denomina-se:", a: ["difusor", "venturi", "borboleta", "agulha"], c: 1},
+    {q: "O instrumento que indica a quantidade total de combustível nos tanques é o:", a: ["fluxômetro", "manômetro", "indicador de quantidade", "totalizador"], c: 2},
+    {q: "O método de medição de combustível que utiliza capacitores para medir a massa de combustível é o:", a: ["sistema mecânico", "sistema eletrônico", "sistema por gravidade", "sistema de pressão"], c: 1},
+    {q: "O principal risco de se utilizar combustível com octanagem inferior à especificada é a ocorrência de:", a: ["congelamento", "detonação", "mistura rica", "excesso de pressão"], c: 1},
+    {q: "O sistema de combustível que utiliza a força da gravidade para alimentar o motor é comum em aeronaves de:", a: ["asa alta", "asa baixa", "grande porte", "motores a jato"], c: 0},
+    {q: "O sistema de medição de combustível tipo 'boia e braço' é classificado como:", a: ["eletrônico", "mecânico", "magnético", "capacitivo"], c: 1},
+    {q: "O sistema que permite transferir combustível de um tanque para outro ou para qualquer motor denomina-se:", a: ["alijamento", "crossfeed", "drenagem", "ventilação"], c: 1},
+    {q: "Os drenos de combustível localizados nos pontos mais baixos do sistema servem para remover:", a: ["excesso de combustível", "vapores de combustível", "água e sedimentos", "ar do sistema"], c: 2},
+    {q: "Para evitar a formação de gelo no carburador, utiliza-se o sistema de:", a: ["injeção de álcool", "aquecimento do ar de admissão", "resistências elétricas", "aquecimento do combustível"], c: 1},
+    {q: "Qual componente do sistema de combustível avisa ao piloto sobre a baixa pressão de combustível?", a: ["fluxômetro", "luz de aviso de baixa pressão", "manômetro de óleo", "termômetro de combustível"], c: 1},
+    {q: "Quando a mistura ar/combustível está muito rica, o motor tende a:", a: ["superaquecer", "perder potência e expelir fumaça preta", "ter retorno de chama", "aumentar a RPM"], c: 1},
+    {q: "Se a mistura ar/combustível for excessivamente pobre, poderá ocorrer:", a: ["detonação", "retorno de chama (backfire)", "fumaça preta no escapamento", "falta de lubrificação"], c: 1},
+    {q: "Se ocorrer formação de gelo no carburador, a primeira indicação em um motor com hélice de passo fixo será:", a: ["aumento da RPM", "redução da RPM", "aumento da pressão de admissão", "redução da temperatura do óleo"], c: 1},
+    {q: "Um dos objetivos do alijamento de combustível (fuel jettison) é:", a: ["balancear a aeronave", "reduzir o peso para um pouso de emergência", "limpar os tanques", "aumentar a autonomia"], c: 1},
+    {q: "A cor da gasolina de aviação 100LL (Low Lead) é:", a: ["verde", "azul", "vermelha", "roxa"], c: 1},
+    {q: "A válvula que impede o retorno de combustível para o tanque é a válvula de:", a: ["corte", "alívio", "retenção (check valve)", "seletora"], c: 2},
+    {q: "O processo de remover vapores de combustível de um tanque vazio para manutenção chama-se:", a: ["drenagem", "purga", "alijamento", "ventilação"], c: 1},
+    {q: "O uso de combustível Jet-A1 em motores convencionais a pistão causa:", a: ["melhor desempenho", "danos severos ou falha total do motor", "redução de consumo", "limpeza das velas"], c: 1}
+];
+
+    let currentQuestions = [];
+    let timeLeft = 2220;
+    let timerInterval;
+
+    function initQuiz() {
+        currentQuestions = [...masterBank].sort(() => 0.5 - Math.random());
+        const container = document.getElementById('quiz-content');
+        container.innerHTML = "";
+
+        currentQuestions.forEach((item, idx) => {
+            const card = document.createElement('div');
+            card.className = 'question-block';
+            card.id = `block-${idx}`;
+            card.innerHTML = `
+                <div class="question-text">${idx + 1}. ${item.q}</div>
+                <div class="options-group">
+                    ${item.a.map((opt, optIdx) => `
+                        <label class="option-label" id="label-${idx}-${optIdx}">
+                            <input type="radio" name="q${idx}" value="${optIdx}" onclick="markAsAnswered(${idx})">
+                            ${String.fromCharCode(97 + optIdx)}) ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+        startTimer();
+    }
+
+    function markAsAnswered(idx) {
+        document.getElementById(`block-${idx}`).classList.remove('pending');
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft <= 0) finalizeQuiz(true);
+            timeLeft--;
+        }, 1000);
+    }
+
+    function finalizeQuiz(isTimeUp = false) {
+        let unanswered = [];
+        if (!isTimeUp) {
+            currentQuestions.forEach((_, idx) => {
+                const radios = document.getElementsByName(`q${idx}`);
+                let checked = false;
+                radios.forEach(r => { if(r.checked) checked = true; });
+                if (!checked) {
+                    unanswered.push(idx);
+                    document.getElementById(`block-${idx}`).classList.add('pending');
+                }
+            });
+            if (unanswered.length > 0) {
+                alert(`⚠️Faltam ${unanswered.length} questões. Elas foram sinalizadas em vermelho.`);
+                document.getElementById(`block-${unanswered[0]}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+        }
+
+        clearInterval(timerInterval);
+        let correctCount = 0;
+        currentQuestions.forEach((item, idx) => {
+            const radios = document.getElementsByName(`q${idx}`);
+            let selected = -1;
+            radios.forEach(r => { if(r.checked) selected = parseInt(r.value); });
+
+            document.getElementById(`label-${idx}-${item.c}`).classList.add('correct-answer');
+            if (selected === item.c) correctCount++;
+            else if (selected !== -1) document.getElementById(`label-${idx}-${selected}`).classList.add('wrong-answer');
+            radios.forEach(r => r.disabled = true);
+        });
+
+        const percent = Math.round((correctCount / currentQuestions.length) * 100);
+        const feedback = document.getElementById('feedback-msg');
+        
+        if (percent >= 70) {
+            feedback.innerText = "🎉 Meus Parabéns! Você foi aprovado!";
+            feedback.style.color = "var(--success)";
+        } else {
+            feedback.innerText = "💪 Não desista! Continue estudando para atingir os 70%.";
+            feedback.style.color = "var(--danger)";
+        }
+
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('final-score').innerText = `Acertos: ${correctCount} de ${currentQuestions.length}`;
+        document.getElementById('final-percent').innerText = `Aproveitamento: ${percent}%`;
+        document.getElementById('finish-btn').style.display = 'none';
+        document.getElementById('restart-btn').style.display = 'block';
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.onload = initQuiz;
+</script>
+</body>
+</html>
