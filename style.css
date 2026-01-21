@@ -1,0 +1,91 @@
+/* Configurações de Cores e Fontes */
+:root {
+    --primary: #2c3e50;
+    --basico: #3498db;
+    --gmp: #e67e22;
+    --celula: #27ae60;
+    --avionico: #9b59b6;
+    --bg: #f5f6fa;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: var(--bg);
+    margin: 0;
+    color: #333;
+}
+
+header {
+    background-color: var(--primary);
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+    padding: 0 20px;
+}
+
+/* Estilo de cada Módulo */
+.modulo {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.modulo:hover {
+    transform: translateY(-5px);
+}
+
+.titulo-modulo {
+    margin: 0;
+    padding: 15px;
+    color: white;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+/* Cores específicas por módulo */
+.basico { background-color: var(--basico); }
+.gmp { background-color: var(--gmp); }
+.celula { background-color: var(--celula); }
+.avionico { background-color: var(--avionico); }
+
+/* Estilo dos Links */
+.links-materias {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.links-materias a {
+    text-decoration: none;
+    color: #555;
+    padding: 12px;
+    margin-bottom: 8px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 500;
+    border: 1px solid #eee;
+    transition: all 0.2s;
+}
+
+.links-materias a:hover {
+    background: #eee;
+    color: #000;
+    border-color: #ccc;
+}
+
+footer {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+}

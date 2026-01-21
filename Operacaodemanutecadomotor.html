@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMP - 0peração de Manutenção do - Hangar MMA</title>
+    <style>
+        :root {
+            --primary: #1a3a5a;
+            --secondary: #f8f9fa;
+            --accent: #007bff;
+            --success: #28a745;
+            --danger: #dc3545;
+            --text: #333;
+            --warning: #ffc107;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: var(--text);
+            margin: 0;
+            padding: 10px;
+            overflow-x: hidden;
+        }
+
+        /* EFEITO POW NO CRÉDITO */
+        .credits-pow {
+            position: fixed;
+            top: 5px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            border-radius: 4px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 2000;
+            transform-origin: center;
+            animation: pow-appearance 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes pow-appearance {
+            0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+            80% { transform: scale(1.2) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .header-sticky {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 15px;
+            border-bottom: 3px solid var(--primary);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--danger);
+            background: #fff5f5;
+            padding: 5px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--danger);
+        }
+
+        .question-block {
+            margin: 25px 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fff;
+            transition: all 0.3s;
+        }
+
+        .pending {
+            border: 2px solid var(--danger) !important;
+            background-color: #fff8f8 !important;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-label:hover { background-color: #f0f7ff; }
+        input[type="radio"] { margin-right: 15px; transform: scale(1.2); }
+
+        .correct-answer { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724; font-weight: bold; }
+        .wrong-answer { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        .btn-finish { background: var(--primary); color: white; margin-top: 20px; }
+        .btn-restart { background: var(--success); color: white; display: none; margin-top: 20px; }
+
+        #results {
+            display: none;
+            padding: 20px;
+            text-align: center;
+            border: 3px solid var(--primary);
+            margin: 20px 0;
+            border-radius: 12px;
+            background-color: #ffffff;
+        }
+
+        .motivational-msg {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .score-box { font-size: 2.2rem; margin: 10px 0; font-weight: 800; }
+        
+        @media (max-width: 600px) {
+            .header-sticky { flex-direction: column; gap: 10px; }
+            .container { padding: 10px; }
+            .credits-pow { font-size: 0.6rem; padding: 2px 6px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="credits-pow">BY EWERTON</div>
+
+<div class="container">
+    <div class="header-sticky">
+        <div>
+            <h2 style="margin:0; color: var(--primary);">GMP - 0peração de Manutenção do Motor - Hangar MMA</h2>
+            <small id="q-counter">Questões: 1 a 15</small>
+        </div>
+        <div id="timer" class="timer">15:00</div>
+    </div>
+
+    <div id="results">
+        <span id="feedback-msg" class="motivational-msg"></span>
+        <div class="score-box" id="final-score"></div>
+        <div id="final-percent" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 15px;"></div>
+        <p style="color: #666; font-size: 1rem; font-weight: bold;">Confira abaixo o gabarito detalhado:</p>
+        <button id="restart-btn" class="btn btn-restart" onclick="location.reload()">Reiniciar Simulado</button>
+    </div>
+
+    <div id="quiz-content"></div>
+
+    <button id="finish-btn" class="btn btn-finish" onclick="finalizeQuiz()">Finalizar Simulado</button>
+</div>
+
+<script>
+    const masterBank = [
+    {q: "A condição de sobrevelocidade ocorrida numa turbina poderá ser observada pelo(a):", a: ["tacômetro", "indicação da TIT", "estol do compressor", "vibração do motor"], c: 0},
+    {q: "Ao fazer uma inspeção na cabeça do cilindro, se forem encontradas rachaduras na base das aletas, o cilindro deve ser:", a: ["rejeitado", "retrabalhado", "reinstalado normalmente", "submetido a um ensaio não-destrutivo"], c: 0},
+    {q: "As sondas distribuídas pelo motor a reação transmitem para o indicador de EGT a:", a: ["soma das temperaturas", "média das temperaturas", "maior dentre as temperaturas", "menor dentre as temperaturas"], c: 1},
+    {q: "Dentre os instrumentos abaixo, aquele que é típico do motor à jato denomina-se:", a: ["indicador de EGT", "indicador de temperatura do óleo", "indicador de pressão da gasolina", "indicador de pressão do óleo"], c: 0},
+    {q: "Em um motor a reação, os montantes aerodinâmicos instalados na seção de escapamento tem a finalidade de:", a: ["orientar os gases para a turbina", "fixar a seção de escapamento no motor", "reduzir a temperatura dos gases de exaustão", "fixar o cone e evitar o turbilhonamento dos gases de exaustão"], c: 3},
+    {q: "Na limpeza das peças da seção quente do motor, podem ser utilizados agentes do tipo:", a: ["álcool ou querosene", "emulsão ou querosene", "álcool etílico ou gasolina", "emulsão ou solvente clorado"], c: 3},
+    {q: "Durante o funcionamento momentâneo do motor, o consumo de combustível é indicado por:", a: ["fluxômetro", "totalizador", "tacometro", "barômetro"], c: 0},
+    {q: "Durante um ensaio de um motor a reação deve-se observar, atentamente, a indicação de N1 e N2, através dos:", a: ["alarmes", "manômetros", "voltímetros", "taquímetros"], c: 3},
+    {q: "Numa turbina de 36 palhetas ao se instalar a primeira palheta na posição de número 10, deve-se instalar a segunda na posição de número:", a: ["9", "18", "28", "36"], c: 2},
+    {q: "O óleo que é drenado para dentro da câmara de combustão quando o motor permanece cortado por longo período de tempo, caracteriza uma pane denominada:", a: ["pane seca", "baixa potência", "calço hidráulico", "deficiência térmica"], c: 2},
+    {q: "O tacômetro mede:", a: ["torque", "rotação", "potência", "temperatura"], c: 1},
+    {q: "O cruzamento das válvulas ocorre no:", a: ["final da exaustão e início da admissão", "final da expansão e início da admissão", "início da exaustão e final da compressão", "início da expansão e final da compressão"], c: 0},
+    {q: "O instrumento que é utilizado para verificar o desempenho e o consumo de combustível do motor é o:", a: ["fuel flow", "torquímetro", "fuel pressure", "indicador de EGT"], c: 0},
+    {q: "Se uma determinada palheta de um disco de turbina requerer substituição, deverá também ser substituída a que estiver:", a: ["a 90 graus à direita", "diametralmente oposta", "ao seu lado, do lado direito", "ao seu lado, do lado esquerdo"], c: 1},
+    {q: "Uma indicação de alta temperatura do óleo, pode ser causada por uma pane no(a):", a: ["bomba de pressão", "válvula de alívio", "bomba de retorno de óleo", "válvula by-pass"], c: 3}
+];
+
+       
+    let currentQuestions = [];
+    let timeLeft = 900;
+    let timerInterval;
+
+    function initQuiz() {
+        currentQuestions = [...masterBank].sort(() => 0.5 - Math.random());
+        const container = document.getElementById('quiz-content');
+        container.innerHTML = "";
+
+        currentQuestions.forEach((item, idx) => {
+            const card = document.createElement('div');
+            card.className = 'question-block';
+            card.id = `block-${idx}`;
+            card.innerHTML = `
+                <div class="question-text">${idx + 1}. ${item.q}</div>
+                <div class="options-group">
+                    ${item.a.map((opt, optIdx) => `
+                        <label class="option-label" id="label-${idx}-${optIdx}">
+                            <input type="radio" name="q${idx}" value="${optIdx}" onclick="markAsAnswered(${idx})">
+                            ${String.fromCharCode(97 + optIdx)}) ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+        startTimer();
+    }
+
+    function markAsAnswered(idx) {
+        document.getElementById(`block-${idx}`).classList.remove('pending');
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft <= 0) finalizeQuiz(true);
+            timeLeft--;
+        }, 1000);
+    }
+
+    function finalizeQuiz(isTimeUp = false) {
+        let unanswered = [];
+        if (!isTimeUp) {
+            currentQuestions.forEach((_, idx) => {
+                const radios = document.getElementsByName(`q${idx}`);
+                let checked = false;
+                radios.forEach(r => { if(r.checked) checked = true; });
+                if (!checked) {
+                    unanswered.push(idx);
+                    document.getElementById(`block-${idx}`).classList.add('pending');
+                }
+            });
+            if (unanswered.length > 0) {
+                alert(`⚠️Faltam ${unanswered.length} questões. Elas foram sinalizadas em vermelho.`);
+                document.getElementById(`block-${unanswered[0]}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+        }
+
+        clearInterval(timerInterval);
+        let correctCount = 0;
+        currentQuestions.forEach((item, idx) => {
+            const radios = document.getElementsByName(`q${idx}`);
+            let selected = -1;
+            radios.forEach(r => { if(r.checked) selected = parseInt(r.value); });
+
+            document.getElementById(`label-${idx}-${item.c}`).classList.add('correct-answer');
+            if (selected === item.c) correctCount++;
+            else if (selected !== -1) document.getElementById(`label-${idx}-${selected}`).classList.add('wrong-answer');
+            radios.forEach(r => r.disabled = true);
+        });
+
+        const percent = Math.round((correctCount / currentQuestions.length) * 100);
+        const feedback = document.getElementById('feedback-msg');
+        
+        if (percent >= 70) {
+            feedback.innerText = "🎉 Meus Parabéns! Você foi aprovado!";
+            feedback.style.color = "var(--success)";
+        } else {
+            feedback.innerText = "💪 Não desista! Continue estudando para atingir os 70%.";
+            feedback.style.color = "var(--danger)";
+        }
+
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('final-score').innerText = `Acertos: ${correctCount} de ${currentQuestions.length}`;
+        document.getElementById('final-percent').innerText = `Aproveitamento: ${percent}%`;
+        document.getElementById('finish-btn').style.display = 'none';
+        document.getElementById('restart-btn').style.display = 'block';
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.onload = initQuiz;
+</script>
+</body>
+</html>
