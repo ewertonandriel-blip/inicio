@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado GMP - Banco Completo</title>
+    <style>
+        :root {
+            --primary: #1a3a5a;
+            --secondary: #f8f9fa;
+            --accent: #007bff;
+            --success: #28a745;
+            --danger: #dc3545;
+            --text: #333;
+            --warning: #ffc107;
+        }
+
+  body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: var(--text);
+            margin: 0;
+            padding: 10px;
+            overflow-x: hidden;
+        }
+
+        /* EFEITO POW NO CRÉDITO */
+        .credits-pow {
+            position: fixed;
+            top: 5px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            border-radius: 4px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 2000;
+            transform-origin: center;
+            animation: pow-appearance 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes pow-appearance {
+            0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+            80% { transform: scale(1.2) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .header-sticky {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 15px;
+            border-bottom: 3px solid var(--primary);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--danger);
+            background: #fff5f5;
+            padding: 5px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--danger);
+        }
+
+        .question-block {
+            margin: 25px 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fff;
+            transition: all 0.3s;
+        }
+
+        .pending {
+            border: 2px solid var(--danger) !important;
+            background-color: #fff8f8 !important;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-label:hover { background-color: #f0f7ff; }
+        input[type="radio"] { margin-right: 15px; transform: scale(1.2); }
+
+        .correct-answer { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724; font-weight: bold; }
+        .wrong-answer { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        .btn-finish { background: var(--primary); color: white; margin-top: 20px; }
+        .btn-restart { background: var(--success); color: white; display: none; margin-top: 20px; }
+
+        #results {
+            display: none;
+            padding: 20px;
+            text-align: center;
+            border: 3px solid var(--primary);
+            margin: 20px 0;
+            border-radius: 12px;
+            background-color: #ffffff;
+        }
+
+        .motivational-msg {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .score-box { font-size: 2.2rem; margin: 10px 0; font-weight: 800; }
+        
+        @media (max-width: 600px) {
+            .header-sticky { flex-direction: column; gap: 10px; }
+            .container { padding: 10px; }
+            .credits-pow { font-size: 0.6rem; padding: 2px 6px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="credits-pow">BY EWERTON</div>
+
+<div class="container">
+    <div class="header-sticky">
+        <div>
+            <h2 style="margin:0; color: var(--primary);">GMP 1/2 - 319 questões do Aerosimulados</h2>
+            <small id="q-counter">Questões: 1 a 20</small>
+        </div>
+        <div id="timer" class="timer">20:00</div>
+    </div>
+
+    <div id="results">
+        <span id="feedback-msg" class="motivational-msg"></span>
+        <div class="score-box" id="final-score"></div>
+        <div id="final-percent" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 15px;"></div>
+        <p style="color: #666; font-size: 1rem; font-weight: bold;">Confira abaixo o gabarito detalhado:</p>
+        <button id="restart-btn" class="btn btn-restart" onclick="location.reload()">Tentar Novamente (Novas Questões)</button>
+    </div>
+
+    <div id="quiz-content"></div>
+
+    <button id="finish-btn" class="btn btn-finish" onclick="finalizeQuiz()">Finalizar Simulado</button>
+</div>
+
+<script>
+    // Banco de dados completo do Aerosimulados
+    const masterBank = [
+    {q: "As posições da chave seletora do magneto que são utilizadas para testar o sistema de ignição dupla?", a: ["Esquerdo e direito", "Ambos e direito", "Desligado e ambos", "Esquerdo e ambos"], c: 3},
+    {q: "O tipo de conector, cujo invólucro é feito de aço, pertence à classe?", a: ["D", "K", "B", "C"], c: 1},
+    {q: "A posição do interruptor na qual os magnetos ficam aterrados é?", a: ["Ambos", "On", "Direito", "Off"], c: 3},
+    {q: "A válvula de alívio de uma bomba de combustível acionada pelo motor é projetada para abrir?", a: ["A uma tensão pré-ajustada da mola", "Após o corte do motor", "A uma determinada pressão atmosférica", "Quando a pressão de combustível for muito baixa"], c: 0},
+    {q: "Sequência na qual o tempo motor ocorre nos diferentes cilindros para balanceamento e vibração:", a: ["Trabalho", "Ordem de fogo", "Razão de compressão", "Potência"], c: 1},
+    {q: "O aquecedor de combustível (fuel heater) opera como um?", a: ["Trocador de potência", "Trocador de calor", "Trocador de pressão", "Trocador de óleo"], c: 1},
+    {q: "Em um ciclo de quatro tempos (720º), cada uma das fases equivale em tese a:", a: ["90 graus", "180 graus", "360 graus", "270 graus"], c: 1},
+    {q: "A mistura ar/combustível entra nos cilindros através das passagens das válvulas de?", a: ["Compressão", "Arrefecimento", "Admissão", "Refrigeração"], c: 2},
+    {q: "A sequência na qual o tempo motor ocorre nos diferentes cilindros denomina-se?", a: ["Claro de válvulas", "Claro de pistões", "Ordem de fogo", "Ordem de queima"], c: 2},
+    {q: "A função básica de uma hélice é converter a potência do motor em força de?", a: ["Tração", "Torção", "Arrasto", "Sustentação"], c: 0},
+    {q: "O eixo de ressaltos sempre gira com a metade da velocidade do:", a: ["Eixo transversal", "Eixo da roda livre", "Eixo de manivelas", "Eixo cardan"], c: 2},
+    {q: "Para o acionamento inicial do conjunto compressor e turbina, usa-se:", a: ["Ignitores de partida", "Gerador de vortex", "Roda livre", "Start generation"], c: 3},
+    {q: "O componente do motor que transmite a força do pistão para o eixo de manivelas é o(a)?", a: ["Mancal", "Biela", "Pino do pistão", "Vela"], c: 1},
+    {q: "A finalidade das alhetas, na cabeça do cilindro de um motor convencional, é?", a: ["Arrefecer o cilindro", "Acoplar as molas das válvulas", "Reduzir o peso do cilindro", "Manter elevada a temperatura"], c: 0},
+    {q: "No pistão, o anel de compressão do motor é instalado?", a: ["Na ranhura superior", "Qualquer ranhura", "Na ranhura central", "Na ranhura inferior"], c: 0},
+    {q: "O objetivo principal do eixo de manivelas é transformar o movimento:", a: ["Linear em axial", "Alternativo em rotativo para as válvulas", "Alternativo do pistão em rotativo para a hélice", "Flexível em alternado"], c: 2},
+    {q: "No termo 'Several different types of fire detection system are installed', a palavra 'Installed' significa:", a: ["Alimentado", "Instalado", "Unido", "Inserido"], c: 1},
+    {q: "A turbina transforma a energia cinética dos gases de escapamento em energia:", a: ["Pneumática", "Mecânica", "Estática", "Elétrica"], c: 1},
+    {q: "Cilindros normalmente resistirão até que o motor seja removido por:", a: ["Limite de torque", "Vontade do operador", "Limite de voo", "Limite de horas"], c: 3},
+    {q: "A alta tensão induzida na bobina secundária é enviada à (ao):", a: ["Vela", "Bobina primária", "Platinado", "Distribuidor"], c: 3},
+    {q: "Os dois principais elementos funcionais do compressor centrífugo são?", a: ["Turbina e difusor", "Carcaça e difusor", "Pistão e biela", "Impulsor e difusor"], c: 3},
+    {q: "O distribuidor de alta tensão consiste em:", a: ["Quatro partes", "Duas partes", "Seis partes", "Três partes"], c: 1},
+    {q: "Quando a hélice dá uma volta completa e ocorre um recuo, ela realiza o passo?", a: ["Bandeira", "Efetivo", "Ativo", "Teórico"], c: 1},
+    {q: "Os dois tipos mais comuns de compressor nos motores a reação são?", a: ["Fluxo centrífugo e axial", "Axial e fly by stol", "Radial e centrífugo", "Caneca e canular"], c: 0},
+    {q: "O cruzamento das válvulas ocorre no?", a: ["Início exaustão/final compressão", "Final exaustão/início admissão", "Início expansão/final compressão", "Final expansão/início admissão"], c: 1},
+    {q: "A expansão dos gases cinéticos transforma energia calorífica em energia?", a: ["Cinética", "Pneumática", "Estática", "Mecânica"], c: 3},
+    {q: "As partes básicas que constituem uma turbina são?", a: ["Rotor e coletor", "Coletor e difusor", "Impelidor e estator", "Estator e rotor"], c: 3},
+    {q: "O combustível vem dos tanques para a unidade de controle através de?", a: ["Bombas do motor", "Filtros", "Bombas de reforço", "Válvulas seletoras"], c: 2},
+    {q: "A seção da turbina de um motor turbojato está localizada na parte?", a: ["Superior", "Traseira", "Dianteira", "Inferior"], c: 1},
+    {q: "A seção que transforma alta velocidade do ar em pressão estática chama-se?", a: ["Escapamento", "Combustão", "Difusora", "Acessória"], c: 2},
+    {q: "A maioria dos motores alternativos de aeronaves opera com ciclo de:", a: ["Cinco tempos", "Dois tempos", "Quatro tempos", "Um tempo"], c: 2},
+    {q: "Componente com a finalidade de expulsar os gases de escapamento:", a: ["Pistão", "Válvula", "Anel de segmento", "Eixo de ressaltos"], c: 1},
+    {q: "Velas correntemente fabricadas utilizam roscas:", a: ["Heli-coil de borracha", "Postiças de alumínio", "Heli-coil de aço inoxidável", "Heli-coil de baquelite"], c: 2},
+    {q: "O mecanismo responsável pelo fechamento das válvulas do cilindro é?", a: ["Condutor e eixo", "Ressalto e pino", "Condutor e mola", "Mola"], c: 3},
+    {q: "Motores radiais são fixados à nacele através do?", a: ["Tubo", "Suporte", "Montante", "Berço"], c: 3},
+    {q: "A expressão 'thermal switch system' refere-se a:", a: ["Sistema de ignição", "Sistema de detecção de calor", "Sistema de interruptor térmico", "Sistema de troca térmica"], c: 2},
+    {q: "Dispositivos silenciadores de ruídos em grandes turbojatos são:", a: ["Supressores de ruídos", "Supressores de atrito", "Supressores de ouvido", "Supressores de gases"], c: 0},
+    {q: "O servo do governador controla o fluxo de combustível para ajustar a velocidade do:", a: ["Eixo", "Filtro", "Motor", "Carburador"], c: 2},
+    {q: "Posições da chave seletora para testar o sistema de ignição dupla:", a: ["On e both", "Right e both", "Left e right", "Off e on"], c: 2},
+    {q: "A turbina transforma energia cinética para acionar o?", a: ["Difusor e acessórios", "Compressor e acessórios", "Câmara de combustão", "Distribuidor"], c: 1},
+    {q: "A carga da mistura ar/combustível depende da abertura da:", a: ["Manete de dreno", "Manete de alijamento", "Manete de ângulo", "Manete de aceleração"], c: 3},
+    {q: "O aquecedor (fuel heater) usa como fonte ar sangrado do:", a: ["Escapamento ou óleo", "Compressor ou óleo", "Turbina ou hidráulico", "Câmara ou hidráulico"], c: 1},
+    {q: "Para combater desenvolvimento microbiológico no combustível deve-se:", a: ["Drenar diariamente", "Destanquear no pernoite", "Vedar entradas", "Adicionar bactericida diariamente"], c: 0},
+    {q: "A finalidade da ligação à massa nos sistemas elétricos é:", a: ["Evitar fadiga", "Caminhos de retorno da corrente", "Aumentar resistência", "Acumular estática"], c: 1},
+    {q: "A parte do motor na qual a potência é desenvolvida chama-se:", a: ["Hastes de passo", "Válvulas", "Cilindro", "Rodas"], c: 2},
+    {q: "Os cilindros dos motores radiais são instalados:", a: ["Em carreira", "Parte traseira do cárter", "Ao redor de um cárter central", "Nas engrenagens"], c: 2},
+    {q: "O pino do pistão une o pistão à?", a: ["Bengala", "Transmissor", "Biela", "Turbina"], c: 2},
+    {q: "O calço hidráulico no motor radial ocorre normalmente nos:", a: ["Cilindros laterais", "Cilindros inferiores", "Cilindros superiores", "Todos"], c: 1},
+    {q: "O calço hidráulico ocorre em qual tipo de motor?", a: ["Turbina centrífuga", "Convencional em V", "Turbina axial", "Alternativo radial"], c: 3},
+    {q: "Tempo do êmbolo do PMB para o PMA com válvulas fechadas:", a: ["Potência", "Admissão", "Escapamento", "Compressão"], c: 3},
+    {q: "Maneira para identificar o tipo de gasolina:", a: ["Quantidade", "Temperatura", "Cor", "Pureza"], c: 2},
+    {q: "Componente para cortar o fluxo que sai do tanque:", a: ["Válvula seletora", "Dreno", "Filtro", "Válvula de transferência"], c: 0},
+    {q: "O motor térmico transforma energia calorífica em:", a: ["Cinética", "Elétrica", "Hidráulica", "Mecânica"], c: 3},
+    {q: "A expressão 'overheat conditions' significa:", a: ["Condições de calor", "Condições de tempo", "Condições climáticas", "Condições de superaquecimento"], c: 3},
+    {q: "Transforma movimento alternativo do pistão em rotativo para a hélice:", a: ["Eixo de manivelas", "Mancal", "Eixo de ressaltos", "Caixa de engrenagem"], c: 0},
+    {q: "No motor a reação, a potência indicada ocorre na:", a: ["Seção de escapamento", "Compressor", "Super turbina", "Seção de combustão"], c: 3},
+    {q: "Motores em 'V' costumam ter cilindros montados em ângulo de:", a: ["90º", "10º", "20º", "60º"], c: 3},
+    {q: "Equipamento para modificar o nível de voltagem:", a: ["Gerador", "Voltímetro", "Potenciômetro", "Transformador"], c: 3},
+    {q: "Mecanismo que transforma energia térmica em mecânica:", a: ["Energia cinética", "Energia estática", "Energia quântica", "Energia mecânica"], c: 3},
+    {q: "O sistema de medição principal fornece combustível em todas:", a: ["Velocidades acima de marcha lenta", "Velocidades após disparo", "Baixas rotações", "Baixas marcha lenta"], c: 0},
+    {q: "Seção que converte velocidade em pressão no motor a reação:", a: ["Acessórios", "Eixo curto", "Difusora", "Turbina"], c: 2},
+    {q: "O tacômetro serve para medição de:", a: ["Potência (PRH)", "Torque (TPH)", "Temperatura (TPM)", "Rotação (RPM)"], c: 3},
+    {q: "As válvulas são abertas e fechadas por ação:", a: ["Elétrica", "Pneumática", "Hidráulica", "Mecânica"], c: 3},
+    {q: "Peça móvel responsável pela acomodação dos anéis de segmento:", a: ["Contrapeso", "Pistão", "Eixo de manivelas", "Moente"], c: 1},
+    {q: "No termo 'warning lights', a tradução correta é:", a: ["Luzes de calor", "Luzes de aviso", "Luzes de indicação", "Luzes de superaquecimento"], c: 1},
+    {q: "No termo 'hot junction' (termopar), a tradução é:", a: ["Junção de fogo", "Aviso de junção", "Junção quente", "Aviso de calor"], c: 2},
+    {q: "O difusor troca a alta velocidade do ar por pressão:", a: ["Estática", "Nula", "Aerodinâmica", "Térmica"], c: 0},
+    {q: "A expressão 'cathode ray tube' significa:", a: ["Tubo de raios ultravioleta", "Tubo de raios catódicos", "Tubo de raios quentes", "Tubo de raios congelados"], c: 1},
+    {q: "A ordem de fogo proporciona melhor:", a: ["Taxa de compressão", "Balanceamento e eliminação de vibração", "Rendimento térmico", "Queima"], c: 1},
+    {q: "A bolha de vapor (vapor lock) pode bloquear o:", a: ["Start generation", "Pistão", "Fluxo de combustível", "Pinhão"], c: 2},
+    {q: "O recuo de hélice é a:", a: ["Igualdade passo geom/efetivo", "Diferença passo geom/efetivo", "Indiferença", "Diferença passo teórico/definitivo"], c: 1},
+    {q: "São requeridas 720º de giro do eixo para o motor de:", a: ["Seis tempos", "Dois tempos", "Um tempo", "Quatro tempos"], c: 3},
+    {q: "Nos motores a reação, a potência indicada desenvolve-se na:", a: ["Cárter", "Cilindro", "Câmara de combustão", "Carburador"], c: 2},
+    {q: "Durante a partida de um motor a reação, monitora-se:", a: ["Pressão óleo e TIT", "Temp compressor e tacômetro", "Tacômetro e TIT", "Pressão, temp e RPM"], c: 3},
+    {q: "O fluxo de ar para o motor é controlado através do:", a: ["Magneto", "FCU", "Carburador", "UCP"], c: 1},
+    {q: "O cone interno evita:", a: ["Orientar gases", "Turbulência dos gases", "Fixar seção", "Reduzir temperatura"], c: 1},
+    {q: "Defletores internos nos tanques servem para:", a: ["Resistir a flutuações de combustível", "Manter pressão", "Eliminar impurezas", "Permitir alijamento"], c: 0},
+    {q: "Instrumento para verificar desempenho e consumo:", a: ["Torquímetro", "Fuel pressure", "EGT", "Fuel flow"], c: 3},
+    {q: "Ignitores na câmara anular ficam (posição relógio):", a: ["3 e 9 horas", "2 e 10 horas", "3 e 9 (lado)", "12 e 6 horas"], c: 0},
+    {q: "O tipo de motor que desenvolve tração expelindo um jato de gases em alta velocidade é o:", a: ["Turboélice", "Pulsojato", "Estatojato", "Turbojato"], c: 3},
+    {q: "A função das janelas de inspeção nos motores é permitir a verificação de:", a: ["Fugas de óleo e combustível", "Danos internos sem desmontagem", "Nível de fluido hidráulico", "Pressão de ar"], c: 1},
+    {q: "O dispositivo que mantém a rotação da hélice constante, alterando o passo, é o:", a: ["Sincronizador", "Governador", "Distribuidor", "Comutador"], c: 1},
+    {q: "A formação de gelo no carburador ocorre devido à:", a: ["Alta temperatura externa", "Queda de pressão e evaporação", "Excesso de combustível", "Baixa velocidade do ar"], c: 1},
+    {q: "O sistema de ignição por bateria utiliza para aumentar a voltagem:", a: ["Um alternador", "Um magneto", "Uma bobina de indução", "Um capacitor"], c: 2},
+    {q: "As câmaras de combustão onde o fluxo de ar entra na frente e sai atrás sem inverter o sentido são:", a: ["Fluxo reverso", "Tipo anular", "Fluxo direto", "Tipo caneca"], c: 2},
+    {q: "O componente que suporta o eixo de manivelas e reduz o atrito é o:", a: ["Moente", "Mancal", "Munhão", "Braço de manivela"], c: 1},
+    {q: "Nos motores a reação, a queima do combustível ocorre com:", a: ["Volume constante", "Temperatura constante", "Pressão constante", "Massa constante"], c: 2},
+    {q: "A unidade de controle de combustível (FCU) ajusta o fluxo baseando-se em:", a: ["Apenas rotação", "Apenas altitude", "Parâmetros de pressão, temp e rotação", "Apenas temperatura"], c: 2},
+    {q: "O fenômeno de 'detonação' num motor convencional é causado por:", a: ["Mistura rica", "Baixa temperatura", "Combustível de baixa octanagem", "Baixa taxa de compressão"], c: 2},
+    {q: "A função do dreno de combustível no ponto mais baixo do sistema é:", a: ["Aumentar a pressão", "Retirar água e sedimentos", "Testar a bomba", "Aliviar o tanque"], c: 1},
+    {q: "A folga entre a haste da válvula e o balancim chama-se:", a: ["Claro de válvula", "Curso de válvula", "Passo de válvula", "Levante"], c: 0},
+    {q: "A quebra da película de óleo entre as peças móveis causa:", a: ["Arrefecimento", "Desgaste excessivo e engripamento", "Melhor lubrificação", "Aumento de potência"], c: 1},
+    {q: "O componente que transforma alta tensão em centelha elétrica é:", a: ["Magneto", "Vela de ignição", "Platinado", "Condensador"], c: 1},
+    {q: "O óleo lubrificante nos motores a jato, comparado aos convencionais, é:", a: ["Mais viscoso", "Mineral puro", "Sintético de baixa viscosidade", "Gordura animal"], c: 2},
+    {q: "O curso do pistão é a distância entre:", a: ["Centro do eixo e moente", "PMA e PMB", "Válvula e pistão", "Cárter e cilindro"], c: 1},
+    {q: "A mistura considerada 'ideal' ou estequiométrica para aviação é de:", a: ["15:1", "8:1", "20:1", "12:1"], c: 0},
+    {q: "A principal vantagem do motor turboélice em relação ao turbojato é:", a: ["Maior velocidade final", "Maior eficiência em baixas altitudes e velocidades", "Menor ruído", "Menor peso"], c: 1},
+    {q: "O sistema que evita o superaquecimento dos cilindros por circulação de ar é o:", a: ["Radiador", "Carenagem e defletores", "Ventoinha", "Intercooler"], c: 1},
+    {q: "O 'passo bandeira' da hélice é utilizado para:", a: ["Decolagem", "Pouso", "Reduzir o arrasto se o motor parar", "Voo de cruzeiro"], c: 2},
+    {q: "A bomba de aceleração no carburador serve para:", a: ["Manter a marcha lenta", "Evitar o 'buraco' na aceleração rápida", "Economizar combustível", "Resfriar o motor"], c: 1},
+    {q: "O compressor axial é composto por:", a: ["Rotores e estatores", "Impulsores e difusores", "Pistões e bielas", "Engrenagens"], c: 0},
+    {q: "O 'firewall' (parede de fogo) serve para:", a: ["Aumentar a estrutura", "Isolar o motor da célula em caso de fogo", "Resfriar o óleo", "Fixar os magnetos"], c: 1},
+    {q: "O termo 'TBO' (Time Between Overhaul) significa:", a: ["Tempo de voo diário", "Tempo entre revisões gerais", "Tempo de aquecimento", "Tempo de garantia"], c: 1},
+    {q: "A ventilação do cárter serve para:", a: ["Aumentar a pressão interna", "Eliminar vapores e gases de escape", "Resfriar o óleo", "Lubrificar as válvulas"], c: 1},
+    {q: "O sistema de ignição é independente do sistema elétrico da aeronave devido ao:", a: ["Alternador", "Magneto", "Inversor", "Retificador"], c: 1},
+    {q: "A pré-ignição é causada por:", a: ["Mistura muito rica", "Pontos quentes na câmara de combustão", "Falta de óleo", "Baixa rotação"], c: 1},
+    {q: "O componente que indica a pressão de admissão é o:", a: ["Tacômetro", "Manifold Pressure Gauge", "EGT", "CHT"], c: 1},
+    {q: "O fluxo de ar num motor turbofan divide-se em:", a: ["Primário e secundário", "Interno e externo", "Frio e quente", "Todas as anteriores"], c: 3},
+    {q: "O óleo que retorna das partes quentes do motor a reação é resfriado no:", a: ["Radiador de ar", "Fuel-oil heat exchanger", "Cárter", "Tanque"], c: 1},
+    {q: "A finalidade do sistema de dreno do bocal de combustível (dump valve) é:", a: ["Aumentar a pressão", "Drenar o combustível após o corte do motor", "Testar a bomba", "Limpar os bicos"], c: 1},
+    {q: "O instrumento que mede a temperatura dos gases de escapamento é o:", a: ["CHT", "EGT", "Oil Temp", "TIT"], c: 1},
+    {q: "A relação entre o peso do motor e a potência produzida chama-se:", a: ["Razão peso/potência", "Carga alar", "Eficiência térmica", "Tração específica"], c: 0},
+    {q: "O 'backfire' (retorno de chama pelo carburador) geralmente indica:", a: ["Mistura muito rica", "Mistura muito pobre", "Excesso de óleo", "Motor frio"], c: 1},
+    {q: "O sistema de cárter seco (dry sump) armazena o óleo em:", a: ["No fundo do motor", "Num reservatório separado", "Dentro do eixo", "Nas tampas de válvulas"], c: 1},
+    {q: "A cor do fluido hidráulico do tipo Skydrol é:", a: ["Vermelho", "Azul", "Roxo/Púrpura", "Amarelo"], c: 2},
+    {q: "As palhetas do estator no compressor axial servem para:", a: ["Aumentar a velocidade", "Direcionar o ar para o próximo estágio", "Queimar o ar", "Girar o rotor"], c: 1},
+    {q: "O supercompressor (supercharger) é acionado:", a: ["Pelos gases de escape", "Mecanicamente pelo motor", "Eletricamente", "Pelo vento"], c: 1},
+    {q: "O turbocompressor (turbocharger) é acionado:", a: ["Mecanicamente", "Pelos gases de escape", "Pela bateria", "Pelo fluxo de ar"], c: 1},
+    {q: "A sangria de ar do compressor (bleed air) é usada para:", a: ["Antigelo e pressurização", "Aumentar a tração", "Resfriar a turbina", "Todas as anteriores"], c: 3},
+    {q: "O 'surge' ou 'stall' do compressor é causado por:", a: ["Excesso de combustível", "Ruptura do fluxo de ar nas palhetas", "Baixa altitude", "Falta de ignição"], c: 1},
+    {q: "A função do selo de labirinto é:", a: ["Lubrificar", "Evitar vazamentos de ar/óleo por pressão", "Fixar rolamentos", "Arrefecer"], c: 1},
+    {q: "O bocal de descarga (exhaust nozzle) num turbojato serve para:", a: ["Aumentar a pressão", "Aumentar a velocidade de saída dos gases", "Diminuir o ruído", "Resfriar a turbina"], c: 1},
+    {q: "A octanagem mede a resistência do combustível à:", a: ["Evaporação", "Detonação", "Corrosão", "Congelamento"], c: 1},
+    {q: "O separador de água no sistema de combustível evita:", a: ["Fogo", "Congelamento nas linhas e filtros", "Corrosão", "Excesso de peso"], c: 1},
+    {q: "A válvula de contorno (bypass) do filtro de óleo abre quando:", a: ["O óleo está quente", "O filtro está obstruído", "A pressão está baixa", "O motor para"], c: 1},
+    {q: "A viscosidade do óleo é sua resistência ao:", a: ["Calor", "Escoamento", "Frio", "Atrito"], c: 1},
+    {q: "As velas de ignição 'quentes' são usadas em motores que:", a: ["Operam em altas temperaturas", "Operam em baixas temperaturas (evita carbonização)", "São turboalimentados", "Usam gasolina azul"], c: 1},
+    {q: "O 'shimmy damper' serve para evitar:", a: ["Vibrações no motor", "Oscilações na roda do nariz", "Gelo na asa", "Fogo"], c: 1},
+    {q: "O passo da hélice é medido em:", a: ["Graus ou polegadas", "Libras", "RPM", "Quilos"], c: 0},
+    {q: "A tração reversa serve para:", a: ["Subir mais rápido", "Auxiliar na frenagem durante o pouso", "Fazer curvas no ar", "Aumentar a velocidade"], c: 1},
+    {q: "O componente que une as duas metades do cárter é:", a: ["Parafusos e porcas", "Solda", "Cola", "Rebites"], c: 0},
+    {q: "A folga lateral dos anéis de segmento serve para:", a: ["Passar óleo", "Dilatação térmica", "Diminuir o peso", "Fixar o pino"], c: 1},
+    {q: "O pino do pistão do tipo 'flutuante' é preso por:", a: ["Solda", "Anéis retentores (trava)", "Parafusos", "Pressão"], c: 1},
+    {q: "A biela mestra é encontrada em motores:", a: ["Em linha", "Radiais", "Opostos", "Em V"], c: 1},
+    {q: "A ordem de fogo de um motor de 4 cilindros opostos costuma ser:", a: ["1-2-3-4", "1-3-2-4", "1-4-2-3", "1-3-4-2"], c: 1},
+    {q: "O resfriador de óleo (radiador) geralmente possui uma válvula:", a: ["De segurança", "Termostática", "De dreno", "De agulha"], c: 1},
+    {q: "O sistema de injeção direta de combustível evita:", a: ["Gelo no carburador", "Uso de filtros", "Uso de bombas", "Consumo de óleo"], c: 0},
+    {q: "A relação de compressão é a razão entre:", a: ["Volume total e volume da câmara", "Peso e potência", "Ar e combustível", "Entrada e saída"], c: 0},
+    {q: "O 'kickback' na partida é causado por:", a: ["Magneto atrasado", "Magneto adiantado", "Falta de bateria", "Combustível pobre"], c: 1},
+    {q: "A principal função do estator da turbina é:", a: ["Aumentar a pressão", "Direcionar os gases para as palhetas do rotor", "Girar o compressor", "Suportar o bocal"], c: 1},
+    {q: "Motores modulares permitem:", a: ["Troca de seções sem desmontar o motor todo", "Voo supersônico", "Uso de qualquer combustível", "Menor consumo de óleo"], c: 0},
+    {q: "O magnetismo remanescente é necessário para:", a: ["O gerador iniciar a produção", "O motor girar", "A bateria carregar", "A vela faiscar"], c: 0},
+    {q: "O 'solenoide' é um dispositivo:", a: ["Mecânico", "Eletromagnético", "Pneumático", "Químico"], c: 1},
+    {q: "O disjuntor (circuit breaker) protege o circuito contra:", a: ["Baixa voltagem", "Sobrecarga/curto-circuito", "Falta de terra", "Calor"], c: 1},
+    {q: "O eletrólito da bateria de chumbo-ácido é composto por:", a: ["Água e sal", "Ácido sulfúrico e água destilada", "Querosene", "Álcool"], c: 1},
+    {q: "A capacidade de uma bateria é medida em:", a: ["Volts", "Ampere-hora (Ah)", "Watts", "Ohms"], c: 1},
+    {q: "O 'inversor' converte:", a: ["AC para DC", "DC para AC", "Alta para baixa tensão", "Mecânica em elétrica"], c: 1},
+    {q: "O 'retificador' converte:", a: ["AC para DC", "DC para AC", "Calor em luz", "Pressão em vácuo"], c: 0},
+    {q: "A cor da gasolina de 80 octanas é:", a: ["Azul", "Verde", "Vermelha", "Púrpura"], c: 2},
+    {q: "O principal risco de usar combustível de baixa octanagem é:", a: ["Fogo no bocal", "Detonação", "Congelamento", "Excesso de fumaça"], c: 1},
+    {q: "A 'mistura rica' serve para:", a: ["Resfriar o motor em altas potências", "Economizar combustível", "Subir mais devagar", "Evitar gelo"], c: 0},
+    {q: "O 'prime' (escorvador) é usado para:", a: ["Limpar o motor", "Facilitar a partida a frio", "Apagar incêndios", "Aumentar a pressão de óleo"], c: 1},
+    {q: "A bomba de combustível de emergência costuma ser:", a: ["Mecânica", "Elétrica (Boost pump)", "Manual", "Pneumática"], c: 1},
+    {q: "O bocal de injeção de água/metanol serve para:", a: ["Limpar o motor", "Aumento temporário de tração na decolagem", "Resfriar a cabine", "Apagar fogo"], c: 1},
+    {q: "A unidade de medida de tração em motores a jato é:", a: ["HP", "Libras (Lbs) ou Newtons", "Quilates", "Cavalos"], c: 1},
+    {q: "O 'turbofan' é mais silencioso porque:", a: ["Gira mais devagar", "O fluxo secundário envolve o fluxo quente", "Não tem turbina", "Usa abafadores"], c: 1},
+    {q: "O rolamento que suporta cargas axiais é o de:", a: ["Agulhas", "Esferas (Thrust bearing)", "Roletes", "Bronze"], c: 1},
+    {q: "A 'carcaça de acessórios' geralmente fica na parte:", a: ["Frontal ou inferior", "Interna da câmara", "Dentro da turbina", "No bocal de escape"], c: 0},
+    {q: "A inspeção 'Hot Section' foca em:", a: ["Compressor", "Câmara de combustão e turbina", "Hélice", "Rodas"], c: 1},
+    {q: "O que acontece se o interruptor de ignição for colocado na posição OFF?", a: ["Os magnetos são aterrados", "O motor acelera", "A bateria descarrega", "As velas recebem mais carga"], c: 0},
+    {q: "A folga dos eletrodos da vela de ignição, quando aumentada pelo desgaste, causa:", a: ["Partida mais fácil", "Dificuldade de salto da centelha", "Aumento da potência", "Melhor queima"], c: 1},
+    {q: "O dispositivo que evita a queima dos contatos do platinado é o:", a: ["Indutor", "Resistor", "Condensador (Capacitor)", "Transformador"], c: 2},
+    {q: "A finalidade do sistema de 'Pneumatic Starter' é:", a: ["Acionar o motor usando ar comprimido", "Injetar combustível", "Resfriar a turbina", "Frear a hélice"], c: 0},
+    {q: "Em motores a reação, a 'Auto-ignição' ocorre quando:", a: ["O motor está frio", "O combustível entra em contato com gases quentes sem centelha", "A bateria acaba", "O magneto falha"], c: 1},
+    {q: "O material mais comum das palhetas da turbina, devido às altas temperaturas, é:", a: ["Alumínio", "Superligas de Níquel/Cobalto", "Cobre", "Chumbo"], c: 1},
+    {q: "O instrumento que indica a temperatura do óleo na entrada do motor é o:", a: ["CHT", "Oil Pressure", "Oil Temperature Gauge", "EGT"], c: 2},
+    {q: "A unidade de medida de potência em motores turboélice é o:", a: ["Libras de tração", "ESHP (Equivalent Shaft Horsepower)", "RPM", "PSI"], c: 1},
+    {q: "O sistema de degelo das pás da hélice pode ser feito por:", a: ["Ar quente ou eletricidade/fluido", "Apenas fricção", "Escapamento", "Magnetismo"], c: 0},
+    {q: "O 'Manifold Pressure' mede a pressão de ar no:", a: ["Escapamento", "Cárter", "Tubo de admissão", "Tanque de combustível"], c: 2},
+    {q: "A função do radiador de ar (Intercooler) em motores turboalimentados é:", a: ["Resfriar o óleo", "Resfriar o ar de admissão para aumentar a densidade", "Aquecer o motor", "Girar a turbina"], c: 1},
+    {q: "O componente que permite o movimento das válvulas através do eixo de ressaltos é o:", a: ["Tucho (Lifter)", "Pistão", "Anel", "Vela"], c: 0},
+    {q: "A 'Janela de Inspeção' do nível de óleo é chamada de:", a: ["Dipstick", "Sight Glass", "Drain plug", "Vent"], c: 1},
+    {q: "O amortecedor de vibrações torcionais no eixo de manivelas é o:", a: ["Mancal", "Contrapeso dinâmico", "Biela", "Hélice"], c: 1},
+    {q: "A cor do fluido hidráulico mineral (MIL-H-5606) é:", a: ["Azul", "Púrpura", "Verde", "Vermelho"], c: 3},
+    {q: "O sistema de extinção de fogo em motores geralmente utiliza:", a: ["Água", "Nitrogênio", "Halon ou Agentes Químicos", "Oxigênio"], c: 2},
+    {q: "O 'EGT' (Exhaust Gas Temperature) ajuda o piloto a:", a: ["Ajustar a mistura ar/combustível", "Ver o nível de óleo", "Controlar a pressão do pneu", "Limpar o para-brisa"], c: 0},
+    {q: "A 'RPM Crítica' é uma faixa de rotação onde:", a: ["O motor produz mais potência", "Ocorre vibração excessiva perigosa", "O consumo é zero", "O óleo esfria"], c: 1},
+    {q: "O governador de hélice utiliza para mudar o passo:", a: ["Pressão de óleo e força centrífuga", "Eletricidade apenas", "Cabos de aço", "Ar comprimido"], c: 0},
+    {q: "A função das 'Varetas de Comando' (Pushrods) é:", a: ["Levar óleo ao pistão", "Transmitir movimento do tucho para o balancim", "Prender o motor no berço", "Girar a hélice"], c: 1},
+    {q: "O sistema 'FADEC' significa:", a: ["Full Authority Digital Engine Control", "Fast Air Digital Engine Check", "Fuel And Diesel Engine Control", "Fire And Damage Emergency Control"], c: 0},
+    {q: "O 'Reverse Thrust' num turbojato é obtido por:", a: ["Inverter a rotação do motor", "Deflexão dos gases de escape para frente", "Mudar o passo da hélice", "Fechando o bocal"], c: 1},
+    {q: "A seção de combustão 'Can-Annular' combina:", a: ["Câmaras individuais dentro de um invólucro comum", "Pistões e turbinas", "Hélice e jato", "Óleo e combustível"], c: 0},
+    {q: "O 'Air-Oil Cooler' regula a temperatura do:", a: ["Ar da cabine", "Óleo lubrificante", "Combustível", "Hidráulico"], c: 1},
+    {q: "A causa mais comum de perda de potência súbita em voo nivelado é:", a: ["Falta de óleo", "Gelo no carburador", "Pneu furado", "Luz de pouso acesa"], c: 1},
+    {q: "O bocal de descarga de geometria variável é comum em motores:", a: ["Turboélice", "Motores com pós-combustão (Afterburner)", "Motores radiais", "Planadores"], c: 1},
+    {q: "A 'Carga de Compressão' ocorre quando:", a: ["O pistão sobe", "O pistão desce", "O motor para", "A turbina gira"], c: 0},
+    {q: "O 'Vapor Lock' ocorre mais frequentemente com:", a: ["Motor frio e inverno", "Motor quente e dias de calor", "Alta pressão de combustível", "Uso de querosene"], c: 1},
+    {q: "O componente que indica falha no filtro de óleo por diferença de pressão é:", a: ["Válvula seletora", "Indicador de bypass (Delta P)", "Dreno", "Vareta"], c: 1},
+    {q: "A 'Descompressão' do motor para manutenção é feita retirando as:", a: ["Asas", "Velas de ignição", "Hélices", "Rodas"], c: 1},
+    {q: "A 'Queima Pobre' causa:", a: ["Resfriamento do motor", "Superaquecimento e possível detonação", "Excesso de fumaça preta", "Aumento de consumo"], c: 1},
+    {q: "O 'Starter-Generator' atua como:", a: ["Apenas motor de partida", "Apenas gerador", "Motor de partida e depois como gerador", "Bateria"], c: 2},
+    {q: "O 'Oil Scavenge Pump' serve para:", a: ["Injetar óleo sob pressão", "Retirar o óleo do motor e levar ao reservatório", "Filtrar o combustível", "Girar a turbina"], c: 1},
+    {q: "A finalidade do 'Stator' na turbina é:", a: ["Direcionar o fluxo e aumentar a velocidade dos gases", "Girar o compressor", "Queimar o óleo", "Reduzir o ruído"], c: 0},
+    {q: "O 'N1' em um motor turbofan refere-se à rotação do:", a: ["Compressor de alta pressão", "Fan e compressor de baixa pressão", "Eixo da hélice", "Bomba de óleo"], c: 1},
+    {q: "O 'N2' em um motor turbofan refere-se à rotação do:", a: ["Fan", "Compressor de alta pressão (Core)", "Gerador", "Roda do nariz"], c: 1},
+    {q: "A seção 'Diffuser' no compressor centrífugo serve para:", a: ["Diminuir pressão", "Transformar velocidade em pressão estática", "Aumentar a temperatura", "Expulsar gases"], c: 1},
+    {q: "O 'Magneto Internally Timed' significa que:", a: ["O magneto está fora de ponto", "O platinado abre no momento exato da maior intensidade magnética (E-gap)", "O magneto funciona sem imã", "O magneto depende da bateria"], c: 1},
+    {q: "A 'Banda de Rodagem' da hélice refere-se à:", a: ["Ponta da hélice", "Face plana da pá", "Parte de trás da pá", "Cubo"], c: 1},
+    {q: "O passo da hélice 'Grosso' é melhor para:", a: ["Decolagem", "Voo de cruzeiro", "Subida rápida", "Táxi"], c: 1},
+    {q: "O passo da hélice 'Fino' é melhor para:", a: ["Decolagem e subida", "Cruzeiro", "Economia", "Descida"], c: 0},
+    {q: "A 'Válvula Solenoide de Corte' (Fuel Shut-off) serve para:", a: ["Aumentar o fluxo", "Interromper o fluxo de combustível em emergências", "Limpar o filtro", "Medir o nível"], c: 1},
+    {q: "O 'Chip Detector' no sistema de óleo serve para:", a: ["Medir a temperatura", "Detectar limalhas metálicas (desgaste interno)", "Filtrar o óleo", "Bombear o óleo"], c: 1},
+    {q: "O 'Efeito Venturi' no carburador causa:", a: ["Aumento de pressão e temperatura", "Queda de pressão e aumento de velocidade do ar", "Congelamento do óleo", "Parada do motor"], c: 1},
+    {q: "A 'Pós-Combustão' (Afterburner) aumenta a tração injetando combustível na:", a: ["Entrada de ar", "Seção de escapamento", "Câmara de combustão principal", "Turbina"], c: 1},
+    {q: "O 'Turboprop' é um motor onde a turbina aciona:", a: ["Apenas o compressor", "Uma hélice através de uma caixa de redução", "As rodas do avião", "O gerador elétrico"], c: 1},
+    {q: "A 'Caixa de Engrenagens de Redução' é necessária porque:", a: ["O motor gira muito devagar", "A turbina gira a rotações muito altas para a hélice", "Para inverter o sentido de voo", "Para economizar óleo"], c: 1},
+    {q: "O 'Anti-Icing' do motor a reação usa:", a: ["Álcool", "Ar quente sangrado do compressor", "Vibração", "Fricção"], c: 1},
+    {q: "O 'Ram Air' é o ar que entra no motor devido à:", a: ["Velocidade de deslocamento da aeronave", "Bomba de ar", "Hélice parada", "Ventilador"], c: 0},
+    {q: "A 'TIT' (Turbine Inlet Temperature) é medida:", a: ["Na saída do escapamento", "Na entrada da turbina (mais crítica)", "No compressor", "No tanque"], c: 1},
+    {q: "O 'Blade Creep' (Fluência da palheta) ocorre devido a:", a: ["Frio intenso", "Altas temperaturas e força centrífuga prolongada", "Falta de combustível", "Baixa rotação"], c: 1},
+    {q: "A 'Mistura de Marcha Lenta' é ajustada no:", a: ["Tanque", "Carburador ou Unidade de Controle", "Magneto", "Cockpit"], c: 1},
+    {q: "O 'Octano' evita a queima:", a: ["Lenta", "Explosiva e descontrolada (Detonação)", "Fria", "Completamente"], c: 1},
+    {q: "A 'Ignição por Centelha' é usada em motores:", a: ["Diesel", "Ciclo Otto (Convencionais)", "Turbinas (apenas na partida)", "B e C estão corretas"], c: 3},
+    {q: "O 'Cilindro Mestre' em motores radiais é o que possui a:", a: ["Biela mestra", "Hélice", "Vela maior", "Maior temperatura"], c: 0},
+    {q: "O 'Anel de Fogo' é o nome comum para o:", a: ["Primeiro anel de compressão", "Anel de óleo", "Cárter", "Escapamento"], c: 0},
+    {q: "A 'Capa de Tucho' evita:", a: ["Entrada de ar", "Vazamento de óleo nas varetas", "Fogo", "Ruído"], c: 1},
+    {q: "O 'Balanceamento Dinâmico' da hélice evita:", a: ["Consumo de combustível", "Vibrações no motor e célula", "Gelo", "Fumaça"], c: 1},
+    {q: "A 'Bomba de Recuperação' (Scavenge) tem capacidade:", a: ["Menor que a de pressão", "Igual à de pressão", "Maior que a de pressão (para garantir cárter seco)", "Zero"], c: 2},
+    {q: "O 'Oil Tank Vent' serve para:", a: ["Drenar óleo", "Equalizar a pressão interna com a atmosfera", "Esfriar o óleo", "Medir o nível"], c: 1},
+    {q: "O 'Magneto de Baixa Tensão' necessita de:", a: ["Um transformador perto da vela", "Uma bateria maior", "Velas especiais", "Mais combustível"], c: 0},
+    {q: "O 'Ponto de Fulgor' (Flash Point) do óleo é a temperatura onde:", a: ["O óleo congela", "O óleo desprende vapores que se inflamam momentaneamente", "O óleo vira pasta", "O óleo lubrifica melhor"], c: 1},
+    {q: "A 'Viscosidade SAE' 50 é:", a: ["Mais fina que a 30", "Mais grossa que a 30", "Igual à 30", "Um tipo de combustível"], c: 1},
+    {q: "O 'Heli-Coil' é usado para:", a: ["Consertar roscas danificadas no cilindro", "Prender a asa", "Vedar o óleo", "Limpar a vela"], c: 0},
+    {q: "A 'Vela Fria' possui:", a: ["Isolador longo", "Isolador curto (dissipa calor rápido)", "Nenhum isolador", "Cor azul"], c: 1},
+    {q: "O 'Platinado' (Breaker Points) abre para:", a: ["Fechar o circuito", "Colapsar o campo primário e induzir alta tensão no secundário", "Ligar a bateria", "Carregar o capacitor"], c: 1},
+    {q: "O 'Impulse Coupling' no magneto serve para:", a: ["Atrasar a centelha e aumentar sua força na partida", "Adiantar a centelha", "Desligar o motor", "Girar o gerador"], c: 0},
+    {q: "O 'Shielding' (Blindagem) dos cabos de ignição evita:", a: ["Fogo", "Interferência de rádio (EMI)", "Vazamento de óleo", "Choques elétricos"], c: 1},
+    {q: "O 'Carbon Track' (Trilha de carvão) no distribuidor causa:", a: ["Aumento de potência", "Fuga de corrente e falha de ignição", "Melhor condução", "Limpeza interna"], c: 1},
+    {q: "A 'Válvula de Alívio de Pressão de Óleo' mantém a pressão:", a: ["Sempre aumentando", "Constante independente da rotação", "Zero", "Mínima"], c: 1},
+    {q: "O 'Cárter Úmido' (Wet Sump) guarda o óleo no:", a: ["Reservatório externo", "Fundo do próprio motor", "Dentro do pistão", "Nas asas"], c: 1},
+    {q: "A 'Bomba de Engrenagens' é um exemplo de bomba de:", a: ["Deslocamento constante", "Deslocamento variável", "Fluxo centrífugo", "Vácuo"], c: 0},
+    {q: "O 'Filtro de Tela' (Screen) retém partículas:", a: ["Microscópicas", "Grandes", "Apenas água", "Nenhuma"], c: 1},
+    {q: "A 'Diluição de Óleo' com gasolina serve para:", a: ["Limpar o motor", "Facilitar a partida em climas extremamente frios", "Aumentar a viscosidade", "Substituir o lubrificante"], c: 1},
+    {q: "O 'Radiador de Óleo' possui um 'Bypass' para quando o óleo está:", a: ["Quente", "Frio (evita passar pelo radiador)", "Limpo", "Sujo"], c: 1},
+    {q: "O 'Passo Fixo' da hélice significa que:", a: ["O ângulo da pá não pode ser alterado", "O motor não gira", "A hélice é de metal", "A hélice é de madeira"], c: 0},
+    {q: "O 'Sincrociclismo' evita que:", a: ["A hélice bata na fuselagem", "As hélices de motores diferentes vibrem em frequências próximas (batimento)", "O motor pare", "O piloto durma"], c: 1},
+    {q: "O 'Torquímetro' no painel indica:", a: ["Rotação", "Potência entregue ao eixo da hélice (em motores a reação)", "Pressão de pneus", "Nível de óleo"], c: 1},
+    {q: "A 'Razão de Compressão' de 8:1 significa que:", a: ["O ar é comprimido 8 vezes seu volume original", "O motor tem 8 cilindros", "O combustível custa 8 reais", "A hélice tem 8 pás"], c: 0},
+    {q: "A 'Auto-rotação' (Windmilling) ocorre quando:", a: ["O motor gira a hélice", "O fluxo de ar gira a hélice com o motor parado", "A hélice para totalmente", "O avião está no chão"], c: 1},
+    {q: "O 'Intercooler' é posicionado entre:", a: ["O compressor e o carburador/admissão", "O motor e a hélice", "A turbina e o escape", "O tanque e a bomba"], c: 0},
+    {q: "O 'Wastegate' no turbocompressor controla:", a: ["A quantidade de gases de escape que passa pela turbina", "A pressão do óleo", "A entrada de ar", "A mistura"], c: 0},
+    {q: "Se o 'Wastegate' estiver totalmente fechado:", a: ["Toda a energia dos gases vai para a turbina (máxima compressão)", "O turbo para", "O motor morre", "A pressão cai"], c: 0},
+    {q: "O 'Critical Altitude' é a altitude máxima onde:", a: ["O motor pode manter a pressão de admissão de nível do mar", "O avião cai", "O motor congela", "O óleo ferve"], c: 0},
+    {q: "O 'Bootstrapping' é uma condition de instabilidade na:", a: ["Pressão de óleo", "Pressão de admissão em motores turbo", "Rotação da hélice", "Temperatura da cabine"], c: 1},
+    {q: "A 'Válvula de Alívio de Admissão' (Pop-off valve) protege contra:", a: ["Baixa pressão", "Sobrepressão (Overboost) no sistema de admissão", "Falta de ar", "Fogo"], c: 1},
+    {q: "O 'Turbo-Compound' utiliza a turbina para:", a: ["Girar um compressor", "Entregar potência diretamente ao eixo de manivelas via engrenagens", "Girar o gerador", "Apenas soltar gases"], c: 1},
+    {q: "A 'Câmara de Combustão' onde o ar entra pelos furos de diluição serve para:", a: ["Aumentar o fogo", "Resfriar os gases antes da turbina e centralizar a chama", "Apagar o motor", "Aumentar a fumaça"], c: 1},
+    {q: "O 'Ignitor' de um motor a jato:", a: ["Funciona o tempo todo", "Funciona apenas na partida e em condições de chuva/gelo", "É igual a uma vela de carro", "Usa bateria de 9V"], c: 1},
+    {q: "O 'FOD' (Foreign Object Damage) ocorre na:", a: ["Saída do motor", "Entrada de ar (ingestão de objetos)", "Hélice", "Cauda"], c: 1},
+    {q: "O 'Secondary Air' na câmara de combustão é usado para:", a: ["Queima", "Arrefecimento e centralização da chama", "Aumentar a pressão", "Nada"], c: 1},
+    {q: "A seção 'Turbine' aciona:", a: ["A hélice apenas", "O compressor e acessórios", "O trem de pouso", "O flaps"], c: 1},
+    {q: "O 'Torque Meter' usa geralmente:", a: ["Pressão hidráulica proporcional à torção do eixo", "Um cabo de aço", "Um imã", "Uma régua"], c: 0},
+    {q: "A 'Válvula de Sangria' (Bleed Valve) no compressor evita:", a: ["Fogo", "Stall do compressor em baixas rotações", "Consumo alto", "Vazamento de óleo"], c: 1},
+    {q: "O 'Turbofan' de alto desvio (High-Bypass) é mais eficiente em:", a: ["Altas velocidades supersônicas", "Velocidades de cruzeiro subsônicas", "Baixas altitudes apenas", "Espaço sideral"], c: 1},
+    {q: "O 'Combustor' do tipo anular é:", a: ["Pesado", "Eficiente e permite uma frente de chama uniforme", "Muito longo", "Difícil de esfriar"], c: 1},
+    {q: "A 'Palheta de Guia de Entrada' (VIGV) direciona o ar para o:", a: ["Escapamento", "Primeiro estágio do compressor", "Tanque", "Radiador"], c: 1},
+    {q: "O 'Labyrinth Seal' usa:", a: ["Borracha", "Diferença de pressão de ar para vedar o óleo", "Graxa", "Cola"], c: 1},
+    {q: "O 'Tail Cone' serve para:", a: ["Aumentar o arrasto", "Evitar turbulência na saída dos gases", "Fixar o motor", "Esfriar a turbina"], c: 1},
+    {q: "A 'EPR' (Engine Pressure Ratio) é a razão entre:", a: ["Pressão de saída e pressão de entrada do motor", "Óleo e combustível", "Ar e fogo", "Peso e potência"], c: 0},
+    {q: "O 'EGT' em motores a reação é medido por:", a: ["Termopares", "Termômetros de mercúrio", "Régua", "Olho nu"], c: 0},
+    {q: "A 'Partida Quente' (Hot Start) ocorre quando:", a: ["O motor pega fogo", "A temperatura de escape excede o limite na partida", "O óleo está fervendo", "O dia está ensolarado"], c: 1},
+    {q: "A 'Partida Interrompida' (Hung Start) ocorre quando:", a: ["O motor não gira", "O motor não atinge a rotação de marcha lenta após a ignição", "A bateria morre", "O piloto desiste"], c: 1},
+    {q: "O 'Corte por Mistura' (Idle Cut-off) evita:", a: ["Desperdício", "Acúmulo de combustível nos cilindros e detonação na próxima partida", "Fogo", "Gelo"], c: 1},
+    {q: "A 'Octanagem' 100/130 significa:", a: ["100 para mistura pobre e 130 para mistura rica", "Preço do litro", "Data de validade", "Quantidade de chumbo"], c: 0},
+    {q: "O 'Detetor de Fogo' do tipo alça contínua (Kidde/Fenwal) funciona por:", a: ["Pressão", "Mudança de resistência elétrica ou capacitância com o calor", "Fumaça", "Luz"], c: 1},
+    {q: "O 'Extintor de HRD' significa:", a: ["High Rate Discharge (Alta taxa de descarga)", "Hard Radio Device", "Heavy Rain Detector", "High Road Drive"], c: 0},
+    {q: "O 'Disco de Ruptura' (Vermelho) no sistema de extinção indica:", a: ["Sistema carregado", "Descarga por excesso de pressão/calor", "Sistema vazio", "Fogo apagado"], c: 1},
+    {q: "O 'Disco de Ruptura' (Amarelo) no sistema de extinção indica:", a: ["Descarga voluntária pelo piloto", "Fogo no motor", "Sistema novo", "Alerta de calor"], c: 0},
+    {q: "A 'Válvula de Sequência' no trem de pouso garante que:", a: ["As portas abram antes do trem descer", "O motor ligue", "O óleo esfrie", "A hélice pare"], c: 0},
+    {q: "O 'Acumulador Hidráulico' serve para:", a: ["Guardar pressão para emergências e suavizar picos", "Filtrar o óleo", "Esfriar o fluido", "Medir o nível"], c: 0},
+    {q: "O 'Fusível Hidráulico' atua em caso de:", a: ["Vazamento excessivo (rompimento de linha)", "Falta de fluido", "Ar no sistema", "Alta temperatura"], c: 0},
+    {q: "O 'Skydrol' é um fluido:", a: ["Mineral", "Base de éster de fosfato (Sintético resistente ao fogo)", "Vegetal", "Água"], c: 1},
+    {q: "O 'Servo-comando' ajuda o piloto a:", a: ["Ver o mapa", "Reduzir o esforço físico para mover superfícies de comando", "Ouvir o rádio", "Dormir"], c: 1},
+    {q: "A 'Bomba de Mão' hidráulica é usada:", a: ["Sempre", "Em emergências ou manutenção no solo", "Para decolar", "Para pousar"], c: 1},
+    {q: "O 'Amortecedor de Direção' (Shimmy Damper) fica no:", a: ["Motor", "Trem de pouso do nariz", "Asa", "Cauda"], c: 1},
+    {q: "A 'Válvula de Prioridade' garante pressão para:", a: ["O rádio", "Sistemas essenciais (ex: Freios) em caso de queda de pressão", "A luz da cabine", "O ar condicionado"], c: 1},
+    {q: "O 'Anti-skid' evita:", a: ["O travamento das rodas na frenagem", "A decolagem", "O fogo", "O consumo de óleo"], c: 0},
+    {q: "O 'Pneu' com 'Creep Marks' (Marcas de desalinhamento) serve para verificar:", a: ["Se o pneu deslizou na roda", "O desgaste", "A pressão", "A marca"], c: 0},
+    {q: "O 'Aquaplanagem' ocorre devido a:", a: ["Gelo", "Lâmina de água entre o pneu e a pista", "Pneu careca apenas", "Alta velocidade apenas"], c: 1},
+    {q: "O 'Ar Condicionado por Ciclo de Ar' (Air Cycle Machine) usa:", a: ["Freon", "Expansão de ar comprimido (Bleed Air)", "Gelo seco", "Ventilador"], c: 1},
+    {q: "O 'Vapor Cycle Air Conditioning' usa:", a: ["Ar sangrado", "Gás refrigerante (Freon/R134)", "Água", "Óleo"], c: 1},
+    {q: "A 'Pressurização' é controlada pela válvula:", a: ["Inflow", "Outflow (Válvula de saída)", "Safety", "Check"], c: 1},
+    {q: "O 'Oxygen Candle' (Vela de Oxigênio) produz o gás por:", a: ["Reação química", "Garrafa de ar", "Compressor", "Água"], c: 0},
+    {q: "O sistema de oxigênio de 'Diluição-Demanda' fornece:", a: ["Oxigênio o tempo todo", "Oxigênio apenas quando o usuário inspira", "Ar puro", "Fumaça"], c: 1},
+    {q: "A cor das garrafas de oxigênio de alta pressão é geralmente:", a: ["Vermelha", "Verde", "Azul", "Amarela"], c: 1},
+    {q: "O 'Módulo de Elasticidade' do aço é:", a: ["Menor que o do alumínio", "Maior que o do alumínio", "Igual", "Zero"], c: 1},
+    {q: "A 'Corrosão Galvânica' ocorre entre:", a: ["Metais iguais", "Metais diferentes em contato com eletrólito", "Plásticos", "Borrachas"], c: 1},
+    {q: "O 'Alclad' é um processo de:", a: ["Pintura", "Revestimento de alumínio puro sobre liga para evitar corrosão", "Solda", "Corte"], c: 1},
+    {q: "A 'Anodização' serve para:", a: ["Aumentar o peso", "Proteger o alumínio contra corrosão", "Derreter o metal", "Limpar o óleo"], c: 1},
+    {q: "O 'Rebite escareado' é usado para:", a: ["Aumentar o arrasto", "Reduzir o arrasto (superfície lisa)", "Ficar bonito", "Ser mais forte"], c: 1},
+    {q: "A 'Longarina' (Spar) é o componente principal da:", a: ["Roda", "Asa (suporta os maiores esforços)", "Hélice", "Poltrona"], c: 1},
+    {q: "As 'Nervuras' (Ribs) dão à asa:", a: ["O formato aerodinâmico", "A cor", "O peso", "O brilho"], c: 0},
+    {q: "O 'Flap' serve para:", a: ["Aumentar a sustentação em baixas velocidades", "Diminuir a asa", "Fazer curvas", "Subir"], c: 0},
+    {q: "O 'Aileron' controla o movimento de:", a: ["Arfagem", "Rolagem (Bancagem)", "Guinada", "Subida"], c: 1},
+    {q: "O 'Leme de Direção' controla a:", a: ["Subida", "Guinada", "Velocidade", "Pressão"], c: 1},
+    {q: "O 'Profundor' controla a:", a: ["Rolagem", "Arfagem (Picar/Cabrar)", "Guinada", "Luz"], c: 1},
+    {q: "O 'Trim Tab' (Compensador) serve para:", a: ["Mudar a direção", "Aliviar a pressão nos comandos para o piloto", "Aumentar a velocidade", "Esfriar o motor"], c: 1},
+    {q: "O 'Cabo de Aço' do tipo 7x19 é:", a: ["Muito rígido", "Muito flexível", "De plástico", "Fraco"], c: 1},
+    {q: "O 'Tensionômetro' serve para medir:", a: ["Pressão arterial", "Tensão dos cabos de comando", "Voltagem", "Amperagem"], c: 1},
+    {q: "O 'Esticador' (Turnbuckle) serve para:", a: ["Cortar o cabo", "Ajustar a tensão do cabo de comando", "Unir a asa", "Prender o motor"], c: 1},
+    {q: "O 'Tubo de Torque' transmite:", a: ["Movimento rotativo", "Movimento linear", "Eletricidade", "Ar"], c: 0},
+    {q: "A 'Inspeção de 100 horas' é obrigatória para:", a: ["Aviões particulares", "Aviões de instrução ou transporte de passageiros (comercial)", "Ninguém", "Planadores"], c: 1},
+    {q: "O 'Mel de Abelha' (Corrosão por pite) é comum em:", a: ["Ferro", "Alumínio", "Madeira", "Tecido"], c: 1},
+    {q: "O 'Ponto de Orvalho' indica o risco de:", a: ["Fogo", "Formação de gelo/nevoeiro", "Calor", "Vento"], c: 1},
+    {q: "A 'Válvula de Retenção' (Check Valve) permite o fluxo em:", a: ["Dois sentidos", "Apenas um sentido", "Nenhum sentido", "Três sentidos"], c: 1},
+    {q: "O 'Trocador de Calor' Óleo/Combustível ajuda a:", a: ["Esfriar o óleo e aquecer o combustível (evita gelo)", "Gastar mais", "Poluir", "Pintar o motor"], c: 0},
+    {q: "A 'Luz de Navegação' na asa direita é de cor:", a: ["Vermelha", "Verde", "Branca", "Azul"], c: 1},
+    {q: "A 'Luz de Navegação' na asa esquerda é de cor:", a: ["Verde", "Vermelha", "Branca", "Amarela"], c: 1},
+    {q: "A 'Luz de Navegação' na cauda é de cor:", a: ["Verde", "Vermelha", "Branca", "Azul"], c: 2},
+    {q: "O 'Insuflador de Ar' (Blower) serve para:", a: ["Resfriar aviônicos no solo", "Girar o motor", "Encher o pneu", "Limpar a asa"], c: 0},
+    {q: "O 'Static Wick' (Descarregador estático) serve para:", a: ["Prender o avião", "Dissipar a eletricidade estática para evitar interferência no rádio", "Atrair raios", "Pintar a asa"], c: 1},
+    {q: "A 'Bússola Magnética' sofre desvio devido a:", a: ["Vento", "Interferência magnética de metais e equipamentos do avião", "Altitude", "Velocidade"], c: 1},
+    {q: "O 'Pitot Static System' alimenta:", a: ["Velocímetro, Altímetro e Climp (VSI)", "Rádio", "Motor", "Luzes"], c: 0},
+    {q: "O 'Altímetro' funciona por:", a: ["Pressão estática", "Pressão dinâmica", "Eletricidade", "GPS"], c: 0},
+    {q: "O 'Velocímetro' (Airspeed) funciona por:", a: ["Pressão diferencial (Pitot - Estática)", "Pressão de óleo", "RPM", "Temperatura"], c: 0},
+    {q: "O 'VSI' (Climb) indica a:", a: ["Velocidade", "Razão de subida ou descida", "Altitude", "Direção"], c: 1},
+    {q: "O 'Giroscópio' é a base do:", a: ["Altímetro", "Horizonte Artificial e Giro Direcional", "Bússola", "Relógio"], c: 1},
+    {q: "Se o filtro de óleo não estiver entupido, a válvula by-pass:", a: ["Fica fechada", "Fica aberta", "Drena o óleo", "Para o motor"], c: 0}
+];
+    let currentQuestions = [];
+    let timeLeft = 20 * 60;
+    let timerId;
+
+    function initQuiz() {
+        const shuffled = [...masterBank].sort(() => 0.5 - Math.random());
+        currentQuestions = shuffled.slice(0, 20);
+        renderQuiz();
+        startTimer();
+    }
+
+    function renderQuiz() {
+        const container = document.getElementById('quiz-content');
+        container.innerHTML = '';
+        currentQuestions.forEach((item, idx) => {
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            block.id = `block-${idx}`;
+            block.innerHTML = `
+                <div class="question-text">${idx + 1}. ${item.q}</div>
+                <div class="options-group">
+                    ${item.a.map((opt, i) => `
+                        <label class="option-label" id="label-${idx}-${i}">
+                            <input type="radio" name="q${idx}" value="${i}"> ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(block);
+        });
+    }
+
+    function startTimer() {
+        timerId = setInterval(() => {
+            timeLeft--;
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            document.getElementById('timer').innerText = `${mins}:${secs.toString().padStart(2, '0')}`;
+            if (timeLeft <= 0) finalizeQuiz();
+        }, 1000);
+    }
+
+    function finalizeQuiz() {
+        let correctCount = 0;
+        let allAnswered = true;
+
+        // 1. Verificar se todas foram respondidas (Obrigatoriedade)
+        currentQuestions.forEach((item, idx) => {
+            const radios = document.getElementsByName(`q${idx}`);
+            let answered = false;
+            radios.forEach(r => { if(r.checked) answered = true; });
+
+            const block = document.getElementById(`block-${idx}`);
+            if (!answered) {
+                block.classList.add('pending');
+                allAnswered = false;
+            } else {
+                block.classList.remove('pending');
+            }
+        });
+
+        if (!allAnswered) {
+            alert("⚠️ Por favor, responda todas as 20 questões antes de finalizar!");
+            const firstPending = document.querySelector('.pending');
+            if (firstPending) firstPending.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            return;
+        }
+
+        // 2. Processar resultados
+        clearInterval(timerId);
+        currentQuestions.forEach((item, idx) => {
+            const radios = document.getElementsByName(`q${idx}`);
+            let selected = -1;
+            radios.forEach(r => { if(r.checked) selected = parseInt(r.value); });
+
+            document.getElementById(`label-${idx}-${item.c}`).classList.add('correct-answer');
+            if (selected === item.c) {
+                correctCount++;
+            } else if (selected !== -1) {
+                document.getElementById(`label-${idx}-${selected}`).classList.add('wrong-answer');
+            }
+            radios.forEach(r => r.disabled = true);
+        });
+
+        // 3. Exibir feedback dinâmico (Parabéns aos 70%)
+        const percent = Math.round((correctCount / currentQuestions.length) * 100);
+        const feedback = document.getElementById('feedback-msg');
+        
+        if (percent >= 70) {
+            feedback.innerText = "🎉 Meus Parabéns! Você foi aprovado!";
+            feedback.style.color = "var(--success)";
+        } else {
+            feedback.innerText = "💪 Não desista! Continue estudando para atingir os 70%.";
+            feedback.style.color = "var(--danger)";
+        }
+
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('final-score').innerText = `Acertos: ${correctCount} de ${currentQuestions.length}`;
+        document.getElementById('final-percent').innerText = `Aproveitamento: ${percent}%`;
+        document.getElementById('finish-btn').style.display = 'none';
+        document.getElementById('restart-btn').style.display = 'block';
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    initQuiz();
+</script>
+
+</body>
+</html>
