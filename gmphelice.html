@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GMP - Hélice - Hangar MMA</title>
+    <title>GMP - Hélice - Hangar MMA (Variado)</title>
     <style>
         :root {
             --primary: #1a3a5a;
@@ -24,7 +24,6 @@
             overflow-x: hidden;
         }
 
-        /* EFEITO POW NO CRÉDITO */
         .credits-pow {
             position: fixed;
             top: 5px;
@@ -189,71 +188,72 @@
 </div>
 
 <script>
+    // BANCO DE DADOS COM AS 64 QUESTÕES E RESPOSTAS EMBARALHADAS
     const masterBank = [
-        {q: "A finalidade básica de uma hélice é converter a potência do motor em força de?", a: ["tração", "torção", "arrasto", "sustentação"], c: 0},
+        {q: "A finalidade básica de uma hélice é converter a potência do motor em força de?", a: ["sustentação", "torção", "tração", "arrasto"], c: 2},
         {q: "A velocidade máxima de um motor turboélice é limitada pela?", a: ["eficiência da hélice", "capacidade do compressor", "temperatura da turbina", "pressão de admissão"], c: 0},
-        {q: "O passo teórico da hélice é a distância que ela deveria avançar em?", a: ["uma volta completa", "meia volta", "duas voltas", "um minuto"], c: 0},
-        {q: "A diferença entre o passo teórico e o passo efetivo chama-se?", a: ["avanço", "recuo (slip)", "ângulo de ataque", "passo geométrico"], c: 1},
-        {q: "Uma hélice de passo fixo é projetada para ter melhor rendimento em?", a: ["uma única condição de voo", "todas as condições", "apenas na decolagem", "apenas no pouso"], c: 0},
-        {q: "O componente que permite alterar o passo da hélice em voo chama-se?", a: ["governador", "distribuidor", "carburador", "alternador"], c: 0},
+        {q: "O passo teórico da hélice é a distância que ela deveria avançar em?", a: ["meia volta", "uma volta completa", "duas voltas", "um minuto"], c: 1},
+        {q: "A diferença entre o passo teórico e o passo efetivo chama-se?", a: ["avanço", "ângulo de ataque", "recuo (slip)", "passo geométrico"], c: 2},
+        {q: "Uma hélice de passo fixo é projetada para ter melhor rendimento em?", a: ["apenas na decolagem", "todas as condições", "apenas no pouso", "uma única condição de voo"], c: 3},
+        {q: "O componente que permite alterar o passo da hélice em voo chama-se?", a: ["carburador", "governador", "distribuidor", "alternador"], c: 1},
         {q: "As hélices de madeira são fabricadas em camadas para evitar?", a: ["empenamento", "excesso de peso", "vibração", "corrosão"], c: 0},
-        {q: "A face da pá da hélice corresponde à parte?", a: ["curva", "plana", "de trás", "da frente"], c: 1},
+        {q: "A face da pá da hélice corresponde à parte?", a: ["curva", "de trás", "da frente", "plana"], c: 3},
         {q: "O ângulo da pá é medido entre a corda da pá e o?", a: ["plano de rotação", "eixo de manivelas", "vento relativo", "fluxo de ar"], c: 0},
-        {q: "A força que tende a dobrar a pá da hélice para a frente é a força de?", a: ["flexão por tração", "centrífuga", "torção", "atrito"], c: 0},
+        {q: "A força que tende a dobrar a pá da hélice para a frente é a força de?", a: ["centrífuga", "torção", "atrito", "flexão por tração"], c: 3},
         {q: "O 'passo bandeira' é utilizado para?", a: ["minimizar o arrasto se o motor parar", "aumentar a tração no pouso", "resfriar o motor", "facilitar a partida"], c: 0},
-        {q: "Hélices hidromáticas utilizam para mudar o passo?", a: ["pressão de óleo", "cabos", "eletricidade", "molas apenas"], c: 0},
+        {q: "Hélices hidromáticas utilizam para mudar o passo?", a: ["cabos", "pressão de óleo", "eletricidade", "molas apenas"], c: 1},
         {q: "A força centrífuga que atua em uma hélice tende a?", a: ["puxar as pás para fora do cubo", "dobrar as pás para trás", "aumentar o passo", "diminuir o passo"], c: 0},
-        {q: "O dispositivo que evita o congelamento das pás da hélice é o?", a: ["sistema de degelo (anti-ice)", "radiador", "defletor", "firewall"], c: 0},
-        {q: "Hélices de velocidade constante mantêm a rotação através da?", a: ["variação automática do passo", "variação da manete", "pressão de admissão", "mistura rica"], c: 0},
-        {q: "A estação da pá é medida a partir do?", a: ["centro do cubo", "ponta da pá", "bordo de ataque", "bordo de fuga"], c: 0},
+        {q: "O dispositivo que evita o congelamento das pás da hélice é o?", a: ["radiador", "defletor", "sistema de degelo (anti-ice)", "firewall"], c: 2},
+        {q: "Hélices de velocidade constante mantêm a rotação através da?", a: ["variação da manete", "variação automática do passo", "pressão de admissão", "mistura rica"], c: 1},
+        {q: "A estação da pá é medida a partir do?", a: ["ponta da pá", "bordo de ataque", "centro do cubo", "bordo de fuga"], c: 2},
         {q: "Pequenos cortes ou riscos em hélices de metal devem ser?", a: ["reparados e polidos (limados)", "pintados", "preenchidos com solda", "ignorados"], c: 0},
-        {q: "O cone da hélice (spinner) tem a função de?", a: ["reduzir o arrasto e melhorar o fluxo de ar", "proteger o motor", "balancear a hélice", "segurar as pás"], c: 0},
-        {q: "O momento de torção centrífuga tende a levar a pá para o?", a: ["passo mínimo", "passo máximo", "passo bandeira", "reverso"], c: 0},
-        {q: "O equilíbrio dinâmico da hélice é verificado com?", a: ["o motor em funcionamento", "a hélice em bancada parada", "o avião parado no solo", "a hélice desmontada"], c: 0},
+        {q: "O cone da hélice (spinner) tem a função de?", a: ["proteger o motor", "balancear a hélice", "reduzir o arrasto e melhorar o fluxo de ar", "segurar as pás"], c: 2},
+        {q: "O momento de torção centrífuga tende a levar a pá para o?", a: ["passo máximo", "passo mínimo", "passo bandeira", "reverso"], c: 1},
+        {q: "O equilíbrio dinâmico da hélice é verificado com?", a: ["a hélice em bancada parada", "o avião parado no solo", "o motor em funcionamento", "a hélice desmontada"], c: 2},
         {q: "Hélices de alumínio são verificadas quanto a trincas usando?", a: ["líquido penetrante ou magnético", "apenas visual", "raio-x apenas", "martelo"], c: 0},
-        {q: "A hélice de passo ajustável permite a mudança do ângulo?", a: ["apenas no solo", "em voo", "pelo governador", "pelo piloto"], c: 0},
-        {q: "O recuo da hélice (slip) é maior durante?", a: ["a decolagem", "o voo de cruzeiro", "a descida", "o táxi"], c: 0},
-        {q: "A parte da hélice que se encaixa no eixo do motor é o?", a: ["cubo", "estação", "bordo de ataque", "ponta"], c: 0},
-        {q: "A força de torção aerodinâmica tende a?", a: ["aumentar o passo da pá", "diminuir o passo", "arrancar a pá", "quebrar o cubo"], c: 0},
-        {q: "O governador da hélice é acionado pelo?", a: ["motor", "fluxo de ar", "piloto manualmente", "sistema elétrico"], c: 0},
+        {q: "A hélice de passo ajustável permite a mudança do ângulo?", a: ["em voo", "apenas no solo", "pelo governador", "pelo piloto"], c: 1},
+        {q: "O recuo da hélice (slip) é maior durante?", a: ["o voo de cruzeiro", "a descida", "a decolagem", "o táxi"], c: 2},
+        {q: "A parte da hélice que se encaixa no eixo do motor é o?", a: ["estação", "cubo", "bordo de ataque", "ponta"], c: 1},
+        {q: "A força de torção aerodinâmica tende a?", a: ["diminuir o passo", "aumentar o passo da pá", "arrancar a pá", "quebrar o cubo"], c: 1},
+        {q: "O governador da hélice é acionado pelo?", a: ["fluxo de ar", "motor", "piloto manualmente", "sistema elétrico"], c: 1},
         {q: "A cor preta na face das pás serve para?", a: ["evitar reflexos de luz para o piloto", "identificar a hélice", "proteger contra corrosão", "esquentar a pá"], c: 0},
-        {q: "Hélices de material composto (composite) são leves e?", a: ["resistentes à corrosão", "frágeis", "pesadas", "baratas"], c: 0},
-        {q: "O sistema de sincronismo de hélices é usado em?", a: ["aviões multimotores", "monomotores", "planadores", "helicópteros"], c: 0},
+        {q: "Hélices de material composto (composite) são leves e?", a: ["frágeis", "pesadas", "resistentes à corrosão", "baratas"], c: 2},
+        {q: "O sistema de sincronismo de hélices é usado em?", a: ["monomotores", "aviões multimotores", "planadores", "helicópteros"], c: 1},
         {q: "Hélices de passo variável que podem atingir ângulos negativos realizam o?", a: ["passo reverso", "passo bandeira", "passo de cruzeiro", "stall"], c: 0},
-        {q: "A função do reverso é?", a: ["auxiliar na frenagem no pouso", "decolar mais rápido", "fazer curvas", "subir em ângulo maior"], c: 0},
-        {q: "A hélice é considerada uma?", a: ["asa rotativa que gera tração", "roda de ferro", "ventoinha de resfriamento", "peça de decoração"], c: 0},
-        {q: "O bordo de ataque da pá é a parte que?", a: ["fere o ar primeiro", "sai do ar por último", "fica voltada para o piloto", "é plana"], c: 0},
+        {q: "A função do reverso é?", a: ["decolar mais rápido", "fazer curvas", "subir em ângulo maior", "auxiliar na frenagem no pouso"], c: 3},
+        {q: "A hélice é considerada uma?", a: ["roda de ferro", "asa rotativa que gera tração", "ventoinha de resfriamento", "peça de decoração"], c: 1},
+        {q: "O bordo de ataque da pá é a parte que?", a: ["sai do ar por último", "fere o ar primeiro", "fica voltada para o piloto", "é plana"], c: 1},
         {q: "O equilíbrio estático é feito com a hélice?", a: ["parada em um suporte", "girando no motor", "em voo", "mergulhada em óleo"], c: 0},
-        {q: "O número de série da hélice fica geralmente gravado no?", a: ["cubo", "ponta da pá", "spinner", "governador"], c: 0},
-        {q: "A vibração da hélice pode ser causada por?", a: ["desbalanceamento ou pás desalinhadas", "excesso de combustível", "óleo frio", "falta de bateria"], c: 0},
+        {q: "O número de série da hélice fica geralmente gravado no?", a: ["ponta da pá", "spinner", "cubo", "governador"], c: 2},
+        {q: "A vibração da hélice pode ser causada por?", a: ["excesso de combustível", "desbalanceamento ou pás desalinhadas", "óleo frio", "falta de bateria"], c: 1},
         {q: "Hélices de madeira usam pontas de metal para?", a: ["proteger contra impactos e erosão", "ficar mais bonita", "aumentar o peso", "conduzir eletricidade"], c: 0},
         {q: "A manete de hélice controla o?", a: ["governador", "carburador", "magneto", "alternador"], c: 0},
-        {q: "Quando a rotação do motor aumenta acima do ajustado, o governador?", a: ["aumenta o passo para aumentar a carga", "diminuir o passo", "desliga o motor", "abre o dreno"], c: 0},
+        {q: "Quando a rotação do motor aumenta acima do ajustado, o governador?", a: ["diminuir o passo", "desliga o motor", "abre o dreno", "aumenta o passo para aumentar a carga"], c: 3},
         {q: "A hélice de velocidade constante atua como um?", a: ["câmbio automático de um carro", "freio de mão", "acelerador", "embreagem"], c: 0},
-        {q: "O termo 'tracking' da hélice refere-se ao?", a: ["caminho percorrido pelas pontas das pás", "ajuste de óleo", "peso da hélice", "ângulo de torção"], c: 0},
+        {q: "O termo 'tracking' da hélice refere-se ao?", a: ["ajuste de óleo", "caminho percorrido pelas pontas das pás", "peso da hélice", "ângulo de torção"], c: 1},
         {q: "O orifício de dreno nas pontas das pás de madeira serve para?", a: ["liberar umidade", "passar ar", "pressionar óleo", "colocar sensores"], c: 0},
-        {q: "Uma hélice de passo fixo para subida tem o passo?", a: ["mais fino (baixo)", "mais grosso (alto)", "ajustável", "em bandeira"], c: 0},
-        {q: "Uma hélice de passo fixo para cruzeiro tem o passo?", a: ["mais grosso (alto)", "mais fino (baixo)", "reverso", "nulo"], c: 0},
+        {q: "Uma hélice de passo fixo para subida tem o passo?", a: ["mais grosso (alto)", "mais fino (baixo)", "ajustável", "em bandeira"], c: 1},
+        {q: "Uma hélice de passo fixo para cruzeiro tem o passo?", a: ["mais fino (baixo)", "reverso", "mais grosso (alto)", "nulo"], c: 2},
         {q: "O torque do motor tende a girar a aeronave no sentido?", a: ["oposto ao da hélice", "igual ao da hélice", "para cima", "para baixo"], c: 0},
-        {q: "A inspeção visual da hélice deve ser feita?", a: ["antes de cada voo (pré-voo)", "a cada 1000 horas", "apenas na revisão geral", "anualmente"], c: 0},
+        {q: "A inspeção visual da hélice deve ser feita?", a: ["a cada 1000 horas", "antes de cada voo (pré-voo)", "apenas na revisão geral", "anualmente"], c: 1},
         {q: "O 'Alpha range' em turboélices refere-se ao voo em?", a: ["regime de cruzeiro e decolagem", "táxi e solo", "reverso", "bandeira"], c: 0},
-        {q: "O 'Beta range' em turboélices refere-se ao regime de?", a: ["operação no solo e reverso", "vôo de cruzeiro", "subida máxima", "estol"], c: 0},
-        {q: "A força de flexão aerodinâmica ocorre devido à?", a: ["tração que puxa as pás para a frente", "força centrífuga", "pressão do óleo", "vibração"], c: 0},
-        {q: "O cubo da hélice de metal pode ser de tipo?", a: ["bi-partido ou monobloco", "apenas madeira", "plástico", "borracha"], c: 0},
-        {q: "A limpeza de hélices de alumínio deve ser feita com?", a: ["água e sabão neutro", "ácido forte", "escova de aço", "lixa grossa"], c: 0},
-        {q: "Se a pressão de óleo do governador falhar em algumas hélices, elas vão para?", a: ["passo mínimo", "passo máximo", "bandeira", "reverso"], c: 0},
-        {q: "A hélice 'pusher' (propulsora) fica montada?", a: ["atrás do motor", "na frente do motor", "na ponta da asa", "no trem de pouso"], c: 0},
-        {q: "A hélice 'tractor' (tratora) fica montada?", a: ["na frente do motor", "atrás do motor", "embaixo da asa", "na cauda"], c: 0},
+        {q: "O 'Beta range' em turboélices refere-se ao regime de?", a: ["vôo de cruzeiro", "subida máxima", "operação no solo e reverso", "estol"], c: 2},
+        {q: "A força de flexão aerodinâmica ocorre devido à?", a: ["força centrífuga", "tração que puxa as pás para a frente", "pressão do óleo", "vibração"], c: 1},
+        {q: "O cubo da hélice de metal pode ser de tipo?", a: ["apenas madeira", "bi-partido ou monobloco", "plástico", "borracha"], c: 1},
+        {q: "A limpeza de hélices de alumínio deve ser feita com?", a: ["ácido forte", "escova de aço", "água e sabão neutro", "lixa grossa"], c: 2},
+        {q: "Se a pressão de óleo do governador falhar em algumas hélices, elas vão para?", a: ["passo mínimo", "bandeira", "passo máximo", "reverso"], c: 1},
+        {q: "A hélice 'pusher' (propulsora) fica montada?", a: ["na frente do motor", "atrás do motor", "na ponta da asa", "no trem de pouso"], c: 1},
+        {q: "A hélice 'tractor' (tratora) fica montada?", a: ["atrás do motor", "embaixo da asa", "na frente do motor", "na cauda"], c: 2},
         {q: "O ângulo de ataque da pá é o ângulo entre a corda e o?", a: ["vento relativo", "plano de rotação", "solo", "eixo longitudinal"], c: 0},
-        {q: "O estol da hélice ocorre quando o ângulo de ataque é?", a: ["muito elevado", "muito pequeno", "zero", "negativo"], c: 0},
+        {q: "O estol da hélice ocorre quando o ângulo de ataque é?", a: ["muito pequeno", "zero", "negativo", "muito elevado"], c: 3},
         {q: "A hélice de passo controlável permite ao piloto?", a: ["mudar o passo em voo", "apenas no solo", "nunca mudar", "mudar a cor"], c: 0},
-        {q: "O governador utiliza contrapesos (flyweights) para sentir a?", a: ["rotação do motor", "temperatura", "altitude", "pressão de ar"], c: 0},
-        {q: "O fluido de degelo da hélice costuma ser?", a: ["álcool isopropílico", "querosene", "óleo", "água"], c: 0},
+        {q: "O governador utiliza contrapesos (flyweights) para sentir a?", a: ["temperatura", "rotação do motor", "altitude", "pressão de ar"], c: 1},
+        {q: "O fluido de degelo da hélice costuma ser?", a: ["querosene", "óleo", "álcool isopropílico", "água"], c: 2},
         {q: "As marcas de referência nas pás da hélice servem para?", a: ["alinhar as pás no cubo", "decoração", "reduzir o arrasto", "balancear"], c: 0},
-        {q: "O balanceamento dinâmico reduz?", a: ["o desgaste do motor e instrumentos", "o consumo de combustível", "o ruído externo", "o peso"], c: 0},
-        {q: "Uma hélice que não avança nada enquanto gira tem passo?", a: ["nulo", "infinito", "bandeira", "máximo"], c: 0},
-        {q: "A erosão nas pás é causada por?", a: ["partículas de areia, poeira e pedras", "gelo apenas", "falta de óleo", "alta velocidade"], c: 0},
-        {q: "O termo 'Feather' significa colocar a hélice em?", a: ["bandeira", "reverso", "passo mínimo", "marcha lenta"], c: 0}
+        {q: "O balanceamento dinâmico reduz?", a: ["o consumo de combustível", "o ruído externo", "o peso", "o desgaste do motor e instrumentos"], c: 3},
+        {q: "Uma hélice que não avança nada enquanto gira tem passo?", a: ["infinito", "nulo", "bandeira", "máximo"], c: 1},
+        {q: "A erosão nas pás é causada por?", a: ["gelo apenas", "partículas de areia, poeira e pedras", "falta de óleo", "alta velocidade"], c: 1},
+        {q: "O termo 'Feather' significa colocar a hélice em?", a: ["reverso", "bandeira", "passo mínimo", "marcha lenta"], c: 1}
     ];
 
     let currentQuestions = [];
@@ -261,6 +261,7 @@
     let timerInterval;
 
     function initQuiz() {
+        // Embaralha a ordem das questões para cada tentativa ser diferente
         currentQuestions = [...masterBank].sort(() => 0.5 - Math.random());
         const container = document.getElementById('quiz-content');
         container.innerHTML = "";
@@ -312,7 +313,7 @@
                 }
             });
             if (unanswered.length > 0) {
-                alert(`⚠️Faltam ${unanswered.length} questões. Elas foram sinalizadas em vermelho.`);
+                alert(`⚠️ Faltam ${unanswered.length} questões. Elas foram sinalizadas em vermelho.`);
                 document.getElementById(`block-${unanswered[0]}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
                 return;
             }
@@ -326,8 +327,11 @@
             radios.forEach(r => { if(r.checked) selected = parseInt(r.value); });
 
             document.getElementById(`label-${idx}-${item.c}`).classList.add('correct-answer');
-            if (selected === item.c) correctCount++;
-            else if (selected !== -1) document.getElementById(`label-${idx}-${selected}`).classList.add('wrong-answer');
+            if (selected === item.c) {
+                correctCount++;
+            } else if (selected !== -1) {
+                document.getElementById(`label-${idx}-${selected}`).classList.add('wrong-answer');
+            }
             radios.forEach(r => r.disabled = true);
         });
 
