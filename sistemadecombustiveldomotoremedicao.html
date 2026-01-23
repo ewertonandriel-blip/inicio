@@ -190,45 +190,43 @@
 
 <script>
     const masterBank = [
-    {q: "A combustão anormal e espontânea que ocorre no cilindro, denomina-se:", a: ["alijamento", "calço de vapor", "detonação", "volatilidade"], c: 2},
-    {q: "A finalidade da bomba de combustível auxiliar (booster) é:", a: ["alijar o combustível", "suprir combustível sob pressão para a bomba do motor", "retornar o combustível excedente do motor para o tanque", "suprir combustível após a aceleração do motor"], c: 1},
-    {q: "A finalidade do sistema de marcha lenta, na maioria dos carburadores, é:", a: ["aumentar o fluxo combustível na baixa rotação do motor", "suprir combustível nas baixas velocidades do motor", "fornecer combustível quando a pressão de combustível for muito baixa", "suprir combustível após o corte do motor"], c: 1},
-    {q: "A gasolina de aviação que possui o número de octana 100/130, indica os índices de antidetonância para:", a: ["mistura pobre e mistura rica, respectivamente", "mistura rica e mistura pobre, respectivamente", "motor frio e motor quente, respectivamente", "decolagem e cruzeiro, respectivamente"], c: 0},
-    {q: "A mistura ar/combustível de um motor convencional é controlada pelo(a):", a: ["fluxômetro", "economisador", "válvula de agulha", "manete de mistura"], c: 3},
-    {q: "A peça do carburador que tem a função de manter o nível de combustível constante na cuba é a:", a: ["bóia", "borboleta", "agulha do estilete", "válvula de aceleração"], c: 0},
-    {q: "A pressão de combustível medida na entrada do carburador é indicada no:", a: ["fluxômetro", "manômetro", "termômetro", "vacuômetro"], c: 1},
-    {q: "A relação de mistura ar/combustível, na qual todo o combustível é queimado e não sobra oxigênio, é chamada de:", a: ["mistura rica", "mistura pobre", "mistura ideal", "mistura estequiométrica"], c: 3},
-    {q: "A unidade do carburador responsável pela medição do fluxo de ar do sistema de indução denomina-se:", a: ["difusor", "venturi", "bocal de descarga", "válvula borboleta"], c: 1},
-    {q: "As aeronaves de grande porte, para reduzirem o tempo de reabastecimento de combustível, empregam o processo denominado:", a: ["abastecimento por gravidade", "reabastecimento por pressão", "transferência cruzada", "alijamento de combustível"], c: 1},
-    {q: "As bombas de combustível do tipo palheta deslocam o combustível através de:", a: ["pressão centrífuga", "movimento alternativo", "palhetas deslizantes", "engrenagens helicoidais"], c: 2},
-    {q: "Como precaução, a bomba de combustível auxiliar (booster) deverá ser ligada:", a: ["em todo o voo", "após a partida nos motores", "somente no táxi", "somente na decolagem e no pouso"], c: 3},
-    {q: "Dentre as alternativas abaixo, o procedimento a ser realizado antes de remover o carburador do motor é:", a: ["frená-lo", "ligar a bomba de combustível", "drenar todo o combustível do tanque", "fechar a válvula de corte do combustível"], c: 3},
-    {q: "Dentre os instrumentos abaixo, aquele que indica a massa de combustível consumida por hora é o:", a: ["fluxômetro", "manômetro", "totalizador", "indicador de pressão"], c: 0},
-    {q: "Em um carburador, a borboleta tem como função controlar diretamente o(a):", a: ["mistura dosada", "ar fornecido ao motor", "água metanol", "combustível fornecido ao motor"], c: 1},
-    {q: "Em um sistema de injeção de combustível, o combustível é injetado diretamente:", a: ["no venturi", "na cuba do carburador", "nos dutos de admissão ou cilindros", "no supercharger"], c: 2},
-    {q: "No carburador, o sistema responsável por fornecer combustível extra durante acelerações rápidas é o:", a: ["sistema de marcha lenta", "sistema de aceleração", "sistema de mistura", "sistema de corte"], c: 1},
-    {q: "O combustível de aviação deve ter como característica principal a:", a: ["baixa volatilidade", "alta viscosidade", "alta resistência à detonação", "baixa octanagem"], c: 2},
-    {q: "O dispositivo que mantém a pressão de combustível constante na saída da bomba de combustível é a:", a: ["válvula de corte", "válvula de alívio", "válvula seletora", "válvula de retenção"], c: 1},
-    {q: "O elemento do carburador que reduz a pressão do ar para aspirar o combustível denomina-se:", a: ["difusor", "venturi", "borboleta", "agulha"], c: 1},
-    {q: "O instrumento que indica a quantidade total de combustível nos tanques é o:", a: ["fluxômetro", "manômetro", "indicador de quantidade", "totalizador"], c: 2},
-    {q: "O método de medição de combustível que utiliza capacitores para medir a massa de combustível é o:", a: ["sistema mecânico", "sistema eletrônico", "sistema por gravidade", "sistema de pressão"], c: 1},
-    {q: "O principal risco de se utilizar combustível com octanagem inferior à especificada é a ocorrência de:", a: ["congelamento", "detonação", "mistura rica", "excesso de pressão"], c: 1},
-    {q: "O sistema de combustível que utiliza a força da gravidade para alimentar o motor é comum em aeronaves de:", a: ["asa alta", "asa baixa", "grande porte", "motores a jato"], c: 0},
-    {q: "O sistema de medição de combustível tipo 'boia e braço' é classificado como:", a: ["eletrônico", "mecânico", "magnético", "capacitivo"], c: 1},
-    {q: "O sistema que permite transferir combustível de um tanque para outro ou para qualquer motor denomina-se:", a: ["alijamento", "crossfeed", "drenagem", "ventilação"], c: 1},
-    {q: "Os drenos de combustível localizados nos pontos mais baixos do sistema servem para remover:", a: ["excesso de combustível", "vapores de combustível", "água e sedimentos", "ar do sistema"], c: 2},
-    {q: "Para evitar a formação de gelo no carburador, utiliza-se o sistema de:", a: ["injeção de álcool", "aquecimento do ar de admissão", "resistências elétricas", "aquecimento do combustível"], c: 1},
-    {q: "Qual componente do sistema de combustível avisa ao piloto sobre a baixa pressão de combustível?", a: ["fluxômetro", "luz de aviso de baixa pressão", "manômetro de óleo", "termômetro de combustível"], c: 1},
-    {q: "Quando a mistura ar/combustível está muito rica, o motor tende a:", a: ["superaquecer", "perder potência e expelir fumaça preta", "ter retorno de chama", "aumentar a RPM"], c: 1},
-    {q: "Se a mistura ar/combustível for excessivamente pobre, poderá ocorrer:", a: ["detonação", "retorno de chama (backfire)", "fumaça preta no escapamento", "falta de lubrificação"], c: 1},
-    {q: "Se ocorrer formação de gelo no carburador, a primeira indicação em um motor com hélice de passo fixo será:", a: ["aumento da RPM", "redução da RPM", "aumento da pressão de admissão", "redução da temperatura do óleo"], c: 1},
-    {q: "Um dos objetivos do alijamento de combustível (fuel jettison) é:", a: ["balancear a aeronave", "reduzir o peso para um pouso de emergência", "limpar os tanques", "aumentar a autonomia"], c: 1},
-    {q: "A cor da gasolina de aviação 100LL (Low Lead) é:", a: ["verde", "azul", "vermelha", "roxa"], c: 1},
-    {q: "A válvula que impede o retorno de combustível para o tanque é a válvula de:", a: ["corte", "alívio", "retenção (check valve)", "seletora"], c: 2},
-    {q: "O processo de remover vapores de combustível de um tanque vazio para manutenção chama-se:", a: ["drenagem", "purga", "alijamento", "ventilação"], c: 1},
-    {q: "O uso de combustível Jet-A1 em motores convencionais a pistão causa:", a: ["melhor desempenho", "danos severos ou falha total do motor", "redução de consumo", "limpeza das velas"], c: 1}
+{q: "A combustão anormal e espontânea que ocorre no cilindro, denomina-se:", a: ["detonação", "volatilidade", "calço de vapor", "taxa de compressão"], c: 0},
+{q: "A finalidade da bomba de combustível auxiliar (booster) é:", a: ["suprir combustível sob pressão para a bomba do motor", "suprir combustível sob pressão para o filtro principal", "retornar o combustível excedente do motor para o tanque", "alijar o combustível"], c: 0},
+{q: "A finalidade do sistema de marcha lenta, na maioria dos carburadores, é:", a: ["suprir combustível após a aceleração do motor", "aumentar o fluxo combustível na baixa rotação do motor", "suprir combustível nas baixas velocidades do motor", "fornecer combustível extra durante a aceleração do motor"], c: 1},
+{q: "A octanagem da gasolina é igual a(o):", a: ["115 para mistura pobre e 145 para mistura rica", "130 para mistura pobre e 145 para mistura rica", "115 para mistura rica e 130 para mistura pobre", "130 para mistura rica e 145 para mistura pobre"], c: 0},
+{q: "A válvula de alívio de uma bomba de combustível acionada pelo motor é projetada para abrir:", a: ["quando a pressão de combustível for muito baixa", "após o corte do motor", "a uma determinada pressão atmosférica", "a uma tensão pré-ajustada da mola"], c: 3},
+{q: "As aeronaves de grande porte, para reduzirem o tempo de reabastecimento de combustível, empregam o processo denominado:", a: ["despressurização", "demanda", "por gravidade", "subalar"], c: 3},
+{q: "Como precaução, a bomba de combustível auxiliar (booster) deverá ser ligada:", a: ["em todo o voo", "após a partida nos motores", "somente no táxi", "somente na decolagem e no pouso"], c: 3},
+{q: "Dentre as alternativas abaixo, o procedimento a ser realizado antes de remover o carburador do motor, é:", a: ["frená-lo", "ligar a bomba de combustível", "drenar todo o combustível do tanque", "fechar a válvula de corte do combustível"], c: 3},
+{q: "Dentre os instrumentos abaixo, aquele que é utilizado para verificar o desempenho e também o consumo de combustível do motor é:", a: ["fuel flow", "torquímetro", "fuel pressure", "indicador de EGT"], c: 0},
+{q: "Dentre os sistemas de carburador abaixo, aquele que supre o motor com combustível durante o aumento de potencia é o de:", a: ["aceleração", "marcha lenta", "medição principal", "controle de mistura"], c: 0},
+{q: "Durante o voo a correção da mistura ar/combustível é realizada no carburador sem a interferência do piloto, através de uma (a):", a: ["bomba elétrica na linha", "bomba mecânica na linha", "sistema de controle automático no magneto", "sistema de controle automático no carburador"], c: 3},
+{q: "Durante o voo, ao ganhar altitude, esta será compensada no carburador pelo sistema:", a: ["de aceleração", "economizador", "de marcha lenta", "de controle de mistura"], c: 3},
+{q: "Em um motor a reação, a RPM é controlada pelo sistema:", a: ["elétrico", "pneumático", "de ignição", "de combustível"], c: 3},
+{q: "Em um motor de turbina a gás, a formação de gelo no combustível ocorre quando o mesmo para no(a):", a: ["filtro", "FCU", "bomba", "transmissor"], c: 0},
+{q: "No motor a reação a RPM é controlada pelo sistema de?", a: ["partida", "ignição", "combustível", "refrigeração"], c: 2},
+{q: "No motor a reação, o trocador de calor combustível/óleo tem a finalidade de:", a: ["resfriar o combustível e o óleo", "pré aquecer o combustível e o óleo", "resfriar o combustível e aquecer o óleo", "pre-aquecer o combustível e resfriar o óleo"], c: 3},
+{q: "No sistema de combustível, a alimentação dos tanques é feita por:", a: ["gravidade e por sucção", "pressão e por sucção", "sucção e por combustão", "pressão e por gravidade"], c: 3},
+{q: "No sistema de combustível, o aquecedor usa como fonte de aquecimento, ar sangrado do(a):", a: ["compressor ou óleo do sistema de lubrificação", "escapamento ou óleo do sistema de lubrificação", "seção da turbina ou óleo do sistema hidráulico", "câmara de combustão ou óleo do sistema hidráulico"], c: 0},
+{q: "No sistema de controle de combustível para motores a reação, a força dos contrapesos centrifugos é menor na:", a: ["partida", "marcha lenta", "potencia maxima", "condição \"on speed\""], c: 0},
+{q: "Nos sistemas de combustível, para proteger a bomba de combustível acionada pelo motor existe o(a):", a: ["válvula de derivação", "filtro de alta pressão", "filtro de baixa pressão", "aquecedor de combustível"], c: 0},
+{q: "O índice que define o poder antidentonante da gasolina é:", a: ["a compressão", "a octanagem", "o pincking", "a detonação"], c: 1},
+{q: "O combustível a ser utilizado na combustão é pré-aquecida pelo trocador de calor, ao mesmo tempo que é:", a: ["resfriado o óleo do sistema de lubrificação", "aquecido o óleo do sistema de lubrificação", "aquecido o ar de impacto"], c: 0},
+{q: "O combustível, vindo dos tanques, é enviado para a entrada da unidade de controle através de:", a: ["filtros", "bombas de reforço", "válvulas seletoras", "bombas acionadas pelo motor"], c: 0},
+{q: "O componente do sistema de combustível que normalmente é instalado na entrada e na saída do tanque de combustível como também na entrada do carburador, denomina-se:", a: ["válvula de corte", "filtro", "válvula seletora", "válvula de alívio"], c: 0},
+{q: "O componente do sistema que define qual dos tanques de combustível suprirá o motor é o (a):", a: ["bomba", "filtro", "válvula seletora", "válvula de alívio"], c: 2},
+{q: "O componente do sistema, que tem a finalidade de cortar o fluxo de combustível que sai do tanque, é o(a):", a: ["dreno", "filtro", "válvula seletora", "válvula de transferência"], c: 2},
+{q: "O desenvolvimento microbial existente no combustível é combatido frequentemente com o procedimento de:", a: ["drenar o combustível", "filtrar as linhas de distribuição", "inserir detergente no tanque, após o reabastecimento", "inserir aditivo para melhorar a performance do motor"], c: 0},
+{q: "O extintor de pó químico \"não\" é recomendado para ser usado nos incêndios em equipamentos eletrônicos, pois:", a: ["esse tipo de extintor alimentará a chama", "o pó químico, em contato com o calor, aumentará o fogo", "a poeira residual poderá causar danos ao equipamento", "esse tipo de extintor, em contato com a energia elétrica pode causar explosão"], c: 2},
+{q: "O poder antidentonante da gasolina é indicado pela:", a: ["pureza", "octanagem", "viscosidade", "volatilidade"], c: 1},
+{q: "O problema do estol que normalmente ocorre no compressor do motor a jato é solucionado com:", a: ["sangria do ar, através de válvula", "aumento da quantidade de ar de admissão", "redução do número de palhetas na turbina", "aumento do número de palhetas na turbina"], c: 0},
+{q: "O sistema de combustível é equipado com válvulas que tornam possível o alijamento em voo, com a finalidade de:", a: ["reduzir o peso da aeronave ao seu peso máximo de pouso", "retirar as bolhas existentes na linha de pressão para o motor", "retirar o combustível da linha de reabastecimento dos tanques", "transferir o combustível do tanque auxiliar para o tanque principal"], c: 0},
+{q: "O sistema de injeção de água nos motores a reação é projetado para funcionar apenas em:", a: ["alta tração", "baixa tração"], c: 0},
+{q: "Os componentes do sistema de combustível que localizam-se, sequencialmente, após a saída do tanque, denominam-se:", a: ["válvula seletora-filtro-bomba-FCU", "bomba-FCU-filtro-válvula seletora", "filtro-válvula seletora-FCU-bomba", "válvula seletora-FCU-bomba-filtro"], c: 3},
+{q: "Os tanques de combustíveis são adaptados com defletores internos, com a finalidade de:", a: ["manter a pressão atmosférica dentro do tanque", "permitir o perfeito alijamento do combustível, em voo", "eliminar as impurezas no combustível, através da decantação", "resistir às flutuações do combustível, causadas pelas mudanças de atitude da aeronave"], c: 3},
+{q: "Para se combater o desenvolvimento microbiológico no combustível deve-se:", a: ["drenar o combustível diariamente", "adicionar bactericida diariamente", "destanquear o avião antes do pernoite", "vedar as entradas de ventilação sempre que o avião for pernoitar"], c: 3},
+{q: "Para se combater o desenvolvimento microbiológico que ocorre no querosene de aviação devem-se drenar as aeronaves:", a: ["antes da entrada do FCU", "após a saída do filtro principal", "na parte mais baixa dos tanques", "após a saída da bomba principal"], c: 2}
 ];
-
     let currentQuestions = [];
     let timeLeft = 2220;
     let timerInterval;
@@ -327,4 +325,5 @@
     window.onload = initQuiz;
 </script>
 </body>
+
 </html>
