@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMP - Sistema de Lubrificação e Refrigeração - Hangar MMA</title>
+    <style>
+        :root {
+            --primary: #1a3a5a;
+            --secondary: #f8f9fa;
+            --accent: #007bff;
+            --success: #28a745;
+            --danger: #dc3545;
+            --text: #333;
+            --warning: #ffc107;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: var(--text);
+            margin: 0;
+            padding: 10px;
+            overflow-x: hidden;
+        }
+
+        /* EFEITO POW NO CRÉDITO */
+        .credits-pow {
+            position: fixed;
+            top: 5px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            border-radius: 4px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            z-index: 2000;
+            transform-origin: center;
+            animation: pow-appearance 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            letter-spacing: 0.5px;
+        }
+
+        @keyframes pow-appearance {
+            0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+            80% { transform: scale(1.2) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .header-sticky {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 15px;
+            border-bottom: 3px solid var(--primary);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--danger);
+            background: #fff5f5;
+            padding: 5px 15px;
+            border-radius: 5px;
+            border: 1px solid var(--danger);
+        }
+
+        .question-block {
+            margin: 25px 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fff;
+            transition: all 0.3s;
+        }
+
+        .pending {
+            border: 2px solid var(--danger) !important;
+            background-color: #fff8f8 !important;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option-label {
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+
+        .option-label:hover { background-color: #f0f7ff; }
+        input[type="radio"] { margin-right: 15px; transform: scale(1.2); }
+
+        .correct-answer { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724; font-weight: bold; }
+        .wrong-answer { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            text-transform: uppercase;
+        }
+
+        .btn-finish { background: var(--primary); color: white; margin-top: 20px; }
+        .btn-restart { background: var(--success); color: white; display: none; margin-top: 20px; }
+
+        #results {
+            display: none;
+            padding: 20px;
+            text-align: center;
+            border: 3px solid var(--primary);
+            margin: 20px 0;
+            border-radius: 12px;
+            background-color: #ffffff;
+        }
+
+        .motivational-msg {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .score-box { font-size: 2.2rem; margin: 10px 0; font-weight: 800; }
+        
+        @media (max-width: 600px) {
+            .header-sticky { flex-direction: column; gap: 10px; }
+            .container { padding: 10px; }
+            .credits-pow { font-size: 0.6rem; padding: 2px 6px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="credits-pow">BY EWERTON</div>
+
+<div class="container">
+    <div class="header-sticky">
+        <div>
+            <h2 style="margin:0; color: var(--primary);">GMP - Sistema de Lubrificação e Refrigeração - Hangar MMA</h2>
+            <small id="q-counter">Questões: 1 a 70</small>
+        </div>
+        <div id="timer" class="timer">70:00</div>
+    </div>
+
+    <div id="results">
+        <span id="feedback-msg" class="motivational-msg"></span>
+        <div class="score-box" id="final-score"></div>
+        <div id="final-percent" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 15px;"></div>
+        <p style="color: #666; font-size: 1rem; font-weight: bold;">Confira abaixo o gabarito detalhado:</p>
+        <button id="restart-btn" class="btn btn-restart" onclick="location.reload()">Reiniciar Simulado</button>
+    </div>
+
+    <div id="quiz-content"></div>
+
+    <button id="finish-btn" class="btn btn-finish" onclick="finalizeQuiz()">Finalizar Simulado</button>
+</div>
+
+<script>
+    const masterBank = [
+{q: "A bomba de sucção do sistema de lubrificação tem a finalidade de:", a: ["aliviar a pressão do sistema", "retornar o óleo para o tanque", "circular o óleo através do motor", "garantir a ventilação do tanque"], c: 2},
+{q: "A finalidade da bomba de sucção no sistema de lubrificação do motor é:", a: ["retornar o óleo ao tanque", "conduzir o óleo para o radiador", "circular o óleo através do motor", "suprir óleo para a bomba principal"], c: 2},
+{q: "A finalidade de instalar o tanque de óleo do motor em local acima da bomba é garantir:", a: ["que o óleo circule descontaminado", "a circulação do óleo caso o filtro entupa", "que o óleo não trasborde quando no abastecimento", "o suprimento na linha da bomba por gravidade"], c: 3},
+{q: "A finalidade de NÃO se encher o tanque de óleo totalmente é:", a: ["limitar a viscosidade de óleo", "compensar a expansão térmica do óleo", "facilitar a passagem do óleo pelo radiador", "evitar que o óleo congele quando o avião estiver voando em região de baixa temperatura"], c: 1},
+{q: "A formação de gelo na entrada do motor pode alterar o ciclo de refrigeração do mesmo, ocasionando:", a: ["aumento de empuxo", "baixa indicação de TIT", "temperatura do ar de escapamento", "danos às palhetas da turbina devido a um superaquecimento"], c: 3},
+{q: "A inspeção com bujões magnéticos permite verificar se o motor está com:", a: ["o óleo sujo", "água do óleo", "limalha de aço", "limalha de bronze"], c: 2},
+{q: "A instalação do tubo do bocal de abastecimento, no tanque de óleo, é posicionado de forma a prover o(a):", a: ["suspiro do tanque", "ventilação do tanque", "espaço suficiente à expansão do óleo", "pressurização do sistema de lubrificação"], c: 2},
+{q: "A pressão do óleo do motor é medida por um instrumento que emprega um mecanismo do tipo:", a: ["sonda", "termopar", "tubo de venture", "tubo de bourdon"], c: 3},
+{q: "A substituição do elemento filtrante do filtro de óleo \"não\" será necessário quando:", a: ["o motor sofrer revisão geral", "for completado o nível no reservatório", "o motor girar sem indicação de pressão", "for substituído o óleo por ter sido contaminado com limalha"], c: 1},
+{q: "A temperatura do óleo do sistema de lubrificação do motor convencional é controlada através de uma válvula denominada:", a: ["pneumática", "sensora", "termostática", "magnética"], c: 2},
+{q: "A utilização de óleo lubrificante com alta viscosidade dificulta o (a):", a: ["corte do motor em tempo frio", "corte do motor em tempo quente", "partida do motor em tempo frio", "partida do motor em tempo quente"], c: 2},
+{q: "A utilização de óleo lubrificante com baixa viscosidade facilita a:", a: ["partida em tempo quente", "refrigeração dos motores", "mudança dos passos das hélices", "lubrificação em baixa temperatura"], c: 3},
+{q: "A utilização de óleo lubrificante com baixa viscosidade facilita o(a):", a: ["corte do motor em tempo frio", "partida do motor em tempo frio", "corte do motor em tempo quente", "partida do motor em tempo quente"], c: 1},
+{q: "A utilização de óleo lubrificante com baixa viscosidade facilita o(a):", a: ["corte do motor em tempo frio", "partida do motor em tempo frio", "corte do motor em tempo quente", "partida do motor em tempo quente"], c: 1},
+{q: "A válvula de alívio do sistema de lubrificação tem a finalidade de:", a: ["limitar a pressão de óleo do sistema", "permitir que o óleo não entre no motor", "drenar o óleo em excesso para a linha de abastecimento", "determinar que das vias de óleo será tomada em direção ao radiador"], c: 0},
+{q: "A válvula que determina qual das vias de óleo será tomada em direção ao radiador:", a: ["dreno", "alívio", "by-pass", "controle de fluxo"], c: 3},
+{q: "A viscosidade do óleo é afetada alterando o(a) seu(sua):", a: ["temperatura", "fluxo", "volume", "pressão"], c: 0},
+{q: "Antes de o motor convencional novo ser testado, ele deve ser:", a: ["drenado", "pré-lubrificado", "dado partida em seco", "posto em marcha lenta"], c: 1},
+{q: "Antes de o motor convencional novo ser testado, ele deve ser:", a: ["drenado", "pré-lubrificado", "dado partida em seco", "posto em marcha lenta"], c: 1},
+{q: "Antes de usar qualquer método de pré-lubrificação dos rolamentos, para permitir que o motor possa ser girado mais facilmente, deve-se:", a: ["ligar os magnetos", "desligar os magnetos", "instalar todas as velas", "remover um vela de cada cilindro"], c: 3},
+{q: "As bombas que circulam o óleo através do motor e as que retornam o óleo para o reservatório são, respectivamente do tipo:", a: ["sucção e sucção", "sucção e retorno", "pressão e sucção", "pressão e pressão"], c: 2},
+{q: "As bombas que circulam o óleo através do motor e as que retornam o óleo para o reservatório são, respectivamente, do tipo:", a: ["sucção e sucção", "sucção e pressão", "pressão e sucção", "pressão e pressão"], c: 2},
+{q: "Dentre as alternativas abaixo, aquela que identifica os métodos de distribuição do óleo para a lubrificação das diversas peças móveis do motor, é o(a):", a: ["decantação e sucção", "pressão e compressão", "salpique e pressão", "pulverização e compressão"], c: 2},
+{q: "Dentre os tipos de óleo abaixo aquele que tem menor viscosidade é o:", a: ["SAE 20", "SAE 40", "SAE 50", "SAE 60"], c: 0},
+{q: "Dentre os tipos de óleo abaixo, aquele que tem menor viscosidade é o:", a: ["SAE 20", "SAE 40", "SAE 50", "SAE 60"], c: 0},
+{q: "Dispositivo do sistema lubrificação que permite regular a temperatura do óleo lubrificante é o (a):", a: ["tanque", "filtro de oleo", "bomba de retorno", "válvula termostática"], c: 3},
+{q: "Em um motor a reação a refrigeração da câmara de combustão é realizada:", a: ["pelo próprio combustível", "pelo óleo do sistema de lubrificação", "por ar de impacto", "com metanol"], c: 2},
+{q: "No óleo do tipo SAE 40w, a indicação que o mesmo é satisfatório para clima frio é:", a: ["W", "40", "40W", "SAE"], c: 0},
+{q: "No reparo de um tanque de óleo, em que seja necessária sua remoção, o primeiro procedimento a ser", a: ["remover o motor da aeronave", "drenar o óleo", "desconectar a braçadeira de fixação do tanque", "desconectar as tubulações das linhas de entrada e saída"], c: 1},
+{q: "No sistema de lubrificação de um motor convencional, quando a temperatura do óleo cai abaixo de um determinado limite, a válvula termostática:", a: ["abre-se, permitindo que o óleo passe pelo radiador", "abre-se, permitindo que o óleo contorne radiador", "fecha-se, permitindo que o óleo passe pelo radiador", "fecha-se, permitindo que o óleo contorne radiador"], c: 3},
+{q: "No sistema de lubrificação do motor, a válvula de alívio localizada na saída da bomba principal limita a pressão máxima do sistema, desviando o óleo para o reservatório ou para o (a):", a: ["dreno", "saída do radiador", "interior do filtro", "entrada da bomba principal"], c: 2},
+{q: "No sistema de lubrificação do motor, a válvula de alívio localizada na saída da bomba principal limita a pressão máxima do sistema, desviando o óleo para o reservatório ou para o (a):", a: ["dreno", "saída do radiador", "interior do filtro", "entrada da bomba principal"], c: 2},
+{q: "No sistema de lubrificação do motor, a válvula de corte da parede de fogo deverá estar na posição aberta", a: ["ocorrer fogo no motor", "o motor estiver funcionando normalmente", "for necessário drenar o óleo para manutenção", "a tubulação, na linha de fornecimento, se romper e o óleo vazar"], c: 3},
+{q: "No sistema de lubrificação do motor, a válvula de alívio localizada na saída da bomba principal limita a pressão máxima do sistema, desviando o óleo para o reservatório ou para o (a):", a: ["dreno", "entrada da bomba principal", "saída do radiador", "interior do filtro"], c: 3},
+{q: "No sistema de lubrificação, a válvula by-pass instalada paralelamente ao filtro abrir-se-á, no caso:", a: ["de ocorrer pane na bomba principal", "do óleo superaqueer", "do filtro entupir", "de faltar óleo na linha de pressão"], c: 2},
+{q: "No sistema de lubrificação, a válvula que permite que o óleo seja desviado para o motor, em caso de filtro entupido, está localizada:", a: ["após o filtro", "no interior do filtro", "na entrada do radiador", "após a bomba, paralela ao filtro"], c: 3},
+{q: "No sistema de refrigeração do motor, a finalidade do termostato flutuante do controle de fluxo de ar através do radiador é:", a: ["manter automaticamente a temperatura normal do óleo", "assegurar a quantidade máxima de óleo, necessária ao funcionamento do sistema", "controlar automaticamente a pressão do óleo", "assegurar a quantidade mínima de óleo, necessária ao funcionamento do motor"], c: 0},
+{q: "Num óleo do tipo SAE 20W a especificação de uso em clima frio é determinado pelo:", a: ["E", "W", "20", "SAE"], c: 1},
+{q: "O óleo lubrificante de um motor que \"não\" possui reservatório, é armazenado no:", a: ["filtro", "cárter", "cilindro", "radiador"], c: 1},
+{q: "O componente do sistema de lubrificação que retira o óleo que circulou no motor e retorna-o para o reservatório é a:", a: ["válvula by-pass", "bomba de sucção", "bomba de pressão", "válvula de alívio de pressão do óleo"], c: 1},
+{q: "O componente do sistema de lubrificação que tem a finalidade de limitar a pressão de óleo denomina-se:", a: ["filtro", "radiador", "válvula de alivio", "válvula de controle de fluxo"], c: 2},
+{q: "O componente que tem a finalidade de limitar a pressão de óleo do sistema de lubrificação denomina-se:", a: ["válvula de alivio", "bomba", "radiador", "válvula termostática"], c: 0},
+{q: "O componente que tem a finalidade de limitar a pressão de óleo do sistema de lubrificação, denomina-se:", a: ["bomba", "radiador", "válvula de alivio", "válvula termostática"], c: 2},
+{q: "O controle de temperatura do óleo, pela variação do fluxo de óleo que passa pelo radiador, é realizado através de um(a):", a: ["ventoinha", "válvula termostática", "arruela de pressão", "bomba"], c: 1},
+{q: "O filtro do óleo, descartável, usa como elemento filtrante:", a: ["tela metálica", "disco metálico", "lâmina de papel", "malha fina de aço inoxidável"], c: 2},
+{q: "O indicador da pressão de óleo utiliza como elemento sensível o(a):", a: ["diafragma", "tubo de bourdon", "cápsula aneroid", "cápsula diferencial"], c: 1},
+{q: "O nível do reservatório de óleo deve ser checado:", a: ["com o motor em marcha lenta", "algum tempo após o corte do motor", "imediatamente após o corte do motor", "com o motor em regime de potência máxima"], c: 1},
+{q: "O nível do reservatório de óleo do motor deve ser verificado:", a: ["com motor em marcha lenta", "imediatamente após o corte do motor", "no tempo pré-determinado pelo fabricante"], c: 2},
+{q: "O núcleo do radiador de óleo é construído com tubos de cobre ou alumínio, num formato que aparenta um (a):", a: ["teia", "disco", "colméia", "pinheiro"], c: 2},
+{q: "O recurso que o sistema utiliza para garantir a lubrificação do motor, caso o filtro esteja entupido é o (a):", a: ["alarme sonoro", "óleo sintético", "válvula do tipo by-pass", "óleo com baixa viscosidade"], c: 2},
+{q: "O sistema de lubrificação é protegido contra uma pressão excessiva que possa causar vazamentos no sistema, através do componente denominado:", a: ["filtro", "radiador", "válvula de alivio", "válvula de controle de fluxo"], c: 2},
+{q: "O sistema de lubrificação do motor a jato utiliza bomba do tipo:", a: ["pistão", "palheta", "centrífuga", "engrenagem"], c: 3},
+{q: "O sistema de lubrificação do motor emprega bomba de retorno, que opera por:", a: ["sucção", "gravidade", "alta pressão", "baixa pressão"], c: 0},
+{q: "Os rolamentos dos motores a reação são lubrificados por:", a: ["névoa", "imersão", "pressão", "salpique"], c: 0},
+{q: "Os rolamentos dos motores a reação são lubrificados por:", a: ["escoamento", "imersão", "pressão", "salpique"], c: 0},
+{q: "Os tanques de óleo das aeronaves nunca devem ser enchidos até sua capacidade máxima, em função da:", a: ["viscosidade do óleo", "expansão térmica do óleo", "formaçãodo calço hidráulico", "formação de vapores explosivos"], c: 1},
+{q: "Para melhorar o arrefecimento do cilindro seria necessário:", a: ["revisar o radiador", "substituir o combustível", "aumentar a viscodidade do óleo", "adicionar aletas ao cilindro"], c: 3},
+{q: "Para se evitar que o óleo espume e entre ar na bomba, no reservatório hidráulico, são incorporados(as):", a: ["suspiros", "retentores", "aletas defletoras", "válvulas de alivio"], c: 2},
+{q: "Para uma operação segura após a instalação de um motor convencional, deve-se sangrar o combustível pelo", a: ["0,5 galão", "1 galão", "0,5 litro", "1 litro"], c: 3},
+{q: "Quanto a bomba de pressão de óleo do sistema de lubrificação é correto afirmar que a mesma possui:", a: ["uma única engrenagem", "duas engrenagens que giram no mesmo sentido", "duas engrenagens que giram em sentido inverso", "um engrenagem que gira no sentido horário e duas outras que giram no anti-horário"], c: 2},
+{q: "Quem devolve ao reservatório através do radiador, o óleo proveniente de vazamentos internos?", a: ["válvula de dreno", "válvula de desvio", "bomba de recalque", "bomba de recuperação"], c: 3},
+{q: "Reduzir a temperatura do óleo do motor, a um valor aceitável para a recirculação através do sistema de lubrificação é finalidade do(a):", a: ["filtro", "radiador", "válvula by-pass", "válvula termoestática"], c: 1},
+{q: "Se durante o funcionamento normal do motor \"não\" ocorrer entupimento no filtro de óleo a:", a: ["pressão do sistema aumentará", "pressão do sistema diminuirá", "válvula by-pass abrir-se-á", "válvula by-pass permanecerá fechada"], c: 3},
+{q: "Se pequenas partículas metálicas forem encontradas no óleo de um motor convencional, o procedimento a ser adotado é:", a: ["girar o motor", "substituir o motor", "drenar e substituir todo o óleo", "apenas trocar o elemento filtrante"], c: 2},
+{q: "Um óleo com alta temperatura, fluindo rapidamente, está com característica de:", a: ["alta viscosidade", "alta volatilidade", "baixa viscosidade", "baixa volatilidade"], c: 2},
+{q: "Um óleo fluindo lentamente está com a característica de:", a: ["alta viscosidade", "baixa viscosidade", "alta volatilidade", "baixa volatilidade"], c: 0},
+{q: "Um óleo que flui livremente quando exposto a alta temperatura tem como característica:", a: ["alta viscosidade", "baixa viscosidade", "alta volatilidade", "baixa volatilidade"], c: 1},
+{q: "Uma das finalidades do óleo que é distribuído entre a parede do cilindro e o pistão é:", a: ["diminuir a taxa de compressão", "aumentar o desgate abrasivo do pistão", "evitar o vazamento dos gases da câmara", "lubrificar as válvulas de admissão e escapamento"], c: 2},
+{q: "Uma indicação de alta temperatura do óleo pode ser causada por uma pane no (a):", a: ["válvula by-pass", "bomba de sucção", "válvula de alívio", "bomba de retorno do óleo"], c: 2},
+{q: "Uma pressão de óleo excessivamente alta poderá ocasionar ao motor:", a: ["vazamento", "baixa temperatura", "falta de lubrificação", "danos de caixa de redução"], c: 0},
+
+];
+
+    let currentQuestions = [];
+    let timeLeft = 4200;
+    let timerInterval;
+
+    function initQuiz() {
+        currentQuestions = [...masterBank].sort(() => 0.5 - Math.random());
+        const container = document.getElementById('quiz-content');
+        container.innerHTML = "";
+
+        currentQuestions.forEach((item, idx) => {
+            const card = document.createElement('div');
+            card.className = 'question-block';
+            card.id = `block-${idx}`;
+            card.innerHTML = `
+                <div class="question-text">${idx + 1}. ${item.q}</div>
+                <div class="options-group">
+                    ${item.a.map((opt, optIdx) => `
+                        <label class="option-label" id="label-${idx}-${optIdx}">
+                            <input type="radio" name="q${idx}" value="${optIdx}" onclick="markAsAnswered(${idx})">
+                            ${String.fromCharCode(97 + optIdx)}) ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(card);
+        });
+        startTimer();
+    }
+
+    function markAsAnswered(idx) {
+        document.getElementById(`block-${idx}`).classList.remove('pending');
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            if (timeLeft <= 0) finalizeQuiz(true);
+            timeLeft--;
+        }, 1000);
+    }
+
+    function finalizeQuiz(isTimeUp = false) {
+        let unanswered = [];
+        if (!isTimeUp) {
+            currentQuestions.forEach((_, idx) => {
+                const radios = document.getElementsByName(`q${idx}`);
+                let checked = false;
+                radios.forEach(r => { if(r.checked) checked = true; });
+                if (!checked) {
+                    unanswered.push(idx);
+                    document.getElementById(`block-${idx}`).classList.add('pending');
+                }
+            });
+            if (unanswered.length > 0) {
+                alert(`⚠️Faltam ${unanswered.length} questões. Elas foram sinalizadas em vermelho.`);
+                document.getElementById(`block-${unanswered[0]}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+        }
+
+        clearInterval(timerInterval);
+        let correctCount = 0;
+        currentQuestions.forEach((item, idx) => {
+            const radios = document.getElementsByName(`q${idx}`);
+            let selected = -1;
+            radios.forEach(r => { if(r.checked) selected = parseInt(r.value); });
+
+            document.getElementById(`label-${idx}-${item.c}`).classList.add('correct-answer');
+            if (selected === item.c) correctCount++;
+            else if (selected !== -1) document.getElementById(`label-${idx}-${selected}`).classList.add('wrong-answer');
+            radios.forEach(r => r.disabled = true);
+        });
+
+        const percent = Math.round((correctCount / currentQuestions.length) * 100);
+        const feedback = document.getElementById('feedback-msg');
+        
+        if (percent >= 70) {
+            feedback.innerText = "🎉 Meus Parabéns! Você foi aprovado!";
+            feedback.style.color = "var(--success)";
+        } else {
+            feedback.innerText = "💪 Não desista! Continue estudando para atingir os 70%.";
+            feedback.style.color = "var(--danger)";
+        }
+
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('final-score').innerText = `Acertos: ${correctCount} de ${currentQuestions.length}`;
+        document.getElementById('final-percent').innerText = `Aproveitamento: ${percent}%`;
+        document.getElementById('finish-btn').style.display = 'none';
+        document.getElementById('restart-btn').style.display = 'block';
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.onload = initQuiz;
+</script>
+</body>
+</html>
