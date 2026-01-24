@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMP - SISTEMA DE COMBUSTÍVEL DO MOTOR E MEDIÇÃO DE COMBUSTÍVEL</title>
+    <style>
+        :root {
+            --primary: #1a3a5a;
+            --accent: #007bff;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 4px;
+            font-size: 13px;
+            line-height: 1.3;
+        }
+
+        .container {
+            max-width: 100%;
+            background: white;
+            padding: 6px;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .credits-integrated {
+            position: absolute;
+            top: 2px;
+            right: 6px;
+            background: var(--primary);
+            color: white;
+            padding: 1px 3px;
+            font-size: 0.5rem;
+            font-weight: bold;
+            border-radius: 1px;
+            z-index: 10;
+        }
+
+        /* CABEÇALHO SUPER COMPACTO */
+        .header-mini {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--primary);
+            z-index: 5;
+            margin-bottom: 6px;
+            padding-top: 16px;
+        }
+
+        .header-mini-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .page-title-mini {
+            margin: 0;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: bold;
+            line-height: 1.1;
+            max-width: 65%;
+        }
+
+        .timer-compact {
+            background: #f8f9fa;
+            color: var(--primary);
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border: 1px solid #dee2e6;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .timer-warning {
+            background: #fff5f5 !important;
+            color: var(--danger) !important;
+            border-color: var(--danger) !important;
+        }
+
+        /* INFO DO SIMULADO MAIS COMPACTA */
+        .simulado-info {
+            background: #e7f3ff;
+            border: 1px solid var(--accent);
+            border-radius: 3px;
+            padding: 4px 5px;
+            margin-bottom: 5px;
+            font-size: 0.65rem;
+            color: var(--primary);
+            display: none;
+        }
+
+        .simulado-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        /* CONTROLES DE HISTÓRICO COMPACTOS */
+        .history-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .history-controls button {
+            padding: 2px 4px;
+            font-size: 0.6rem;
+            border-radius: 2px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .clear-history-btn {
+            background: var(--warning);
+            color: #856404;
+            border: 1px solid #ffc107;
+        }
+
+        .info-history-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        /* INFO BÁSICA SUPER COMPACTA */
+        .quiz-info-mini {
+            background: #f8f9fa;
+            border-radius: 3px;
+            padding: 5px 6px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 4px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            font-size: 0.55rem;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0;
+        }
+
+        .info-value {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* CONTROLES COMPACTOS */
+        .controls-compact {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4px;
+        }
+
+        .auto-nav-toggle {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 0.65rem;
+        }
+
+        .auto-nav-checkbox {
+            transform: scale(0.8);
+            accent-color: var(--primary);
+        }
+
+        .auto-nav-label {
+            font-weight: 600;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .reset-btn-mini {
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            padding: 2px 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        /* STATUS COMPACTO */
+        .completion-status {
+            background: #f8f9fa;
+            border-radius: 3px;
+            padding: 4px 5px;
+            margin: 5px 0;
+            border: 1px solid #dee2e6;
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2px;
+        }
+
+        .status-text {
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+
+        .status-count {
+            font-size: 0.65rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* PENDENTES SUPER COMPACTOS */
+        .pending-compact {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 2px;
+            padding: 2px 3px;
+            font-size: 0.6rem;
+        }
+
+        .pending-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1px;
+        }
+
+        .pending-count {
+            font-weight: bold;
+            color: #856404;
+            font-size: 0.65rem;
+        }
+
+        .pending-list-compact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            max-height: 18px;
+            overflow-y: auto;
+            padding: 1px 0;
+        }
+
+        .pending-number {
+            background: #ffc107;
+            color: #856404;
+            font-weight: bold;
+            padding: 0 2px;
+            border-radius: 1px;
+            font-size: 0.55rem;
+            min-width: 12px;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .pending-number.answered {
+            background: #28a745;
+            color: white;
+            opacity: 0.5;
+        }
+
+        /* QUESTÕES COMPACTAS */
+        .question-block-mini {
+            margin: 6px 0;
+            padding: 8px;
+            border: 1px solid #e0e0e0;
+            border-radius: 3px;
+            background: #fff;
+        }
+
+        .question-text-mini {
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .options-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .option-mini {
+            padding: 5px 6px;
+            border: 1px solid #eee;
+            border-radius: 2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 0.75rem;
+            min-height: 28px;
+        }
+
+        input[type="radio"] {
+            margin-right: 4px;
+            transform: scale(0.8);
+            accent-color: var(--primary);
+        }
+
+        .correct-answer {
+            background-color: #d4edda !important;
+            border-color: #28a745 !important;
+            color: #155724;
+        }
+
+        .wrong-answer {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #721c24;
+        }
+
+        /* BOTÕES DE NAVEGAÇÃO COMPACTOS */
+        .nav-buttons {
+            display: flex;
+            gap: 4px;
+            margin: 8px 0;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 6px 4px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-align: center;
+            min-height: 32px;
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        /* BOTÕES PRINCIPAIS COMPACTOS */
+        .btn {
+            padding: 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 8px;
+            min-height: 36px;
+        }
+
+        .btn-finish {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-finish:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-restart {
+            background: var(--success);
+            color: white;
+            display: none;
+        }
+
+        /* RESULTADOS COMPACTOS */
+        #results {
+            display: none;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--primary);
+            margin: 8px 0;
+            border-radius: 3px;
+            background: #f8f9fa;
+        }
+
+        .result-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: var(--primary);
+        }
+
+        .score-mini {
+            font-size: 1.1rem;
+            margin: 4px 0;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* SCROLL PERSONALIZADO */
+        .pending-list-compact::-webkit-scrollbar {
+            height: 2px;
+        }
+        
+        .pending-list-compact::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 1px;
+        }
+        
+        .pending-list-compact::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 1px;
+        }
+
+        /* AJUSTES PARA TELAS MUITO PEQUENAS */
+        @media (max-width: 320px) {
+            body {
+                padding: 2px;
+                font-size: 12px;
+            }
+            
+            .container {
+                padding: 4px;
+            }
+            
+            .page-title-mini {
+                font-size: 0.75rem;
+                max-width: 60%;
+            }
+            
+            .timer-compact {
+                font-size: 0.7rem;
+                min-width: 35px;
+                padding: 1px 3px;
+            }
+            
+            .info-grid {
+                gap: 3px;
+            }
+            
+            .info-label {
+                font-size: 0.5rem;
+            }
+            
+            .info-value {
+                font-size: 0.7rem;
+            }
+            
+            .question-text-mini {
+                font-size: 0.75rem;
+            }
+            
+            .option-mini {
+                padding: 4px 5px;
+                font-size: 0.7rem;
+                min-height: 26px;
+            }
+            
+            .nav-btn, .btn {
+                font-size: 0.7rem;
+                padding: 5px 3px;
+            }
+            
+            .pending-list-compact {
+                max-height: 16px;
+            }
+            
+            .pending-number {
+                font-size: 0.5rem;
+                min-width: 10px;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .header-mini {
+                padding-top: 10px;
+            }
+            
+            .question-block-mini {
+                margin: 4px 0;
+                padding: 6px;
+            }
+            
+            .nav-buttons {
+                margin: 6px 0;
+            }
+            
+            .btn {
+                margin-top: 6px;
+                min-height: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="credits-integrated">BY EWERTON</div>
+    
+    <div class="header-mini">
+        <div class="header-mini-top">
+            <h1 class="page-title-mini" id="page-title">Carregando...</h1>
+            <div id="timer" class="timer-compact">00:00</div>
+        </div>
+        
+        <div class="simulado-info" id="simulado-info">
+            <div>Simulado: <span id="questions-per-simulado">20</span> questões</div>
+            <div class="simulado-stats">
+                <span id="remaining-questions">Disponíveis: 0</span>
+                <span id="recent-used">Usadas: 0</span>
+            </div>
+            
+            <div class="history-controls">
+                <button class="clear-history-btn" onclick="clearHistory()">
+                    🗑️ Limpar Histórico
+                </button>
+                <button class="info-history-btn" onclick="showHistoryInfo()">
+                    ℹ️ Info
+                </button>
+            </div>
+        </div>
+        
+        <div class="quiz-info-mini">
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Questão</div>
+                    <div class="info-value" id="question-counter">0/0</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Respondidas</div>
+                    <div class="info-value" id="answered-counter">0/0</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Progresso</div>
+                    <div class="info-value" id="progress-percent">0%</div>
+                </div>
+            </div>
+            
+            <div class="controls-compact">
+                <div class="auto-nav-toggle" onclick="toggleAutoNav()">
+                    <input type="checkbox" id="auto-nav-checkbox" class="auto-nav-checkbox" checked>
+                    <label class="auto-nav-label">Auto-navegação</label>
+                </div>
+                <button class="reset-btn-mini" onclick="resetQuiz()">
+                    ↻ Reiniciar
+                </button>
+            </div>
+        </div>
+
+        <div class="completion-status">
+            <div class="status-header">
+                <span class="status-text">Status:</span>
+                <span class="status-count" id="status-count">0/0</span>
+            </div>
+            <div class="pending-compact" id="pending-questions">
+                <div class="pending-summary">
+                    <span>Pendentes:</span>
+                    <span class="pending-count" id="pending-count">0</span>
+                </div>
+                <div class="pending-list-compact" id="pending-list">
+                    <span style="color: #6c757d; font-style: italic;">Nenhuma pendente</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="results">
+        <div class="result-title" id="feedback-msg"></div>
+        <div class="score-mini" id="final-score"></div>
+        <div id="final-percent" style="font-size: 0.8rem; font-weight: bold; margin-bottom: 6px; color: var(--accent);"></div>
+        <div id="simulado-summary" style="margin-bottom: 8px; font-size: 0.7rem; color: var(--primary);"></div>
+        <button id="restart-btn" class="btn btn-restart" onclick="startNewQuiz()">🔄 Refazer</button>
+        <button id="new-simulado-btn" class="btn" style="background: var(--accent); color: white; margin-top: 4px; display: none;" onclick="generateNewSimulado()">🎲 Novo Simulado</button>
+    </div>
+
+    <div id="quiz-content"></div>
+
+    <div class="nav-buttons">
+        <button id="prev-btn" class="nav-btn" onclick="prevQuestion()" disabled>
+            ← Anterior
+        </button>
+        <button id="next-btn" class="nav-btn" onclick="nextQuestion()">
+            Próximo →
+        </button>
+    </div>
+
+    <button id="finish-btn" class="btn btn-finish" onclick="finalizeQuiz()" disabled>
+        🏁 Finalizar
+    </button>
+</div>
+
+<script>
+    
+const masterBank = [
+
+    {q: "A combustão anormal e espontânea que ocorre no cilindro, denomina-se:", a: ["detonação", "volatilidade", "calço de vapor", "taxa de compressão"], c: 0},
+    {q: "A finalidade da bomba de combustível auxiliar (booster) é:", a: ["suprir combustível sob pressão para a bomba do motor", "suprir combustível sob pressão para o filtro principal", "retornar o combustível excedente do motor para o tanque", "alijar o combustível"], c: 0},
+    {q: "A finalidade do sistema de marcha lenta, na maioria dos carburadores, é:", a: ["suprir combustível após a aceleração do motor", "aumentar o fluxo combustível na baixa rotação do motor", "suprir combustível nas baixas velocidades do motor", "fornecer combustível extra durante a aceleração do motor"], c: 1},
+    {q: "A octanagem da gasolina é igual a(o):", a: ["115 para mistura pobre e 145 para mistura rica", "130 para mistura pobre e 145 para mistura rica", "115 para mistura rica e 130 para mistura pobre", "130 para mistura rica e 145 para mistura pobre"], c: 0},
+    {q: "A válvula de alívio de uma bomba de combustível acionada pelo motor é projetada para abrir:", a: ["quando a pressão de combustível for muito baixa", "após o corte do motor", "a uma determinada pressão atmosférica", "a uma tensão pré-ajustada da mola"], c: 3},
+    {q: "As aeronaves de grande porte, para reduzirem o tempo de reabastecimento de combustível, empregam o processo denominado:", a: ["despressurização", "demanda", "por gravidade", "subalar"], c: 3},
+    {q: "Como precaução, a bomba de combustível auxiliar (booster) deverá ser ligada:", a: ["em todo o voo", "após a partida nos motores", "somente no táxi", "somente na decolagem e no pouso"], c: 1},
+    {q: "Dentre as alternativas abaixo, o procedimento a ser realizado antes de remover o carburador do motor, é:", a: ["frená-lo", "ligar a bomba de combustível", "drenar todo o combustível do tanque", "fechar a válvula de corte do combustível"], c: 3},
+    {q: "Dentre os instrumentos abaixo, aquele que é utilizado para verificar o desempenho e também o consumo de combustível do motor é:", a: ["fuel flow", "torquímetro", "fuel pressure", "indicador de EGT"], c: 0},
+    {q: "Dentre os sistemas de carburador abaixo, aquele que supre o motor com combustível durante o aumento de potencia é o de:", a: ["aceleração", "marcha lenta", "medição principal", "controle de mistura"], c: 0},
+    {q: "Durante o voo a correção da mistura ar/combustível é realizada no carburador sem a interferência do piloto, através de uma (a):", a: ["bomba elétrica na linha", "bomba mecânica na linha", "sistema de controle automático no magneto", "sistema de controle automático no carburador"], c: 3},
+    {q: "Durante o voo, ao ganhar altitude, esta será compensada no carburador pelo sistema:", a: ["de aceleração", "economizador", "de marcha lenta", "de controle de mistura"], c: 1},
+    {q: "Em um motor a reação, a RPM é controlada pelo sistema:", a: ["elétrico", "pneumático", "de ignição", "de combustível"], c: 3},
+    {q: "Em um motor de turbina a gás, a formação de gelo no combustível ocorre quando o mesmo para no(a):", a: ["filtro", "FCU", "bomba", "transmissor"], c: 0},
+    {q: "No motor a reação a RPM é controlada pelo sistema de?", a: ["partida", "ignição", "combustível", "refrigeração"], c: 2},
+    {q: "No motor a reação, o trocador de calor combustível/óleo tem a finalidade de:", a: ["resfriar o combustível e o óleo", "pré aquecer o combustível e o óleo", "resfriar o combustível e aquecer o óleo", "pre-aquecer o combustível e resfriar o óleo"], c: 3},
+    {q: "No sistema de combustível, a alimentação dos tanques é feita por:", a: ["gravidade e por sucção", "pressão e por sucção", "sucção e por combustão", "pressão e por gravidade"], c: 3},
+    {q: "No sistema de combustível, o aquecedor usa como fonte de aquecimento, ar sangrado do(a):", a: ["compressor ou óleo do sistema de lubrificação", "escapamento ou óleo do sistema de lubrificação", "seção da turbina ou óleo do sistema hidráulico", "câmara de combustão ou óleo do sistema hidráulico"], c: 0},
+    {q: "No sistema de controle de combustível para motores a reação, a força dos contrapesos centrifugos é menor na:", a: ["partida", "marcha lenta", "potencia maxima", "condição \"on speed\""], c: 0},
+    {q: "Nos sistemas de combustível, para proteger a bomba de combustível acionada pelo motor existe o(a):", a: ["válvula de derivação", "filtro de alta pressão", "filtro de baixa pressão", "aquecedor de combustível"], c: 2},
+    {q: "O índice que define o poder antidentonante da gasolina é:", a: ["a compressão", "a octanagem", "o pincking", "a detonação"], c: 1},
+    {q: "O combustível a ser utilizado na combustão é pré-aquecida pelo trocador de calor, ao mesmo tempo que é:", a: ["resfriado o ar sangrado do compressor", "resfriado o óleo do sistema de lubrificação", "aquecido o óleo do sistema de lubrificação", "aquecido o ar de impacto"], c: 1},
+    {q: "O combustível, vindo dos tanques, é enviado para a entrada da unidade de controle através de:", a: ["filtros", "bombas de reforço", "válvulas seletoras", "bombas acionadas pelo motor"], c: 1},
+    {q: "O componente do sistema de combustível que normalmente é instalado na entrada e na saída do tanque de combustível como também na entrada do carburador, denomina-se:", a: ["válvula de corte", "válvula de distribuição", "dreno", "filtro"], c: 3},
+    {q: "O componente do sistema que define qual dos tanques de combustível suprirá o motor é o (a):", a: ["bomba", "filtro", "válvula seletora", "válvula de alívio"], c: 2},
+    {q: "O componente do sistema, que tem a finalidade de cortar o fluxo de combustível que sai do tanque, é o(a):", a: ["dreno", "filtro", "válvula seletora", "válvula de transferência"], c: 0},
+    {q: "O desenvolvimento microbial existente no combustível é combatido frequentemente com o procedimento de:", a: ["drenar o combustível", "filtrar as linhas de distribuição", "inserir detergente no tanque, após o reabastecimento", "inserir aditivo para melhorar a performance do motor"], c: 0},
+    {q: "O extintor de pó químico \"não\" é recomendado para ser usado nos incêndios em equipamentos eletrônicos, pois:", a: ["esse tipo de extintor alimentará a chama", "o pó químico, em contato com o calor, aumentará o fogo", "a poeira residual poderá causar danos ao equipamento", "esse tipo de extintor, em contato com a energia elétrica pode causar explosão"], c: 2},
+    {q: "O poder antidentonante da gasolina é indicado pela:", a: ["pureza", "octanagem", "viscosidade", "volatilidade"], c: 1},
+    {q: "O problema do estol que normalmente ocorre no compressor do motor a jato é solucionado com:", a: ["sangria do ar, através de válvula", "aumento da quantidade de ar de admissão", "redução do número de palhetas na turbina", "aumento do número de palhetas na turbina"], c: 0},
+    {q: "O sistema de combustível é equipado com válvulas que tornam possível o alijamento em voo, com a finalidade de:", a: ["reduzir o peso da aeronave ao seu peso máximo de pouso", "retirar as bolhas existentes na linha de pressão para o motor", "retirar o combustível da linha de reabastecimento dos tanques", "transferir o combustível do tanque auxiliar para o tanque principal"], c: 0},
+    {q: "O sistema de injeção de água nos motores a reação é projetado para funcionar apenas em:", a: ["alta tração", "baixa tração", "alta velocidade", "baixa velocidade"], c: 0},
+    {q: "Os componentes do sistema de combustivel que localizam-se, sequencialmente, após a saída do tanque, denominam-se:", a: ["valvula seletora-filtro-bomba-FCU", "bomba-FCU-filtro-valvula seletora", "filtro-valvula seletora-FCU-bomba", "valvula seletora-FCU-bomba-filtro"], c: 0},
+    {q: "Os tanques de combustíveis são adaptados com defletores internos, com a finalidade de:", a: ["manter a pressão atmosférica dentro do tanque", "permitir o perfeito alijamento do combustível, em voo", "eliminar as impurezas no combustível, através da decantação", "resistir às flutuações do combustível, causadas pelas mudanças de atitude da aeronave"], c: 3},
+    {q: "Para se combater o desenvolvimento microbiológico no combustível deve-se:", a: ["drenar o combustível diariamente", "adicionar bactericida diariamente", "destanquear o avião antes do pernoite", "vedar as entradas de ventilação sempre que o avião for pernoitar"], c: 0},
+    {q: "Para se combater o desenvolvimento microbiológico que ocorre no querosene de aviação devem-se drenar as aeronaves:", a: ["antes da entrada do FCU", "após a saída do filtro principal", "na parte mais baixa dos tanques", "após a saída da bomba principal"], c: 2}
+];    
+
+    // CONFIGURAÇÕES
+    const QUESTIONS_PER_SIMULADO = 20;
+    let TIME_LIMIT = 0;
+    let currentQuestions = [];
+    let userAnswers = [];
+    let timeLeft = 0;
+    let timerId;
+    let currentQuestionIndex = 0;
+    let autoNavEnabled = true;
+    let usedQuestionsHistory = [];
+    let currentSimuladoIndices = [];
+    const MAX_HISTORY_SIZE = 100;
+    
+    // GERAR ID ÚNICO AUTOMATICAMENTE
+    function generateQuizId() {
+        const pageTitle = document.title || "Quiz";
+        const cleanTitle = pageTitle
+            .replace(/[^a-zA-Z0-9\s]/g, '')
+            .replace(/\s+/g, '_')
+            .toLowerCase()
+            .substring(0, 30);
+        const titleHash = pageTitle.length.toString(36);
+        return `quiz_${cleanTitle}_${titleHash}`;
+    }
+    
+    const QUIZ_ID = generateQuizId();
+    const HISTORY_KEY = `${QUIZ_ID}_history`;
+
+    // FUNÇÃO PARA ATUALIZAR TÍTULO DA PÁGINA
+    function updatePageTitle() {
+        const totalQuestions = masterBank.length;
+        const remaining = Math.max(0, totalQuestions - usedQuestionsHistory.length);
+        const isFinaleira = currentQuestions.length < QUESTIONS_PER_SIMULADO && remaining < QUESTIONS_PER_SIMULADO;
+        const finaleiraText = isFinaleira ? ' 🔥 FINALEIRA' : '';
+        
+        // Pega o título da página HTML
+        const pageTitle = document.title || "Quiz Simulado";
+        
+        // Limpa prefixos/sufixos comuns
+        let cleanTitle = pageTitle
+            .replace(/^GMP\s*[-–—]\s*/i, '')
+            .replace(/^Simulado\s*[-–—]\s*/i, '')
+            .replace(/^Quiz\s*[-–—]\s*/i, '')
+            .replace(/\s*[-–—]\s*Simulado$/i, '')
+            .replace(/\s*[-–—]\s*Quiz$/i, '')
+            .replace(/\s*[-–—]\s*Teste$/i, '')
+            .trim();
+        
+        // Se ficou vazio, usa o título original
+        if (!cleanTitle) cleanTitle = pageTitle;
+        
+        // Garante que não seja muito longo
+        if (cleanTitle.length > 40) {
+            cleanTitle = cleanTitle.substring(0, 37) + '...';
+        }
+        
+        // Formata o título final
+        document.getElementById('page-title').textContent = 
+            `${cleanTitle}${finaleiraText} (${currentQuestions.length}/${totalQuestions})`;
+        
+        return isFinaleira;
+    }
+
+    // FUNÇÕES
+    function calculateTimeLimit(questionsCount) {
+        return questionsCount * 60;
+    }
+
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // Lógica inteligente para seleção de questões
+    function selectRandomQuestions() {
+        const totalQuestions = masterBank.length;
+        let availableQuestions = [];
+        
+        // Todas as questões disponíveis
+        for (let i = 0; i < totalQuestions; i++) {
+            availableQuestions.push(i);
+        }
+        
+        // Remove as já usadas (do histórico persistente)
+        if (usedQuestionsHistory.length > 0) {
+            availableQuestions = availableQuestions.filter(index => 
+                !usedQuestionsHistory.includes(index)
+            );
+        }
+        
+        const availableCount = availableQuestions.length;
+        
+        // DECISÃO INTELIGENTE: quantas questões usar?
+        let questionsToSelect;
+        
+        if (availableCount === 0) {
+            // Se não tem mais questões disponíveis
+            if (confirm(`Todas as ${totalQuestions} questões já foram usadas!\n\nDeseja reiniciar o histórico e começar de novo?`)) {
+                usedQuestionsHistory = [];
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
+                alert('Histórico reiniciado! Todas as questões estão disponíveis novamente.');
+            } else {
+                // Usa todas as questões mesmo (modo de repetição)
+                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
+            }
+        } 
+        else if (availableCount >= QUESTIONS_PER_SIMULADO) {
+            // Tem questões suficientes para um simulado normal
+            questionsToSelect = QUESTIONS_PER_SIMULADO;
+        }
+        else if (availableCount >= 10) {
+            // Tem entre 10 e 19 questões - usa todas disponíveis
+            questionsToSelect = availableCount;
+        }
+        else {
+            // Tem menos de 10 questões - oferece opção de "finaleira"
+            if (confirm(`Só restam ${availableCount} questões disponíveis!\n\nDeseja fazer uma "finaleira" com essas ${availableCount} questões restantes?`)) {
+                questionsToSelect = availableCount;
+            } else {
+                // Usuário não quer fazer finaleira, reinicia histórico
+                if (confirm(`Deseja reiniciar o histórico e começar um novo ciclo com todas as ${totalQuestions} questões?`)) {
+                    usedQuestionsHistory = [];
+                    localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                    availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+                    questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
+                    alert('Histórico reiniciado!');
+                } else {
+                    // Continua com as disponíveis mesmo sendo poucas
+                    questionsToSelect = availableCount;
+                }
+            }
+        }
+        
+        // Embaralha as questões disponíveis
+        availableQuestions.sort(() => Math.random() - 0.5);
+        
+        // Seleciona as questões
+        const selectedIndices = availableQuestions.slice(0, questionsToSelect);
+        
+        // Armazena temporariamente (não salva no localStorage ainda)
+        currentSimuladoIndices = selectedIndices;
+        
+        return selectedIndices.map(index => ({
+            ...masterBank[index], 
+            originalIndex: index
+        }));
+    }
+
+    function updateSimuladoInfo() {
+        const totalQuestions = masterBank.length;
+        const remaining = Math.max(0, totalQuestions - usedQuestionsHistory.length);
+        const recentUsed = usedQuestionsHistory.length;
+        const percentUsed = totalQuestions > 0 ? Math.round((recentUsed / totalQuestions) * 100) : 0;
+        
+        // Verifica se é finaleira
+        const isFinaleira = currentQuestions.length < QUESTIONS_PER_SIMULADO && remaining < QUESTIONS_PER_SIMULADO;
+        
+        // Atualiza elementos
+        document.getElementById('remaining-questions').textContent = `Disponíveis: ${remaining}`;
+        document.getElementById('recent-used').textContent = `Usadas: ${recentUsed}`;
+        document.getElementById('questions-per-simulado').textContent = currentQuestions.length;
+        
+        // Adiciona informação sobre o tamanho do simulado atual
+        const simuladoInfo = document.getElementById('simulado-info');
+        simuladoInfo.innerHTML = `
+            <div>Simulado: <span id="questions-per-simulado">${currentQuestions.length}</span> questões 
+            <span style="font-size: 0.6rem; color: ${isFinaleira ? 'var(--warning)' : 'var(--primary)'}">
+                ${isFinaleira ? '(finaleira)' : ''}
+            </span></div>
+            <div class="simulado-stats">
+                <span id="remaining-questions">Disponíveis: ${remaining}</span>
+                <span id="recent-used">Usadas: ${recentUsed} (${percentUsed}%)</span>
+            </div>
+            
+            <div class="history-controls">
+                <button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar Histórico</button>
+                <button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button>
+            </div>
+        `;
+        
+        simuladoInfo.style.display = 'block';
+    }
+
+    function clearHistory() {
+        if (confirm(`Limpar histórico deste simulado? Todas as ${masterBank.length} questões ficarão disponíveis novamente.`)) {
+            usedQuestionsHistory = [];
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+            
+            // Recarrega o simulado com todas as questões disponíveis
+            currentQuestions = selectRandomQuestions();
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            currentQuestionIndex = 0;
+            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+            timeLeft = TIME_LIMIT;
+            
+            // Atualiza título SEM "finaleira"
+            updatePageTitle();
+            document.getElementById('timer').textContent = formatTime(timeLeft);
+            
+            updateSimuladoInfo();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+            updateFinishButton();
+            updatePendingQuestions();
+            alert('Histórico limpo! Novo simulado gerado.');
+        }
+    }
+
+    function showHistoryInfo() {
+        const totalQuestions = masterBank.length;
+        const usedCount = usedQuestionsHistory.length;
+        const availableCount = Math.max(0, totalQuestions - usedCount);
+        const percentUsed = totalQuestions > 0 ? Math.round((usedCount / totalQuestions) * 100) : 0;
+        
+        let message = `📊 ESTATÍSTICAS:\n\n`;
+        message += `• Total no banco: ${totalQuestions} questões\n`;
+        message += `• Já usadas: ${usedCount} (${percentUsed}%)\n`;
+        message += `• Disponíveis: ${availableCount}\n`;
+        message += `• Tamanho padrão: ${QUESTIONS_PER_SIMULADO} questões\n\n`;
+        
+        if (currentSimuladoIndices.length > 0) {
+            const isFinaleira = currentQuestions.length < QUESTIONS_PER_SIMULADO && availableCount < QUESTIONS_PER_SIMULADO;
+            message += `📝 SIMULADO ATUAL:\n`;
+            message += `• ${currentSimuladoIndices.length} questões\n`;
+            if (isFinaleira) {
+                message += `• 🔥 FINALEIRA (questões restantes)\n`;
+            }
+            message += `• Será salvo ao FINALIZAR\n\n`;
+        }
+        
+        if (availableCount < QUESTIONS_PER_SIMULADO && availableCount > 0) {
+            message += `⚠️  ATENÇÃO: Só restam ${availableCount} questões!\n`;
+            message += `O próximo simulado será uma "finaleira" com as questões restantes.`;
+        } else if (availableCount === 0) {
+            message += `🎯 CONCLUÍDO: Todas as questões já foram usadas!\n`;
+            message += `Clique em "Limpar Histórico" para recomeçar.`;
+        }
+        
+        alert(message);
+    }
+
+    function updatePendingQuestions() {
+        const pendingList = document.getElementById('pending-list');
+        const pendingCount = document.getElementById('pending-count');
+        const answeredCount = getAnsweredCount();
+        const pending = currentQuestions.length - answeredCount;
+        
+        pendingCount.textContent = pending;
+        
+        if (pending === 0) {
+            pendingList.innerHTML = '<span style="color: #28a745;">✅ Todas</span>';
+            return;
+        }
+        
+        let html = '';
+        let pendingNumbers = [];
+        
+        for (let i = 0; i < currentQuestions.length; i++) {
+            if (userAnswers[i] === null) {
+                pendingNumbers.push(i + 1);
+            }
+        }
+        
+        const maxToShow = 15;
+        const numbersToShow = pendingNumbers.slice(0, maxToShow);
+        
+        numbersToShow.forEach(num => {
+            html += `<span class="pending-number">${num}</span>`;
+        });
+        
+        if (pendingNumbers.length > maxToShow) {
+            html += `<span style="color: #6c757d; font-size: 0.55rem;"> +${pendingNumbers.length - maxToShow}</span>`;
+        }
+        
+        pendingList.innerHTML = html || '<span style="color: #6c757d;">Nenhuma</span>';
+    }
+
+    function initQuiz() {
+        // Carrega histórico existente
+        const savedHistory = localStorage.getItem(HISTORY_KEY);
+        if (savedHistory) {
+            usedQuestionsHistory = JSON.parse(savedHistory);
+        } else {
+            usedQuestionsHistory = [];
+        }
+        
+        // Seleciona questões com lógica inteligente
+        currentQuestions = selectRandomQuestions();
+        TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+        
+        // Atualiza título (mostra "finaleira" se for o caso)
+        updatePageTitle();
+        
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        timeLeft = TIME_LIMIT;
+        currentQuestionIndex = 0;
+        autoNavEnabled = true;
+        
+        document.getElementById('timer').textContent = formatTime(timeLeft);
+        document.getElementById('auto-nav-checkbox').checked = true;
+        
+        updateSimuladoInfo();
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+        updatePendingQuestions();
+    }
+
+    function generateNewSimulado() {
+        const totalAvailable = Math.max(0, masterBank.length - usedQuestionsHistory.length);
+        
+        let message;
+        if (totalAvailable === 0) {
+            message = `Todas as ${masterBank.length} questões já foram usadas!\n\nDeseja reiniciar o histórico e gerar novo simulado?`;
+        } else if (totalAvailable < QUESTIONS_PER_SIMULADO) {
+            message = `Só restam ${totalAvailable} questões disponíveis.\n\nDeseja fazer um simulado com essas ${totalAvailable} questões restantes?`;
+        } else {
+            message = `Gerar novo simulado com ${Math.min(QUESTIONS_PER_SIMULADO, totalAvailable)} questões?`;
+        }
+        
+        if (confirm(message)) {
+            if (totalAvailable === 0) {
+                // Reinicia histórico se não tem mais questões
+                usedQuestionsHistory = [];
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                alert('Histórico reiniciado! Todas as questões estão disponíveis.');
+            }
+            
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('finish-btn').style.display = 'block';
+            document.getElementById('restart-btn').style.display = 'none';
+            document.getElementById('new-simulado-btn').style.display = 'none';
+            document.querySelector('.nav-buttons').style.display = 'flex';
+            
+            // Seleciona novas questões
+            currentQuestions = selectRandomQuestions();
+            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            timeLeft = TIME_LIMIT;
+            currentQuestionIndex = 0;
+            
+            // Atualiza título
+            updatePageTitle();
+            
+            document.getElementById('timer').textContent = formatTime(timeLeft);
+            startTimer();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+            updateFinishButton();
+            updatePendingQuestions();
+            updateSimuladoInfo();
+        }
+    }
+
+    function renderCurrentQuestion() {
+        const container = document.getElementById('quiz-content');
+        
+        if (!currentQuestions || currentQuestions.length === 0) {
+            container.innerHTML = '<div class="question-block-mini">Erro: Nenhuma questão.</div>';
+            return;
+        }
+        
+        const question = currentQuestions[currentQuestionIndex];
+        
+        container.innerHTML = `
+            <div class="question-block-mini">
+                <div class="question-text-mini">
+                    ${currentQuestionIndex + 1}. ${question.q}
+                </div>
+                <div class="options-mini">
+                    ${question.a.map((opt, i) => `
+                        <label class="option-mini" id="option-${i}">
+                            <input type="radio" name="currentQuestion" value="${i}" 
+                                   ${userAnswers[currentQuestionIndex] === i ? 'checked' : ''}
+                                   onchange="selectAnswer(${i})">
+                            ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    function selectAnswer(answerIndex) {
+        userAnswers[currentQuestionIndex] = answerIndex;
+        updateCounters();
+        updateFinishButton();
+        updatePendingQuestions();
+        
+        if (autoNavEnabled && currentQuestionIndex < currentQuestions.length - 1) {
+            setTimeout(() => {
+                nextQuestion();
+            }, 200);
+        }
+    }
+
+    function toggleAutoNav() {
+        autoNavEnabled = !autoNavEnabled;
+        document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+    }
+
+    function getAnsweredCount() {
+        return userAnswers.filter(answer => answer !== null).length;
+    }
+
+    function updateFinishButton() {
+        const finishBtn = document.getElementById('finish-btn');
+        const answeredCount = getAnsweredCount();
+        const allAnswered = answeredCount === currentQuestions.length;
+        
+        finishBtn.disabled = !allAnswered;
+        finishBtn.innerHTML = allAnswered ? '🏁 Finalizar' : `❌ Faltam ${currentQuestions.length - answeredCount}`;
+    }
+
+    function updateNavButtons() {
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        
+        prevBtn.disabled = currentQuestionIndex === 0;
+        nextBtn.disabled = currentQuestionIndex === currentQuestions.length - 1;
+        nextBtn.innerHTML = currentQuestionIndex === currentQuestions.length - 1 ? 'Última' : 'Próximo →';
+    }
+
+    function updateCounters() {
+        const answeredCount = getAnsweredCount();
+        
+        document.getElementById('question-counter').textContent = `${currentQuestionIndex + 1}/${currentQuestions.length}`;
+        document.getElementById('answered-counter').textContent = `${answeredCount}/${currentQuestions.length}`;
+        document.getElementById('progress-percent').textContent = `${currentQuestions.length > 0 ? Math.round((answeredCount / currentQuestions.length) * 100) : 0}%`;
+        document.getElementById('status-count').textContent = `${answeredCount}/${currentQuestions.length}`;
+        
+        updateTimerDisplay();
+    }
+
+    function updateTimerDisplay() {
+        const timerElement = document.getElementById('timer');
+        timerElement.textContent = formatTime(timeLeft);
+        
+        if (timeLeft <= Math.min(300, Math.floor(TIME_LIMIT * 0.25))) {
+            timerElement.classList.add('timer-warning');
+        } else {
+            timerElement.classList.remove('timer-warning');
+        }
+    }
+
+    function startTimer() {
+        clearInterval(timerId);
+        
+        timerId = setInterval(() => {
+            timeLeft--;
+            updateTimerDisplay();
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerId);
+                if (getAnsweredCount() === currentQuestions.length) {
+                    finalizeQuiz();
+                } else {
+                    if (confirm('Tempo esgotado! Deseja finalizar o simulado?')) {
+                        finalizeQuiz();
+                    }
+                }
+            }
+        }, 1000);
+    }
+
+    function nextQuestion() {
+        if (currentQuestionIndex < currentQuestions.length - 1) {
+            currentQuestionIndex++;
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+        }
+    }
+
+    function finalizeQuiz() {
+        clearInterval(timerId);
+        
+        const answeredCount = getAnsweredCount();
+        if (answeredCount !== currentQuestions.length && !confirm(`Respondidas: ${answeredCount}/${currentQuestions.length}. Finalizar?`)) {
+            startTimer();
+            return;
+        }
+        
+        let finalScore = 0;
+        userAnswers.forEach((answer, index) => {
+            if (answer !== null && answer === currentQuestions[index].c) {
+                finalScore++;
+            }
+        });
+        
+        const percent = currentQuestions.length > 0 ? Math.round((finalScore / currentQuestions.length) * 100) : 0;
+        const feedback = document.getElementById('feedback-msg');
+        
+        if (percent >= 70) feedback.textContent = "🎉 Aprovado!";
+        else if (percent >= 50) feedback.textContent = "👍 Quase lá!";
+        else feedback.textContent = "💪 Continue!";
+        
+        feedback.style.color = percent >= 70 ? "var(--success)" : percent >= 50 ? "var(--accent)" : "var(--danger)";
+        
+        // AGORA SIM: Adiciona ao histórico persistente
+        if (currentSimuladoIndices.length > 0) {
+            usedQuestionsHistory.push(...currentSimuladoIndices);
+            
+            // Remove duplicatas
+            usedQuestionsHistory = [...new Set(usedQuestionsHistory)];
+            
+            // Limita o tamanho do histórico
+            if (usedQuestionsHistory.length > MAX_HISTORY_SIZE) {
+                usedQuestionsHistory = usedQuestionsHistory.slice(-MAX_HISTORY_SIZE);
+            }
+            
+            // Salva no localStorage
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+        }
+        
+        // Mostra questões com cores
+        let quizHTML = '';
+        currentQuestions.forEach((question, index) => {
+            const userAnswer = userAnswers[index];
+            const isCorrect = userAnswer === question.c;
+            
+            quizHTML += `
+                <div class="question-block-mini">
+                    <div class="question-text-mini">
+                        ${index + 1}. ${question.q}
+                    </div>
+                    <div class="options-mini">
+                        ${question.a.map((opt, i) => {
+                            let classes = 'option-mini';
+                            if (i === question.c) classes += ' correct-answer';
+                            else if (userAnswer === i && !isCorrect) classes += ' wrong-answer';
+                            
+                            return `<label class="${classes}">
+                                <input type="radio" disabled ${userAnswer === i ? 'checked' : ''}>
+                                ${opt}
+                            </label>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        });
+        
+        document.getElementById('quiz-content').innerHTML = quizHTML;
+        document.getElementById('final-score').textContent = `${finalScore}/${currentQuestions.length}`;
+        document.getElementById('final-percent').textContent = `${percent}%`;
+        
+        const totalQuestions = masterBank.length;
+        const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
+        const percentComplete = totalQuestions > 0 ? Math.round((usedQuestionsHistory.length / totalQuestions) * 100) : 0;
+        
+        let summaryText = '';
+        if (remainingQuestions === 0) {
+            summaryText = `🎯 PARABÉNS! Você completou TODAS as ${totalQuestions} questões!`;
+        } else if (remainingQuestions < QUESTIONS_PER_SIMULADO) {
+            summaryText = `🔥 Restam apenas ${remainingQuestions} questões para a finaleira!<br>Progresso total: ${percentComplete}%`;
+        } else {
+            summaryText = `Questões deste simulado foram adicionadas ao histórico.<br>Restantes: <strong>${remainingQuestions}</strong> | Total usadas: <strong>${usedQuestionsHistory.length}</strong> (${percentComplete}%)`;
+        }
+        
+        document.getElementById('simulado-summary').innerHTML = summaryText;
+        
+        document.querySelector('.nav-buttons').style.display = 'none';
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('finish-btn').style.display = 'none';
+        document.getElementById('restart-btn').style.display = 'block';
+        document.getElementById('new-simulado-btn').style.display = 'block';
+        
+        // Atualiza info do simulado
+        updateSimuladoInfo();
+    }
+
+    function resetQuiz() {
+        if (confirm('Reiniciar este simulado? Suas respostas serão perdidas, mas as questões NÃO serão salvas no histórico.')) {
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            timeLeft = TIME_LIMIT;
+            currentQuestionIndex = 0;
+            
+            startTimer();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+            updateFinishButton();
+            updatePendingQuestions();
+        }
+    }
+
+    function startNewQuiz() {
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        document.getElementById('restart-btn').style.display = 'none';
+        document.getElementById('new-simulado-btn').style.display = 'none';
+        document.querySelector('.nav-buttons').style.display = 'flex';
+        
+        // Usa as MESMAS questões (não gera novas)
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        timeLeft = TIME_LIMIT;
+        currentQuestionIndex = 0;
+        
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+        updatePendingQuestions();
+    }
+
+    // Atalhos de teclado
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') nextQuestion();
+        if (e.key === 'ArrowLeft') prevQuestion();
+    });
+
+    // Inicializar quando a página carregar
+    window.onload = function() {
+        initQuiz();
+    };
+</script>
+
+</body>
+</html>

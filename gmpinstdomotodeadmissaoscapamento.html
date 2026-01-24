@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMP - INSTALAÇÃO DO MOTOR e SISTEMA DE ADMISSÃO E ESCAPAMENTO</title>
+    <style>
+        :root {
+            --primary: #1a3a5a;
+            --accent: #007bff;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 8px;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 100%;
+            background: white;
+            padding: 10px;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* CRÉDITO MAIS DISCRETO */
+        .credits-integrated {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            background: var(--primary);
+            color: white;
+            padding: 1px 4px;
+            font-size: 0.6rem;
+            font-weight: bold;
+            border-radius: 2px;
+            z-index: 10;
+        }
+
+        /* CABEÇALHO MAIS COMPACTO */
+        .header-mini {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding-bottom: 6px;
+            border-bottom: 2px solid var(--primary);
+            z-index: 5;
+            margin-bottom: 8px;
+            padding-top: 20px;
+        }
+
+        .header-mini-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .page-title-mini {
+            margin: 0;
+            color: var(--primary);
+            font-size: 1rem;
+            font-weight: bold;
+            line-height: 1.2;
+            max-width: 70%;
+        }
+
+        /* TIMER MAIS COMPACTO */
+        .timer-compact {
+            background: #f8f9fa;
+            color: var(--primary);
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border: 1px solid #dee2e6;
+            min-width: 55px;
+            text-align: center;
+        }
+
+        .timer-warning {
+            background: #fff5f5 !important;
+            color: var(--danger) !important;
+            border-color: var(--danger) !important;
+        }
+
+        /* INFO BÁSICA MAIS COMPACTA */
+        .quiz-info-mini {
+            background: #f8f9fa;
+            border-radius: 4px;
+            padding: 8px 10px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 6px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            font-size: 0.7rem;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 1px;
+        }
+
+        .info-value {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* CONTROLES COMPACTOS */
+        .controls-compact {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .auto-nav-toggle {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            background: #e9ecef;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .auto-nav-checkbox {
+            transform: scale(1);
+            accent-color: var(--primary);
+        }
+
+        .auto-nav-label {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .reset-btn-mini {
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 4px 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* STATUS MAIS COMPACTO */
+        .completion-status {
+            background: #f8f9fa;
+            border-radius: 4px;
+            padding: 6px 8px;
+            margin: 8px 0;
+            border: 1px solid #dee2e6;
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .status-text {
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-count {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* PENDENTES COMPACTOS */
+        .pending-compact {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 4px 6px;
+            font-size: 0.75rem;
+        }
+
+        .pending-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3px;
+        }
+
+        .pending-count {
+            font-weight: bold;
+            color: #856404;
+        }
+
+        .pending-list-compact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            max-height: 32px;
+            overflow-y: auto;
+        }
+
+        .pending-number {
+            background: #ffc107;
+            color: #856404;
+            font-weight: bold;
+            padding: 1px 4px;
+            border-radius: 2px;
+            font-size: 0.7rem;
+            min-width: 16px;
+            text-align: center;
+        }
+
+        .pending-number.answered {
+            background: #28a745;
+            color: white;
+            opacity: 0.5;
+        }
+
+        /* QUESTÕES MAIS COMPACTAS */
+        .question-block-mini {
+            margin: 10px 0;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            background: #fff;
+        }
+
+        .question-text-mini {
+            font-size: 0.95rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary);
+            line-height: 1.3;
+        }
+
+        .options-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .option-mini {
+            padding: 8px 10px;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+            transform: scale(1);
+            accent-color: var(--primary);
+        }
+
+        .correct-answer {
+            background-color: #d4edda !important;
+            border-color: #28a745 !important;
+            color: #155724;
+        }
+
+        .wrong-answer {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #721c24;
+        }
+
+        /* BOTÕES COMPACTOS */
+        .nav-buttons {
+            display: flex;
+            gap: 8px;
+            margin: 12px 0;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .btn {
+            padding: 12px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        .btn-finish {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-finish:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-restart {
+            background: var(--success);
+            color: white;
+            display: none;
+        }
+
+        /* RESULTADOS COMPACTOS */
+        #results {
+            display: none;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid var(--primary);
+            margin: 12px 0;
+            border-radius: 5px;
+            background: #f8f9fa;
+        }
+
+        .result-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .score-mini {
+            font-size: 1.5rem;
+            margin: 8px 0;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* RESPONSIVIDADE EXTRA */
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+                font-size: 13px;
+            }
+            
+            .container {
+                padding: 8px;
+            }
+            
+            .page-title-mini {
+                font-size: 0.95rem;
+            }
+            
+            .timer-compact {
+                font-size: 0.85rem;
+                min-width: 50px;
+                padding: 3px 6px;
+            }
+            
+            .info-grid {
+                gap: 6px;
+            }
+            
+            .info-label {
+                font-size: 0.65rem;
+            }
+            
+            .info-value {
+                font-size: 0.85rem;
+            }
+            
+            .question-text-mini {
+                font-size: 0.9rem;
+            }
+            
+            .option-mini {
+                padding: 6px 8px;
+                font-size: 0.85rem;
+            }
+            
+            .nav-btn, .btn {
+                padding: 10px;
+                font-size: 0.85rem;
+            }
+            
+            .pending-list-compact {
+                max-height: 28px;
+            }
+            
+            .pending-number {
+                font-size: 0.65rem;
+                padding: 1px 3px;
+                min-width: 14px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .info-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .page-title-mini {
+                font-size: 0.9rem;
+            }
+            
+            .timer-compact {
+                font-size: 0.8rem;
+                min-width: 45px;
+            }
+        }
+
+        /* SCROLL PERSONALIZADO */
+        .pending-list-compact::-webkit-scrollbar {
+            height: 3px;
+        }
+        
+        .pending-list-compact::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 2px;
+        }
+        
+        .pending-list-compact::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- CRÉDITO -->
+    <div class="credits-integrated">BY EWERTON</div>
+    
+    <!-- CABEÇALHO COMPACTO -->
+    <div class="header-mini">
+        <div class="header-mini-top">
+            <h1 class="page-title-mini" id="page-title">Carregando...</h1>
+            <div id="timer" class="timer-compact">00:00</div>
+        </div>
+        
+        <div class="quiz-info-mini">
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Questão</div>
+                    <div class="info-value" id="question-counter">0/0</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Respondidas</div>
+                    <div class="info-value" id="answered-counter">0/0</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Progresso</div>
+                    <div class="info-value" id="progress-percent">0%</div>
+                </div>
+            </div>
+            
+            <div class="controls-compact">
+                <div class="auto-nav-toggle" onclick="toggleAutoNav()">
+                    <input type="checkbox" id="auto-nav-checkbox" class="auto-nav-checkbox" checked>
+                    <label class="auto-nav-label">Auto-navegação</label>
+                </div>
+                <button class="reset-btn-mini" onclick="resetQuiz()">
+                    ↻ Reiniciar
+                </button>
+            </div>
+        </div>
+
+        <!-- STATUS COMPACTO -->
+        <div class="completion-status">
+            <div class="status-header">
+                <span class="status-text">Status:</span>
+                <span class="status-count" id="status-count">0/0</span>
+            </div>
+            <div class="pending-compact" id="pending-questions">
+                <div class="pending-summary">
+                    <span>Pendentes:</span>
+                    <span class="pending-count" id="pending-count">0</span>
+                </div>
+                <div class="pending-list-compact" id="pending-list">
+                    <span style="color: #6c757d; font-style: italic;">Nenhuma pendente</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESULTADOS -->
+    <div id="results">
+        <div class="result-title" id="feedback-msg"></div>
+        <div class="score-mini" id="final-score"></div>
+        <div id="final-percent" style="font-size: 1rem; font-weight: bold; margin-bottom: 10px; color: var(--accent);"></div>
+        <button id="restart-btn" class="btn btn-restart" onclick="startNewQuiz()">🔄 Refazer</button>
+    </div>
+
+    <!-- QUESTÕES -->
+    <div id="quiz-content"></div>
+
+    <!-- BOTÕES DE NAVEGAÇÃO -->
+    <div class="nav-buttons">
+        <button id="prev-btn" class="nav-btn" onclick="prevQuestion()" disabled>
+            ← Anterior
+        </button>
+        <button id="next-btn" class="nav-btn" onclick="nextQuestion()">
+            Próximo →
+        </button>
+    </div>
+
+    <!-- BOTÃO FINALIZAR -->
+    <button id="finish-btn" class="btn btn-finish" onclick="finalizeQuiz()" disabled>
+        🏁 Finalizar
+    </button>
+</div>
+
+<script>
+
+ const masterBank = [
+
+    {q: "Dentre as alternativas abaixo, a parede fogo do motor é confeccionada de:", a: ["borracha", "aluminio", "fibra de vidro", "aço inoxidável"], c: 3},
+    {q: "Em um motor a reação, deve-se realizar a regulagem do motor, quando ocorrer a substituição do(a):", a: ["FCU", "bleed-air", "bomba auxiliar", "bomba principal"], c: 0},
+    {q: "Numa turbina com 36 palhetas foram instaladas 5 delas nas seguintes posições: 1 - 19 - 4 - 22 e 9, sequencialmente a sexta palheta deverá ser instalada na posição:", a: ["25", "27", "32", "34"], c: 1},
+    {q: "Para a remoção do carburador, o procedimento necessário a ser realizado, anteriormente, será:", a: ["retirar o filtro de combustível", "fechar a válvula de corte do combustível", "drenar o tanque de combustível", "fechar a borboleta do carburador"], c: 1},
+    {q: "Quando um motor é guardado numa embalagem para transporte ou num container, alguns agentes desidratantes devem ser usados a finalidade destes agentes é:", a: ["eliminar poeira para preservar o motor", "remover a umidade do ar no ambiente do motor", "conservar a entrada de ar do motor livre de impurezas", "manter o interior do container com temperatura abaixo de zero grau"], c: 1},
+    {q: "A causa de um retorno de chama no motor convencional é o(a):", a: ["decolagem com manete na posição IDLE", "hélice desbalanceada estaticamente", "mistura ar/combustível excessivamente pobre", "hélice desbalanceada dinamicamente"], c: 2},
+    {q: "A seção do motor a turbina em que ocorre o maior índice de rachaduras por calor é a seção de:", a: ["acessórios", "compressão", "escapamento", "entrada de ar"], c: 2},
+    {q: "A unidade do carburador responsável pela medição do fluxo de ar do sistema de indução denomina-se:", a: ["válvula de aceleração", "bóia", "venturi", "marcha lenta"], c: 2},
+    {q: "Dentre as alternativas abaixo, aquela que caracteriza o problema do estol, que normalmente ocorre no compressor do motor a jato, é o(a):", a: ["sangria de ar, através de válvula", "sangria de combustível, através de válvula", "aumento da quantidade de palhetas na turbina", "diminuição da quantidade de palhetas na turbina"], c: 0},
+    {q: "Durante o funcionamento normal do motor a reação é possível que este succione objetos estranhos. Neste caso, diz-se que ocorre uma:", a: ["injeção", "ingestão", "exaustão", "aspiração"], c: 1},
+    {q: "Em relação a válvula de escapamento, a válvula de admissão:", a: ["opera com temperatura mais baixa", "é intercambiável", "tem o tamanho menor", "opera com a mesma temperatura"], c: 0},
+    {q: "Em um carburador, a borboleta tem como função controlar diretamente o(a):", a: ["mistura dosada", "água metanol", "ar fornecido ao motor", "combustível fornecido ao motor"], c: 2},
+    {q: "Em um motor a reação, os montantes aerodinâmicos instalados na seção de escapamento tem a finalidade de:", a: ["orientar os gases para a turbina", "fixar a seção de escapamento no motor", "reduzir a temperatura dos gases de exaustão", "fixar o cone e evitar o turbilhonamento dos gases de exaustão"], c: 3},
+    {q: "No motor a reação, o alinhamento dos gases de escapamento e a fixação do cone interno é feita pelo componente denominado:", a: ["elemento estator do conjunto da turbina", "alheta ejectora da turbina", "longarina radial", "manta de isolamento"], c: 1},
+    {q: "No motor convencional, converter o movimento de rotação do anel de ressaltos, em movimento alternativo para abrir a válvula, é função do(a):", a: ["mola da válvula", "conjunto de tuchos", "conjunto de bielas", "camisa do cilindro"], c: 1},
+    {q: "Nos motores turbolamentados acionados internamente, o controle da temperatura do ar é necessário para não causar:", a: ["redução do fluxo de combustível", "aumento do fluxo de combustível", "aumento da eficiência volumétrica", "redução da eficiência volumétrica"], c: 3},
+    {q: "O estol do motor a reação é corrigido:", a: ["diminuindo o fluxo de ar na entrada do motor", "com sangria de ar quente da seção de escapamento", "com a sangria de ar de um dos estágios do compressor", "aumentando o fluxo de ar frio na câmara de combustão"], c: 2},
+    {q: "O indicador de temperatura dos gases de exaustão emprega como elemento sensitivo:", a: ["termopares, que indicam a soma das temperaturas", "termopares, que indicam a média das temperaturas", "sondas, que indicam a diferença das temperaturas", "sondas, que indicam a totalização das temperaturas"], c: 1},
+    {q: "Os supressores de ruidos utilizados nos motores a reação atuam:", a: ["diminuindo a energia de saída", "aumentando a energia de saída", "diminuindo a frequência do som", "aumentando a frequência do som"], c: 2},
+    {q: "Para reduzir a velocidade no pouso, imediatamente após o toque, de uma aeronave turbo jato, utiliza-se o(a):", a: ["hélice de passo reverso", "ar sangrado do 1º estágio do compressor", "freio das rodas", "reversor de empuxo do motor"], c: 3},
+    {q: "Se a quantidade de combustível tornar-se excessiva em relação à massa do fluxo de ar através do motor, poderá ocorrer:", a: ["aumento do arrasto", "estol de compressor", "estol de sustentação", "diminuição da temperatura"], c: 1},
+    {q: "Se um carburador está regulado para realizar uma mistura de ar/combustível na razão de 12:1, logo, a mistura é formada por:", a: ["treze libras de ar", "doze libras de combustível e uma libra de ar", "doze libras de ar e uma libra de combustível", "treze libras de combustível"], c: 2}
+];
+
+    // VARIÁVEIS DO SISTEMA
+    let TOTAL_QUESTIONS = 0;
+    let TIME_LIMIT = 0;
+    let currentQuestions = [];
+    let userAnswers = [];
+    let timeLeft = 0;
+    let timerId;
+    let currentQuestionIndex = 0;
+    let autoNavEnabled = true;
+
+    // FUNÇÕES PRINCIPAIS
+    function calculateTimeLimit() {
+        return TOTAL_QUESTIONS * 60;
+    }
+
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function updatePendingQuestions() {
+        const pendingList = document.getElementById('pending-list');
+        const pendingCount = document.getElementById('pending-count');
+        const answeredCount = getAnsweredCount();
+        const pending = TOTAL_QUESTIONS - answeredCount;
+        
+        pendingCount.textContent = pending;
+        
+        if (pending === 0) {
+            pendingList.innerHTML = '<span style="color: #28a745;">✅ Todas respondidas</span>';
+            return;
+        }
+        
+        let html = '';
+        let pendingNumbers = [];
+        
+        for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+            if (userAnswers[i] === null) {
+                pendingNumbers.push(i + 1);
+            }
+        }
+        
+        // Mostrar apenas os primeiros 20 números pendentes para não ficar muito longo
+        const maxToShow = 20;
+        const numbersToShow = pendingNumbers.slice(0, maxToShow);
+        
+        numbersToShow.forEach(num => {
+            html += `<span class="pending-number">${num}</span>`;
+        });
+        
+        if (pendingNumbers.length > maxToShow) {
+            html += `<span style="color: #6c757d; font-size: 0.7rem;"> +${pendingNumbers.length - maxToShow} mais</span>`;
+        }
+        
+        pendingList.innerHTML = html || '<span style="color: #6c757d; font-style: italic;">Nenhuma pendente</span>';
+    }
+
+    function initQuiz() {
+        TOTAL_QUESTIONS = masterBank.length;
+        TIME_LIMIT = calculateTimeLimit();
+        
+        document.getElementById('page-title').textContent = 
+            `GMP - INSTALAÇÃO DO MOTOR e SISTEMA DE ADMISSÃO E ESCAPAMENTO - ${TOTAL_QUESTIONS} Questõe${TOTAL_QUESTIONS > 1 ? 's' : ''}`;
+        
+        currentQuestions = [...masterBank].sort(() => Math.random() - 0.5);
+        userAnswers = new Array(TOTAL_QUESTIONS).fill(null);
+        timeLeft = TIME_LIMIT;
+        currentQuestionIndex = 0;
+        autoNavEnabled = true;
+        
+        document.getElementById('timer').textContent = formatTime(timeLeft);
+        document.getElementById('auto-nav-checkbox').checked = true;
+        
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+        updatePendingQuestions();
+    }
+
+    function renderCurrentQuestion() {
+        const container = document.getElementById('quiz-content');
+        const question = currentQuestions[currentQuestionIndex];
+        
+        container.innerHTML = `
+            <div class="question-block-mini">
+                <div class="question-text-mini">
+                    ${currentQuestionIndex + 1}. ${question.q}
+                </div>
+                <div class="options-mini">
+                    ${question.a.map((opt, i) => `
+                        <label class="option-mini" id="option-${i}">
+                            <input type="radio" name="currentQuestion" value="${i}" 
+                                   ${userAnswers[currentQuestionIndex] === i ? 'checked' : ''}
+                                   onchange="selectAnswer(${i})">
+                            ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+
+    function selectAnswer(answerIndex) {
+        userAnswers[currentQuestionIndex] = answerIndex;
+        updateCounters();
+        updateFinishButton();
+        updatePendingQuestions();
+        
+        if (autoNavEnabled && currentQuestionIndex < TOTAL_QUESTIONS - 1) {
+            setTimeout(() => {
+                nextQuestion();
+            }, 300);
+        }
+    }
+
+    function toggleAutoNav() {
+        autoNavEnabled = !autoNavEnabled;
+        document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+    }
+
+    function getAnsweredCount() {
+        return userAnswers.filter(answer => answer !== null).length;
+    }
+
+    function updateFinishButton() {
+        const finishBtn = document.getElementById('finish-btn');
+        const answeredCount = getAnsweredCount();
+        const allAnswered = answeredCount === TOTAL_QUESTIONS;
+        
+        finishBtn.disabled = !allAnswered;
+        finishBtn.innerHTML = allAnswered ? '🏁 Finalizar' : `❌ Falta ${TOTAL_QUESTIONS - answeredCount}`;
+    }
+
+    function updateNavButtons() {
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        
+        prevBtn.disabled = currentQuestionIndex === 0;
+        nextBtn.disabled = currentQuestionIndex === TOTAL_QUESTIONS - 1;
+        nextBtn.innerHTML = currentQuestionIndex === TOTAL_QUESTIONS - 1 ? 'Última' : 'Próximo →';
+    }
+
+    function updateCounters() {
+        const answeredCount = getAnsweredCount();
+        
+        document.getElementById('question-counter').textContent = 
+            `${currentQuestionIndex + 1}/${TOTAL_QUESTIONS}`;
+        document.getElementById('answered-counter').textContent = 
+            `${answeredCount}/${TOTAL_QUESTIONS}`;
+        document.getElementById('progress-percent').textContent = 
+            `${TOTAL_QUESTIONS > 0 ? Math.round((answeredCount / TOTAL_QUESTIONS) * 100) : 0}%`;
+        document.getElementById('status-count').textContent = 
+            `${answeredCount}/${TOTAL_QUESTIONS}`;
+        
+        updateTimerDisplay();
+    }
+
+    function updateTimerDisplay() {
+        const timerElement = document.getElementById('timer');
+        timerElement.textContent = formatTime(timeLeft);
+        
+        if (timeLeft <= Math.min(300, Math.floor(TIME_LIMIT * 0.25))) {
+            timerElement.classList.add('timer-warning');
+        } else {
+            timerElement.classList.remove('timer-warning');
+        }
+    }
+
+    function startTimer() {
+        clearInterval(timerId);
+        
+        timerId = setInterval(() => {
+            timeLeft--;
+            updateTimerDisplay();
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerId);
+                if (getAnsweredCount() === TOTAL_QUESTIONS) {
+                    finalizeQuiz();
+                } else {
+                    if (confirm('Tempo esgotado! Finalizar mesmo assim?')) {
+                        finalizeQuiz();
+                    }
+                }
+            }
+        }, 1000);
+    }
+
+    function nextQuestion() {
+        if (currentQuestionIndex < TOTAL_QUESTIONS - 1) {
+            currentQuestionIndex++;
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+        }
+    }
+
+    function finalizeQuiz() {
+        clearInterval(timerId);
+        
+        const answeredCount = getAnsweredCount();
+        if (answeredCount !== TOTAL_QUESTIONS && !confirm(`Você respondeu ${answeredCount} de ${TOTAL_QUESTIONS}. Finalizar?`)) {
+            startTimer();
+            return;
+        }
+        
+        let finalScore = 0;
+        userAnswers.forEach((answer, index) => {
+            if (answer !== null && answer === currentQuestions[index].c) {
+                finalScore++;
+            }
+        });
+        
+        const percent = TOTAL_QUESTIONS > 0 ? Math.round((finalScore / TOTAL_QUESTIONS) * 100) : 0;
+        const feedback = document.getElementById('feedback-msg');
+        
+        if (percent >= 70) feedback.textContent = "🎉 Parabéns, Você foi aprovado!";
+        else if (percent >= 50) feedback.textContent = "👍 Quase lá, continue estudando!";
+        else feedback.textContent = "💪 Não desanime, continue estudando!";
+        
+        feedback.style.color = percent >= 70 ? "var(--success)" : percent >= 50 ? "var(--accent)" : "var(--danger)";
+        
+        let quizHTML = '';
+        currentQuestions.forEach((question, index) => {
+            const userAnswer = userAnswers[index];
+            const isCorrect = userAnswer === question.c;
+            
+            quizHTML += `
+                <div class="question-block-mini">
+                    <div class="question-text-mini">
+                        ${index + 1}. ${question.q}
+                    </div>
+                    <div class="options-mini">
+                        ${question.a.map((opt, i) => {
+                            let classes = 'option-mini';
+                            if (i === question.c) classes += ' correct-answer';
+                            else if (userAnswer === i && !isCorrect) classes += ' wrong-answer';
+                            
+                            return `<label class="${classes}">
+                                <input type="radio" disabled ${userAnswer === i ? 'checked' : ''}>
+                                ${opt}
+                            </label>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        });
+        
+        document.getElementById('quiz-content').innerHTML = quizHTML;
+        document.getElementById('final-score').textContent = `${finalScore}/${TOTAL_QUESTIONS}`;
+        document.getElementById('final-percent').textContent = `${percent}%`;
+        
+        document.querySelector('.nav-buttons').style.display = 'none';
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('finish-btn').style.display = 'none';
+        document.getElementById('restart-btn').style.display = 'block';
+    }
+
+    function resetQuiz() {
+        if (confirm('Reiniciar simulado?')) {
+            initQuiz();
+        }
+    }
+
+    function startNewQuiz() {
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        document.getElementById('restart-btn').style.display = 'none';
+        document.querySelector('.nav-buttons').style.display = 'flex';
+        initQuiz();
+    }
+
+    // ATALHOS DE TECLADO
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') nextQuestion();
+        if (e.key === 'ArrowLeft') prevQuestion();
+    });
+
+    // INICIAR
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
