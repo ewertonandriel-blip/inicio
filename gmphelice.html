@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GMP - Hélice - 60 questões/title>
+    <title>Simulado GMP</title>
     <style>
         :root {
             --primary: #1a3a5a;
@@ -356,7 +356,7 @@
     <!-- BARRA SUPERIOR ULTRA COMPACTA -->
     <div class="top-bar-compact">
         <div class="title-row">
-            <h1 class="page-title" id="page-title">GMP - Hélice - 60 questões</h1>
+            <h1 class="page-title" id="page-title">GMP - Hélice - Carregando...</h1>
             <div id="timer" class="timer-super-compact">20:00</div>
         </div>
         
@@ -545,7 +545,7 @@
         loadProgress();
         
         const totalQuestions = masterBank.length;
-        document.getElementById('page-title').textContent = `GMP 1/2 - ${totalQuestions} questões`;
+        document.getElementById('page-title').textContent = `GMP - Hélice - ${totalQuestions} questões`;
         
         if (remainingQuestions.length < 20) {
             const lastUsedSet = new Set(currentQuestions.map(q => masterBank.indexOf(q)));
@@ -697,5 +697,3 @@
 </script>
 </body>
 </html>
-
-
