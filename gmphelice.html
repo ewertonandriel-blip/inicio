@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GMP - Hélice - Hangar MMA (Variado)</title>
+    <title>Simulado GMP</title>
     <style>
         :root {
             --primary: #1a3a5a;
@@ -12,7 +12,6 @@
             --success: #28a745;
             --danger: #dc3545;
             --text: #333;
-            --warning: #ffc107;
         }
 
         body {
@@ -21,70 +20,143 @@
             color: var(--text);
             margin: 0;
             padding: 10px;
-            overflow-x: hidden;
-        }
-
-        .credits-pow {
-            position: fixed;
-            top: 5px;
-            right: 10px;
-            background: var(--primary);
-            color: white;
-            padding: 4px 10px;
-            font-size: 0.7rem;
-            font-weight: bold;
-            border-radius: 4px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-            z-index: 2000;
-            transform-origin: center;
-            animation: pow-appearance 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            letter-spacing: 0.5px;
-        }
-
-        @keyframes pow-appearance {
-            0% { transform: scale(0) rotate(-20deg); opacity: 0; }
-            80% { transform: scale(1.2) rotate(5deg); }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
 
         .container {
             max-width: 900px;
             margin: 0 auto;
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative; /* Para o crédito absoluto */
         }
 
-        .header-sticky {
+        /* CRÉDITO INTEGRADO - DENTRO DO CONTAINER */
+        .credits-integrated {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 2px 6px;
+            font-size: 0.65rem;
+            font-weight: bold;
+            border-radius: 3px;
+            z-index: 10;
+        }
+
+        /* BARRA SUPERIOR COMPACTA */
+        .top-bar-compact {
             position: sticky;
             top: 0;
             background: white;
-            padding: 15px;
-            border-bottom: 3px solid var(--primary);
-            z-index: 1000;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary);
+            z-index: 5;
+            margin-bottom: 10px;
+            padding-top: 25px; /* Espaço para o crédito */
+        }
+
+        .title-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 5px;
         }
 
-        .timer {
-            font-size: 1.5rem;
+        .page-title {
+            margin: 0;
+            color: var(--primary);
+            font-size: 1.1rem;
             font-weight: bold;
-            color: var(--danger);
-            background: #fff5f5;
-            padding: 5px 15px;
-            border-radius: 5px;
-            border: 1px solid var(--danger);
+            line-height: 1.2;
         }
 
+        /* TIMER SUPER COMPACTO */
+        .timer-super-compact {
+            background: #fff5f5;
+            color: var(--danger);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border: 1.5px solid var(--danger);
+            white-space: nowrap;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        /* PROGRESSO ULTRA COMPACTO */
+        .progress-ultra-compact {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 8px 10px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 5px;
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 2px;
+        }
+
+        .stat-value {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .progress-mini-bar {
+            height: 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+
+        .progress-mini-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success) 0%, var(--accent) 100%);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .reset-btn-mini {
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            padding: 4px 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 3px;
+        }
+
+        /* CONTEÚDO DO SIMULADO */
         .question-block {
-            margin: 25px 0;
-            padding: 20px;
+            margin: 15px 0;
+            padding: 15px;
             border: 1px solid #e0e0e0;
-            border-radius: 8px;
+            border-radius: 6px;
             background: #fff;
-            transition: all 0.3s;
         }
 
         .pending {
@@ -93,103 +165,247 @@
         }
 
         .question-text {
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: bold;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             color: var(--primary);
+            line-height: 1.3;
         }
 
         .options-group {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 6px;
         }
 
         .option-label {
-            padding: 12px;
-            border: 2px solid #eee;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-        }
-
-        .option-label:hover { background-color: #f0f7ff; }
-        input[type="radio"] { margin-right: 15px; transform: scale(1.2); }
-
-        .correct-answer { background-color: #d4edda !important; border-color: #28a745 !important; color: #155724; font-weight: bold; }
-        .wrong-answer { background-color: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
-
-        .btn {
-            padding: 15px 30px;
-            font-size: 1rem;
-            font-weight: bold;
-            border: none;
+            padding: 10px;
+            border: 1px solid #eee;
             border-radius: 5px;
             cursor: pointer;
-            width: 100%;
-            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
         }
 
-        .btn-finish { background: var(--primary); color: white; margin-top: 20px; }
-        .btn-restart { background: var(--success); color: white; display: none; margin-top: 20px; }
+        input[type="radio"] { 
+            margin-right: 10px; 
+            transform: scale(1.1);
+            accent-color: var(--primary);
+        }
 
+        .correct-answer { 
+            background-color: #d4edda !important; 
+            border-color: #28a745 !important; 
+            color: #155724; 
+            font-weight: bold; 
+        }
+        
+        .wrong-answer { 
+            background-color: #f8d7da !important; 
+            border-color: #dc3545 !important; 
+            color: #721c24; 
+        }
+
+        /* BOTÕES */
+        .btn {
+            padding: 12px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn-finish { 
+            background: var(--primary); 
+            color: white; 
+        }
+
+        .btn-restart { 
+            background: var(--success); 
+            color: white; 
+            display: none;
+        }
+
+        /* RESULTADOS */
         #results {
             display: none;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
-            border: 3px solid var(--primary);
-            margin: 20px 0;
-            border-radius: 12px;
-            background-color: #ffffff;
+            border: 2px solid var(--primary);
+            margin: 15px 0;
+            border-radius: 8px;
+            background: #f8f9fa;
         }
 
         .motivational-msg {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             font-weight: bold;
             margin-bottom: 10px;
-            display: block;
+            color: var(--primary);
         }
 
-        .score-box { font-size: 2.2rem; margin: 10px 0; font-weight: 800; }
+        .score-box { 
+            font-size: 1.5rem; 
+            margin: 10px 0; 
+            font-weight: 800; 
+            color: var(--primary);
+        }
+
+        /* RESPONSIVIDADE */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .page-title {
+                font-size: 1rem;
+            }
+            
+            .timer-super-compact {
+                font-size: 0.85rem;
+                padding: 3px 6px;
+                min-width: 55px;
+            }
+            
+            .stat-value {
+                font-size: 0.9rem;
+            }
+            
+            .stat-label {
+                font-size: 0.65rem;
+            }
+            
+            .question-text {
+                font-size: 0.95rem;
+            }
+        }
         
-        @media (max-width: 600px) {
-            .header-sticky { flex-direction: column; gap: 10px; }
-            .container { padding: 10px; }
-            .credits-pow { font-size: 0.6rem; padding: 2px 6px; }
+        @media (max-width: 480px) {
+            .title-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .timer-super-compact {
+                align-self: flex-end;
+                margin-top: -25px;
+            }
+            
+            .progress-stats {
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                min-width: 33%;
+                margin-bottom: 3px;
+            }
+            
+            .question-block {
+                padding: 12px;
+            }
+            
+            .option-label {
+                padding: 8px;
+                font-size: 0.85rem;
+            }
+            
+            /* Ajuste para o crédito em telas pequenas */
+            .credits-integrated {
+                top: 3px;
+                right: 8px;
+                font-size: 0.6rem;
+                padding: 1px 4px;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .container {
+                padding: 8px;
+            }
+            
+            .page-title {
+                font-size: 0.95rem;
+            }
+            
+            .timer-super-compact {
+                font-size: 0.8rem;
+                min-width: 50px;
+            }
+            
+            .stat-value {
+                font-size: 0.85rem;
+            }
+            
+            .stat-label {
+                font-size: 0.6rem;
+            }
         }
     </style>
 </head>
 <body>
 
-<div class="credits-pow">BY EWERTON</div>
-
 <div class="container">
-    <div class="header-sticky">
-        <div>
-            <h2 style="margin:0; color: var(--primary);">GMP - Hélice - Hangar MMA</h2>
-            <small id="q-counter">Questões: 1 a 60</small>
+    <!-- CRÉDITO DENTRO DO CONTAINER -->
+    <div class="credits-integrated">BY EWERTON</div>
+    
+    <!-- BARRA SUPERIOR ULTRA COMPACTA -->
+    <div class="top-bar-compact">
+        <div class="title-row">
+            <h1 class="page-title" id="page-title">GMP - Hélice - Carregando...</h1>
+            <div id="timer" class="timer-super-compact">20:00</div>
         </div>
-        <div id="timer" class="timer">60:00</div>
+        
+        <div class="progress-ultra-compact">
+            <div class="progress-stats">
+                <div class="stat-item">
+                    <div class="stat-label">Questões</div>
+                    <div class="stat-value" id="current-range">1-20</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Total</div>
+                    <div class="stat-value" id="total-questions">60</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Restantes</div>
+                    <div class="stat-value" id="remaining-count">40</div>
+                </div>
+            </div>
+            
+            <div class="progress-mini-bar">
+                <div class="progress-mini-fill" id="progress-bar"></div>
+            </div>
+            
+            <button class="reset-btn-mini" onclick="resetProgress()">
+                ↻ Reiniciar Progresso
+            </button>
+        </div>
     </div>
 
+    <!-- RESULTADOS -->
     <div id="results">
         <span id="feedback-msg" class="motivational-msg"></span>
         <div class="score-box" id="final-score"></div>
-        <div id="final-percent" style="font-size: 1.3rem; font-weight: bold; margin-bottom: 15px;"></div>
-        <p style="color: #666; font-size: 1rem; font-weight: bold;">Confira abaixo o gabarito detalhado:</p>
-        <button id="restart-btn" class="btn btn-restart" onclick="location.reload()">Reiniciar Simulado</button>
+        <div id="final-percent" style="font-size: 1rem; font-weight: bold; margin-bottom: 10px; color: var(--accent);"></div>
+        <p style="color: #666; font-size: 0.9rem; margin-bottom: 12px;">Confira abaixo o gabarito:</p>
+        <button id="restart-btn" class="btn btn-restart" onclick="startNewQuiz()">▶️ Novo Simulado</button>
     </div>
 
+    <!-- QUESTÕES -->
     <div id="quiz-content"></div>
 
-    <button id="finish-btn" class="btn btn-finish" onclick="finalizeQuiz()">Finalizar Simulado</button>
+    <!-- BOTÃO FINALIZAR -->
+    <button id="finish-btn" class="btn btn-finish" onclick="finalizeQuiz()">✅ Finalizar Simulado</button>
 </div>
 
 <script>
-    // BANCO DE DADOS COM AS 64 QUESTÕES E RESPOSTAS EMBARALHADAS
-    const masterBank = [
+  
+ const masterBank = [
+
     {q: "Uma parada do motor em decorrência de colisão de uma ou mais pás de hélice com um objeto, de modo que o motor pare antes que a hélice complete uma volta, denomina-se:", a: ["retorno de chama", "calço hidráulico", "parada brusca", "corte de motor"], c: 2},
     {q: "A distância que a hélice realmente percorre, denomina-se passo:", a: ["teórico", "efetivo", "de recuo", "geométrico"], c: 1},
     {q: "A energia calorifica para o controle do degelo da pá da hélice é realizada através de:", a: ["energia hidráulica", "ar quente, oriundo do compressor", "ar quente, oriundo do escapamento", "energia elétrica"], c: 3},
@@ -252,71 +468,179 @@
     {q: "Uma hélice reversível é uma hélice:", a: ["em que o ângulo da pá pode ser mudado para um valor negativo, durante a operação", "em que o ângulo da pá diminui o suficiente para evitar que o motor reduza sua rotação", "que é usada como freio aerodinâmico e que aumenta a corrida da aeronave após o pouso", "que, na condição de falha do motor, muda o passo para que reduza ao mínimo a resistência ao avanço"], c: 0}
 ];
 
+
+    // Sistema de controle
+    let remainingQuestions = [];
+    let usedQuestions = [];
     let currentQuestions = [];
-    let timeLeft = 3600;
-    let timerInterval;
+    let timeLeft = 20 * 60;
+    let timerId;
+
+    // Funções
+    function saveProgress() {
+        const progress = {
+            remainingIndices: remainingQuestions.map(q => masterBank.indexOf(q)),
+            usedIndices: usedQuestions.map(q => masterBank.indexOf(q))
+        };
+        localStorage.setItem('gmpQuizProgress', JSON.stringify(progress));
+    }
+
+    function loadProgress() {
+        const saved = localStorage.getItem('gmpQuizProgress');
+        if (saved) {
+            try {
+                const progress = JSON.parse(saved);
+                remainingQuestions = progress.remainingIndices
+                    .map(idx => masterBank[idx])
+                    .filter(q => q !== undefined);
+                usedQuestions = progress.usedIndices
+                    .map(idx => masterBank[idx])
+                    .filter(q => q !== undefined);
+            } catch (e) {
+                resetProgressData();
+            }
+        } else {
+            resetProgressData();
+        }
+    }
+
+    function resetProgressData() {
+        remainingQuestions = [...masterBank];
+        usedQuestions = [];
+    }
+
+    function resetProgress() {
+        if (confirm('Reiniciar progresso?')) {
+            localStorage.removeItem('gmpQuizProgress');
+            resetProgressData();
+            startNewQuiz();
+        }
+    }
+
+    function updateCounter() {
+        const total = masterBank.length;
+        const used = usedQuestions.length;
+        const remaining = remainingQuestions.length;
+        const currentStart = used + 1;
+        const currentEnd = Math.min(used + 20, total);
+        const progressPercentage = Math.round((used / total) * 100);
+        
+        document.getElementById('current-range').textContent = `${currentStart}-${currentEnd}`;
+        document.getElementById('total-questions').textContent = total;
+        document.getElementById('remaining-count').textContent = remaining;
+        
+        const progressBar = document.getElementById('progress-bar');
+        progressBar.style.width = `${progressPercentage}%`;
+        
+        if (progressPercentage < 30) {
+            progressBar.style.background = 'linear-gradient(90deg, #dc3545 0%, #ff6b6b 100%)';
+        } else if (progressPercentage < 70) {
+            progressBar.style.background = 'linear-gradient(90deg, #ffc107 0%, #ffd54f 100%)';
+        } else {
+            progressBar.style.background = 'linear-gradient(90deg, #28a745 0%, #5cb85c 100%)';
+        }
+    }
 
     function initQuiz() {
-        // Embaralha a ordem das questões para cada tentativa ser diferente
-        currentQuestions = [...masterBank].sort(() => 0.5 - Math.random());
-        const container = document.getElementById('quiz-content');
-        container.innerHTML = "";
+        loadProgress();
+        
+        const totalQuestions = masterBank.length;
+        document.getElementById('page-title').textContent = `GMP 1/2 - ${totalQuestions} questões`;
+        
+        if (remainingQuestions.length < 20) {
+            const lastUsedSet = new Set(currentQuestions.map(q => masterBank.indexOf(q)));
+            resetProgressData();
+            
+            if (lastUsedSet.size > 0) {
+                remainingQuestions = remainingQuestions.filter((q, idx) => !lastUsedSet.has(idx));
+            }
+            
+            if (remainingQuestions.length < 20) {
+                remainingQuestions = [...masterBank];
+            }
+        }
+        
+        const shuffled = [...remainingQuestions].sort(() => 0.5 - Math.random());
+        currentQuestions = shuffled.slice(0, 20);
+        
+        currentQuestions.forEach(q => {
+            const index = remainingQuestions.indexOf(q);
+            if (index > -1) {
+                remainingQuestions.splice(index, 1);
+                usedQuestions.push(q);
+            }
+        });
+        
+        renderQuiz();
+        startTimer();
+        updateCounter();
+        saveProgress();
+    }
 
+    function renderQuiz() {
+        const container = document.getElementById('quiz-content');
+        container.innerHTML = '';
         currentQuestions.forEach((item, idx) => {
-            const card = document.createElement('div');
-            card.className = 'question-block';
-            card.id = `block-${idx}`;
-            card.innerHTML = `
+            const block = document.createElement('div');
+            block.className = 'question-block';
+            block.id = `block-${idx}`;
+            block.innerHTML = `
                 <div class="question-text">${idx + 1}. ${item.q}</div>
                 <div class="options-group">
-                    ${item.a.map((opt, optIdx) => `
-                        <label class="option-label" id="label-${idx}-${optIdx}">
-                            <input type="radio" name="q${idx}" value="${optIdx}" onclick="markAsAnswered(${idx})">
-                            ${String.fromCharCode(97 + optIdx)}) ${opt}
+                    ${item.a.map((opt, i) => `
+                        <label class="option-label" id="label-${idx}-${i}">
+                            <input type="radio" name="q${idx}" value="${i}" onchange="removePending(${idx})"> ${opt}
                         </label>
                     `).join('')}
                 </div>
             `;
-            container.appendChild(card);
+            container.appendChild(block);
         });
-        startTimer();
     }
 
-    function markAsAnswered(idx) {
-        document.getElementById(`block-${idx}`).classList.remove('pending');
+    function removePending(idx) {
+        const block = document.getElementById(`block-${idx}`);
+        block.classList.remove('pending');
     }
 
     function startTimer() {
-        timerInterval = setInterval(() => {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            document.getElementById('timer').innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-            if (timeLeft <= 0) finalizeQuiz(true);
+        clearInterval(timerId);
+        const timerElement = document.getElementById('timer');
+        
+        timerId = setInterval(() => {
             timeLeft--;
+            const mins = Math.floor(timeLeft / 60);
+            const secs = timeLeft % 60;
+            timerElement.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+            
+            if (timeLeft <= 0) {
+                finalizeQuiz();
+            }
         }, 1000);
     }
 
-    function finalizeQuiz(isTimeUp = false) {
-        let unanswered = [];
-        if (!isTimeUp) {
-            currentQuestions.forEach((_, idx) => {
-                const radios = document.getElementsByName(`q${idx}`);
-                let checked = false;
-                radios.forEach(r => { if(r.checked) checked = true; });
-                if (!checked) {
-                    unanswered.push(idx);
-                    document.getElementById(`block-${idx}`).classList.add('pending');
-                }
-            });
-            if (unanswered.length > 0) {
-                alert(`⚠️ Faltam ${unanswered.length} questões. Elas foram sinalizadas em vermelho.`);
-                document.getElementById(`block-${unanswered[0]}`).scrollIntoView({ behavior: 'smooth', block: 'center' });
-                return;
+    function finalizeQuiz() {
+        clearInterval(timerId);
+        
+        let correctCount = 0;
+        let allAnswered = true;
+
+        currentQuestions.forEach((item, idx) => {
+            const radios = document.getElementsByName(`q${idx}`);
+            let answered = false;
+            radios.forEach(r => { if(r.checked) answered = true; });
+
+            if (!answered) {
+                document.getElementById(`block-${idx}`).classList.add('pending');
+                allAnswered = false;
             }
+        });
+
+        if (!allAnswered) {
+            alert("Responda todas as questões!");
+            return;
         }
 
-        clearInterval(timerInterval);
-        let correctCount = 0;
         currentQuestions.forEach((item, idx) => {
             const radios = document.getElementsByName(`q${idx}`);
             let selected = -1;
@@ -335,19 +659,37 @@
         const feedback = document.getElementById('feedback-msg');
         
         if (percent >= 70) {
-            feedback.innerText = "🎉 Meus Parabéns! Você foi aprovado!";
+            feedback.textContent = "🎉 Parabéns! Aprovado!";
             feedback.style.color = "var(--success)";
+        } else if (percent >= 50) {
+            feedback.textContent = "👍 Boa tentativa!";
+            feedback.style.color = "var(--warning)";
         } else {
-            feedback.innerText = "💪 Não desista! Continue estudando para atingir os 70%.";
+            feedback.textContent = "💪 Continue estudando!";
             feedback.style.color = "var(--danger)";
         }
 
         document.getElementById('results').style.display = 'block';
-        document.getElementById('final-score').innerText = `Acertos: ${correctCount} de ${currentQuestions.length}`;
-        document.getElementById('final-percent').innerText = `Aproveitamento: ${percent}%`;
+        document.getElementById('final-score').textContent = `Acertos: ${correctCount}/${currentQuestions.length}`;
+        document.getElementById('final-percent').textContent = `${percent}%`;
         document.getElementById('finish-btn').style.display = 'none';
         document.getElementById('restart-btn').style.display = 'block';
         
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        saveProgress();
+    }
+
+    function startNewQuiz() {
+        clearInterval(timerId);
+        timeLeft = 20 * 60;
+        
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        document.getElementById('restart-btn').style.display = 'none';
+        
+        document.getElementById('timer').textContent = '20:00';
+        
+        initQuiz();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -355,19 +697,3 @@
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
