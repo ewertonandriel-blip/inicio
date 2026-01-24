@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GMP - Operação de Manutenção do Motor</title>
+    <title>GMP - OPERAÇÃO DE MANUTENÇÃO DO MOTOR</title>
     <style>
         :root {
             --primary: #1a3a5a;
@@ -485,7 +485,7 @@
             <div class="controls-compact">
                 <div class="auto-nav-toggle" onclick="toggleAutoNav()">
                     <input type="checkbox" id="auto-nav-checkbox" class="auto-nav-checkbox" checked>
-                    <label class="auto-nav-label">Navegação automática</label>
+                    <label class="auto-nav-label">Auto-navegação</label>
                 </div>
                 <button class="reset-btn-mini" onclick="resetQuiz()">
                     ↻ Reiniciar
@@ -622,7 +622,7 @@
         TIME_LIMIT = calculateTimeLimit();
         
         document.getElementById('page-title').textContent = 
-            `GMP - Operação de Manutenção do Motor - ${TOTAL_QUESTIONS} Questão${TOTAL_QUESTIONS > 1 ? 's' : ''}`;
+            `GMP - OPERAÇÃO DE MANUTENÇÃO DO MOTOR - ${TOTAL_QUESTIONS} Questõe${TOTAL_QUESTIONS > 1 ? 's' : ''}`;
         
         currentQuestions = [...masterBank].sort(() => Math.random() - 0.5);
         userAnswers = new Array(TOTAL_QUESTIONS).fill(null);
