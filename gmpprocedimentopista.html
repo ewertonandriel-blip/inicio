@@ -243,6 +243,7 @@
             border: 1px solid #e0e0e0;
             border-radius: 5px;
             background: #fff;
+            position: relative;
         }
 
         .question-text-mini {
@@ -285,6 +286,53 @@
             background-color: #f8d7da !important;
             border-color: #dc3545 !important;
             color: #721c24;
+        }
+
+        /* BOTÃO DE REPORTAR NAS QUESTÕES */
+        .report-btn {
+            background: transparent;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+            border-radius: 2px;
+            padding: 4px 8px;
+            font-size: 0.65rem;
+            cursor: pointer;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: all 0.2s;
+        }
+
+        .report-btn:hover {
+            background: #f8f9fa;
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        /* BOTÃO DE REPORTAR NO GABARITO (canto superior direito) */
+        .report-gabarito-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: transparent;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+            border-radius: 2px;
+            padding: 2px 6px;
+            font-size: 0.6rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            transition: all 0.2s;
+            z-index: 2;
+        }
+
+        .report-gabarito-btn:hover {
+            background: #f8f9fa;
+            color: var(--danger);
+            border-color: var(--danger);
         }
 
         /* BOTÕES COMPACTOS */
@@ -364,6 +412,258 @@
             color: var(--primary);
         }
 
+        /* MODAL DE REPORTE - NOVO */
+        .report-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .report-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 95%;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .report-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        .report-question-info {
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .report-question-info strong {
+            color: var(--primary);
+        }
+
+        .report-section {
+            margin-bottom: 15px;
+        }
+
+        .report-section-title {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .report-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .report-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .report-option:hover {
+            background: #f8f9fa;
+            border-color: var(--accent);
+        }
+
+        .report-option input[type="radio"] {
+            margin: 0;
+            transform: scale(0.9);
+        }
+
+        .report-option label {
+            font-size: 0.75rem;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        /* FORMULÁRIO DE IDENTIFICAÇÃO */
+        .user-info-form {
+            background: #f0f8ff;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #cce5ff;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.1);
+        }
+
+        .form-input.error {
+            border-color: var(--danger);
+            background-color: #fff5f5;
+        }
+
+        .form-hint {
+            font-size: 0.65rem;
+            color: #6c757d;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .required-star {
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        .report-textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            resize: vertical;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .report-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.1);
+        }
+
+        .report-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .report-submit {
+            flex: 2;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .report-submit:hover {
+            background: #0d2c4a;
+        }
+
+        .report-submit:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .report-cancel {
+            flex: 1;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .report-cancel:hover {
+            background: #545b62;
+        }
+
+        .report-success {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 15px;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+
+        .report-error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            text-align: center;
+            margin-top: 10px;
+            border: 1px solid #f5c6cb;
+            display: none;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* RESPONSIVIDADE EXTRA */
         @media (max-width: 480px) {
             body {
@@ -419,6 +719,14 @@
                 font-size: 0.65rem;
                 padding: 1px 3px;
                 min-width: 14px;
+            }
+            
+            .report-content {
+                padding: 15px;
+            }
+            
+            .report-buttons {
+                flex-direction: column;
             }
         }
 
@@ -538,10 +846,104 @@
     </button>
 </div>
 
+<!-- MODAL DE REPORTE - NOVO -->
+<div id="reportModal" class="report-modal">
+    <div class="report-content">
+        <div class="report-title">📝 Reportar Questão</div>
+        
+        <div class="report-question-info">
+            <div><strong>Questão #<span id="reportQuestionNumber">1</span></strong></div>
+            <div id="reportQuestionText" style="font-size: 0.75rem; margin-top: 5px;">Carregando...</div>
+        </div>
+        
+        <!-- SEÇÃO: TIPO DE PROBLEMA -->
+        <div class="report-section">
+            <div class="report-section-title">📌 Tipo de Problema</div>
+            <div class="report-options">
+                <div class="report-option">
+                    <input type="radio" id="reportError" name="reportType" value="error">
+                    <label for="reportError">❌ Questão com erro</label>
+                </div>
+                <div class="report-option">
+                    <input type="radio" id="reportWrongAnswer" name="reportType" value="wrong_answer">
+                    <label for="reportWrongAnswer">⚠️ Resposta incorreta</label>
+                </div>
+                <div class="report-option">
+                    <input type="radio" id="reportConfusing" name="reportType" value="confusing">
+                    <label for="reportConfusing">🤔 Enunciado confuso</label>
+                </div>
+                <div class="report-option">
+                    <input type="radio" id="reportAlternative" name="reportType" value="alternative">
+                    <label for="reportAlternative">🔤 Alternativas erradas</label>
+                </div>
+                <div class="report-option">
+                    <input type="radio" id="reportOther" name="reportType" value="other">
+                    <label for="reportOther">📝 Outro problema</label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SEÇÃO: SUA IDENTIFICAÇÃO -->
+        <div class="report-section">
+            <div class="report-section-title">👤 Sua Identificação <span class="required-star">*</span></div>
+            <div class="user-info-form">
+                <div class="form-group">
+                    <label class="form-label" for="userName">Nome Completo <span class="required-star">*</span></label>
+                    <input type="text" id="userName" class="form-input" placeholder="Digite seu nome completo" maxlength="100">
+                    <span class="form-hint">Para podermos entrar em contato com você</span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="userEmail">E-mail <span class="required-star">*</span></label>
+                    <input type="email" id="userEmail" class="form-input" placeholder="seu.email@exemplo.com" maxlength="100">
+                    <span class="form-hint">Para enviarmos o feedback sobre sua solicitação</span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="userInfo">Instituição/Curso (opcional)</label>
+                    <input type="text" id="userInfo" class="form-input" placeholder="Ex: SENAI, Engenharia Mecânica" maxlength="100">
+                    <span class="form-hint">Ajuda a identificar o contexto do reporte</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SEÇÃO: DETALHES -->
+        <div class="report-section">
+            <div class="report-section-title">📋 Detalhes do Problema</div>
+            <textarea 
+                id="reportDetails" 
+                class="report-textarea" 
+                placeholder="Descreva detalhadamente o problema encontrado na questão. Se achar que há erro na resposta, explique sua justificativa..."
+                maxlength="1000"
+            ></textarea>
+            <div class="form-hint" style="text-align: right;">
+                <span id="charCount">0</span>/1000 caracteres
+            </div>
+        </div>
+        
+        <div id="reportErrorMsg" class="report-error"></div>
+        
+        <div class="report-buttons">
+            <button id="cancelReport" class="report-cancel">Cancelar</button>
+            <button id="submitReport" class="report-submit">
+                <span id="submitText">Enviar Reporte</span>
+                <span id="submitLoading" class="loading-spinner" style="display: none;"></span>
+            </button>
+        </div>
+        
+        <div id="reportSuccess" class="report-success">
+            ✅ Reporte enviado com sucesso! Obrigado pela contribuição.<br>
+            <small>Você receberá um feedback por email em breve.</small>
+        </div>
+    </div>
+</div>
+
 <script>
-
- const masterBank = [
-
+    // ============================================
+    // BANCO DE QUESTÕES
+    // ============================================
+    const masterBank = [
+ 
   {q: "Aeronaves equipadas com trem de pouso triciclo são geralmente rebocadas:", a: ["Para frente", "Para trás", "Com a ajuda das mãos", "Sem o uso de reboques"], c: 0},
     {q: "As barras de reboque normalmente são projetadas e construídas pelos:", a: ["Operadores da aeronave", "Donos da aeronave", "Fabricantes da aeronave", "Órgão regulamentador"], c: 2},
     {q: "As GPU´s normalmente são usadas para:", a: ["Fornecer energia elétrica à aeronave", "Fornecer energia pneumática à aeronave", "Fornecer energia hidráulica para os sistemas da aeronave", "Fornecer ar condicionado para a aeronave"], c: 0},
@@ -564,8 +966,13 @@
     {q: "Tipo de partida onde o RPM permanece em um valor baixo, em vez de aumentar até a rotação normal:", a: ["Partida falsa ou hung start", "Partida quente (hot start)", "Partida lenta ou travada", "Partida low RPM"], c: 0}
 ];
 
-
-    // VARIÁVEIS DO SISTEMA
+    // ============================================
+    // CONFIGURAÇÕES DO SISTEMA
+    // ============================================
+    const API_URL = "https://script.google.com/macros/s/AKfycbwcX8bNdrDQZ6sRB1sbG0COJe7aGYyBlOCPkno2JxbM-59_-FsWt4LCccUQ8DBLTy1S5g/exec";
+    const EMAIL_DESTINO = "ewerton.andriel@hotmail.com";
+    
+    // VARIÁVEIS DO QUIZ
     let TOTAL_QUESTIONS = 0;
     let TIME_LIMIT = 0;
     let currentQuestions = [];
@@ -574,8 +981,24 @@
     let timerId;
     let currentQuestionIndex = 0;
     let autoNavEnabled = true;
+    
+    // VARIÁVEIS DO SISTEMA DE REPORTE
+    let currentReportQuestionIndex = null;
+    let reportsHistory = [];
 
-    // FUNÇÕES PRINCIPAIS
+    // TIPOS DE REPORTE
+    const REPORT_TYPES = {
+        error: "❌ Questão com erro",
+        wrong_answer: "⚠️ Resposta incorreta", 
+        confusing: "🤔 Enunciado confuso",
+        alternative: "🔤 Alternativas erradas",
+        other: "📝 Outro problema"
+    };
+    
+    // ============================================
+    // FUNÇÕES DO QUIZ
+    // ============================================
+    
     function calculateTimeLimit() {
         return TOTAL_QUESTIONS * 60;
     }
@@ -608,7 +1031,7 @@
             }
         }
         
-        // Mostrar apenas os primeiros 20 números pendentes para não ficar muito longo
+        // Mostrar apenas os primeiros 20 números pendentes
         const maxToShow = 20;
         const numbersToShow = pendingNumbers.slice(0, maxToShow);
         
@@ -666,6 +1089,10 @@
                         </label>
                     `).join('')}
                 </div>
+                <!-- BOTÃO DE REPORTAR (DURANTE O SIMULADO) -->
+                <button class="report-btn" onclick="openReportModal(${currentQuestionIndex})">
+                    <span>⚠️</span> Reportar Problema
+                </button>
             </div>
         `;
     }
@@ -806,6 +1233,11 @@
             
             quizHTML += `
                 <div class="question-block-mini">
+                    <!-- BOTÃO DE REPORTAR NO GABARITO -->
+                    <button class="report-gabarito-btn" onclick="openReportModal(${index})" title="Reportar problema nesta questão">
+                        ⚠️
+                    </button>
+                    
                     <div class="question-text-mini">
                         ${index + 1}. ${question.q}
                     </div>
@@ -849,14 +1281,306 @@
         initQuiz();
     }
 
-    // ATALHOS DE TECLADO
+    // ============================================
+    // SISTEMA DE REPORTE AVANÇADO
+    // ============================================
+    
+    function initReportSystem() {
+        // Configura eventos do modal
+        document.getElementById('cancelReport').onclick = closeReportModal;
+        document.getElementById('submitReport').onclick = submitReport;
+        
+        // Fecha modal ao clicar fora
+        document.getElementById('reportModal').onclick = function(e) {
+            if (e.target.id === 'reportModal') {
+                closeReportModal();
+            }
+        };
+        
+        // Contador de caracteres
+        const reportDetails = document.getElementById('reportDetails');
+        const charCount = document.getElementById('charCount');
+        
+        if (reportDetails && charCount) {
+            reportDetails.addEventListener('input', function() {
+                charCount.textContent = this.value.length;
+                if (this.value.length > 1000) {
+                    this.value = this.value.substring(0, 1000);
+                    charCount.textContent = 1000;
+                }
+            });
+        }
+        
+        // Limpa erros ao digitar
+        const inputs = document.querySelectorAll('.form-input');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.classList.contains('error')) {
+                    this.classList.remove('error');
+                    hideError();
+                }
+            });
+        });
+    }
+
+    function openReportModal(questionIndex) {
+        currentReportQuestionIndex = questionIndex;
+        
+        // Verifica se há questões carregadas
+        if (!currentQuestions || currentQuestions.length === 0) {
+            alert("Não há questões carregadas.");
+            return;
+        }
+        
+        const question = currentQuestions[questionIndex];
+        
+        // Atualiza informações no modal
+        document.getElementById('reportQuestionNumber').textContent = questionIndex + 1;
+        
+        // Trunca o texto da questão se for muito longo
+        let questionText = question.q;
+        if (questionText.length > 150) {
+            questionText = questionText.substring(0, 147) + '...';
+        }
+        document.getElementById('reportQuestionText').textContent = questionText;
+        
+        // Limpa formulário anterior
+        document.querySelectorAll('input[name="reportType"]').forEach(radio => {
+            radio.checked = false;
+        });
+        document.getElementById('reportDetails').value = '';
+        document.getElementById('userName').value = '';
+        document.getElementById('userEmail').value = '';
+        document.getElementById('userInfo').value = '';
+        document.getElementById('charCount').textContent = '0';
+        document.getElementById('reportSuccess').style.display = 'none';
+        document.getElementById('reportErrorMsg').style.display = 'none';
+        
+        // Habilita botão de submit
+        document.getElementById('submitReport').disabled = false;
+        document.getElementById('submitText').textContent = 'Enviar Reporte';
+        document.getElementById('submitLoading').style.display = 'none';
+        
+        // Mostra modal
+        document.getElementById('reportModal').style.display = 'flex';
+        
+        // Foca no primeiro campo
+        setTimeout(() => {
+            document.getElementById('userName').focus();
+        }, 100);
+    }
+
+    function closeReportModal() {
+        document.getElementById('reportModal').style.display = 'none';
+        currentReportQuestionIndex = null;
+    }
+
+    function showError(message) {
+        const errorElement = document.getElementById('reportErrorMsg');
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+        
+        // Rola até o erro
+        errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    function hideError() {
+        document.getElementById('reportErrorMsg').style.display = 'none';
+    }
+
+    function validateForm() {
+        const name = document.getElementById('userName').value.trim();
+        const email = document.getElementById('userEmail').value.trim();
+        const reportType = document.querySelector('input[name="reportType"]:checked');
+        
+        // Valida campos obrigatórios
+        if (!name) {
+            document.getElementById('userName').classList.add('error');
+            showError('Por favor, preencha seu nome completo.');
+            return false;
+        }
+        
+        if (!email) {
+            document.getElementById('userEmail').classList.add('error');
+            showError('Por favor, preencha seu e-mail.');
+            return false;
+        }
+        
+        // Valida formato do email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            document.getElementById('userEmail').classList.add('error');
+            showError('Por favor, insira um e-mail válido.');
+            return false;
+        }
+        
+        if (!reportType) {
+            showError('Por favor, selecione o tipo de problema.');
+            return false;
+        }
+        
+        return true;
+    }
+
+    // FUNÇÃO PARA ENVIAR REPORTE VIA GOOGLE APPS SCRIPT
+    async function submitReport() {
+        // Valida formulário
+        if (!validateForm()) {
+            return;
+        }
+        
+        const questionIndex = currentReportQuestionIndex;
+        const question = currentQuestions[questionIndex];
+        
+        // Coleta dados do formulário
+        const reportData = {
+            quizId: "GMP_IGNICAO_ELETRICO",
+            materia: document.title || "GMP - Sistema de Ignição e Elétrico do Motor",
+            questionIndex: questionIndex + 1,
+            originalIndex: questionIndex,
+            questionText: question.q,
+            reportType: document.querySelector('input[name="reportType"]:checked').value,
+            reportLabel: REPORT_TYPES[document.querySelector('input[name="reportType"]:checked').value],
+            details: document.getElementById('reportDetails').value.trim(),
+            userName: document.getElementById('userName').value.trim(),
+            userEmail: document.getElementById('userEmail').value.trim(),
+            userInfo: document.getElementById('userInfo').value.trim(),
+            userAnswer: userAnswers[questionIndex] !== null ? 
+                question.a[userAnswers[questionIndex]] : 'Não respondida',
+            correctAnswer: question.a[question.c],
+            userAnswerIndex: userAnswers[questionIndex],
+            correctAnswerIndex: question.c,
+            timestamp: new Date().toLocaleString('pt-BR'),
+            url: window.location.href,
+            userAgent: navigator.userAgent
+        };
+        
+        // Mostra estado de carregamento
+        document.getElementById('submitReport').disabled = true;
+        document.getElementById('submitText').textContent = 'Enviando...';
+        document.getElementById('submitLoading').style.display = 'inline-block';
+        
+        try {
+            // Tenta enviar via Google Apps Script
+            const response = await sendToGoogleSheets(reportData);
+            
+            if (response.success) {
+                // Mostra mensagem de sucesso
+                document.getElementById('reportSuccess').style.display = 'block';
+                document.getElementById('submitText').textContent = 'Enviado!';
+                
+                // Fecha modal após 3 segundos
+                setTimeout(() => {
+                    closeReportModal();
+                }, 3000);
+            } else {
+                throw new Error(response.message || 'Erro ao enviar');
+            }
+        } catch (error) {
+            console.error('Erro ao enviar reporte:', error);
+            
+            // Fallback: Envia por email se o Google Sheets falhar
+            const emailSent = sendReportByEmailFallback(reportData);
+            
+            if (emailSent) {
+                document.getElementById('reportSuccess').innerHTML = 
+                    '✅ Reporte enviado por email! Obrigado pela contribuição.<br>' +
+                    '<small>Você receberá um feedback por email em breve.</small>';
+                document.getElementById('reportSuccess').style.display = 'block';
+                document.getElementById('submitText').textContent = 'Enviado!';
+                
+                setTimeout(() => {
+                    closeReportModal();
+                }, 3000);
+            } else {
+                // Se ambos falharem
+                showError('Erro de conexão. Tente novamente mais tarde.');
+                document.getElementById('submitReport').disabled = false;
+                document.getElementById('submitText').textContent = 'Enviar Reporte';
+                document.getElementById('submitLoading').style.display = 'none';
+            }
+        }
+    }
+
+    // Função para enviar para Google Sheets via Google Apps Script
+    async function sendToGoogleSheets(reportData) {
+        const formData = new FormData();
+        
+        // Adiciona todos os dados ao FormData
+        Object.keys(reportData).forEach(key => {
+            formData.append(key, reportData[key]);
+        });
+        
+        // Envia para o Google Apps Script
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors' // Importante para evitar problemas de CORS
+        });
+        
+        // Como estamos usando no-cors, não podemos ler a resposta
+        // Mas assumimos que foi bem-sucedido se não houver erro de rede
+        return { success: true, message: 'Enviado com sucesso' };
+    }
+
+    // Fallback: Envia por email se o Google Sheets falhar
+    function sendReportByEmailFallback(reportData) {
+        try {
+            const subject = `[REPORTE] ${reportData.materia} - Questão #${reportData.questionIndex}`;
+            
+            let body = `NOVO REPORTE DE QUESTÃO\n`;
+            body += `=======================\n\n`;
+            body += `MATÉRIA: ${reportData.materia}\n`;
+            body += `ID DO QUIZ: ${reportData.quizId}\n`;
+            body += `QUESTÃO #${reportData.questionIndex}\n\n`;
+            body += `ENUNCIADO:\n${reportData.questionText}\n\n`;
+            body += `TIPO DE PROBLEMA: ${reportData.reportLabel}\n\n`;
+            body += `RESPOSTA DO USUÁRIO: ${reportData.userAnswer}\n`;
+            body += `RESPOSTA CORRETA: ${reportData.correctAnswer}\n\n`;
+            
+            body += `INFORMAÇÕES DO USUÁRIO:\n`;
+            body += `Nome: ${reportData.userName}\n`;
+            body += `E-mail: ${reportData.userEmail}\n`;
+            body += `Instituição/Curso: ${reportData.userInfo || 'Não informado'}\n\n`;
+            
+            if (reportData.details) {
+                body += `DETALHES ADICIONAIS:\n${reportData.details}\n\n`;
+            }
+            
+            body += `DATA/HORA: ${reportData.timestamp}\n`;
+            body += `URL DA PÁGINA: ${reportData.url}\n`;
+            
+            // Codifica para URL
+            const encodedSubject = encodeURIComponent(subject);
+            const encodedBody = encodeURIComponent(body);
+            
+            // Cria link mailto:
+            const mailtoLink = `mailto:${EMAIL_DESTINO}?subject=${encodedSubject}&body=${encodedBody}`;
+            
+            // Abre cliente de email
+            window.open(mailtoLink, '_blank');
+            return true;
+        } catch (error) {
+            console.error('Erro ao enviar email:', error);
+            return false;
+        }
+    }
+
+    // ============================================
+    // INICIALIZAÇÃO
+    // ============================================
+    
+    // Atalhos de teclado
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowRight' || e.key === ' ') nextQuestion();
         if (e.key === 'ArrowLeft') prevQuestion();
     });
 
-    // INICIAR
-    window.onload = initQuiz;
+    // Inicializar quando a página carregar
+    window.onload = function() {
+        initQuiz();
+        initReportSystem();
+    };
 </script>
 
 </body>
