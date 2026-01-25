@@ -7,7 +7,7 @@
 }
 
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
     color: #333;
     min-height: 100vh;
     padding-bottom: 60px;
@@ -17,10 +17,10 @@ body {
 
 /* Header - Mobile First */
 header {
-    background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+    background: linear-gradient(135deg, #1976d2 0%, #2196f3 100%);
     color: white;
     padding: 1rem 1rem;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 15px rgba(33, 150, 243, 0.15);
     margin-bottom: 1.5rem;
     position: sticky;
     top: 0;
@@ -43,8 +43,11 @@ header {
 
 .header-icon {
     font-size: 2rem;
-    color: #64b5f6;
+    color: #fff;
     min-width: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.5rem;
+    border-radius: 10px;
 }
 
 h1 {
@@ -52,10 +55,12 @@ h1 {
     font-weight: 700;
     letter-spacing: -0.3px;
     line-height: 1.2;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .subtitle {
-    color: #bbdefb;
+    color: #e3f2fd;
     font-size: 0.9rem;
     margin-top: 0.2rem;
     line-height: 1.3;
@@ -64,22 +69,23 @@ h1 {
 .search-container {
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.25);
     border-radius: 25px;
     padding: 0.6rem 1.2rem;
     transition: all 0.3s ease;
     position: relative;
     width: 100%;
     margin-top: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .search-container:focus-within {
-    background: rgba(255, 255, 255, 0.25);
-    box-shadow: 0 0 0 2px rgba(100, 181, 246, 0.3);
+    background: rgba(255, 255, 255, 0.35);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
 }
 
 .search-container i {
-    color: #bbdefb;
+    color: white;
     margin-right: 0.6rem;
     font-size: 1rem;
 }
@@ -96,8 +102,7 @@ h1 {
 }
 
 .search-container input::placeholder {
-    color: #bbdefb;
-    opacity: 0.8;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 #clearSearch {
@@ -105,7 +110,7 @@ h1 {
     right: 12px;
     background: transparent;
     border: none;
-    color: #bbdefb;
+    color: white;
     cursor: pointer;
     padding: 4px;
     display: flex;
@@ -114,39 +119,41 @@ h1 {
     width: 24px;
     height: 24px;
     border-radius: 50%;
+    transition: all 0.2s ease;
 }
 
 #clearSearch:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .progress-bar {
     margin-top: 1rem;
     height: 4px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 2px;
     overflow: hidden;
 }
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #4fc3f7, #29b6f6);
+    background: linear-gradient(90deg, #ffeb3b, #ffc107);
     border-radius: 2px;
 }
 
 .search-results {
     margin-top: 0.8rem;
     padding: 0.8rem;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.2);
     border-radius: 8px;
     display: none;
     font-size: 0.9rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .search-results p {
     margin: 0;
-    color: #bbdefb;
+    color: white;
     font-weight: 500;
 }
 
@@ -163,17 +170,33 @@ h1 {
 /* Módulos - Mobile First */
 .modulo {
     background: white;
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 1.2rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-left: 4px solid;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    border: 1px solid #e0e0e0;
     margin-bottom: 0.5rem;
+    position: relative;
+    overflow: hidden;
 }
 
+.modulo::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+}
+
+.modulo.basico::before { background: linear-gradient(90deg, #ff9800, #ffb74d); }
+.modulo.gmp::before { background: linear-gradient(90deg, #4caf50, #81c784); }
+.modulo.celula::before { background: linear-gradient(90deg, #2196f3, #64b5f6); }
+.modulo.avionico::before { background: linear-gradient(90deg, #9c27b0, #ba68c8); }
+
 .modulo:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
 }
 
 .modulo.hidden {
@@ -186,7 +209,7 @@ h1 {
     align-items: flex-start;
     margin-bottom: 1.2rem;
     padding-bottom: 0.8rem;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #f0f0f0;
     gap: 0.8rem;
 }
 
@@ -197,7 +220,7 @@ h1 {
     font-size: 1.2rem;
     font-weight: 700;
     padding: 0.5rem 0.8rem;
-    border-radius: 6px;
+    border-radius: 8px;
     color: white;
     width: 100%;
     justify-content: flex-start;
@@ -209,33 +232,30 @@ h1 {
 }
 
 .basico {
-    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
-    border-left-color: #e65100;
+    background: linear-gradient(135deg, #ff9800 0%, #ffb74d 100%);
 }
 
 .gmp {
-    background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
-    border-left-color: #1b5e20;
+    background: linear-gradient(135deg, #4caf50 0%, #81c784 100%);
 }
 
 .celula {
-    background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
-    border-left-color: #0d47a1;
+    background: linear-gradient(135deg, #2196f3 0%, #64b5f6 100%);
 }
 
 .avionico {
-    background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
-    border-left-color: #4a148c;
+    background: linear-gradient(135deg, #9c27b0 0%, #ba68c8 100%);
 }
 
 .modulo-status {
-    background: #f5f5f5;
+    background: #f8f9fa;
     color: #666;
     padding: 0.4rem 0.8rem;
     border-radius: 16px;
     font-size: 0.85rem;
     font-weight: 600;
     align-self: flex-end;
+    border: 1px solid #e0e0e0;
 }
 
 /* Links das matérias - Mobile First */
@@ -250,18 +270,38 @@ h1 {
     align-items: flex-start;
     padding: 0.9rem;
     text-decoration: none;
-    border-radius: 8px;
+    border-radius: 10px;
     transition: all 0.3s ease;
     color: #333;
-    background: #f9f9f9;
-    border-left: 4px solid;
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
     gap: 0.8rem;
     flex-wrap: wrap;
+    position: relative;
+}
+
+.materia-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 2px;
+}
+
+.available.materia-link::before {
+    background: linear-gradient(to bottom, #4caf50, #81c784);
+}
+
+.construction.materia-link::before {
+    background: linear-gradient(to bottom, #ff9800, #ffb74d);
 }
 
 .materia-link:hover {
-    background: #f0f0f0;
+    background: white;
     transform: translateX(3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .materia-link.hidden {
@@ -270,38 +310,45 @@ h1 {
 
 .materia-link.highlight {
     background: #fff8e1;
-    border-left-color: #ffb300;
-    box-shadow: 0 2px 8px rgba(255, 179, 0, 0.2);
+    border-color: #ffd54f;
+    box-shadow: 0 4px 15px rgba(255, 193, 7, 0.15);
     animation: highlight-pulse 2s infinite;
 }
 
 @keyframes highlight-pulse {
-    0%, 100% { box-shadow: 0 2px 8px rgba(255, 179, 0, 0.2); }
-    50% { box-shadow: 0 2px 12px rgba(255, 179, 0, 0.4); }
+    0%, 100% { box-shadow: 0 4px 15px rgba(255, 193, 7, 0.15); }
+    50% { box-shadow: 0 4px 20px rgba(255, 193, 7, 0.25); }
 }
 
 .materia-icon {
     font-size: 1.3rem;
     width: 36px;
     min-width: 36px;
+    height: 36px;
     text-align: center;
-    color: #555;
+    color: white;
     margin-top: 0.2rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .available .materia-icon {
-    color: #4caf50;
+    background: linear-gradient(135deg, #4caf50, #66bb6a);
+    box-shadow: 0 2px 5px rgba(76, 175, 80, 0.2);
 }
 
 .construction .materia-icon {
-    color: #ff9800;
+    background: linear-gradient(135deg, #ff9800, #ffa726);
+    box-shadow: 0 2px 5px rgba(255, 152, 0, 0.2);
 }
 
 .materia-info {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    min-width: 0; /* Permite que o texto quebre */
+    min-width: 0;
 }
 
 .materia-name {
@@ -309,7 +356,8 @@ h1 {
     font-size: 0.95rem;
     margin-bottom: 0.3rem;
     line-height: 1.3;
-    word-break: break-word; /* Quebra palavras longas */
+    word-break: break-word;
+    color: #2c3e50;
 }
 
 .materia-desc {
@@ -317,14 +365,6 @@ h1 {
     color: #666;
     font-weight: 400;
     line-height: 1.3;
-}
-
-.available {
-    border-left-color: #4caf50;
-}
-
-.construction {
-    border-left-color: #ff9800;
 }
 
 .materia-status {
@@ -337,15 +377,17 @@ h1 {
     margin-top: 0.5rem;
     width: 100%;
     text-align: center;
-    order: 3; /* Garante que fique na parte inferior */
+    order: 3;
+    border: 1px solid #ffcc80;
 }
 
 /* Footer - Mobile First */
 footer {
-    background: linear-gradient(135deg, #263238 0%, #37474f 100%);
-    color: white;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    color: #495057;
     margin-top: 2rem;
     padding: 1.5rem 1rem;
+    border-top: 1px solid #dee2e6;
 }
 
 .footer-content {
@@ -364,12 +406,12 @@ footer {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 0.4rem;
-    color: #bbdefb;
+    color: #1976d2;
     line-height: 1.2;
 }
 
 .footer-subtitle {
-    color: #b0bec5;
+    color: #6c757d;
     font-size: 0.9rem;
     line-height: 1.3;
 }
@@ -385,24 +427,26 @@ footer {
 .stat {
     text-align: center;
     padding: 0.8rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
+    background: white;
+    border-radius: 10px;
     flex: 1;
     min-width: calc(33.333% - 1rem);
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .stat-number {
     display: block;
     font-size: 1.8rem;
     font-weight: 700;
-    color: #4fc3f7;
+    color: #2196f3;
     line-height: 1.2;
     margin-bottom: 0.2rem;
 }
 
 .stat-label {
     font-size: 0.8rem;
-    color: #b0bec5;
+    color: #6c757d;
     line-height: 1.2;
 }
 
@@ -411,20 +455,21 @@ footer {
     text-align: center;
     margin-top: 1rem;
     padding-top: 1.2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: #b0bec5;
+    border-top: 1px solid #dee2e6;
+    color: #6c757d;
     font-size: 0.85rem;
 }
 
 .footer-copyright i {
     margin-right: 0.3rem;
     font-size: 0.85rem;
+    color: #2196f3;
 }
 
 .footer-note {
     margin-top: 0.4rem;
     font-size: 0.8rem;
-    color: #90a4ae;
+    color: #868e96;
     line-height: 1.3;
 }
 
@@ -436,13 +481,13 @@ footer {
     }
     
     .search-container input {
-        font-size: 16px; /* Evita zoom no iOS */
+        font-size: 16px;
     }
     
     button, 
     .materia-link,
     #clearSearch {
-        min-height: 44px; /* Tamanho mínimo para toque */
+        min-height: 44px;
     }
     
     .stat {
@@ -596,7 +641,8 @@ footer {
     .materia-icon {
         width: 32px;
         min-width: 32px;
-        font-size: 1.2rem;
+        height: 32px;
+        font-size: 1.1rem;
     }
     
     .materia-name {
@@ -633,43 +679,10 @@ footer {
     }
 }
 
-/* Acessibilidade - Melhor contraste para modo escuro do sistema */
+/* Modo escuro opcional - mantém o tema claro por padrão */
 @media (prefers-color-scheme: dark) {
-    body {
-        background: linear-gradient(135deg, #121212 0%, #1e1e1e 100%);
-        color: #e0e0e0;
-    }
-    
-    .modulo {
-        background: #2d2d2d;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-    
-    .materia-link {
-        background: #3d3d3d;
-        color: #e0e0e0;
-    }
-    
-    .materia-link:hover {
-        background: #4a4a4a;
-    }
-    
-    .materia-link.highlight {
-        background: #4a3d1a;
-    }
-    
-    .materia-desc {
-        color: #aaa;
-    }
-    
-    .modulo-status {
-        background: #3d3d3d;
-        color: #aaa;
-    }
-    
-    .modulo-header {
-        border-bottom-color: #444;
-    }
+    /* Esta versão mantém o tema claro mesmo no modo escuro do sistema */
+    /* Para tema escuro, precisaríamos de uma versão alternativa */
 }
 
 /* Animações de carregamento suave */
@@ -685,3 +698,34 @@ footer {
 .modulo:nth-child(2) { animation-delay: 0.1s; }
 .modulo:nth-child(3) { animation-delay: 0.2s; }
 .modulo:nth-child(4) { animation-delay: 0.3s; }
+
+/* Botões e interações */
+button {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Efeito de foco para acessibilidade */
+:focus {
+    outline: 2px solid #2196f3;
+    outline-offset: 2px;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
