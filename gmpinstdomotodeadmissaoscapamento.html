@@ -1127,7 +1127,7 @@
     
     const masterBank = [
  
-    {q: "Dentre as alternativas abaixo, aquela que caracteriza o problema do estol, que normalmente ocorre no compressor do motor a jato, é o(a):", a: ["sangria de ar, através de válvula", "sangria de combustível, através de válvula", "aumento da quantidade de palhetas na turbina", "diminuição da quantidade de palhetas na turbina"], c: 0},
+ {q: "Dentre as alternativas abaixo, aquela que caracteriza o problema do estol, que normalmente ocorre no compressor do motor a jato, é o(a):", a: ["sangria de ar, através de válvula", "sangria de combustível, através de válvula", "aumento da quantidade de palhetas na turbina", "diminuição da quantidade de palhetas na turbina"], c: 0},
     {q: "Durante o funcionamento normal do motor a reação é possível que este succione objetos estranhos. Neste caso, diz-se que ocorre uma:", a: ["injeção", "ingestão", "exaustão", "aspiração"], c: 1},
     {q: "Em relação a válvula de escapamento, a válvula de admissão:", a: ["opera com temperatura mais baixa", "é intercambiável", "tem o tamanho menor", "opera com a mesma temperatura"], c: 0},
     {q: "Em um carburador, a borboleta tem como função controlar diretamente o(a):", a: ["mistura dosada", "água metanol", "ar fornecido ao motor", "combustível fornecido ao motor"], c: 2},
@@ -1150,7 +1150,6 @@
     {q: "A unidade do carburador responsável pela medição do fluxo de ar do sistema de indução denomina-se:", a: ["válvula de aceleração", "bóia", "venturi", "marcha lenta"], c: 2},
     {q: "Se um carburador está regulado para realizar uma mistura de ar/combustível na razão de 12:1, logo, a mistura é formada por:", a: ["treze libras de ar", "doze libras de combustível e uma libra de ar", "doze libras de ar e uma libra de combustível", "treze libras de combustível"], c: 2}
 ];
-
     
     // ============================================
     // CONFIGURAÇÕES DO SISTEMA
@@ -1724,7 +1723,106 @@
     }
     
     // ============================================
-    // CONTINUAÇÃO DO CÓDIGO EXISTENTE
+    // CORREÇÃO PRINCIPAL: FUNÇÃO UPDATESIMULADOINFO
+    // ============================================
+    
+    function updateSimuladoInfo() {
+        const totalQuestions = masterBank.length;
+        
+        // CORREÇÃO: Usa currentSimuladoIndices ou currentQuestions para contar questões atuais
+        const currentQuestionsCount = currentQuestions ? currentQuestions.length : 0;
+        
+        // CORREÇÃO: Calcula disponíveis corretamente
+        let remaining = 0;
+        if (currentQuestions && currentQuestions[0]?.isWrongQuestion) {
+            // Para simulado de reforço
+            const wrongCount = wrongQuestionsHistory.length;
+            const successRate = Math.round(((totalQuestions - wrongCount) / totalQuestions) * 100);
+            
+            document.getElementById('simulado-info').innerHTML = `
+                <div style="color: var(--danger); font-weight: bold; text-align: center;">⚡ SIMULADO DE REFORÇO</div>
+                <div style="text-align: center; font-size: 0.6rem;">Questões que você errou anteriormente</div>
+                <div class="simulado-stats">
+                    <span>Questões: ${currentQuestionsCount}</span>
+                    <span>Acertos gerais: ${successRate}%</span>
+                </div>
+            `;
+            document.getElementById('simulado-info').style.display = 'block';
+            return;
+        }
+        
+        // CORREÇÃO: Para simulado normal
+        // Removendo duplicatas do histórico
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        const recentUsed = uniqueUsed.length;
+        remaining = Math.max(0, totalQuestions - recentUsed);
+        const percentUsed = totalQuestions > 0 ? Math.round((recentUsed / totalQuestions) * 100) : 0;
+        
+        let simuladoNumberText = '';
+        if (totalSimulados > 1) {
+            const simuladoAtual = Math.min(currentSimuladoNumber, totalSimulados);
+            simuladoNumberText = ` (${simuladoAtual}/${totalSimulados})`;
+        }
+        
+        document.getElementById('simulado-info').innerHTML = `
+            <div>Simulado${simuladoNumberText}: <span id="questions-per-simulado">${currentQuestionsCount}</span> questões</div>
+            <div class="simulado-stats">
+                <span id="remaining-questions">Disponíveis: ${remaining}</span>
+                <span id="recent-used">Usadas: ${recentUsed} (${percentUsed}%)</span>
+            </div>
+            
+            <div class="history-controls">
+                <button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar Histórico</button>
+                <button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button>
+            </div>
+        `;
+        document.getElementById('simulado-info').style.display = 'block';
+        
+        // CORREÇÃO: Atualiza também os elementos específicos se existirem
+        const questionsPerSimuladoEl = document.getElementById('questions-per-simulado');
+        const remainingQuestionsEl = document.getElementById('remaining-questions');
+        const recentUsedEl = document.getElementById('recent-used');
+        
+        if (questionsPerSimuladoEl) questionsPerSimuladoEl.textContent = currentQuestionsCount;
+        if (remainingQuestionsEl) remainingQuestionsEl.textContent = `Disponíveis: ${remaining}`;
+        if (recentUsedEl) recentUsedEl.textContent = `Usadas: ${recentUsed} (${percentUsed}%)`;
+    }
+    
+    // ============================================
+    // CORREÇÃO: FUNÇÃO UPDATECONTINUARBANCOBUTTON
+    // ============================================
+    
+    function updateContinuarBancoButton() {
+        const continuarBtn = document.getElementById('continuar-banco-btn');
+        if (!continuarBtn) return;
+        
+        const totalQuestions = masterBank.length;
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        const remainingQuestions = Math.max(0, totalQuestions - uniqueUsed.length);
+        
+        const isResultsVisible = document.getElementById('results').style.display === 'block';
+        const isReforco = currentQuestions[0]?.isWrongQuestion;
+        const percent = parseInt(document.getElementById('final-percent')?.textContent?.replace('%', '') || 0);
+        
+        // Mostra se:
+        // 1. Está na tela de resultados
+        // 2. Não é simulado de reforço
+        // 3. Atingiu 70% OU é simulado de reforço com 70%
+        // 4. Ainda há questões OU todas foram usadas
+        if (isResultsVisible && !isReforco && remainingQuestions > 0) {
+            continuarBtn.style.display = 'block';
+            continuarBtn.innerHTML = `📚 Continuar com Banco (${remainingQuestions} restantes)`;
+        } else if (isResultsVisible && isReforco && percent >= MIN_PERCENT_FOR_SUCCESS) {
+            // Para reforço bem-sucedido
+            continuarBtn.style.display = 'block';
+            continuarBtn.innerHTML = `📚 Voltar ao Banco (${remainingQuestions} restantes)`;
+        } else {
+            continuarBtn.style.display = 'none';
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO: START WRONG QUESTIONS SIMULADO
     // ============================================
     
     function startWrongQuestionsSimulado() {
@@ -1793,6 +1891,10 @@
         alert(`🎯 SIMULADO DE REFORÇO INICIADO!\n\n${currentQuestions.length} questões que você errou anteriormente.\nBoa sorte!`);
     }
     
+    // ============================================
+    // FUNÇÃO: UPDATE REFORCO BUTTON
+    // ============================================
+    
     function updateReforcoButton() {
         const wrongBtn = document.getElementById('wrong-questions-btn');
         if (!wrongBtn) return;
@@ -1809,6 +1911,10 @@
         }
     }
     
+    // ============================================
+    // FUNÇÃO: UPDATE REINICIAR BANCO BUTTON
+    // ============================================
+    
     function updateReiniciarBancoButton() {
         const reiniciarBtn = document.getElementById('reiniciar-banco-btn');
         if (!reiniciarBtn) return;
@@ -1824,6 +1930,10 @@
             reiniciarBtn.style.display = 'none';
         }
     }
+    
+    // ============================================
+    // FUNÇÃO: REINICIAR BANCO COMPLETO
+    // ============================================
     
     function reiniciarBancoCompleto() {
         const totalQuestions = masterBank.length;
@@ -2263,7 +2373,8 @@
     
     function showHistoryInfo() {
         const totalQuestions = masterBank.length;
-        const usedCount = usedQuestionsHistory.length;
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        const usedCount = uniqueUsed.length;
         const availableCount = Math.max(0, totalQuestions - usedCount);
         const percentUsed = totalQuestions > 0 ? Math.round((usedCount / totalQuestions) * 100) : 0;
         const wrongCount = wrongQuestionsHistory.length;
@@ -2423,56 +2534,6 @@
         updateContinuarBancoButton();
         updateVoltarInicioButton();
         updateNovoSimuladoReforcoButton();
-    }
-    
-    // ============================================
-    // FUNÇÃO UPDATESIMULADOINFO ATUALIZADA
-    // ============================================
-
-    function updateSimuladoInfo() {
-        const totalQuestions = masterBank.length;
-        const remaining = Math.max(0, totalQuestions - usedQuestionsHistory.length);
-        const recentUsed = usedQuestionsHistory.length;
-        const percentUsed = totalQuestions > 0 ? Math.round((recentUsed / totalQuestions) * 100) : 0;
-        
-        // Se for simulado de reforço
-        if (currentQuestions && currentQuestions[0]?.isWrongQuestion) {
-            const wrongCount = wrongQuestionsHistory.length;
-            const successRate = Math.round(((totalQuestions - wrongCount) / totalQuestions) * 100);
-            
-            document.getElementById('simulado-info').innerHTML = `
-                <div style="color: var(--danger); font-weight: bold; text-align: center;">⚡ SIMULADO DE REFORÇO</div>
-                <div style="text-align: center; font-size: 0.6rem;">Questões que você errou anteriormente</div>
-                <div class="simulado-stats">
-                    <span>Questões: ${currentQuestions.length}</span>
-                    <span>Acertos gerais: ${successRate}%</span>
-                </div>
-            `;
-            document.getElementById('simulado-info').style.display = 'block';
-            return;
-        }
-        
-        // Info normal - MOSTRA SEMPRE O NÚMERO CORRETO DO SIMULADO
-        let simuladoNumberText = '';
-        if (totalSimulados > 1) {
-            // Garante que mostra o número correto baseado no histórico
-            const simuladoAtual = Math.min(currentSimuladoNumber, totalSimulados);
-            simuladoNumberText = ` (${simuladoAtual}/${totalSimulados})`;
-        }
-        
-        document.getElementById('simulado-info').innerHTML = `
-            <div>Simulado${simuladoNumberText}: <span id="questions-per-simulado">${currentQuestions ? currentQuestions.length : 0}</span> questões</div>
-            <div class="simulado-stats">
-                <span id="remaining-questions">Disponíveis: ${remaining}</span>
-                <span id="recent-used">Usadas: ${recentUsed} (${percentUsed}%)</span>
-            </div>
-            
-            <div class="history-controls">
-                <button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar Histórico</button>
-                <button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button>
-            </div>
-        `;
-        document.getElementById('simulado-info').style.display = 'block';
     }
     
     function renderCurrentQuestion() {
@@ -2728,7 +2789,8 @@
         motivationElement.innerHTML = motivationHTML;
         
         const totalQuestions = masterBank.length;
-        const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        const remainingQuestions = Math.max(0, totalQuestions - uniqueUsed.length);
         const wrongCount = wrongQuestionsHistory.length;
         
         let summaryText = '';
@@ -2754,7 +2816,7 @@
                 showNewSimuladoBtn = false;
             }
         } else {
-            summaryText = `Restam: <strong>${remainingQuestions}</strong> | Usadas: <strong>${usedQuestionsHistory.length}</strong><br>`;
+            summaryText = `Restam: <strong>${remainingQuestions}</strong> | Usadas: <strong>${uniqueUsed.length}</strong><br>`;
             summaryText += `Questões erradas: <strong>${wrongCount}</strong>`;
         }
         
