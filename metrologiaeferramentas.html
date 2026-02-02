@@ -1,0 +1,3283 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAS - METROLOGIA E FERRAMENTAS</title>
+    <style>
+        :root {
+            --primary: #1a3a5a;
+            --accent: #007bff;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --purple: #6f42c1;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 4px;
+            font-size: 13px;
+            line-height: 1.3;
+        }
+
+        .container {
+            max-width: 100%;
+            background: white;
+            padding: 6px;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .credits-integrated {
+            position: absolute;
+            top: 2px;
+            right: 6px;
+            background: var(--primary);
+            color: white;
+            padding: 1px 3px;
+            font-size: 0.5rem;
+            font-weight: bold;
+            border-radius: 1px;
+            z-index: 10;
+        }
+
+        /* CABEÇALHO SUPER COMPACTO */
+        .header-mini {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--primary);
+            z-index: 5;
+            margin-bottom: 6px;
+            padding-top: 16px;
+        }
+
+        .header-mini-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .page-title-mini {
+            margin: 0;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: bold;
+            line-height: 1.1;
+            max-width: 65%;
+        }
+
+        .timer-compact {
+            background: #f8f9fa;
+            color: var(--primary);
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border: 1px solid #dee2e6;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .timer-warning {
+            background: #fff5f5 !important;
+            color: var(--danger) !important;
+            border-color: var(--danger) !important;
+        }
+
+        /* INFO DO SIMULADO MAIS COMPACTA */
+        .simulado-info {
+            background: #e7f3ff;
+            border: 1px solid var(--accent);
+            border-radius: 3px;
+            padding: 4px 5px;
+            margin-bottom: 5px;
+            font-size: 0.65rem;
+            color: var(--primary);
+            display: none;
+        }
+
+        .simulado-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        /* CONTROLES DE HISTÓRICO COMPACTOS */
+        .history-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .history-controls button {
+            padding: 2px 4px;
+            font-size: 0.6rem;
+            border-radius: 2px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .clear-history-btn {
+            background: var(--warning);
+            color: #856404;
+            border: 1px solid #ffc107;
+        }
+
+        .info-history-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        /* INFO BÁSICA SUPER COMPACTA */
+        .quiz-info-mini {
+            background: #f8f9fa;
+            border-radius: 3px;
+            padding: 5px 6px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 4px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            font-size: 0.55rem;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0;
+        }
+
+        .info-value {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* CONTROLES COMPACTOS */
+        .controls-compact {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4px;
+        }
+
+        .auto-nav-toggle {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 0.65rem;
+        }
+
+        .auto-nav-checkbox {
+            transform: scale(0.8);
+            accent-color: var(--primary);
+        }
+
+        .auto-nav-label {
+            font-weight: 600;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .reset-btn-mini {
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            padding: 2px 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        /* STATUS COMPACTO */
+        .completion-status {
+            background: #f8f9fa;
+            border-radius: 3px;
+            padding: 4px 5px;
+            margin: 5px 0;
+            border: 1px solid #dee2e6;
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2px;
+        }
+
+        .status-text {
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+
+        .status-count {
+            font-size: 0.65rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* PENDENTES SUPER COMPACTOS */
+        .pending-compact {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 2px;
+            padding: 2px 3px;
+            font-size: 0.6rem;
+        }
+
+        .pending-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1px;
+        }
+
+        .pending-count {
+            font-weight: bold;
+            color: #856404;
+            font-size: 0.65rem;
+        }
+
+        .pending-list-compact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            max-height: 18px;
+            overflow-y: auto;
+            padding: 1px 0;
+        }
+
+        .pending-number {
+            background: #ffc107;
+            color: #856404;
+            font-weight: bold;
+            padding: 0 2px;
+            border-radius: 1px;
+            font-size: 0.55rem;
+            min-width: 12px;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .pending-number.answered {
+            background: #28a745;
+            color: white;
+            opacity: 0.5;
+        }
+
+        /* QUESTÕES COMPACTAS */
+        .question-block-mini {
+            margin: 6px 0;
+            padding: 8px;
+            border: 1px solid #e0e0e0;
+            border-radius: 3px;
+            background: #fff;
+            position: relative;
+        }
+
+        .question-text-mini {
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .options-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .option-mini {
+            padding: 5px 6px;
+            border: 1px solid #eee;
+            border-radius: 2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 0.75rem;
+            min-height: 28px;
+            position: relative;
+        }
+
+        input[type="radio"] {
+            margin-right: 4px;
+            transform: scale(0.8);
+            accent-color: var(--primary);
+        }
+
+        .correct-answer {
+            background-color: #d4edda !important;
+            border-color: #28a745 !important;
+            color: #155724;
+        }
+
+        .wrong-answer {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #721c24;
+        }
+
+        /* BOTÃO DE REPORTAR NAS QUESTÕES */
+        .report-btn {
+            background: transparent;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+            border-radius: 2px;
+            padding: 2px 6px;
+            font-size: 0.55rem;
+            cursor: pointer;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            transition: all 0.2s;
+        }
+
+        .report-btn:hover {
+            background: #f8f9fa;
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        /* BOTÃO DE REPORTAR NO GABARITO (canto superior direito) */
+        .report-gabarito-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: transparent;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+            border-radius: 2px;
+            padding: 1px 4px;
+            font-size: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            transition: all 0.2s;
+            z-index: 2;
+        }
+
+        .report-gabarito-btn:hover {
+            background: #f8f9fa;
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        /* BOTÕES DE NAVEGAÇÃO COMPACTOS */
+        .nav-buttons {
+            display: flex;
+            gap: 4px;
+            margin: 8px 0;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 6px 4px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-align: center;
+            min-height: 32px;
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        /* BOTÕES PRINCIPAIS COMPACTOS */
+        .btn {
+            padding: 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 8px;
+            min-height: 36px;
+        }
+
+        .btn-finish {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-finish:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-restart {
+            background: var(--success);
+            color: white;
+            display: none;
+        }
+
+        .btn-restart-success {
+            background: linear-gradient(135deg, var(--success), #1e7e34);
+            color: white;
+            display: none;
+        }
+
+        /* BOTÃO VOLTAR AO INÍCIO */
+        .btn-voltar-inicio {
+            background: linear-gradient(135deg, var(--accent), #0056b3);
+            color: white;
+            border: none;
+            display: none;
+        }
+
+        /* BOTÃO CONTINUAR BANCO */
+        .btn-continuar-banco {
+            background: linear-gradient(135deg, var(--info), #138496);
+            color: white;
+            border: none;
+            display: none;
+        }
+
+        /* BOTÃO DE SIMULADO DE REFORÇO */
+        .btn-reforco {
+            background: linear-gradient(135deg, var(--danger), #c82333);
+            color: white;
+            border: none;
+            display: none;
+        }
+
+        /* BOTÃO DE REINICIAR BANCO */
+        .btn-reiniciar-banco {
+            background: linear-gradient(135deg, var(--purple), #5a32a3);
+            color: white;
+            border: none;
+            display: none;
+        }
+
+        /* BOTÃO DE NOVO SIMULADO NO REFORÇO */
+        .btn-novo-simulado-reforco {
+            background: linear-gradient(135deg, var(--warning), #e0a800);
+            color: #856404;
+            border: none;
+            display: none;
+        }
+
+        /* RESULTADOS COMPACTOS */
+        #results {
+            display: none;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--primary);
+            margin: 8px 0;
+            border-radius: 3px;
+            background: #f8f9fa;
+        }
+
+        .result-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: var(--primary);
+        }
+
+        .score-mini {
+            font-size: 1.1rem;
+            margin: 4px 0;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* MENSAGEM DE MOTIVAÇÃO */
+        .motivation-message {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 8px 10px;
+            margin: 8px 0;
+            font-size: 0.7rem;
+            color: #856404;
+            text-align: center;
+        }
+
+        .motivation-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .motivation-warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+
+        .motivation-danger {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        /* MODAL DE REPORTE - ATUALIZADO */
+        .report-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .report-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 95%;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .report-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        .report-question-info {
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .report-section {
+            margin-bottom: 15px;
+        }
+
+        .report-section-title {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .report-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .report-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .report-option:hover {
+            background: #f8f9fa;
+            border-color: var(--accent);
+        }
+
+        .report-option input[type="radio"] {
+            margin: 0;
+            transform: scale(0.9);
+        }
+
+        .report-option label {
+            font-size: 0.75rem;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        /* FORMULÁRIO DE IDENTIFICAÇÃO */
+        .user-info-form {
+            background: #f0f8ff;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #cce5ff;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.1);
+        }
+
+        .form-input.error {
+            border-color: var(--danger);
+            background-color: #fff5f5;
+        }
+
+        .form-hint {
+            font-size: 0.65rem;
+            color: #6c757d;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .required-star {
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        .report-textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            resize: vertical;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .report-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.1);
+        }
+
+        .report-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .report-submit {
+            flex: 2;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .report-submit:hover {
+            background: #0d2c4a;
+        }
+
+        .report-submit:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .report-cancel {
+            flex: 1;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .report-cancel:hover {
+            background: #545b62;
+        }
+
+        .report-success {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 15px;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+
+        .report-error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            text-align: center;
+            margin-top: 10px;
+            border: 1px solid #f5c6cb;
+            display: none;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* SCROLL PERSONALIZADO */
+        .pending-list-compact::-webkit-scrollbar {
+            height: 2px;
+        }
+        
+        .pending-list-compact::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 1px;
+        }
+        
+        .pending-list-compact::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 1px;
+        }
+
+        /* AJUSTES PARA TELAS MUITO PEQUENAS */
+        @media (max-width: 320px) {
+            body {
+                padding: 2px;
+                font-size: 12px;
+            }
+            
+            .container {
+                padding: 4px;
+            }
+            
+            .page-title-mini {
+                font-size: 0.75rem;
+                max-width: 60%;
+            }
+            
+            .timer-compact {
+                font-size: 0.7rem;
+                min-width: 35px;
+                padding: 1px 3px;
+            }
+            
+            .info-grid {
+                gap: 3px;
+            }
+            
+            .info-label {
+                font-size: 0.5rem;
+            }
+            
+            .info-value {
+                font-size: 0.7rem;
+            }
+            
+            .question-text-mini {
+                font-size: 0.75rem;
+            }
+            
+            .option-mini {
+                padding: 4px 5px;
+                font-size: 0.7rem;
+                min-height: 26px;
+            }
+            
+            .nav-btn, .btn {
+                font-size: 0.7rem;
+                padding: 5px 3px;
+            }
+            
+            .pending-list-compact {
+                max-height: 16px;
+            }
+            
+            .pending-number {
+                font-size: 0.5rem;
+                min-width: 10px;
+            }
+            
+            .report-gabarito-btn {
+                font-size: 0.45rem;
+                padding: 1px 3px;
+            }
+            
+            .report-content {
+                padding: 15px;
+            }
+            
+            .report-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .header-mini {
+                padding-top: 10px;
+            }
+            
+            .question-block-mini {
+                margin: 4px 0;
+                padding: 6px;
+            }
+            
+            .nav-buttons {
+                margin: 6px 0;
+            }
+            
+            .btn {
+                margin-top: 6px;
+                min-height: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="main-container">
+    <div class="credits-integrated">BY EWERTON</div>
+    
+    <div class="header-mini">
+        <div class="header-mini-top">
+            <h1 class="page-title-mini" id="page-title">Carregando...</h1>
+            <div id="timer" class="timer-compact">00:00</div>
+        </div>
+        
+        <div class="simulado-info" id="simulado-info">
+            <div>Simulado: <span id="questions-per-simulado">20</span> questões</div>
+            <div class="simulado-stats">
+                <span id="remaining-questions">Disponíveis: 0</span>
+                <span id="recent-used">Usadas: 0</span>
+            </div>
+            
+            <div class="history-controls">
+                <button class="clear-history-btn" onclick="clearHistory()">
+                    🗑️ Limpar Histórico
+                </button>
+                <button class="info-history-btn" onclick="showHistoryInfo()">
+                    ℹ️ Info
+                </button>
+            </div>
+        </div>
+        
+        <div class="quiz-info-mini">
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Questão</div>
+                    <div class="info-value" id="question-counter">0/0</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Respondidas</div>
+                    <div class="info-value" id="answered-counter">0/0</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Progresso</div>
+                    <div class="info-value" id="progress-percent">0%</div>
+                </div>
+            </div>
+            
+            <div class="controls-compact">
+                <div class="auto-nav-toggle" onclick="toggleAutoNav()">
+                    <input type="checkbox" id="auto-nav-checkbox" class="auto-nav-checkbox" checked>
+                    <label class="auto-nav-label">Auto-navegação</label>
+                </div>
+                <button class="reset-btn-mini" onclick="resetQuiz()">
+                    ↻ Reiniciar
+                </button>
+            </div>
+        </div>
+
+        <div class="completion-status">
+            <div class="status-header">
+                <span class="status-text">Status:</span>
+                <span class="status-count" id="status-count">0/0</span>
+            </div>
+            <div class="pending-compact" id="pending-questions">
+                <div class="pending-summary">
+                    <span>Pendentes:</span>
+                    <span class="pending-count" id="pending-count">0</span>
+                </div>
+                <div class="pending-list-compact" id="pending-list">
+                    <span style="color: #6c757d; font-style: italic;">Nenhuma pendente</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="results">
+        <div class="result-title" id="feedback-msg"></div>
+        <div class="score-mini" id="final-score"></div>
+        <div id="final-percent" style="font-size: 0.8rem; font-weight: bold; margin-bottom: 6px; color: var(--accent);"></div>
+        <div id="motivation-message" class="motivation-message"></div>
+        <div id="simulado-summary" style="margin-bottom: 8px; font-size: 0.7rem; color: var(--primary);"></div>
+        
+        <button id="restart-btn" class="btn btn-restart" onclick="startNewQuiz()">🔄 Refazer Simulado</button>
+        <button id="voltar-inicio-btn" class="btn btn-voltar-inicio" onclick="voltarAoInicio()">
+            🏁 Voltar ao Início
+        </button>
+        <button id="continuar-banco-btn" class="btn btn-continuar-banco" onclick="continuarComBanco()">
+            📚 Continuar com Banco
+        </button>
+        <button id="wrong-questions-btn" class="btn btn-reforco" onclick="startWrongQuestionsSimulado()">
+            ⚡ Simulado de Reforço
+        </button>
+        <button id="reiniciar-banco-btn" class="btn btn-reiniciar-banco" onclick="reiniciarBancoCompleto()">
+            🔄 Reiniciar Banco Completo
+        </button>
+        <button id="new-simulado-btn" class="btn" style="background: var(--accent); color: white; margin-top: 4px; display: none;" onclick="generateNewSimulado()">🎲 Novo Simulado</button>
+        <!-- NOVO BOTÃO PARA SIMULADO DE REFORÇO -->
+        <button id="novo-simulado-reforco-btn" class="btn btn-novo-simulado-reforco" onclick="novoSimuladoAposReforco()">
+            🎯 Novo Simulado
+        </button>
+    </div>
+
+    <div id="quiz-content"></div>
+
+    <div class="nav-buttons">
+        <button id="prev-btn" class="nav-btn" onclick="prevQuestion()" disabled>
+            ← Anterior
+        </button>
+        <button id="next-btn" class="nav-btn" onclick="nextQuestion()">
+            Próximo →
+        </button>
+    </div>
+
+    <button id="finish-btn" class="btn btn-finish" onclick="finalizeQuiz()" disabled>
+        🏁 Finalizar
+    </button>
+</div>
+
+<!-- MODAL DE REPORTE ATUALIZADO -->
+<div id="reportModal" class="report-modal">
+    <div class="report-content">
+        <div class="report-title">📝 Reportar Questão</div>
+        
+        <div class="report-question-info">
+            <div><strong>Questão #<span id="reportQuestionNumber">1</span></strong></div>
+            <div id="reportQuestionText" style="font-size: 0.75rem; margin-top: 5px;">Carregando...</div>
+        </div>
+        
+        <!-- SEÇÃO: TIPO DE PROBLEMA -->
+        <div class="report-section">
+            <div class="report-section-title">📌 Tipo de Problema</div>
+            <div class="report-options">
+                <div class="report-option">
+                    <input type="radio" id="reportError" name="reportType" value="error">
+                    <label for="reportError">❌ Questão com erro</label>
+                </div>
+                <div class="report-option">
+                    <input type="radio" id="reportWrongAnswer" name="reportType" value="wrong_answer">
+                    <label for="reportWrongAnswer">⚠️ Resposta incorreta</label>
+                </div>
+                <div class="report-option">
+                    <input type="radio" id="reportConfusing" name="reportType" value="confusing">
+                    <label for="reportConfusing">🤔 Enunciado confuso</label>
+                </div>
+                <div class="report-option">
+                    <input type="radio" id="reportAlternative" name="reportType" value="alternative">
+                    <label for="reportAlternative">🔤 Alternativas erradas</label>
+                </div>
+                <div class="report-option">
+                    <input type="radio" id="reportOther" name="reportType" value="other">
+                    <label for="reportOther">📝 Outro problema</label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SEÇÃO: SUA IDENTIFICAÇÃO -->
+        <div class="report-section">
+            <div class="report-section-title">👤 Sua Identificação <span class="required-star">*</span></div>
+            <div class="user-info-form">
+                <div class="form-group">
+                    <label class="form-label" for="userName">Nome Completo <span class="required-star">*</span></label>
+                    <input type="text" id="userName" class="form-input" placeholder="Digite seu nome completo" maxlength="100">
+                    <span class="form-hint">Para podermos entrar em contato com você</span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="userEmail">E-mail <span class="required-star">*</span></label>
+                    <input type="email" id="userEmail" class="form-input" placeholder="seu.email@exemplo.com" maxlength="100">
+                    <span class="form-hint">Para enviarmos o feedback sobre sua solicitação</span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="userInfo">Instituição/Curso (opcional)</label>
+                    <input type="text" id="userInfo" class="form-input" placeholder="Ex: SENAI, Engenharia Mecânica" maxlength="100">
+                    <span class="form-hint">Ajuda a identificar o contexto do reporte</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SEÇÃO: DETALHES -->
+        <div class="report-section">
+            <div class="report-section-title">📋 Detalhes do Problema</div>
+            <textarea 
+                id="reportDetails" 
+                class="report-textarea" 
+                placeholder="Descreva detalhadamente o problema encontrado na questão. Se achar que há erro na resposta, explique sua justificativa..."
+                maxlength="1000"
+            ></textarea>
+            <div class="form-hint" style="text-align: right;">
+                <span id="charCount">0</span>/1000 caracteres
+            </div>
+        </div>
+        
+        <div id="reportErrorMsg" class="report-error"></div>
+        
+        <div class="report-buttons">
+            <button id="cancelReport" class="report-cancel" onclick="closeReportModal()">Cancelar</button>
+            <button id="submitReport" class="report-submit" onclick="submitReport()">
+                <span id="submitText">Enviar Reporte</span>
+                <span id="submitLoading" class="loading-spinner" style="display: none;"></span>
+            </button>
+        </div>
+        
+        <div id="reportSuccess" class="report-success">
+            ✅ Reporte enviado com sucesso! Obrigado pela contribuição.<br>
+            <small>Você receberá um feedback por email em breve.</small>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ============================================
+    // BANCO DE QUESTÕES - ADICIONE AS SUAS AQUI
+    // ============================================
+    
+    // FORMATO: {q: "Pergunta?", a: ["Opção A", "Opção B", "Opção C", "Opção D"], c: 0}
+    // Onde 'c' é o índice da resposta correta (0 = A, 1 = B, 2 = C, 3 = D)
+    
+ const masterBank = [
+
+  {q: "O torquímetro é uma ferramenta:", a: ["Medir a resistência de parafusos e porcas especiais", "Usada para apertar ou afrouxar uma porca ou parafuso sem danificá-los", "Usada para apertar ou afrouxar uma porca somente, sem danificá-la", "Que tem a capacidade de medir o torque (força de rotação) do parafuso ou porca, fazendo com que os ajustes se tornem muito mais precisos"], c: 1},
+  {q: "A ferramenta utilizada para abrir rosca externa denomina-se:", a: ["macho", "cossinete", "vazador", "calibrador"], c: 1},
+  {q: "Ferramenta que pode ser usada junto com um arco de velocidade:", a: ["soquetes", "catraca", "chave de fenda", "brocas de aço"], c: 0},
+  {q: "A chave mista ou combinada que tem um lado 1/2 polegadas, terá do outro lado?", a: ["5/8 pol", "7/16 pol", "1/2 pol", "9/16 pol"], c: 2},
+  {q: "São ferramentas que cortam em forma cônica uma depressão ao redor de um furo, para permitir que um rebite ou parafuso fique no mesmo plano da superfície do material:", a: ["machos", "vazadores", "cossinete padrão", "escareadores"], c: 3},
+  {q: "O ângulo do escareador padrão é de?", a: ["10º", "100º", "90º", "45º"], c: 1},
+  {q: "O instrumento para medida de precisão, utilizado para medir quando for preciso medir em milésimo ou décimo de milímetro de polegadas denomina-se:", a: ["paquímetro", "micrômetro", "calibre Vernier", "relógio comparador"], c: 1},
+  {q: "As partes fixas de um micrômetro são:", a: ["arco, bainha e encosto", "tambor e haste", "cursor, catraca e impulsor", "tambor, haste e bainha"], c: 0},
+  {q: "Na desmontagem de um pneu qual ferramenta é usada para auxiliar?", a: ["marreta", "extrator", "macete", "alavanca"], c: 2},
+  {q: "Em uma chave colar se a extremidade menor tem 1/4 a outra terá?", a: ["1/4", "1/8", "5/16", "2/4"], c: 2},
+  {q: "Em uma chave combinada, se a extremidade colar medir 6/8 da polegada, a outra extremidade medirá, em polegadas:", a: ["3/4", "6/8", "7/8", "11/16"], c: 1},
+  {q: "Na desmontagem de um pneu, para o deslocamento do mesmo, da roda, usa-se um:", a: ["macete", "martelete", "martelo bola", "martelo te pena reta"], c: 0},
+  {q: "As ferramentas que cortam em forma cônica uma depressão ao redor de um furo, para permitir que um parafuso fique ao mesmo plano da superfície do material, denomina-se:", a: ["lima", "broca", "punção", "escareador"], c: 3},
+  {q: "Em uma chave de boca, se uma extremidade medir 5/8 da polegada, a outra extremidade mediará:", a: ["1/2", "3/4", "3/8", "11/16"], c: 3},
+  {q: "A parte da lima onde se fixa o cabo denomina-se:", a: ["raiz", "ponta", "espiga", "borda"], c: 2},
+  {q: "Tipo de punção utilizado para fazer marcações necessárias para o início de uma furação, denomina-se:", a: ["ponta", "centro", "vasada", "extrator"], c: 1},
+  {q: "Dentre as ferramentas abaixo, aquela utilizada para executar furos é o (a):", a: ["broca", "riscador", "alargador", "cossinete"], c: 0},
+  {q: "Ferramenta de precisão utilizada para medir a quantidade de força de torção ou de giro a ser aplicada em um parafuso denomina-se:", a: ["taquímetro", "tensiômetro", "torquímetro", "chave de gancho"], c: 2},
+  {q: "A ferramenta utilizada para abrir rosca interna denomina-se:", a: ["macho", "punção", "cossinete", "escareador"], c: 0},
+  {q: "Em uma chave de boca 5/8, qual é a medida maior da outra extremidade:", a: ["1/4", "1/2", "1/8", "11/16"], c: 3},
+  {q: "Como são classificadas as chaves de fenda?", a: ["como chave Philips e fenda", "de acordo com o tamanho da haste sem o cabo", "de acordo com o tamanho da haste com o cabo", "pelo formato, tipo e comprimento da haste"], c: 3},
+  {q: "Quais são os tipos de macete conhecidos?", a: ["pena, bola e comum", "borracha dura ou macia", "madeira, couro cru e borracha", "madeira, borracha e vidro"], c: 2},
+  {q: "O calibre vernier do paquímetro é graduado em qual escala?", a: ["sete partes de 3/16 de polegada", "oito partes de 1/128 de polegada", "sete partes de 1/16 de milimetros", "oito partes de 3/16 de milimetros"], c: 1},
+  {q: "Os soquetes para fixar uma porca tem encaixe de?", a: ["4, 6 ou 30 pontos", "4, 6 ou 12 pontos", "regulável", "fixo"], c: 1},
+  {q: "As chaves colar são feitas de 12 pontos para permitir um deslocamento de?", a: ["90º", "15°", "mão livre", "180°"], c: 1},
+  {q: "Chave usada quando se necessita de agilidade (ação rápida)?", a: ["soquete", "catraca", "retífica", "furadeira de alta rotação"], c: 1},
+  {q: "A ferramenta que possui um mordente fixo, e outro que é movimentado por um sem-fim usada para executar o trabalho de varias chaves de boca, denomina-se:", a: ["regulável", "tolerável", "ajustável", "compensável"], c: 2},
+  {q: "Num jogo de ferramentas do tipo soquete, se uma das peças mede 9/16 da polegada,", a: ["1/2 da polegada", "5/8 da polegada", "7/16 da polegada", "11/16 da polegada"], c: 1},
+  {q: "Num jogo de ferramentas do tipo soquete, se uma das peças mede 5/8 da polegada, a peça imediatamente inferior mede:", a: ["1/2 da polegada", "3/4 da polegada", "7/16 da polegada", "9/16 da polegada"], c: 3},
+  {q: "As partes móveis de um micrômetro são:", a: ["arco, bainha e encosto", "tambor e haste", "cursor, catraca e impulsor", "tambor, haste e bainha"], c: 1},
+  {q: "Dentre as alternativas abaixo a ferramenta utilizada para medição com precisão é o", a: ["broca", "paquímetro", "chave de fenda", "alicate de corte"], c: 1},
+  {q: "Num jogo de ferramentas do tipo soquete, se uma das peças mede 9/16 da polegada,", a: ["1/2 da polegada", "5/8 da polegada", "7/16 da polegada", "7/8 da polegada"], c: 0},
+  {q: "Um deslocamento de 15 graus de uma chave colar é possível quando essa possui:", a: ["4 pontos", "6 pontos", "8 pontos", "12 pontos"], c: 3},
+  {q: "Para que \"não\" haja danos no parafuso uma chave de fenda comum deve prender a fenda em, pelo menos:", a: ["25%", "50%", "75%", "100%"], c: 2},
+  {q: "Em relação às chaves de fenda é correto afirmar que:", a: ["podem ser usadas como ferramentas de corte", "podem ser usadas como alavancas para outros serviços", "as chaves PHILLIPS e RED AND PRINCE são intercambiáveis", "a estrutura"], c: 3},
+  {q: "Qual instrumento de medição é utilizado para milésimos e décimos de milésimos de polegada?", a: ["paquímetro", "micrômetro", "relógio comparador", "régua de precisão"], c: 1},
+  {q: "Qual a menor medida a ser medida por um paquímetro?", a: ["1/128", "1/64", "2/128", "2/64"], c: 0},
+  {q: "Em uma medida de micrômetro, quanto equivale cada divisão?", a: ["0,01 (um centésimo de uma polegada)", "0,001 (um milésimo de uma polegada)", "1/128", "1/64"], c: 1},
+  {q: "A chave mista ou combinada, que tem de um lado 1/2 polegada, terá do outro lado:", a: ["1/2 de polegada", "5/8 de polegada", "7/16 de polegada", "9/16 de polegada"], c: 0},
+  {q: "Toda chave ajustável à força de tração deve ser sempre girada em direção ao mordente:", a: ["móvel", "fixo", "direito", "esquerdo"], c: 1},
+  {q: "A chave cuja ponta é rombuda e os ângulos internos são côncavos, é a tipo:", a: ["fenda fina", "Phillips", "Reed Prince", "fenda simples"], c: 1},
+  {q: "O peso de um martelo é dado em:", a: ["onça", "gramas", "libras", "quilos"], c: 0},
+  {q: "Para se apertar um parafuso, com precisão de regulagem, o tipo de chave utilizada", a: ["manômetro", "goniômetro", "tensiômetro", "torquímetro"], c: 3},
+  {q: "O arco de velocidade a catraca e a extensão são ferramentas que podem ser usadas em conjunto com uma chave do tipo:", a: ["colar", "de boca", "soquete", "combinada"], c: 2},
+  {q: "Uma chave combinada é aquela que possui, em uma das extremidades uma chave:", a: ["colar e na outra uma soquete", "colar e na outra uma de boca", "de boca e na outra uma soquete", "soquete e na outra uma de fenda"], c: 1},
+  {q: "Quais as ferramentas usadas para fazer roscas:", a: ["lima meia- cana", "micrometro", "cossinete e macho", "lima lisa"], c: 2},
+  {q: "As ferramentas para uso em porcas e parafusos são feitas com metal de:", a: ["latão e vanádio", "alumínio e cromo mole", "cromo vanádio", "ferro fundido"], c: 2},
+  {q: "O passo de uma lâmina de serra significa:", a: ["o número da lâmina", "o número de teor do carbono", "o número de dentes por polegada", "o número de golpes"], c: 2},
+  {q: "Uma chave de boca tem geralmente um ângulo de:", a: ["30º", "25°", "15º", "45°"], c: 2},
+  {q: "Uma chave de fenda que tem suas pontas dobradas com um ângulo de 90º é do tipo:", a: ["Allen", "em L", "em Z", "reta"], c: 2},
+  {q: "Um alicate gasista é:", a: ["um alicate universal", "um alicate de bico", "um alicate de corte", "um alicate de cinco posições"], c: 3},
+  {q: "Na aviação, os dois tipos de alicates de bico mais usados são:", a: ["fino e reto", "curvo e reto", "elétrico e fino", "magnético e curvo"], c: 0},
+  {q: "A conversão de milímetro em polegada fracionada de 12,7 mm é:", a: ["3/4", "1/2", "25/32", "12/34"], c: 1},
+  {q: "No paquímetro a escala do Vernier em polegada tem comprimento de:", a: ["3/16 dividido em 6 partes", "5/16 dividido em 4 partes", "7/16 dividido em 8 partes", "9/16 dividido em 2 partes"], c: 2},
+  {q: "Dentre as ferramentas abaixo, identifique aquela que é usada para frenar parafusos", a: ["punção", "toca pino", "chave de fenda em Z", "alicate de bico de pato"], c: 3},
+  {q: "O deslocamento de 15 graus de uma chave colar é possível quando esta possui:", a: ["4 pontos", "6 pontos", "12 pontos", "18 pontos"], c: 2},
+  {q: "Dentre as ferramentas abaixo, aquela que possui encaixe que forma uma perfeita cruz é o:", a: ["macete", "tocapino", "chave phillips", "chave reed prince"], c: 3},
+  {q: "Ao conjunto cossinete e desandador dá-se o nome de:", a: ["rotor", "tambor", "tarraxa", "catraca"], c: 2},
+  {q: "Num jogo de ferramentas soquete, se uma das peças mede 11/16 da polegada, a peça imediatamente superior medirá, em polegada:", a: ["1/2", "3/4", "9/16", "13/16"], c: 1},
+  {q: "A ferramenta denominada martelete tem o propósito de:", a: ["remover rebites", "instalar rebites", "furar uma fuselagem para instalação de rebites", "distanciar, entre si, os rebites instalados nas fuselagens"], c: 1},
+  {q: "A chave de fenda é classificada pelo:", a: ["como chave Philips e fenda", "de acordo com o tamanho da haste sem o cabo", "pelo formato, tipo e comprimento da haste", "de acordo com o tamanho da haste com o cabo"], c: 2},
+  {q: "Em uma chave combinada, se uma extremidade medir 3/8 da polegada, a outra extremidade medirá:", a: ["1/4 da polegada", "3/8 da polegada", "5/16 da polegada", "7/16 da polegada"], c: 1},
+  {q: "O martelo de cabeça metálica tem sua medida de acordo com:", a: ["tipo de metal", "tamanho do cabo", "tamanho da cabeça", "peso da cabeça sem o cabo"], c: 3},
+  {q: "Em uma chave colar, se a extremidade menor tem 1/4 polegadas, a extremidade oposta tem, em polegadas:", a: ["1/4", "3/4", "5/16", "7/16"], c: 2},
+  {q: "A chave de fenda em `z` é construída com as pontas dobradas a:", a: ["45º em relação a haste", "60º em relação a haste", "90º em relação a haste", "10º em relação a haste"], c: 2},
+  {q: "O alicate que possui mordentes curtos com lâminas de corte, formando um pequeno ângulo com o punho, utilizado geralmente para cortar arame de freno, denomina-se", a: ["de bico", "gazista", "diagonal", "universal"], c: 2},
+  {q: "O macete é uma ferramenta semelhante ao martelo, porém sua cabeça é", a: ["metal", "grafite", "aço-inoxidável", "madeira"], c: 3},
+  {q: "Numa medida do micrômetros cada divisão do tambor representa:", a: ["1 polegada", "0,1 da polegada", "0,01 da polegada", "0,001 da polegada"], c: 3},
+  {q: "Qual dos punções abaixo é utilizada para fazer marcas de referência no metal:", a: ["bico", "alinhamento", "toca-pino", "vazador"], c: 0},
+  {q: "Dentre as ferramentas abaixo, aquela que é confeccionada de couro cru ou borracha e é empregada em conjunto com um formão, denomina-se:", a: ["macete", "punção", "soquete", "talhadeira"], c: 0},
+  {q: "As lâminas de serra geralmente são fabricadas em aço:", a: ["inoxidável ou latão", "tungstênio ou alumínio", "cromo-vandádio ou alumínio", "de alto teor ou aço tungstênio"], c: 3},
+  {q: "Uma chave colar feita com 12 pontos é usada em lugares que só permite um", a: ["10", "12", "15", "30"], c: 2},
+  {q: "O tipo de alicate ajustável, com eixo deslizante e os mordentes em ângulo com os punhos, denomina-se:", a: ["gasista", "diagonal", "ponta fina", "bico redondo"], c: 0},
+  {q: "Dentre as chaves abaixo, aquela que é utilizada como uma chave de boca é a:", a: ["soquete", "phillips", "ajustável", "reed e prince"], c: 2},
+  {q: "Os cossinetes são classificados em:", a: ["longos e curtos", "espessos e finos", "cônicos e paralelos", "comuns e ajustáveis"], c: 3},
+  {q: "Em uma chave combinada, se a extremidade colar medir 3/4 da polegada, a outra extremidade medirá, em polegadas:", a: ["3/4", "5/8", "7/8", "11/16"], c: 0},
+  {q: "Dentre as ferramentas abaixo, indique aquela que poderá ser utilizada em conjunto", a: ["prego", "formão", "punção", "talhadeira"], c: 1},
+  {q: "Se uma das extremidades das chaves de boca, colar e combinada, mede em todas 7/16 polegadas, as outras extremidades medirão, em polegadas, respectivamente:", a: ["3/8, 3/8 e 3/8", "3/8, 3/8 e 7/16", "7/16, 7/16 e 3/8", "7/17, 3/8 e 3/8"], c: 1},
+  {q: "O tamanho do alicate é determinado pelo seu comprimento:", a: ["total", "do bico", "do cabo", "no mordente"], c: 0},
+  {q: "Quantos pontos possui o encaixe de uma soquete para fixar uma porca:", a: ["dois, três ou quatro", "três, seis ou nove", "quatro, seis ou doze", "cinco, sete ou nove"], c: 2},
+  {q: "O instrumento para medidas de precisão, utilizado quando for necessário medir em milésimos ou décimos de milésimos da polegada, denomina-se:", a: ["paquímetro", "micrômetro", "calibre vernier", "esquadro combinado"], c: 1},
+  {q: "Dentre as ferramentas abaixo, aquela que é usada para cortar arame de freno é o:", a: ["alicate de ponta fina", "alicate de bico chato", "alicate de bico redondo", "alicate de corte diagonal"], c: 3},
+  {q: "A chave de utilização manual que possui um mordente fixo e outro móvel e é utilizada", a: ["cossinete", "ajustável", "de gancho", "desandador"], c: 1},
+  {q: "Dentre as alternativas abaixo, indique os alicates que são ajustáveis:", a: ["gasista e bico de pato", "gasista e bomba d'água", "bomba d'água e diagonal", "bico longo e bico de pato"], c: 1},
+  {q: "A ferramenta de precisão utilizada para medir a quantidade de força de torção ou de giro a ser aplicada em um parafuso é o (a):", a: ["manômetro", "tensiômetro", "torquímetro", "paquímetro"], c: 2},
+  {q: "Dentre os alicates abaixo, aqueles que são ajustáveis denomina-se:", a: ["gasista e bico de pato", "bomba d'água e diagonal", "bico longo e bico de pato", "bico de papagaio e bomba d'água"], c: 3},
+  {q: "Num micrômetro, se a leitura for de 4mm na bainha de 0,45mm no tambor e de 0,003mm no vernier, a leitura final será de:", a: ["0,453 milímetros", "0,853 milímetros", "4,453 milímetros", "4,853 milímetros"], c: 2},
+  {q: "A chave de fenda pode ser classificada pelo:", a: ["formato e material de fabricação", "formato, tipo e comprimento da haste", "poder de torção e comprimento da haste", "comprimento do cabo, tipo e formato da ponta"], c: 1},
+  {q: "Os citados abaixo, o tipo de punção utilizado para extrair parafusos que algumas vezes ficam presos em orifícios, é o:", a: ["vasador", "de bico", "tocapinos", "de centro"], c: 2},
+  {q: "Num jogo de chaves soquetes com 7 peças, somente as chaves nas medidas 3/8, 7/16, 11/16 e 3/4 foram localizadas neste caso, as peças que estão faltando são:", a: ["1/2, 9/16 e 5/8", "1/2, 5/8 e 12/16", "6/16, 9/16 e 5/8", "6/16, 9/16 e 1/2"], c: 0},
+  {q: "É chamado de VERNIER do paquímetro a escala marcada no:", a: ["cursor", "tambor", "tensor", "impulsor"], c: 0},
+  {q: "Dentre as ferramentas abaixo, aquela que tem a finalidade de apertar e afrouxar parafusos, denomina-se:", a: ["chave reed and prince", "micrômetro", "alicate universal", "alicate de bico"], c: 0},
+  {q: "A menor medida que pode ser verificada, em polegadas, com um paquímetro, é a de:", a: ["1/16", "1/32", "1/64", "1/128"], c: 3},
+  {q: "A ferramenta adequada para medidas de precisão da ordem de um décimo de milímetro é o (a):", a: ["régua", "compasso", "micrômetro", "paquímetro"], c: 3},
+  {q: "As profundas marcações no metal, que são necessárias para o início de uma furação, são feitas com a ferramenta denominada punção:", a: ["vasador", "extrator", "de centro", "de alinhamento"], c: 2},
+  {q: "Dentre as alternativas abaixo, aquela que é uma ferramenta de medição é o(a):", a: ["paquímetro e a régua", "paquímetro e a soquete", "micrômetro e o soquete", "micrômetro e o cossinete"], c: 0},
+  {q: "Dentre as ferramentas abaixo, aquela que é utilizada em trabalho de ação rápida é o(a):", a: ["alicate gasista", "alicate universal", "chave de fenda em", "chave de fenda de catraca"], c: 3},
+  {q: "A ferramenta que tem a finalidade de apertar e afrouxar parafusos e que seu encaixe forma uma perfeita cruz, é classificada como chave:", a: ["em Z", "comum", "Phillips", "Reed e Prince"], c: 3},
+  {q: "A ferramenta que possui em umas das extremidades uma chave de boca e, na outra, uma colar, denomina-se chave:", a: ["reta", "combinada", "ajustável", "associada"], c: 1},
+  {q: "Dentre os alicates abaixo, aquele utilizado exclusivamente para executar frenagens", a: ["gasista", "diagonal", "bico de pato", "bico de papagaio"], c: 2},
+  {q: "As chaves de fenda em \"z\" são construídas com ambas as pontas dobradas em relação a haste formando, em graus, um ângulo de:", a: ["60", "15", "120", "90"], c: 3},
+  {q: "A ferramenta usada para abrir roscas externas é denominada:", a: ["cossinete", "punção", "alargador", "macho"], c: 0},
+  {q: "O torquímetro cuja tensão desejada deverá ser ajustada, previamente, na escala do tipo micrômetro, denomina-se:", a: ["convencional", "barra flexível", "estrutura rígida", "estrutura de catraca"], c: 3},
+  {q: "A ferramenta usada para abrir roscas internas é chamada de:", a: ["cossinete", "escareador", "punção", "macho"], c: 3},
+  {q: "Qual das punções abaixo é utilizada para fazer marcas de referência no metal:", a: ["alinhamento", "toca-pino", "vazador", "bico"], c: 3},
+  {q: "A chave colar com 12 pontos é para ser usada em lugares que só permitem um", a: ["10", "15", "20", "30"], c: 1},
+  {q: "Se numa chave combinada a extremidade colar mede 1/4 da polegada, logo a extremidade em boca medirá:", a: ["1/4 da polegada", "1/8 da polegada", "3/16 da polegada", "5/16 da polegada"], c: 0},
+  {q: "O punção extrator também é chamado de:", a: ["punção de centro", "punção cônico", "marcador", "alargador"], c: 1},
+  {q: "Alicates usados para apertar porcas serrilhadas do sistema elétrico, tubos e inúmeras partes:", a: ["alicates de bico de pato", "alicates em diagonal", "alicates gasistas", "universal"], c: 2},
+  {q: "Ocasionalmente será necessário usar um martelo de face macia, para isso utiliz-se um martelo com superfície feita de:", a: ["aluminio", "ouro", "pneu", "latão"], c: 3},
+  {q: "No punção automático, uma mola é comprimida e, ao final do seu curso, ela é liberada repentinamente, dando um golpe na ponta e marcando o metal. Quanto a a força", a: ["Não é ajustável", "Não penetra em ligas de aço", "Deve-se evitar materiais macios como liga de alumínio leve", "Pode ser ajustada, apertando-se a extremidade roscada do punção"], c: 3},
+  {q: "Quais as formas de medição de um micrômetro?", a: ["externas, internas, profundidade e ovalização", "externas, internas, profundidade e roscas", "externas, internas, horizontal, e empenamento", "Internas, roscas e de superfície"], c: 1},
+  {q: "Quando utlizamos o martelo usamos como se fosse uma extensão do cabo:", a: ["o pulso", "usamos somente a extensão do braço", "o cotovelo sem utlizar o pulso", "o antebraço"], c: 3},
+  {q: "Uma polegada é equivalente a:", a: ["2,4 milímetros", "2,5 milímetros", "25,4 milímetros", "25,4 centímetros"], c: 2}
+];
+    
+    // ============================================
+    // CONFIGURAÇÕES DO SISTEMA
+    // ============================================
+    const QUESTIONS_PER_SIMULADO_PADRAO = 20;
+    const MIN_WRONG_QUESTIONS_FOR_SIMULADO = 1;
+    const MIN_PERCENT_FOR_SUCCESS = 70;
+    
+    // ============================================
+    // VARIÁVEIS GLOBAIS
+    // ============================================
+    let QUESTIONS_PER_SIMULADO = QUESTIONS_PER_SIMULADO_PADRAO;
+    let API_URL = "https://script.google.com/macros/s/AKfycbwcX8bNdrDQZ6sRB1sbG0COJe7aGYyBlOCPkno2JxbM-59_-FsWt4LCccUQ8DBLTy1S5g/exec";
+    let EMAIL_DESTINO = "ewerton.andriel@hotmail.com";
+    
+    let TIME_LIMIT = 0;
+    let currentQuestions = [];
+    let userAnswers = [];
+    let timeLeft = 0;
+    let timerId;
+    let currentQuestionIndex = 0;
+    let autoNavEnabled = true;
+    let usedQuestionsHistory = [];
+    let currentSimuladoIndices = [];
+    let totalSimulados = 1;
+    let currentSimuladoNumber = 1;
+    
+    // VARIÁVEIS DO SISTEMA DE REPORTE
+    let currentReportQuestionIndex = null;
+    let reportsHistory = [];
+
+    // TIPOS DE REPORTE
+    const REPORT_TYPES = {
+        error: "❌ Questão com erro",
+        wrong_answer: "⚠️ Resposta incorreta", 
+        confusing: "🤔 Enunciado confuso",
+        alternative: "🔤 Alternativas erradas",
+        other: "📝 Outro problema"
+    };
+    
+    // ============================================
+    // VARIÁVEIS PARA SISTEMA DE REFORÇO
+    // ============================================
+    let wrongQuestionsHistory = [];
+    const WRONG_QUESTIONS_KEY = 'wrong_questions_history';
+    const LAST_OFFER_KEY = 'last_reforco_offer';
+    
+    // ============================================
+    // CHAVE PARA SESSÃO ATUAL
+    // ============================================
+    const SESSION_ID_KEY = 'current_session_id';
+    const CURRENT_QUESTIONS_KEY = 'current_session_questions';
+    const CURRENT_QUESTION_INDEX_KEY = 'current_question_index';
+    const USER_ANSWERS_KEY = 'user_answers';
+    const TIME_LEFT_KEY = 'time_left';
+    const AUTO_NAV_KEY = 'auto_nav';
+    const SIMULADO_STARTED_KEY = 'simulado_started';
+    const CURRENT_SIMULADO_NUMBER_KEY = 'current_simulado_number';
+    
+    // ============================================
+    // FUNÇÕES DE CONFIGURAÇÃO DO SIMULADO
+    // ============================================
+    
+    function calcularConfiguracaoSimulados() {
+        const totalQuestions = masterBank.length;
+        
+        if (totalQuestions <= 27) {
+            totalSimulados = 1;
+            QUESTIONS_PER_SIMULADO = totalQuestions;
+            return {
+                totalSimulados: 1,
+                questionsPerSimulado: totalQuestions,
+                mensagem: `Banco com ${totalQuestions} questões → 1 único simulado`
+            };
+        } else if (totalQuestions >= 28 && totalQuestions <= 39) {
+            totalSimulados = 2;
+            const questionsPerSimulado = Math.ceil(totalQuestions / 2);
+            QUESTIONS_PER_SIMULADO = questionsPerSimulado;
+            return {
+                totalSimulados: 2,
+                questionsPerSimulado: questionsPerSimulado,
+                mensagem: `Banco com ${totalQuestions} questões → 2 simulados de ~${questionsPerSimulado} questões cada`
+            };
+        } else {
+            totalSimulados = Math.ceil(totalQuestions / QUESTIONS_PER_SIMULADO_PADRAO);
+            QUESTIONS_PER_SIMULADO = QUESTIONS_PER_SIMULADO_PADRAO;
+            return {
+                totalSimulados: totalSimulados,
+                questionsPerSimulado: QUESTIONS_PER_SIMULADO_PADRAO,
+                mensagem: `Banco com ${totalQuestions} questões → ${totalSimulados} simulados de 20 questões`
+            };
+        }
+    }
+    
+    // ============================================
+    // NOVA FUNÇÃO: NOVO SIMULADO APÓS REFORÇO
+    // ============================================
+    
+    function novoSimuladoAposReforco() {
+        const totalQuestions = masterBank.length;
+        const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
+        
+        if (remainingQuestions === 0) {
+            if (confirm(`Você já completou todas as ${totalQuestions} questões!\n\nDeseja reiniciar o histórico e começar um novo simulado?`)) {
+                usedQuestionsHistory = [];
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                startNewSimuladoFromResults();
+            }
+        } else {
+            if (confirm(`Deseja continuar com as próximas questões do banco?\n\nRestam: ${remainingQuestions} questões\nUsadas: ${usedQuestionsHistory.length} questões`)) {
+                startNewSimuladoFromResults();
+            }
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO: ATUALIZAR BOTÃO NOVO SIMULADO REFORÇO
+    // ============================================
+    
+    function updateNovoSimuladoReforcoButton() {
+        const novoSimuladoBtn = document.getElementById('novo-simulado-reforco-btn');
+        if (!novoSimuladoBtn) return;
+        
+        const isReforco = currentQuestions[0]?.isWrongQuestion;
+        const isResultsVisible = document.getElementById('results').style.display === 'block';
+        const totalQuestions = masterBank.length;
+        const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
+        
+        // Mostra o botão se:
+        // 1. É um simulado de reforço que acabou
+        // 2. Está na tela de resultados
+        // 3. Ainda há questões no banco OU todas foram usadas
+        if (isReforco && isResultsVisible) {
+            novoSimuladoBtn.style.display = 'block';
+            
+            if (remainingQuestions === 0) {
+                novoSimuladoBtn.innerHTML = `🎯 Novo Simulado (Reiniciar Banco)`;
+            } else {
+                novoSimuladoBtn.innerHTML = `🎯 Novo Simulado (${remainingQuestions} restantes)`;
+            }
+        } else {
+            novoSimuladoBtn.style.display = 'none';
+        }
+    }
+    
+    // ============================================
+    // NOVA FUNÇÃO: CONTINUAR COM BANCO
+    // ============================================
+    
+    function continuarComBanco() {
+        const totalQuestions = masterBank.length;
+        const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
+        
+        let message = `📚 CONTINUAR COM BANCO\n\n`;
+        
+        if (remainingQuestions === 0) {
+            message += `Você já completou todas as ${totalQuestions} questões!\n`;
+            message += `Deseja reiniciar o histórico e começar um novo simulado?`;
+            
+            if (confirm(message)) {
+                // Limpa histórico e começa novo
+                usedQuestionsHistory = [];
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                
+                // Gera novo simulado
+                startNewSimuladoFromResults();
+            }
+        } else {
+            message += `Restam ${remainingQuestions} questões no banco.\n`;
+            message += `Você já completou ${usedQuestionsHistory.length} questões.\n\n`;
+            message += `Deseja continuar com as próximas questões do banco?`;
+            
+            if (confirm(message)) {
+                // Continua com próximo simulado
+                startNewSimuladoFromResults();
+            }
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO: VOLTAR AO INÍCIO
+    // ============================================
+    
+    function voltarAoInicio() {
+        const totalQuestions = masterBank.length;
+        
+        let message = `🏁 VOLTAR AO INÍCIO\n\n`;
+        message += `Esta ação vai:\n`;
+        message += `• Limpar TODO o histórico de progresso\n`;
+        message += `• Limpar TODO o histórico de questões erradas\n`;
+        message += `• Reiniciar completamente o sistema\n`;
+        message += `• Começar um NOVO simulado do zero\n\n`;
+        message += `Tem certeza que deseja voltar ao início?`;
+        
+        if (confirm(message)) {
+            usedQuestionsHistory = [];
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+            
+            wrongQuestionsHistory = [];
+            saveWrongQuestionsHistory();
+            
+            localStorage.removeItem(LAST_OFFER_KEY);
+            
+            clearSessionData();
+            
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('finish-btn').style.display = 'block';
+            document.getElementById('restart-btn').style.display = 'none';
+            document.getElementById('voltar-inicio-btn').style.display = 'none';
+            document.getElementById('continuar-banco-btn').style.display = 'none';
+            document.getElementById('wrong-questions-btn').style.display = 'none';
+            document.getElementById('reiniciar-banco-btn').style.display = 'none';
+            document.getElementById('new-simulado-btn').style.display = 'none';
+            document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+            document.querySelector('.nav-buttons').style.display = 'flex';
+            
+            currentQuestions = selectRandomQuestions(true); // true = forçar simulado 1
+            
+            if (currentQuestions.length === 0) {
+                alert("Erro ao gerar novo simulado.");
+                return;
+            }
+            
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            currentQuestionIndex = 0;
+            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+            timeLeft = TIME_LIMIT;
+            autoNavEnabled = true;
+            currentSimuladoNumber = 1;
+            
+            saveCurrentSessionState();
+            
+            updatePageTitle();
+            document.getElementById('timer').textContent = formatTime(timeLeft);
+            document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+            
+            startTimer();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+            updateFinishButton();
+            updatePendingQuestions();
+            updateSimuladoInfo();
+            updateReforcoButton();
+            updateContinuarBancoButton();
+            updateVoltarInicioButton();
+            updateNovoSimuladoReforcoButton();
+            
+            document.getElementById('motivation-message').innerHTML = '';
+            document.getElementById('motivation-message').className = 'motivation-message';
+            
+            alert(`✅ SISTEMA REINICIADO!\n\n${totalQuestions} questões disponíveis.\nBoa sorte!`);
+        }
+    }
+    
+    // ============================================
+    // FUNÇÕES DE HISTÓRICO CORRIGIDAS
+    // ============================================
+
+    function clearHistory() {
+        if (confirm(`Limpar histórico completo?`)) {
+            // Limpa histórico
+            usedQuestionsHistory = [];
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+            
+            wrongQuestionsHistory = [];
+            saveWrongQuestionsHistory();
+            
+            clearSessionData();
+            
+            // RESETA INTERFACE
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('finish-btn').style.display = 'block';
+            document.getElementById('restart-btn').style.display = 'none';
+            document.getElementById('voltar-inicio-btn').style.display = 'none';
+            document.getElementById('continuar-banco-btn').style.display = 'none';
+            document.getElementById('wrong-questions-btn').style.display = 'none';
+            document.getElementById('reiniciar-banco-btn').style.display = 'none';
+            document.getElementById('new-simulado-btn').style.display = 'none';
+            document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+            document.querySelector('.nav-buttons').style.display = 'flex';
+            
+            // Gera NOVO simulado começando do 1
+            currentQuestions = selectRandomQuestions(true); // true = forçar simulado 1
+            
+            if (currentQuestions.length === 0) {
+                alert("Não foi possível gerar o simulado.");
+                return;
+            }
+            
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            currentQuestionIndex = 0;
+            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+            timeLeft = TIME_LIMIT;
+            autoNavEnabled = true;
+            
+            // IMPORTANTE: Garante que começa no simulado 1
+            currentSimuladoNumber = 1;
+            
+            saveCurrentSessionState();
+            
+            updatePageTitle();
+            document.getElementById('timer').textContent = formatTime(timeLeft);
+            document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+            updateSimuladoInfo();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+            updateFinishButton();
+            updatePendingQuestions();
+            updateReforcoButton();
+            updateContinuarBancoButton();
+            updateVoltarInicioButton();
+            updateNovoSimuladoReforcoButton();
+            
+            startTimer();
+            
+            alert('Histórico limpo! Novo simulado gerado.');
+        }
+    }
+
+    // ============================================
+    // FUNÇÃO SELECTRANDOMQUESTIONS CORRIGIDA
+    // ============================================
+
+    function selectRandomQuestions(forceFirstSimulado = false) {
+        const totalQuestions = masterBank.length;
+        
+        if (totalQuestions === 0) {
+            alert("⚠️ O banco de questões está vazio! Adicione questões no código.");
+            return [];
+        }
+        
+        const config = calcularConfiguracaoSimulados();
+        console.log(config.mensagem);
+        
+        let availableQuestions = [];
+        for (let i = 0; i < totalQuestions; i++) {
+            availableQuestions.push(i);
+        }
+        
+        // Remove as já usadas
+        if (usedQuestionsHistory.length > 0 && !forceFirstSimulado) {
+            availableQuestions = availableQuestions.filter(index => 
+                !usedQuestionsHistory.includes(index)
+            );
+        }
+        
+        const availableCount = availableQuestions.length;
+        let questionsToSelect;
+        
+        if (availableCount === 0) {
+            if (confirm(`Todas as ${totalQuestions} questões já foram usadas!\n\nDeseja reiniciar o histórico?`)) {
+                usedQuestionsHistory = [];
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
+                alert('Histórico reiniciado!');
+                // Quando reinicia, força começar do simulado 1
+                forceFirstSimulado = true;
+            } else {
+                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
+            }
+        } else if (availableCount >= QUESTIONS_PER_SIMULADO) {
+            questionsToSelect = QUESTIONS_PER_SIMULADO;
+        } else if (availableCount >= 5) {
+            questionsToSelect = availableCount;
+        } else {
+            if (confirm(`Só restam ${availableCount} questões!\n\nDeseja fazer simulado com essas questões?`)) {
+                questionsToSelect = availableCount;
+            } else {
+                if (confirm(`Deseja reiniciar o histórico?`)) {
+                    usedQuestionsHistory = [];
+                    localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                    availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+                    questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
+                    // Quando reinicia, força começar do simulado 1
+                    forceFirstSimulado = true;
+                } else {
+                    questionsToSelect = availableCount;
+                }
+            }
+        }
+        
+        // Para bancos pequenos (≤ 27), usa todas as questões
+        if (totalQuestions <= 27) {
+            questionsToSelect = totalQuestions;
+            availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+        }
+        
+        const shuffledQuestions = shuffleArray(availableQuestions);
+        const selectedIndices = shuffledQuestions.slice(0, questionsToSelect);
+        
+        currentSimuladoIndices = selectedIndices;
+        
+        // CORREÇÃO: Lógica aprimorada para calcular o número do simulado
+        if (forceFirstSimulado || usedQuestionsHistory.length === 0) {
+            // Se forçado ou histórico vazio, começa do simulado 1
+            currentSimuladoNumber = 1;
+        } else if (selectedIndices.length > 0) {
+            // Calcula baseado nas questões já usadas
+            const usedCount = usedQuestionsHistory.length;
+            const simuladoIndex = Math.floor(usedCount / QUESTIONS_PER_SIMULADO);
+            currentSimuladoNumber = Math.min(simuladoIndex + 1, totalSimulados);
+        } else {
+            // Fallback
+            currentSimuladoNumber = 1;
+        }
+        
+        // Garante que não ultrapassa o total de simulados
+        if (currentSimuladoNumber > totalSimulados) {
+            currentSimuladoNumber = totalSimulados;
+        }
+        
+        console.log(`Simulado configurado: ${currentSimuladoNumber}/${totalSimulados}`);
+        
+        return selectedIndices.map(index => ({
+            ...masterBank[index], 
+            originalIndex: index
+        }));
+    }
+
+    // ============================================
+    // FUNÇÃO GENERATENEWSIMULADO CORRIGIDA
+    // ============================================
+
+    function generateNewSimulado() {
+        const totalQuestions = masterBank.length;
+        const totalAvailable = Math.max(0, totalQuestions - usedQuestionsHistory.length);
+        
+        let message;
+        if (totalAvailable === 0) {
+            message = `Todas as questões já foram usadas!\n\nDeseja reiniciar o histórico?`;
+        } else if (totalAvailable < QUESTIONS_PER_SIMULADO) {
+            message = `Só restam ${totalAvailable} questões.\n\nDeseja fazer simulado com elas?`;
+        } else {
+            message = `Gerar novo simulado com ${Math.min(QUESTIONS_PER_SIMULADO, totalAvailable)} questões?`;
+        }
+        
+        if (confirm(message)) {
+            if (totalAvailable === 0) {
+                usedQuestionsHistory = [];
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                alert('Histórico reiniciado!');
+            }
+            
+            // RESETA INTERFACE
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('finish-btn').style.display = 'block';
+            document.getElementById('restart-btn').style.display = 'none';
+            document.getElementById('voltar-inicio-btn').style.display = 'none';
+            document.getElementById('continuar-banco-btn').style.display = 'none';
+            document.getElementById('wrong-questions-btn').style.display = 'none';
+            document.getElementById('reiniciar-banco-btn').style.display = 'none';
+            document.getElementById('new-simulado-btn').style.display = 'none';
+            document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+            document.querySelector('.nav-buttons').style.display = 'flex';
+            
+            // Gera novo simulado SEM forçar o primeiro (deixa a lógica normal decidir)
+            currentQuestions = selectRandomQuestions(false);
+            
+            if (currentQuestions.length === 0) {
+                alert("Erro ao gerar simulado.");
+                return;
+            }
+            
+            const newSessionId = 'session_' + Date.now();
+            sessionStorage.setItem(SESSION_ID_KEY, newSessionId);
+            
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            currentQuestionIndex = 0;
+            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+            timeLeft = TIME_LIMIT;
+            autoNavEnabled = true;
+            
+            saveCurrentSessionState();
+            
+            updatePageTitle();
+            document.getElementById('timer').textContent = formatTime(timeLeft);
+            document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+            startTimer();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+            updateFinishButton();
+            updatePendingQuestions();
+            updateSimuladoInfo();
+            updateReforcoButton();
+            updateContinuarBancoButton();
+            updateVoltarInicioButton();
+            updateNovoSimuladoReforcoButton();
+        }
+    }
+
+    // ============================================
+    // FUNÇÃO STARTSIMULADOFROMBANCO CORRIGIDA
+    // ============================================
+
+    function startNewSimuladoFromResults() {
+        // RESETA A INTERFACE
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        document.getElementById('restart-btn').style.display = 'none';
+        document.getElementById('voltar-inicio-btn').style.display = 'none';
+        document.getElementById('continuar-banco-btn').style.display = 'none';
+        document.getElementById('wrong-questions-btn').style.display = 'none';
+        document.getElementById('reiniciar-banco-btn').style.display = 'none';
+        document.getElementById('new-simulado-btn').style.display = 'none';
+        document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+        document.querySelector('.nav-buttons').style.display = 'flex';
+        
+        // Gera novo simulado normal (deixa a lógica normal decidir o número)
+        currentQuestions = selectRandomQuestions(false);
+        
+        if (currentQuestions.length === 0) {
+            alert("Não foi possível gerar novo simulado.");
+            return;
+        }
+        
+        const newSessionId = 'session_' + Date.now();
+        sessionStorage.setItem(SESSION_ID_KEY, newSessionId);
+        
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        currentQuestionIndex = 0;
+        TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+        timeLeft = TIME_LIMIT;
+        autoNavEnabled = true;
+        
+        saveCurrentSessionState();
+        
+        updatePageTitle();
+        document.getElementById('timer').textContent = formatTime(timeLeft);
+        document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+        updatePendingQuestions();
+        updateSimuladoInfo();
+        updateReforcoButton();
+        updateContinuarBancoButton();
+        updateVoltarInicioButton();
+        updateNovoSimuladoReforcoButton();
+        
+        // Mostra mensagem informativa
+        const totalQuestions = masterBank.length;
+        const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
+        alert(`✅ NOVO SIMULADO INICIADO!\n\n${currentQuestions.length} questões selecionadas.\n\nRestam ${remainingQuestions} questões no banco.`);
+    }
+    
+    // ============================================
+    // FUNÇÃO: ATUALIZAR BOTÃO VOLTAR AO INÍCIO
+    // ============================================
+    
+    function updateVoltarInicioButton() {
+        const voltarBtn = document.getElementById('voltar-inicio-btn');
+        if (!voltarBtn) return;
+        
+        const isReforco = currentQuestions[0]?.isWrongQuestion;
+        const isResultsVisible = document.getElementById('results').style.display === 'block';
+        const percent = parseInt(document.getElementById('final-percent')?.textContent?.replace('%', '') || 0);
+        
+        if (isReforco && isResultsVisible && percent >= MIN_PERCENT_FOR_SUCCESS) {
+            voltarBtn.style.display = 'block';
+            voltarBtn.innerHTML = `🏁 Voltar ao Início (Limpar Tudo)`;
+        } else {
+            voltarBtn.style.display = 'none';
+        }
+    }
+    
+    // ============================================
+    // CORREÇÃO PRINCIPAL: FUNÇÃO UPDATESIMULADOINFO
+    // ============================================
+    
+    function updateSimuladoInfo() {
+        const totalQuestions = masterBank.length;
+        
+        // CORREÇÃO: Usa currentSimuladoIndices ou currentQuestions para contar questões atuais
+        const currentQuestionsCount = currentQuestions ? currentQuestions.length : 0;
+        
+        // CORREÇÃO: Calcula disponíveis corretamente
+        let remaining = 0;
+        if (currentQuestions && currentQuestions[0]?.isWrongQuestion) {
+            // Para simulado de reforço
+            const wrongCount = wrongQuestionsHistory.length;
+            const successRate = Math.round(((totalQuestions - wrongCount) / totalQuestions) * 100);
+            
+            document.getElementById('simulado-info').innerHTML = `
+                <div style="color: var(--danger); font-weight: bold; text-align: center;">⚡ SIMULADO DE REFORÇO</div>
+                <div style="text-align: center; font-size: 0.6rem;">Questões que você errou anteriormente</div>
+                <div class="simulado-stats">
+                    <span>Questões: ${currentQuestionsCount}</span>
+                    <span>Acertos gerais: ${successRate}%</span>
+                </div>
+            `;
+            document.getElementById('simulado-info').style.display = 'block';
+            return;
+        }
+        
+        // CORREÇÃO: Para simulado normal
+        // Removendo duplicatas do histórico
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        const recentUsed = uniqueUsed.length;
+        remaining = Math.max(0, totalQuestions - recentUsed);
+        const percentUsed = totalQuestions > 0 ? Math.round((recentUsed / totalQuestions) * 100) : 0;
+        
+        let simuladoNumberText = '';
+        if (totalSimulados > 1) {
+            const simuladoAtual = Math.min(currentSimuladoNumber, totalSimulados);
+            simuladoNumberText = ` (${simuladoAtual}/${totalSimulados})`;
+        }
+        
+        document.getElementById('simulado-info').innerHTML = `
+            <div>Simulado${simuladoNumberText}: <span id="questions-per-simulado">${currentQuestionsCount}</span> questões</div>
+            <div class="simulado-stats">
+                <span id="remaining-questions">Disponíveis: ${remaining}</span>
+                <span id="recent-used">Usadas: ${recentUsed} (${percentUsed}%)</span>
+            </div>
+            
+            <div class="history-controls">
+                <button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar Histórico</button>
+                <button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button>
+            </div>
+        `;
+        document.getElementById('simulado-info').style.display = 'block';
+        
+        // CORREÇÃO: Atualiza também os elementos específicos se existirem
+        const questionsPerSimuladoEl = document.getElementById('questions-per-simulado');
+        const remainingQuestionsEl = document.getElementById('remaining-questions');
+        const recentUsedEl = document.getElementById('recent-used');
+        
+        if (questionsPerSimuladoEl) questionsPerSimuladoEl.textContent = currentQuestionsCount;
+        if (remainingQuestionsEl) remainingQuestionsEl.textContent = `Disponíveis: ${remaining}`;
+        if (recentUsedEl) recentUsedEl.textContent = `Usadas: ${recentUsed} (${percentUsed}%)`;
+    }
+    
+    // ============================================
+    // CORREÇÃO: FUNÇÃO UPDATECONTINUARBANCOBUTTON
+    // ============================================
+    
+    function updateContinuarBancoButton() {
+        const continuarBtn = document.getElementById('continuar-banco-btn');
+        if (!continuarBtn) return;
+        
+        const totalQuestions = masterBank.length;
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        const remainingQuestions = Math.max(0, totalQuestions - uniqueUsed.length);
+        
+        const isResultsVisible = document.getElementById('results').style.display === 'block';
+        const isReforco = currentQuestions[0]?.isWrongQuestion;
+        const percent = parseInt(document.getElementById('final-percent')?.textContent?.replace('%', '') || 0);
+        
+        // Mostra se:
+        // 1. Está na tela de resultados
+        // 2. Não é simulado de reforço
+        // 3. Atingiu 70% OU é simulado de reforço com 70%
+        // 4. Ainda há questões OU todas foram usadas
+        if (isResultsVisible && !isReforco && remainingQuestions > 0) {
+            continuarBtn.style.display = 'block';
+            continuarBtn.innerHTML = `📚 Continuar com Banco (${remainingQuestions} restantes)`;
+        } else if (isResultsVisible && isReforco && percent >= MIN_PERCENT_FOR_SUCCESS) {
+            // Para reforço bem-sucedido
+            continuarBtn.style.display = 'block';
+            continuarBtn.innerHTML = `📚 Voltar ao Banco (${remainingQuestions} restantes)`;
+        } else {
+            continuarBtn.style.display = 'none';
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO: START WRONG QUESTIONS SIMULADO
+    // ============================================
+    
+    function startWrongQuestionsSimulado() {
+        console.log('Iniciando simulado de reforço...');
+        
+        currentQuestions = generateWrongQuestionsSimulado();
+        
+        if (currentQuestions.length === 0) {
+            alert('Não há questões erradas para fazer o simulado de reforço.');
+            updateReforcoButton();
+            return;
+        }
+        
+        currentSimuladoNumber = totalSimulados + 1;
+        
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        currentQuestionIndex = 0;
+        TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+        timeLeft = TIME_LIMIT;
+        autoNavEnabled = true;
+        
+        saveCurrentSessionState();
+        
+        updatePageTitle();
+        document.getElementById('timer').textContent = formatTime(timeLeft);
+        document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+        
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        document.getElementById('restart-btn').style.display = 'none';
+        document.getElementById('voltar-inicio-btn').style.display = 'none';
+        document.getElementById('continuar-banco-btn').style.display = 'none';
+        document.getElementById('wrong-questions-btn').style.display = 'none';
+        document.getElementById('reiniciar-banco-btn').style.display = 'none';
+        document.getElementById('new-simulado-btn').style.display = 'none';
+        document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+        document.querySelector('.nav-buttons').style.display = 'flex';
+        
+        const wrongCount = wrongQuestionsHistory.length;
+        const totalQuestions = masterBank.length;
+        const successRate = Math.round(((totalQuestions - wrongCount) / totalQuestions) * 100);
+        
+        document.getElementById('simulado-info').innerHTML = `
+            <div style="color: var(--danger); font-weight: bold; text-align: center;">⚡ SIMULADO DE REFORÇO</div>
+            <div style="text-align: center; font-size: 0.6rem;">Questões que você errou anteriormente</div>
+            <div class="simulado-stats">
+                <span>Questões: ${currentQuestions.length}</span>
+                <span>Acertos anteriores: ${successRate}%</span>
+            </div>
+        `;
+        document.getElementById('simulado-info').style.display = 'block';
+        
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+        updatePendingQuestions();
+        
+        updateReforcoButton();
+        updateReiniciarBancoButton();
+        updateContinuarBancoButton();
+        updateVoltarInicioButton();
+        updateNovoSimuladoReforcoButton();
+        
+        alert(`🎯 SIMULADO DE REFORÇO INICIADO!\n\n${currentQuestions.length} questões que você errou anteriormente.\nBoa sorte!`);
+    }
+    
+    // ============================================
+    // FUNÇÃO: UPDATE REFORCO BUTTON
+    // ============================================
+    
+    function updateReforcoButton() {
+        const wrongBtn = document.getElementById('wrong-questions-btn');
+        if (!wrongBtn) return;
+        
+        const hasEnough = hasEnoughWrongQuestionsForSimulado();
+        const isReforcoActive = currentQuestions[0]?.isWrongQuestion;
+        const isResultsVisible = document.getElementById('results').style.display === 'block';
+        
+        if (hasEnough && !isReforcoActive && isResultsVisible) {
+            wrongBtn.style.display = 'block';
+            wrongBtn.innerHTML = `⚡ Simulado de Reforço (${wrongQuestionsHistory.length})`;
+        } else {
+            wrongBtn.style.display = 'none';
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO: UPDATE REINICIAR BANCO BUTTON
+    // ============================================
+    
+    function updateReiniciarBancoButton() {
+        const reiniciarBtn = document.getElementById('reiniciar-banco-btn');
+        if (!reiniciarBtn) return;
+        
+        const isReforco = currentQuestions[0]?.isWrongQuestion;
+        const isResultsVisible = document.getElementById('results').style.display === 'block';
+        const percent = parseInt(document.getElementById('final-percent')?.textContent?.replace('%', '') || 0);
+        
+        if (isReforco && isResultsVisible && percent < MIN_PERCENT_FOR_SUCCESS) {
+            reiniciarBtn.style.display = 'block';
+            reiniciarBtn.innerHTML = `🔄 Reiniciar Banco (${masterBank.length} questões)`;
+        } else {
+            reiniciarBtn.style.display = 'none';
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO: REINICIAR BANCO COMPLETO
+    // ============================================
+    
+    function reiniciarBancoCompleto() {
+        const totalQuestions = masterBank.length;
+        const wrongCount = wrongQuestionsHistory.length;
+        
+        let message = `🔄 REINICIAR BANCO COMPLETO\n\n`;
+        message += `Você não atingiu 70% no simulado de reforço.\n\n`;
+        message += `Esta ação vai:\n`;
+        message += `• Limpar TODO o histórico (${usedQuestionsHistory.length} questões usadas)\n`;
+        message += `• Limpar TODO o histórico de erros (${wrongCount} questões)\n`;
+        message += `• Reiniciar o progresso do ZERO\n\n`;
+        message += `Deseja reiniciar completamente?`;
+        
+        if (confirm(message)) {
+            usedQuestionsHistory = [];
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+            
+            wrongQuestionsHistory = [];
+            saveWrongQuestionsHistory();
+            
+            localStorage.removeItem(LAST_OFFER_KEY);
+            
+            clearSessionData();
+            
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('finish-btn').style.display = 'block';
+            document.getElementById('restart-btn').style.display = 'none';
+            document.getElementById('voltar-inicio-btn').style.display = 'none';
+            document.getElementById('continuar-banco-btn').style.display = 'none';
+            document.getElementById('wrong-questions-btn').style.display = 'none';
+            document.getElementById('reiniciar-banco-btn').style.display = 'none';
+            document.getElementById('new-simulado-btn').style.display = 'none';
+            document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+            document.querySelector('.nav-buttons').style.display = 'flex';
+            
+            currentQuestions = selectRandomQuestions(true); // true = forçar simulado 1
+            
+            if (currentQuestions.length === 0) {
+                alert("Erro ao gerar novo simulado.");
+                return;
+            }
+            
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            currentQuestionIndex = 0;
+            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+            timeLeft = TIME_LIMIT;
+            autoNavEnabled = true;
+            currentSimuladoNumber = 1;
+            
+            saveCurrentSessionState();
+            
+            updatePageTitle();
+            document.getElementById('timer').textContent = formatTime(timeLeft);
+            document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+            
+            startTimer();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+            updateFinishButton();
+            updatePendingQuestions();
+            updateSimuladoInfo();
+            updateReforcoButton();
+            updateContinuarBancoButton();
+            updateVoltarInicioButton();
+            updateNovoSimuladoReforcoButton();
+            
+            document.getElementById('motivation-message').innerHTML = '';
+            document.getElementById('motivation-message').className = 'motivation-message';
+            
+            alert(`✅ BANCO REINICIADO!\n\n${totalQuestions} questões disponíveis.\nBoa sorte!`);
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO RESETQUIZ CORRIGIDA
+    // ============================================
+    
+    function resetQuiz() {
+        if (confirm('Reiniciar este simulado?')) {
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            timeLeft = TIME_LIMIT;
+            currentQuestionIndex = 0;
+            
+            // Volta para o modo de simulado ativo
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('finish-btn').style.display = 'block';
+            document.getElementById('restart-btn').style.display = 'none';
+            document.getElementById('voltar-inicio-btn').style.display = 'none';
+            document.getElementById('continuar-banco-btn').style.display = 'none';
+            document.getElementById('wrong-questions-btn').style.display = 'none';
+            document.getElementById('reiniciar-banco-btn').style.display = 'none';
+            document.getElementById('new-simulado-btn').style.display = 'none';
+            document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+            document.querySelector('.nav-buttons').style.display = 'flex';
+            
+            // Limpa o conteúdo das questões (remove o gabarito)
+            document.getElementById('quiz-content').innerHTML = '';
+            
+            saveCurrentSessionState();
+            
+            startTimer();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+            updateFinishButton();
+            updatePendingQuestions();
+            updateContinuarBancoButton();
+            updateVoltarInicioButton();
+            updateNovoSimuladoReforcoButton();
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO STARTNEWQUIZ CORRIGIDA
+    // ============================================
+    
+    function startNewQuiz() {
+        // RESETA A INTERFACE
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        document.getElementById('restart-btn').style.display = 'none';
+        document.getElementById('voltar-inicio-btn').style.display = 'none';
+        document.getElementById('continuar-banco-btn').style.display = 'none';
+        document.getElementById('wrong-questions-btn').style.display = 'none';
+        document.getElementById('reiniciar-banco-btn').style.display = 'none';
+        document.getElementById('new-simulado-btn').style.display = 'none';
+        document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+        document.querySelector('.nav-buttons').style.display = 'flex';
+        
+        // Limpa o conteúdo das questões
+        document.getElementById('quiz-content').innerHTML = '';
+        
+        // Usa as MESMAS questões
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        timeLeft = TIME_LIMIT;
+        currentQuestionIndex = 0;
+        
+        saveCurrentSessionState();
+        
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+        updatePendingQuestions();
+        updateContinuarBancoButton();
+        updateVoltarInicioButton();
+        updateNovoSimuladoReforcoButton();
+    }
+    
+    // ============================================
+    // RESTANTE DAS FUNÇÕES EXISTENTES
+    // ============================================
+    
+    function loadWrongQuestionsHistory() {
+        const saved = localStorage.getItem(WRONG_QUESTIONS_KEY);
+        if (saved) {
+            try {
+                wrongQuestionsHistory = JSON.parse(saved);
+                console.log(`Histórico de questões erradas carregado: ${wrongQuestionsHistory.length} questões`);
+            } catch (e) {
+                console.error('Erro ao carregar histórico de questões erradas:', e);
+                wrongQuestionsHistory = [];
+            }
+        } else {
+            wrongQuestionsHistory = [];
+            console.log('Nenhum histórico de questões erradas encontrado');
+        }
+    }
+    
+    function saveWrongQuestionsHistory() {
+        localStorage.setItem(WRONG_QUESTIONS_KEY, JSON.stringify(wrongQuestionsHistory));
+    }
+    
+    function addWrongQuestionsToHistory() {
+        if (!currentQuestions || currentQuestions.length === 0) return;
+        
+        currentQuestions.forEach((question, index) => {
+            const userAnswer = userAnswers[index];
+            const isCorrect = userAnswer !== null && userAnswer === question.c;
+            
+            if (!isCorrect && question.originalIndex !== undefined) {
+                if (!wrongQuestionsHistory.includes(question.originalIndex)) {
+                    wrongQuestionsHistory.push(question.originalIndex);
+                }
+            }
+        });
+        
+        wrongQuestionsHistory = [...new Set(wrongQuestionsHistory)];
+        saveWrongQuestionsHistory();
+        
+        console.log(`Questões erradas adicionadas ao histórico. Total: ${wrongQuestionsHistory.length}`);
+    }
+    
+    function removeCorrectQuestionsFromHistory() {
+        const initialCount = wrongQuestionsHistory.length;
+        
+        if (!currentQuestions || currentQuestions.length === 0) return;
+        
+        currentQuestions.forEach((question, index) => {
+            const userAnswer = userAnswers[index];
+            const isCorrect = userAnswer !== null && userAnswer === question.c;
+            
+            if (isCorrect && question.originalIndex !== undefined) {
+                const indexInHistory = wrongQuestionsHistory.indexOf(question.originalIndex);
+                if (indexInHistory !== -1) {
+                    wrongQuestionsHistory.splice(indexInHistory, 1);
+                }
+            }
+        });
+        
+        saveWrongQuestionsHistory();
+        
+        console.log(`Questões removidas do histórico de erradas: ${initialCount - wrongQuestionsHistory.length}`);
+    }
+    
+    function allQuestionsUsed() {
+        const totalQuestions = masterBank.length;
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        return uniqueUsed.length >= totalQuestions;
+    }
+    
+    function hasEnoughWrongQuestionsForSimulado() {
+        return wrongQuestionsHistory.length >= MIN_WRONG_QUESTIONS_FOR_SIMULADO;
+    }
+    
+    function canOfferReforcoSimulado() {
+        const condition1 = hasEnoughWrongQuestionsForSimulado();
+        const condition2 = !currentQuestions[0]?.isWrongQuestion;
+        const condition3 = !hasRecentOffer();
+        
+        return condition1 && condition2 && condition3;
+    }
+    
+    function hasRecentOffer() {
+        const lastOffer = localStorage.getItem(LAST_OFFER_KEY);
+        if (!lastOffer) return false;
+        
+        const now = Date.now();
+        const lastOfferTime = parseInt(lastOffer);
+        const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
+        
+        return (now - lastOfferTime) < TWO_HOURS_MS;
+    }
+    
+    function saveOfferTimestamp() {
+        localStorage.setItem(LAST_OFFER_KEY, Date.now().toString());
+    }
+    
+    function generateWrongQuestionsSimulado() {
+        console.log(`Gerando simulado de reforço com ${wrongQuestionsHistory.length} questões erradas...`);
+        
+        if (wrongQuestionsHistory.length === 0) {
+            console.error('Nenhuma questão errada no histórico');
+            return [];
+        }
+        
+        let availableWrongQuestions = [...wrongQuestionsHistory];
+        availableWrongQuestions = shuffleArray(availableWrongQuestions);
+        
+        const selectedIndices = availableWrongQuestions;
+        
+        console.log(`Selecionadas ${selectedIndices.length} questões para o simulado de reforço`);
+        
+        const questions = selectedIndices.map(index => {
+            if (index >= 0 && index < masterBank.length) {
+                return {
+                    ...masterBank[index],
+                    originalIndex: index,
+                    isWrongQuestion: true
+                };
+            }
+            return null;
+        }).filter(q => q !== null);
+        
+        return questions;
+    }
+    
+    function offerWrongQuestionsSimulado() {
+        if (!canOfferReforcoSimulado()) {
+            console.log('Não pode oferecer simulado de reforço no momento');
+            updateReforcoButton();
+            return false;
+        }
+        
+        const wrongCount = wrongQuestionsHistory.length;
+        
+        let title = "🎯 TEMPO DE REFORÇO";
+        let message = `Identificamos ${wrongCount} questões que você errou.\n\n`;
+        message += `⚡ SIMULADO DE REFORÇO DISPONÍVEL\n`;
+        message += `Deseja focar nessas ${wrongCount} questões?\n\n`;
+        message += `✅ Benefícios:\n`;
+        message += `• Foco nas suas dificuldades\n`;
+        message += `• Reforço da memória\n`;
+        message += `• Maior taxa de acerto`;
+        
+        const userWantsReforco = confirm(`${title}\n\n${message}`);
+        
+        saveOfferTimestamp();
+        
+        if (userWantsReforco) {
+            console.log('Usuário aceitou simulado de reforço');
+            startWrongQuestionsSimulado();
+            return true;
+        } else {
+            console.log('Usuário recusou simulado de reforço');
+            updateReforcoButton();
+            return false;
+        }
+    }
+    
+    function isNewSession() {
+        const sessionId = sessionStorage.getItem(SESSION_ID_KEY);
+        const simuladoStarted = sessionStorage.getItem(SIMULADO_STARTED_KEY);
+        
+        if (!sessionId || !simuladoStarted) {
+            const newSessionId = 'session_' + Date.now();
+            sessionStorage.setItem(SESSION_ID_KEY, newSessionId);
+            sessionStorage.setItem(SIMULADO_STARTED_KEY, 'true');
+            return true;
+        }
+        return false;
+    }
+    
+    function clearSessionData() {
+        sessionStorage.removeItem(CURRENT_QUESTIONS_KEY);
+        sessionStorage.removeItem(CURRENT_QUESTION_INDEX_KEY);
+        sessionStorage.removeItem(USER_ANSWERS_KEY);
+        sessionStorage.removeItem(TIME_LEFT_KEY);
+        sessionStorage.removeItem(AUTO_NAV_KEY);
+        sessionStorage.removeItem(SIMULADO_STARTED_KEY);
+        sessionStorage.removeItem(CURRENT_SIMULADO_NUMBER_KEY);
+    }
+    
+    function saveCurrentSessionState() {
+        try {
+            sessionStorage.setItem(CURRENT_QUESTIONS_KEY, JSON.stringify(currentQuestions));
+            sessionStorage.setItem(CURRENT_QUESTION_INDEX_KEY, currentQuestionIndex.toString());
+            sessionStorage.setItem(USER_ANSWERS_KEY, JSON.stringify(userAnswers));
+            sessionStorage.setItem(TIME_LEFT_KEY, timeLeft.toString());
+            sessionStorage.setItem(AUTO_NAV_KEY, autoNavEnabled.toString());
+            sessionStorage.setItem(SIMULADO_STARTED_KEY, 'true');
+            sessionStorage.setItem(CURRENT_SIMULADO_NUMBER_KEY, currentSimuladoNumber.toString());
+        } catch (e) {
+            console.error('Erro ao salvar estado da sessão:', e);
+        }
+    }
+    
+    function loadCurrentSessionState() {
+        try {
+            const savedQuestions = sessionStorage.getItem(CURRENT_QUESTIONS_KEY);
+            const savedIndex = sessionStorage.getItem(CURRENT_QUESTION_INDEX_KEY);
+            const savedAnswers = sessionStorage.getItem(USER_ANSWERS_KEY);
+            const savedTime = sessionStorage.getItem(TIME_LEFT_KEY);
+            const savedAutoNav = sessionStorage.getItem(AUTO_NAV_KEY);
+            const savedSimuladoNumber = sessionStorage.getItem(CURRENT_SIMULADO_NUMBER_KEY);
+            
+            if (savedQuestions) currentQuestions = JSON.parse(savedQuestions);
+            if (savedIndex) currentQuestionIndex = parseInt(savedIndex);
+            if (savedAnswers) userAnswers = JSON.parse(savedAnswers);
+            if (savedTime) timeLeft = parseInt(savedTime);
+            if (savedAutoNav) autoNavEnabled = savedAutoNav === 'true';
+            if (savedSimuladoNumber) currentSimuladoNumber = parseInt(savedSimuladoNumber);
+            
+            return {
+                hasQuestions: !!savedQuestions,
+                hasState: !!(savedQuestions && savedIndex !== null)
+            };
+        } catch (e) {
+            console.error('Erro ao carregar estado da sessão:', e);
+            return { hasQuestions: false, hasState: false };
+        }
+    }
+    
+    function generateQuizId() {
+        const pageTitle = document.title || "Quiz";
+        const cleanTitle = pageTitle
+            .replace(/[^a-zA-Z0-9\s]/g, '')
+            .replace(/\s+/g, '_')
+            .toLowerCase()
+            .substring(0, 30);
+        const titleHash = pageTitle.length.toString(36);
+        return `quiz_${cleanTitle}_${titleHash}`;
+    }
+    
+    const QUIZ_ID = generateQuizId();
+    const HISTORY_KEY = `${QUIZ_ID}_history`;
+    const REPORTS_KEY = `${QUIZ_ID}_reports`;
+    
+    function updatePageTitle() {
+        const totalQuestions = masterBank.length;
+        let simuladoText = '';
+        
+        if (currentQuestions && currentQuestions[0]?.isWrongQuestion) {
+            simuladoText = ' (⚡ Reforço)';
+        } else if (totalSimulados > 1) {
+            simuladoText = ` (Simulado ${currentSimuladoNumber}/${totalSimulados})`;
+        }
+        
+        const pageTitle = document.title || "Quiz Simulado";
+        let cleanTitle = pageTitle
+            .replace(/^GMP\s*[-–—]\s*/i, '')
+            .replace(/^Simulado\s*[-–—]\s*/i, '')
+            .replace(/^Quiz\s*[-–—]\s*/i, '')
+            .replace(/\s*[-–—]\s*Simulado$/i, '')
+            .replace(/\s*[-–—]\s*Quiz$/i, '')
+            .replace(/\s*[-–—]\s*Teste$/i, '')
+            .trim();
+        
+        if (!cleanTitle) cleanTitle = pageTitle;
+        if (cleanTitle.length > 40) cleanTitle = cleanTitle.substring(0, 37) + '...';
+        
+        const questionCount = currentQuestions ? currentQuestions.length : 0;
+        document.getElementById('page-title').textContent = 
+            `${cleanTitle}${simuladoText} (${questionCount}/${totalQuestions})`;
+    }
+    
+    function calculateTimeLimit(questionsCount) {
+        return questionsCount * 60;
+    }
+    
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+    
+    function shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
+    
+    function showHistoryInfo() {
+        const totalQuestions = masterBank.length;
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        const usedCount = uniqueUsed.length;
+        const availableCount = Math.max(0, totalQuestions - usedCount);
+        const percentUsed = totalQuestions > 0 ? Math.round((usedCount / totalQuestions) * 100) : 0;
+        const wrongCount = wrongQuestionsHistory.length;
+        
+        let message = `📊 ESTATÍSTICAS:\n\n`;
+        message += `• Total: ${totalQuestions} questões\n`;
+        message += `• Usadas: ${usedCount} (${percentUsed}%)\n`;
+        message += `• Disponíveis: ${availableCount}\n`;
+        message += `• Erradas: ${wrongCount}\n`;
+        
+        if (currentQuestions && currentQuestions[0]?.isWrongQuestion) {
+            message += `\n⚡ SIMULADO DE REFORÇO ATIVO\n`;
+        }
+        
+        if (wrongCount >= MIN_WRONG_QUESTIONS_FOR_SIMULADO) {
+            message += `\n⚡ SIMULADO DE REFORÇO DISPONÍVEL\n`;
+            message += `• ${wrongCount} questões para revisar\n`;
+        }
+        
+        alert(message);
+    }
+    
+    function updatePendingQuestions() {
+        const pendingList = document.getElementById('pending-list');
+        const pendingCount = document.getElementById('pending-count');
+        const answeredCount = getAnsweredCount();
+        const pending = currentQuestions ? currentQuestions.length - answeredCount : 0;
+        
+        if (pendingCount) pendingCount.textContent = pending;
+        
+        if (pending === 0) {
+            if (pendingList) pendingList.innerHTML = '<span style="color: #28a745;">✅ Todas</span>';
+            return;
+        }
+        
+        let html = '';
+        let pendingNumbers = [];
+        
+        if (currentQuestions) {
+            for (let i = 0; i < currentQuestions.length; i++) {
+                if (userAnswers[i] === null) {
+                    pendingNumbers.push(i + 1);
+                }
+            }
+        }
+        
+        const maxToShow = 10;
+        const numbersToShow = pendingNumbers.slice(0, maxToShow);
+        
+        numbersToShow.forEach(num => {
+            html += `<span class="pending-number">${num}</span>`;
+        });
+        
+        if (pendingNumbers.length > maxToShow) {
+            html += `<span style="color: #6c757d; font-size: 0.55rem;"> +${pendingNumbers.length - maxToShow}</span>`;
+        }
+        
+        if (pendingList) {
+            pendingList.innerHTML = html || '<span style="color: #6c757d;">Nenhuma</span>';
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO INITQUIZ ATUALIZADA
+    // ============================================
+
+    function initQuiz() {
+        loadWrongQuestionsHistory();
+        
+        if (masterBank.length === 0) {
+            document.getElementById('page-title').textContent = "⚠️ BANCO VAZIO";
+            document.getElementById('quiz-content').innerHTML = `
+                <div class="question-block-mini">
+                    <div class="question-text-mini" style="color: var(--danger);">
+                        ⚠️ ERRO: Banco de questões vazio!
+                    </div>
+                </div>
+            `;
+            return;
+        }
+        
+        const config = calcularConfiguracaoSimulados();
+        console.log('Configuração:', config.mensagem);
+        totalSimulados = config.totalSimulados;
+        QUESTIONS_PER_SIMULADO = config.questionsPerSimulado;
+        
+        const savedHistory = localStorage.getItem(HISTORY_KEY);
+        if (savedHistory) {
+            try {
+                usedQuestionsHistory = JSON.parse(savedHistory);
+            } catch (e) {
+                console.error('Erro ao carregar histórico:', e);
+                usedQuestionsHistory = [];
+            }
+        } else {
+            usedQuestionsHistory = [];
+        }
+        
+        // VERIFICA SE É UMA NOVA SESSÃO OU UM REFRESH
+        if (isNewSession()) {
+            console.log('Nova sessão - gerando questões');
+            currentQuestions = selectRandomQuestions();
+            
+            if (currentQuestions.length === 0) {
+                alert("Não foi possível selecionar questões.");
+                return;
+            }
+            
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            currentQuestionIndex = 0;
+            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+            timeLeft = TIME_LIMIT;
+            autoNavEnabled = true;
+            
+            saveCurrentSessionState();
+        } else {
+            console.log('Sessão existente - restaurando');
+            const state = loadCurrentSessionState();
+            
+            if (state.hasQuestions && state.hasState) {
+                console.log('Estado restaurado');
+                if (timeLeft <= 0) {
+                    TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+                    timeLeft = TIME_LIMIT;
+                }
+            } else {
+                console.log('Não há estado - gerando novo');
+                currentQuestions = selectRandomQuestions();
+                if (currentQuestions.length === 0) {
+                    alert("Não foi possível gerar o simulado.");
+                    return;
+                }
+                
+                userAnswers = new Array(currentQuestions.length).fill(null);
+                currentQuestionIndex = 0;
+                TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+                timeLeft = TIME_LIMIT;
+                autoNavEnabled = true;
+                
+                saveCurrentSessionState();
+            }
+        }
+        
+        updatePageTitle();
+        document.getElementById('timer').textContent = formatTime(timeLeft);
+        document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+        
+        updateSimuladoInfo();
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+        updatePendingQuestions();
+        updateReforcoButton();
+        updateReiniciarBancoButton();
+        updateContinuarBancoButton();
+        updateVoltarInicioButton();
+        updateNovoSimuladoReforcoButton();
+    }
+    
+    function renderCurrentQuestion() {
+        const container = document.getElementById('quiz-content');
+        
+        if (!currentQuestions || currentQuestions.length === 0) {
+            container.innerHTML = '<div class="question-block-mini">Erro: Nenhuma questão carregada.</div>';
+            return;
+        }
+        
+        const question = currentQuestions[currentQuestionIndex];
+        
+        container.innerHTML = `
+            <div class="question-block-mini">
+                <div class="question-text-mini">
+                    ${currentQuestionIndex + 1}. ${question.q}
+                </div>
+                <div class="options-mini">
+                    ${question.a.map((opt, i) => `
+                        <label class="option-mini" id="option-${i}">
+                            <input type="radio" name="currentQuestion" value="${i}" 
+                                   ${userAnswers[currentQuestionIndex] === i ? 'checked' : ''}
+                                   onchange="selectAnswer(${i})">
+                            ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+                <button class="report-btn" onclick="openReportModal(${currentQuestionIndex})">
+                    <span>⚠️</span> Reportar Problema
+                </button>
+            </div>
+        `;
+    }
+    
+    function selectAnswer(answerIndex) {
+        userAnswers[currentQuestionIndex] = answerIndex;
+        saveCurrentSessionState();
+        
+        updateCounters();
+        updateFinishButton();
+        updatePendingQuestions();
+        
+        if (autoNavEnabled && currentQuestionIndex < currentQuestions.length - 1) {
+            setTimeout(() => {
+                nextQuestion();
+            }, 200);
+        }
+    }
+    
+    function toggleAutoNav() {
+        autoNavEnabled = !autoNavEnabled;
+        document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+        saveCurrentSessionState();
+    }
+    
+    function getAnsweredCount() {
+        return userAnswers.filter(answer => answer !== null).length;
+    }
+    
+    function updateFinishButton() {
+        const finishBtn = document.getElementById('finish-btn');
+        const answeredCount = getAnsweredCount();
+        const allAnswered = currentQuestions && answeredCount === currentQuestions.length;
+        
+        finishBtn.disabled = !allAnswered;
+        finishBtn.innerHTML = allAnswered ? '🏁 Finalizar' : `❌ Faltam ${currentQuestions ? currentQuestions.length - answeredCount : 0}`;
+    }
+    
+    function updateNavButtons() {
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        
+        prevBtn.disabled = currentQuestionIndex === 0;
+        nextBtn.disabled = currentQuestions ? currentQuestionIndex === currentQuestions.length - 1 : true;
+        nextBtn.innerHTML = currentQuestions && currentQuestionIndex === currentQuestions.length - 1 ? 'Última' : 'Próximo →';
+    }
+    
+    function updateCounters() {
+        const answeredCount = getAnsweredCount();
+        const totalQuestions = currentQuestions ? currentQuestions.length : 0;
+        
+        document.getElementById('question-counter').textContent = `${currentQuestionIndex + 1}/${totalQuestions}`;
+        document.getElementById('answered-counter').textContent = `${answeredCount}/${totalQuestions}`;
+        document.getElementById('progress-percent').textContent = `${totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0}%`;
+        document.getElementById('status-count').textContent = `${answeredCount}/${totalQuestions}`;
+        
+        updateTimerDisplay();
+    }
+    
+    function updateTimerDisplay() {
+        const timerElement = document.getElementById('timer');
+        timerElement.textContent = formatTime(timeLeft);
+        
+        if (timeLeft <= Math.min(300, Math.floor(TIME_LIMIT * 0.25))) {
+            timerElement.classList.add('timer-warning');
+        } else {
+            timerElement.classList.remove('timer-warning');
+        }
+    }
+    
+    function startTimer() {
+        clearInterval(timerId);
+        
+        timerId = setInterval(() => {
+            timeLeft--;
+            
+            if (timeLeft % 5 === 0) {
+                saveCurrentSessionState();
+            }
+            
+            updateTimerDisplay();
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerId);
+                if (getAnsweredCount() === currentQuestions.length) {
+                    finalizeQuiz();
+                } else {
+                    if (confirm('Tempo esgotado! Finalizar?')) {
+                        finalizeQuiz();
+                    }
+                }
+            }
+        }, 1000);
+    }
+    
+    function nextQuestion() {
+        if (currentQuestions && currentQuestionIndex < currentQuestions.length - 1) {
+            currentQuestionIndex++;
+            saveCurrentSessionState();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+        }
+    }
+    
+    function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            saveCurrentSessionState();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO FINALIZEQUIZ ATUALIZADA COM NOVO BOTÃO
+    // ============================================
+    
+    function finalizeQuiz() {
+        clearInterval(timerId);
+        
+        const answeredCount = getAnsweredCount();
+        if (answeredCount !== currentQuestions.length && !confirm(`Respondidas: ${answeredCount}/${currentQuestions.length}. Finalizar?`)) {
+            startTimer();
+            return;
+        }
+        
+        let finalScore = 0;
+        userAnswers.forEach((answer, index) => {
+            if (answer !== null && answer === currentQuestions[index].c) {
+                finalScore++;
+            }
+        });
+        
+        const percent = currentQuestions.length > 0 ? Math.round((finalScore / currentQuestions.length) * 100) : 0;
+        const feedback = document.getElementById('feedback-msg');
+        
+        if (percent >= 70) {
+            feedback.textContent = "🎉 Excelente!";
+            feedback.style.color = "var(--success)";
+        } else if (percent >= 50) {
+            feedback.textContent = "👍 Quase lá!";
+            feedback.style.color = "var(--accent)";
+        } else {
+            feedback.textContent = "💪 Continue!";
+            feedback.style.color = "var(--danger)";
+        }
+        
+        if (currentQuestions[0]?.isWrongQuestion) {
+            removeCorrectQuestionsFromHistory();
+        } else {
+            addWrongQuestionsToHistory();
+        }
+        
+        if (currentSimuladoIndices.length > 0 && !currentQuestions[0]?.isWrongQuestion) {
+            usedQuestionsHistory.push(...currentSimuladoIndices);
+            usedQuestionsHistory = [...new Set(usedQuestionsHistory)];
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+        }
+        
+        clearSessionData();
+        
+        let quizHTML = '';
+        currentQuestions.forEach((question, index) => {
+            const userAnswer = userAnswers[index];
+            const isCorrect = userAnswer === question.c;
+            
+            quizHTML += `
+                <div class="question-block-mini">
+                    <button class="report-gabarito-btn" onclick="openReportModal(${index})" title="Reportar problema">
+                        ⚠️
+                    </button>
+                    
+                    <div class="question-text-mini">
+                        ${index + 1}. ${question.q}
+                    </div>
+                    <div class="options-mini">
+                        ${question.a.map((opt, i) => {
+                            let classes = 'option-mini';
+                            if (i === question.c) classes += ' correct-answer';
+                            else if (userAnswer === i && !isCorrect) classes += ' wrong-answer';
+                            
+                            return `<label class="${classes}">
+                                <input type="radio" disabled ${userAnswer === i ? 'checked' : ''}>
+                                ${opt}
+                                ${userAnswer === i ? '<span style="margin-left: auto; font-size: 0.6rem; color: #6c757d;">(sua resposta)</span>' : ''}
+                                ${i === question.c && userAnswer !== i ? '<span style="margin-left: auto; font-size: 0.6rem; color: var(--success);">(correta)</span>' : ''}
+                            </label>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        });
+        
+        document.getElementById('quiz-content').innerHTML = quizHTML;
+        document.getElementById('final-score').textContent = `${finalScore}/${currentQuestions.length}`;
+        document.getElementById('final-percent').textContent = `${percent}%`;
+        
+        const motivationElement = document.getElementById('motivation-message');
+        let motivationHTML = '';
+        
+        if (currentQuestions[0]?.isWrongQuestion) {
+            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
+                motivationHTML = `✅ <strong>PARABÉNS!</strong> Você superou suas dificuldades!`;
+                motivationElement.className = 'motivation-message motivation-success';
+            } else {
+                motivationHTML = `⚡ <strong>PRECISA MELHORAR</strong><br>`;
+                motivationHTML += `Você acertou ${finalScore} de ${currentQuestions.length}.<br>`;
+                motivationHTML += `Faltam ${MIN_PERCENT_FOR_SUCCESS - percent}% para a meta de ${MIN_PERCENT_FOR_SUCCESS}%.`;
+                motivationElement.className = 'motivation-message motivation-warning';
+            }
+        } else {
+            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
+                motivationHTML = `🎯 <strong>ÓTIMO DESEMPENHO!</strong>`;
+                motivationElement.className = 'motivation-message motivation-success';
+            } else {
+                motivationHTML = `📚 <strong>CONTINUE ESTUDANDO!</strong>`;
+                motivationElement.className = 'motivation-message motivation-warning';
+            }
+        }
+        
+        motivationElement.innerHTML = motivationHTML;
+        
+        const totalQuestions = masterBank.length;
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        const remainingQuestions = Math.max(0, totalQuestions - uniqueUsed.length);
+        const wrongCount = wrongQuestionsHistory.length;
+        
+        let summaryText = '';
+        let showNewSimuladoBtn = true;
+        let showReiniciarBancoBtn = false;
+        let showNovoSimuladoReforcoBtn = false;
+        
+        if (currentQuestions[0]?.isWrongQuestion) {
+            summaryText = `⚡ <strong>SIMULADO DE REFORÇO FINALIZADO</strong><br>`;
+            summaryText += `Você revisou ${currentQuestions.length} questões que errou anteriormente.<br>`;
+            summaryText += `Questões ainda erradas: <strong>${wrongCount}</strong>`;
+            showNewSimuladoBtn = false;
+            showNovoSimuladoReforcoBtn = true;
+            
+            if (percent < MIN_PERCENT_FOR_SUCCESS) {
+                showReiniciarBancoBtn = true;
+            }
+        } else if (remainingQuestions === 0) {
+            summaryText = `🎯 <strong>COMPLETOU TODAS AS ${totalQuestions} QUESTÕES!</strong><br>`;
+            summaryText += `Questões erradas: <strong>${wrongCount}</strong>`;
+            
+            if (wrongCount < MIN_WRONG_QUESTIONS_FOR_SIMULADO) {
+                showNewSimuladoBtn = false;
+            }
+        } else {
+            summaryText = `Restam: <strong>${remainingQuestions}</strong> | Usadas: <strong>${uniqueUsed.length}</strong><br>`;
+            summaryText += `Questões erradas: <strong>${wrongCount}</strong>`;
+        }
+        
+        document.getElementById('simulado-summary').innerHTML = summaryText;
+        
+        document.querySelector('.nav-buttons').style.display = 'none';
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('finish-btn').style.display = 'none';
+        document.getElementById('restart-btn').style.display = 'block';
+        
+        document.getElementById('wrong-questions-btn').style.display = 'none';
+        document.getElementById('reiniciar-banco-btn').style.display = showReiniciarBancoBtn ? 'block' : 'none';
+        document.getElementById('new-simulado-btn').style.display = showNewSimuladoBtn ? 'block' : 'none';
+        document.getElementById('novo-simulado-reforco-btn').style.display = showNovoSimuladoReforcoBtn ? 'block' : 'none';
+        
+        updateSimuladoInfo();
+        updateReforcoButton();
+        updateReiniciarBancoButton();
+        updateContinuarBancoButton();
+        updateVoltarInicioButton();
+        updateNovoSimuladoReforcoButton();
+        
+        setTimeout(() => {
+            if (canOfferReforcoSimulado()) {
+                console.log('Oferecendo simulado de reforço...');
+                setTimeout(() => {
+                    offerWrongQuestionsSimulado();
+                }, 1500);
+            } else {
+                console.log('Não pode oferecer reforço no momento');
+            }
+        }, 500);
+    }
+    
+    // ============================================
+    // SISTEMA DE REPORTE - CORRIGIDO
+    // ============================================
+    
+    function initReportSystem() {
+        const savedReports = localStorage.getItem(REPORTS_KEY);
+        if (savedReports) {
+            reportsHistory = JSON.parse(savedReports);
+        } else {
+            reportsHistory = [];
+        }
+        
+        // CORREÇÃO: Adiciona os event listeners diretamente
+        document.getElementById('cancelReport').addEventListener('click', closeReportModal);
+        document.getElementById('submitReport').addEventListener('click', submitReport);
+        
+        document.getElementById('reportModal').addEventListener('click', function(e) {
+            if (e.target.id === 'reportModal') {
+                closeReportModal();
+            }
+        });
+        
+        const reportDetails = document.getElementById('reportDetails');
+        const charCount = document.getElementById('charCount');
+        
+        if (reportDetails && charCount) {
+            reportDetails.addEventListener('input', function() {
+                charCount.textContent = this.value.length;
+                if (this.value.length > 1000) {
+                    this.value = this.value.substring(0, 1000);
+                    charCount.textContent = 1000;
+                }
+            });
+        }
+        
+        const inputs = document.querySelectorAll('.form-input');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.classList.contains('error')) {
+                    this.classList.remove('error');
+                    hideError();
+                }
+            });
+        });
+    }
+    
+    function openReportModal(questionIndex) {
+        currentReportQuestionIndex = questionIndex;
+        
+        if (!currentQuestions || currentQuestions.length === 0) {
+            alert("Não há questões carregadas.");
+            return;
+        }
+        
+        const question = currentQuestions[questionIndex];
+        
+        document.getElementById('reportQuestionNumber').textContent = questionIndex + 1;
+        
+        let questionText = question.q;
+        if (questionText.length > 150) {
+            questionText = questionText.substring(0, 147) + '...';
+        }
+        document.getElementById('reportQuestionText').textContent = questionText;
+        
+        document.querySelectorAll('input[name="reportType"]').forEach(radio => {
+            radio.checked = false;
+        });
+        document.getElementById('reportDetails').value = '';
+        document.getElementById('userName').value = '';
+        document.getElementById('userEmail').value = '';
+        document.getElementById('userInfo').value = '';
+        document.getElementById('charCount').textContent = '0';
+        document.getElementById('reportSuccess').style.display = 'none';
+        document.getElementById('reportErrorMsg').style.display = 'none';
+        
+        document.getElementById('submitReport').disabled = false;
+        document.getElementById('submitText').textContent = 'Enviar Reporte';
+        document.getElementById('submitLoading').style.display = 'none';
+        
+        document.getElementById('reportModal').style.display = 'flex';
+        
+        setTimeout(() => {
+            document.getElementById('userName').focus();
+        }, 100);
+    }
+    
+    function closeReportModal() {
+        document.getElementById('reportModal').style.display = 'none';
+        currentReportQuestionIndex = null;
+    }
+    
+    function showError(message) {
+        const errorElement = document.getElementById('reportErrorMsg');
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+        errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    function hideError() {
+        document.getElementById('reportErrorMsg').style.display = 'none';
+    }
+    
+    function validateForm() {
+        const name = document.getElementById('userName').value.trim();
+        const email = document.getElementById('userEmail').value.trim();
+        const reportType = document.querySelector('input[name="reportType"]:checked');
+        
+        if (!name) {
+            document.getElementById('userName').classList.add('error');
+            showError('Por favor, preencha seu nome completo.');
+            return false;
+        }
+        
+        if (!email) {
+            document.getElementById('userEmail').classList.add('error');
+            showError('Por favor, preencha seu e-mail.');
+            return false;
+        }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            document.getElementById('userEmail').classList.add('error');
+            showError('Por favor, insira um e-mail válido.');
+            return false;
+        }
+        
+        if (!reportType) {
+            showError('Por favor, selecione o tipo de problema.');
+            return false;
+        }
+        
+        return true;
+    }
+    
+    async function submitReport() {
+        if (!validateForm()) {
+            return;
+        }
+        
+        const questionIndex = currentReportQuestionIndex;
+        const question = currentQuestions[questionIndex];
+        
+        const reportData = {
+            quizId: QUIZ_ID,
+            materia: document.title || "Quiz",
+            questionIndex: questionIndex + 1,
+            originalIndex: question.originalIndex,
+            questionText: question.q,
+            reportType: document.querySelector('input[name="reportType"]:checked').value,
+            reportLabel: REPORT_TYPES[document.querySelector('input[name="reportType"]:checked').value],
+            details: document.getElementById('reportDetails').value.trim(),
+            userName: document.getElementById('userName').value.trim(),
+            userEmail: document.getElementById('userEmail').value.trim(),
+            userInfo: document.getElementById('userInfo').value.trim(),
+            userAnswer: userAnswers[questionIndex] !== null ? 
+                question.a[userAnswers[questionIndex]] : 'Não respondida',
+            correctAnswer: question.a[question.c],
+            userAnswerIndex: userAnswers[questionIndex],
+            correctAnswerIndex: question.c,
+            timestamp: new Date().toLocaleString('pt-BR'),
+            url: window.location.href,
+            userAgent: navigator.userAgent
+        };
+        
+        document.getElementById('submitReport').disabled = true;
+        document.getElementById('submitText').textContent = 'Enviando...';
+        document.getElementById('submitLoading').style.display = 'inline-block';
+        
+        try {
+            const response = await sendToGoogleSheets(reportData);
+            
+            if (response.success) {
+                const report = {
+                    ...reportData,
+                    id: Date.now(),
+                    timestamp: new Date().toISOString(),
+                    sentToGoogleSheets: true
+                };
+                
+                reportsHistory.push(report);
+                localStorage.setItem(REPORTS_KEY, JSON.stringify(reportsHistory));
+                
+                document.getElementById('reportSuccess').style.display = 'block';
+                document.getElementById('submitText').textContent = 'Enviado!';
+                
+                setTimeout(() => {
+                    closeReportModal();
+                }, 3000);
+            } else {
+                throw new Error(response.message || 'Erro ao enviar');
+            }
+        } catch (error) {
+            console.error('Erro ao enviar reporte:', error);
+            
+            const emailSent = sendReportByEmailFallback(reportData);
+            
+            if (emailSent) {
+                const report = {
+                    ...reportData,
+                    id: Date.now(),
+                    timestamp: new Date().toISOString(),
+                    sentByEmail: true
+                };
+                
+                reportsHistory.push(report);
+                localStorage.setItem(REPORTS_KEY, JSON.stringify(reportsHistory));
+                
+                document.getElementById('reportSuccess').innerHTML = 
+                    '✅ Reporte enviado por email! Obrigado pela contribuição.<br>' +
+                    '<small>Você receberá um feedback por email em breve.</small>';
+                document.getElementById('reportSuccess').style.display = 'block';
+                document.getElementById('submitText').textContent = 'Enviado!';
+                
+                setTimeout(() => {
+                    closeReportModal();
+                }, 3000);
+            } else {
+                const report = {
+                    ...reportData,
+                    id: Date.now(),
+                    timestamp: new Date().toISOString(),
+                    savedLocally: true
+                };
+                
+                reportsHistory.push(report);
+                localStorage.setItem(REPORTS_KEY, JSON.stringify(reportsHistory));
+                
+                showError('Erro de conexão. Reporte salvo localmente. Tente novamente mais tarde.');
+                document.getElementById('submitReport').disabled = false;
+                document.getElementById('submitText').textContent = 'Enviar Reporte';
+                document.getElementById('submitLoading').style.display = 'none';
+            }
+        }
+    }
+    
+    async function sendToGoogleSheets(reportData) {
+        const formData = new FormData();
+        
+        Object.keys(reportData).forEach(key => {
+            formData.append(key, reportData[key]);
+        });
+        
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors'
+        });
+        
+        return { success: true, message: 'Enviado com sucesso' };
+    }
+    
+    function sendReportByEmailFallback(reportData) {
+        try {
+            const subject = `[REPORTE] ${reportData.materia} - Questão #${reportData.questionIndex}`;
+            
+            let body = `NOVO REPORTE DE QUESTÃO\n`;
+            body += `=======================\n\n`;
+            body += `MATÉRIA: ${reportData.materia}\n`;
+            body += `ID DO QUIZ: ${reportData.quizId}\n`;
+            body += `QUESTÃO #${reportData.questionIndex}\n`;
+            body += `ÍNDICE ORIGINAL: ${reportData.originalIndex}\n\n`;
+            body += `ENUNCIADO:\n${reportData.questionText}\n\n`;
+            body += `TIPO DE PROBLEMA: ${reportData.reportLabel}\n\n`;
+            body += `RESPOSTA DO USUÁRIO: ${reportData.userAnswer}\n`;
+            body += `RESPOSTA CORRETA: ${reportData.correctAnswer}\n\n`;
+            
+            body += `INFORMAÇÕES DO USUÁRIO:\n`;
+            body += `Nome: ${reportData.userName}\n`;
+            body += `E-mail: ${reportData.userEmail}\n`;
+            body += `Instituição/Curso: ${reportData.userInfo || 'Não informado'}\n\n`;
+            
+            if (reportData.details) {
+                body += `DETALHES ADICIONAIS:\n${reportData.details}\n\n`;
+            }
+            
+            body += `DATA/HORA: ${reportData.timestamp}\n`;
+            body += `URL DA PÁGINA: ${reportData.url}\n`;
+            
+            const encodedSubject = encodeURIComponent(subject);
+            const encodedBody = encodeURIComponent(body);
+            
+            const mailtoLink = `mailto:${EMAIL_DESTINO}?subject=${encodedSubject}&body=${encodedBody}`;
+            
+            window.open(mailtoLink, '_blank');
+            return true;
+        } catch (error) {
+            console.error('Erro ao enviar email:', error);
+            return false;
+        }
+    }
+    
+    // ============================================
+    // INICIALIZAÇÃO
+    // ============================================
+    
+    function hasUnsavedProgress() {
+        const answeredCount = getAnsweredCount();
+        return answeredCount > 0 && answeredCount < currentQuestions.length;
+    }
+    
+    function showCloseWarning(event) {
+        if (hasUnsavedProgress()) {
+            const message = '⚠️ ATENÇÃO!\n\nVocê tem um simulado em andamento.\nSe sair agora, todo o seu progresso será perdido!\n\nTem certeza que deseja sair?';
+            
+            if (event) {
+                event.preventDefault();
+                event.returnValue = message;
+            }
+            
+            return message;
+        }
+    }
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') nextQuestion();
+        if (e.key === 'ArrowLeft') prevQuestion();
+    });
+    
+    window.addEventListener('beforeunload', function(event) {
+        if (hasUnsavedProgress()) {
+            try {
+                saveCurrentSessionState();
+            } catch (e) {
+                console.error('Erro ao salvar estado antes de sair:', e);
+            }
+            
+            return showCloseWarning(event);
+        }
+    });
+    
+    window.onload = function() {
+        initQuiz();
+        initReportSystem();
+    };
+</script>
+
+</body>
+</html>
