@@ -1150,7 +1150,8 @@
   {q: "Antes do acionamento dos motores, porque deve-se colocar a aeronave contra o vento?", a: ["para prevenir o superaquecimento do motor", "para preservar o equipamento e a segurança dos operadores", "para compensar o torque do motor", "nenhuma das anteriores"], c: 0},
   {q: "Qual o agente extintor menos tóxico e menos corrosivo indicados abaixo devemos usar no interior da aeronave?", a: ["água", "Pó químico", "dióxido de carbono", "Tetracloreto de carbono"], c: 2}
 ];
-    
+
+
     // ============================================
     // CONFIGURAÇÕES DO SISTEMA
     // ============================================
@@ -1208,6 +1209,379 @@
     const AUTO_NAV_KEY = 'auto_nav';
     const SIMULADO_STARTED_KEY = 'simulado_started';
     const CURRENT_SIMULADO_NUMBER_KEY = 'current_simulado_number';
+    
+    // ============================================
+    // NOVA FUNÇÃO: EMBARALHAR ALTERNATIVAS
+    // ============================================
+    
+    function shuffleAlternatives(question) {
+        // Cria uma cópia da questão
+        const shuffledQuestion = { ...question };
+        
+        // Cria um array de índices [0, 1, 2, 3...]
+        const indices = Array.from({ length: question.a.length }, (_, i) => i);
+        
+        // Embaralha os índices
+        const shuffledIndices = shuffleArray(indices);
+        
+        // Cria novas alternativas com a ordem embaralhada
+        const shuffledAlternatives = shuffledIndices.map(index => question.a[index]);
+        
+        // Encontra o novo índice da resposta correta
+        const newCorrectIndex = shuffledIndices.indexOf(question.c);
+        
+        // Atualiza a questão com as alternativas embaralhadas e o novo índice correto
+        shuffledQuestion.a = shuffledAlternatives;
+        shuffledQuestion.c = newCorrectIndex;
+        shuffledQuestion.shuffledIndices = shuffledIndices; // Guarda o mapeamento para o gabarito
+        shuffledQuestion.originalCorrectIndex = question.c; // Guarda o índice original para referência
+        
+        return shuffledQuestion;
+    }
+    
+    // ============================================
+    // FUNÇÃO SELECTRANDOMQUESTIONS ATUALIZADA
+    // ============================================
+
+    function selectRandomQuestions(forceFirstSimulado = false) {
+        const totalQuestions = masterBank.length;
+        
+        if (totalQuestions === 0) {
+            alert("⚠️ O banco de questões está vazio! Adicione questões no código.");
+            return [];
+        }
+        
+        const config = calcularConfiguracaoSimulados();
+        console.log(config.mensagem);
+        
+        let availableQuestions = [];
+        for (let i = 0; i < totalQuestions; i++) {
+            availableQuestions.push(i);
+        }
+        
+        // Remove as já usadas
+        if (usedQuestionsHistory.length > 0 && !forceFirstSimulado) {
+            availableQuestions = availableQuestions.filter(index => 
+                !usedQuestionsHistory.includes(index)
+            );
+        }
+        
+        const availableCount = availableQuestions.length;
+        let questionsToSelect;
+        
+        if (availableCount === 0) {
+            if (confirm(`Todas as ${totalQuestions} questões já foram usadas!\n\nDeseja reiniciar o histórico?`)) {
+                usedQuestionsHistory = [];
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
+                alert('Histórico reiniciado!');
+                forceFirstSimulado = true;
+            } else {
+                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
+            }
+        } else if (availableCount >= QUESTIONS_PER_SIMULADO) {
+            questionsToSelect = QUESTIONS_PER_SIMULADO;
+        } else if (availableCount >= 5) {
+            questionsToSelect = availableCount;
+        } else {
+            if (confirm(`Só restam ${availableCount} questões!\n\nDeseja fazer simulado com essas questões?`)) {
+                questionsToSelect = availableCount;
+            } else {
+                if (confirm(`Deseja reiniciar o histórico?`)) {
+                    usedQuestionsHistory = [];
+                    localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                    availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+                    questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
+                    forceFirstSimulado = true;
+                } else {
+                    questionsToSelect = availableCount;
+                }
+            }
+        }
+        
+        if (totalQuestions <= 27) {
+            questionsToSelect = totalQuestions;
+            availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+        }
+        
+        const shuffledQuestions = shuffleArray(availableQuestions);
+        const selectedIndices = shuffledQuestions.slice(0, questionsToSelect);
+        
+        currentSimuladoIndices = selectedIndices;
+        
+        if (forceFirstSimulado || usedQuestionsHistory.length === 0) {
+            currentSimuladoNumber = 1;
+        } else if (selectedIndices.length > 0) {
+            const usedCount = usedQuestionsHistory.length;
+            const simuladoIndex = Math.floor(usedCount / QUESTIONS_PER_SIMULADO);
+            currentSimuladoNumber = Math.min(simuladoIndex + 1, totalSimulados);
+        } else {
+            currentSimuladoNumber = 1;
+        }
+        
+        if (currentSimuladoNumber > totalSimulados) {
+            currentSimuladoNumber = totalSimulados;
+        }
+        
+        console.log(`Simulado configurado: ${currentSimuladoNumber}/${totalSimulados}`);
+        
+        // ALTERAÇÃO: Embaralha as alternativas de cada questão selecionada
+        const selectedQuestions = selectedIndices.map(index => {
+            const originalQuestion = masterBank[index];
+            return shuffleAlternatives({
+                ...originalQuestion, 
+                originalIndex: index
+            });
+        });
+        
+        return selectedQuestions;
+    }
+
+    // ============================================
+    // FUNÇÃO: GENERATE WRONG QUESTIONS SIMULADO ATUALIZADA
+    // ============================================
+    
+    function generateWrongQuestionsSimulado() {
+        console.log(`Gerando simulado de reforço com ${wrongQuestionsHistory.length} questões erradas...`);
+        
+        if (wrongQuestionsHistory.length === 0) {
+            console.error('Nenhuma questão errada no histórico');
+            return [];
+        }
+        
+        let availableWrongQuestions = [...wrongQuestionsHistory];
+        availableWrongQuestions = shuffleArray(availableWrongQuestions);
+        
+        const selectedIndices = availableWrongQuestions;
+        
+        console.log(`Selecionadas ${selectedIndices.length} questões para o simulado de reforço`);
+        
+        // ALTERAÇÃO: Embaralha as alternativas de cada questão de reforço
+        const questions = selectedIndices.map(index => {
+            if (index >= 0 && index < masterBank.length) {
+                const originalQuestion = masterBank[index];
+                return shuffleAlternatives({
+                    ...originalQuestion,
+                    originalIndex: index,
+                    isWrongQuestion: true
+                });
+            }
+            return null;
+        }).filter(q => q !== null);
+        
+        return questions;
+    }
+    
+    // ============================================
+    // FUNÇÃO RENDERCURRENTQUESTION ATUALIZADA
+    // ============================================
+    
+    function renderCurrentQuestion() {
+        const container = document.getElementById('quiz-content');
+        
+        if (!currentQuestions || currentQuestions.length === 0) {
+            container.innerHTML = '<div class="question-block-mini">Erro: Nenhuma questão carregada.</div>';
+            return;
+        }
+        
+        const question = currentQuestions[currentQuestionIndex];
+        
+        container.innerHTML = `
+            <div class="question-block-mini">
+                <div class="question-text-mini">
+                    ${currentQuestionIndex + 1}. ${question.q}
+                </div>
+                <div class="options-mini">
+                    ${question.a.map((opt, i) => `
+                        <label class="option-mini" id="option-${i}">
+                            <input type="radio" name="currentQuestion" value="${i}" 
+                                   ${userAnswers[currentQuestionIndex] === i ? 'checked' : ''}
+                                   onchange="selectAnswer(${i})">
+                            ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+                <button class="report-btn" onclick="openReportModal(${currentQuestionIndex})">
+                    <span>⚠️</span> Reportar Problema
+                </button>
+            </div>
+        `;
+    }
+    
+    // ============================================
+    // FUNÇÃO FINALIZEQUIZ ATUALIZADA
+    // ============================================
+    
+    function finalizeQuiz() {
+        clearInterval(timerId);
+        
+        const answeredCount = getAnsweredCount();
+        if (answeredCount !== currentQuestions.length && !confirm(`Respondidas: ${answeredCount}/${currentQuestions.length}. Finalizar?`)) {
+            startTimer();
+            return;
+        }
+        
+        let finalScore = 0;
+        userAnswers.forEach((answer, index) => {
+            if (answer !== null && answer === currentQuestions[index].c) {
+                finalScore++;
+            }
+        });
+        
+        const percent = currentQuestions.length > 0 ? Math.round((finalScore / currentQuestions.length) * 100) : 0;
+        const feedback = document.getElementById('feedback-msg');
+        
+        if (percent >= 70) {
+            feedback.textContent = "🎉 Excelente!";
+            feedback.style.color = "var(--success)";
+        } else if (percent >= 50) {
+            feedback.textContent = "👍 Quase lá!";
+            feedback.style.color = "var(--accent)";
+        } else {
+            feedback.textContent = "💪 Continue!";
+            feedback.style.color = "var(--danger)";
+        }
+        
+        if (currentQuestions[0]?.isWrongQuestion) {
+            removeCorrectQuestionsFromHistory();
+        } else {
+            addWrongQuestionsToHistory();
+        }
+        
+        if (currentSimuladoIndices.length > 0 && !currentQuestions[0]?.isWrongQuestion) {
+            usedQuestionsHistory.push(...currentSimuladoIndices);
+            usedQuestionsHistory = [...new Set(usedQuestionsHistory)];
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+        }
+        
+        clearSessionData();
+        
+        let quizHTML = '';
+        currentQuestions.forEach((question, index) => {
+            const userAnswer = userAnswers[index];
+            const isCorrect = userAnswer === question.c;
+            
+            // Para o gabarito, usamos as alternativas como foram mostradas
+            quizHTML += `
+                <div class="question-block-mini">
+                    <button class="report-gabarito-btn" onclick="openReportModal(${index})" title="Reportar problema">
+                        ⚠️
+                    </button>
+                    
+                    <div class="question-text-mini">
+                        ${index + 1}. ${question.q}
+                    </div>
+                    <div class="options-mini">
+                        ${question.a.map((opt, i) => {
+                            let classes = 'option-mini';
+                            if (i === question.c) classes += ' correct-answer';
+                            else if (userAnswer === i && !isCorrect) classes += ' wrong-answer';
+                            
+                            return `<label class="${classes}">
+                                <input type="radio" disabled ${userAnswer === i ? 'checked' : ''}>
+                                ${opt}
+                                ${userAnswer === i ? '<span style="margin-left: auto; font-size: 0.6rem; color: #6c757d;">(sua resposta)</span>' : ''}
+                                ${i === question.c && userAnswer !== i ? '<span style="margin-left: auto; font-size: 0.6rem; color: var(--success);">(correta)</span>' : ''}
+                            </label>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        });
+        
+        document.getElementById('quiz-content').innerHTML = quizHTML;
+        document.getElementById('final-score').textContent = `${finalScore}/${currentQuestions.length}`;
+        document.getElementById('final-percent').textContent = `${percent}%`;
+        
+        const motivationElement = document.getElementById('motivation-message');
+        let motivationHTML = '';
+        
+        if (currentQuestions[0]?.isWrongQuestion) {
+            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
+                motivationHTML = `✅ <strong>PARABÉNS!</strong> Você superou suas dificuldades!`;
+                motivationElement.className = 'motivation-message motivation-success';
+            } else {
+                motivationHTML = `⚡ <strong>PRECISA MELHORAR</strong><br>`;
+                motivationHTML += `Você acertou ${finalScore} de ${currentQuestions.length}.<br>`;
+                motivationHTML += `Faltam ${MIN_PERCENT_FOR_SUCCESS - percent}% para a meta de ${MIN_PERCENT_FOR_SUCCESS}%.`;
+                motivationElement.className = 'motivation-message motivation-warning';
+            }
+        } else {
+            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
+                motivationHTML = `🎯 <strong>ÓTIMO DESEMPENHO!</strong>`;
+                motivationElement.className = 'motivation-message motivation-success';
+            } else {
+                motivationHTML = `📚 <strong>CONTINUE ESTUDANDO!</strong>`;
+                motivationElement.className = 'motivation-message motivation-warning';
+            }
+        }
+        
+        motivationElement.innerHTML = motivationHTML;
+        
+        const totalQuestions = masterBank.length;
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        const remainingQuestions = Math.max(0, totalQuestions - uniqueUsed.length);
+        const wrongCount = wrongQuestionsHistory.length;
+        
+        let summaryText = '';
+        let showNewSimuladoBtn = true;
+        let showReiniciarBancoBtn = false;
+        let showNovoSimuladoReforcoBtn = false;
+        
+        if (currentQuestions[0]?.isWrongQuestion) {
+            summaryText = `⚡ <strong>SIMULADO DE REFORÇO FINALIZADO</strong><br>`;
+            summaryText += `Você revisou ${currentQuestions.length} questões que errou anteriormente.<br>`;
+            summaryText += `Questões ainda erradas: <strong>${wrongCount}</strong>`;
+            showNewSimuladoBtn = false;
+            showNovoSimuladoReforcoBtn = true;
+            
+            if (percent < MIN_PERCENT_FOR_SUCCESS) {
+                showReiniciarBancoBtn = true;
+            }
+        } else if (remainingQuestions === 0) {
+            summaryText = `🎯 <strong>COMPLETOU TODAS AS ${totalQuestions} QUESTÕES!</strong><br>`;
+            summaryText += `Questões erradas: <strong>${wrongCount}</strong>`;
+            
+            if (wrongCount < MIN_WRONG_QUESTIONS_FOR_SIMULADO) {
+                showNewSimuladoBtn = false;
+            }
+        } else {
+            summaryText = `Restam: <strong>${remainingQuestions}</strong> | Usadas: <strong>${uniqueUsed.length}</strong><br>`;
+            summaryText += `Questões erradas: <strong>${wrongCount}</strong>`;
+        }
+        
+        document.getElementById('simulado-summary').innerHTML = summaryText;
+        
+        document.querySelector('.nav-buttons').style.display = 'none';
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('finish-btn').style.display = 'none';
+        document.getElementById('restart-btn').style.display = 'block';
+        
+        document.getElementById('wrong-questions-btn').style.display = 'none';
+        document.getElementById('reiniciar-banco-btn').style.display = showReiniciarBancoBtn ? 'block' : 'none';
+        document.getElementById('new-simulado-btn').style.display = showNewSimuladoBtn ? 'block' : 'none';
+        document.getElementById('novo-simulado-reforco-btn').style.display = showNovoSimuladoReforcoBtn ? 'block' : 'none';
+        
+        updateSimuladoInfo();
+        updateReforcoButton();
+        updateReiniciarBancoButton();
+        updateContinuarBancoButton();
+        updateVoltarInicioButton();
+        updateNovoSimuladoReforcoButton();
+        
+        setTimeout(() => {
+            if (canOfferReforcoSimulado()) {
+                console.log('Oferecendo simulado de reforço...');
+                setTimeout(() => {
+                    offerWrongQuestionsSimulado();
+                }, 1500);
+            } else {
+                console.log('Não pode oferecer reforço no momento');
+            }
+        }, 500);
+    }
     
     // ============================================
     // FUNÇÕES DE CONFIGURAÇÃO DO SIMULADO
@@ -1278,10 +1652,6 @@
         const totalQuestions = masterBank.length;
         const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
         
-        // Mostra o botão se:
-        // 1. É um simulado de reforço que acabou
-        // 2. Está na tela de resultados
-        // 3. Ainda há questões no banco OU todas foram usadas
         if (isReforco && isResultsVisible) {
             novoSimuladoBtn.style.display = 'block';
             
@@ -1310,11 +1680,8 @@
             message += `Deseja reiniciar o histórico e começar um novo simulado?`;
             
             if (confirm(message)) {
-                // Limpa histórico e começa novo
                 usedQuestionsHistory = [];
                 localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-                
-                // Gera novo simulado
                 startNewSimuladoFromResults();
             }
         } else {
@@ -1323,7 +1690,6 @@
             message += `Deseja continuar com as próximas questões do banco?`;
             
             if (confirm(message)) {
-                // Continua com próximo simulado
                 startNewSimuladoFromResults();
             }
         }
@@ -1366,7 +1732,7 @@
             document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
             document.querySelector('.nav-buttons').style.display = 'flex';
             
-            currentQuestions = selectRandomQuestions(true); // true = forçar simulado 1
+            currentQuestions = selectRandomQuestions(true);
             
             if (currentQuestions.length === 0) {
                 alert("Erro ao gerar novo simulado.");
@@ -1411,7 +1777,6 @@
 
     function clearHistory() {
         if (confirm(`Limpar histórico completo?`)) {
-            // Limpa histórico
             usedQuestionsHistory = [];
             localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
             
@@ -1420,7 +1785,6 @@
             
             clearSessionData();
             
-            // RESETA INTERFACE
             document.getElementById('results').style.display = 'none';
             document.getElementById('finish-btn').style.display = 'block';
             document.getElementById('restart-btn').style.display = 'none';
@@ -1432,8 +1796,7 @@
             document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
             document.querySelector('.nav-buttons').style.display = 'flex';
             
-            // Gera NOVO simulado começando do 1
-            currentQuestions = selectRandomQuestions(true); // true = forçar simulado 1
+            currentQuestions = selectRandomQuestions(true);
             
             if (currentQuestions.length === 0) {
                 alert("Não foi possível gerar o simulado.");
@@ -1445,8 +1808,6 @@
             TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
             timeLeft = TIME_LIMIT;
             autoNavEnabled = true;
-            
-            // IMPORTANTE: Garante que começa no simulado 1
             currentSimuladoNumber = 1;
             
             saveCurrentSessionState();
@@ -1469,108 +1830,6 @@
             
             alert('Histórico limpo! Novo simulado gerado.');
         }
-    }
-
-    // ============================================
-    // FUNÇÃO SELECTRANDOMQUESTIONS CORRIGIDA
-    // ============================================
-
-    function selectRandomQuestions(forceFirstSimulado = false) {
-        const totalQuestions = masterBank.length;
-        
-        if (totalQuestions === 0) {
-            alert("⚠️ O banco de questões está vazio! Adicione questões no código.");
-            return [];
-        }
-        
-        const config = calcularConfiguracaoSimulados();
-        console.log(config.mensagem);
-        
-        let availableQuestions = [];
-        for (let i = 0; i < totalQuestions; i++) {
-            availableQuestions.push(i);
-        }
-        
-        // Remove as já usadas
-        if (usedQuestionsHistory.length > 0 && !forceFirstSimulado) {
-            availableQuestions = availableQuestions.filter(index => 
-                !usedQuestionsHistory.includes(index)
-            );
-        }
-        
-        const availableCount = availableQuestions.length;
-        let questionsToSelect;
-        
-        if (availableCount === 0) {
-            if (confirm(`Todas as ${totalQuestions} questões já foram usadas!\n\nDeseja reiniciar o histórico?`)) {
-                usedQuestionsHistory = [];
-                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
-                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
-                alert('Histórico reiniciado!');
-                // Quando reinicia, força começar do simulado 1
-                forceFirstSimulado = true;
-            } else {
-                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
-                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
-            }
-        } else if (availableCount >= QUESTIONS_PER_SIMULADO) {
-            questionsToSelect = QUESTIONS_PER_SIMULADO;
-        } else if (availableCount >= 5) {
-            questionsToSelect = availableCount;
-        } else {
-            if (confirm(`Só restam ${availableCount} questões!\n\nDeseja fazer simulado com essas questões?`)) {
-                questionsToSelect = availableCount;
-            } else {
-                if (confirm(`Deseja reiniciar o histórico?`)) {
-                    usedQuestionsHistory = [];
-                    localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-                    availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
-                    questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
-                    // Quando reinicia, força começar do simulado 1
-                    forceFirstSimulado = true;
-                } else {
-                    questionsToSelect = availableCount;
-                }
-            }
-        }
-        
-        // Para bancos pequenos (≤ 27), usa todas as questões
-        if (totalQuestions <= 27) {
-            questionsToSelect = totalQuestions;
-            availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
-        }
-        
-        const shuffledQuestions = shuffleArray(availableQuestions);
-        const selectedIndices = shuffledQuestions.slice(0, questionsToSelect);
-        
-        currentSimuladoIndices = selectedIndices;
-        
-        // CORREÇÃO: Lógica aprimorada para calcular o número do simulado
-        if (forceFirstSimulado || usedQuestionsHistory.length === 0) {
-            // Se forçado ou histórico vazio, começa do simulado 1
-            currentSimuladoNumber = 1;
-        } else if (selectedIndices.length > 0) {
-            // Calcula baseado nas questões já usadas
-            const usedCount = usedQuestionsHistory.length;
-            const simuladoIndex = Math.floor(usedCount / QUESTIONS_PER_SIMULADO);
-            currentSimuladoNumber = Math.min(simuladoIndex + 1, totalSimulados);
-        } else {
-            // Fallback
-            currentSimuladoNumber = 1;
-        }
-        
-        // Garante que não ultrapassa o total de simulados
-        if (currentSimuladoNumber > totalSimulados) {
-            currentSimuladoNumber = totalSimulados;
-        }
-        
-        console.log(`Simulado configurado: ${currentSimuladoNumber}/${totalSimulados}`);
-        
-        return selectedIndices.map(index => ({
-            ...masterBank[index], 
-            originalIndex: index
-        }));
     }
 
     // ============================================
@@ -1597,7 +1856,6 @@
                 alert('Histórico reiniciado!');
             }
             
-            // RESETA INTERFACE
             document.getElementById('results').style.display = 'none';
             document.getElementById('finish-btn').style.display = 'block';
             document.getElementById('restart-btn').style.display = 'none';
@@ -1609,7 +1867,6 @@
             document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
             document.querySelector('.nav-buttons').style.display = 'flex';
             
-            // Gera novo simulado SEM forçar o primeiro (deixa a lógica normal decidir)
             currentQuestions = selectRandomQuestions(false);
             
             if (currentQuestions.length === 0) {
@@ -1650,7 +1907,6 @@
     // ============================================
 
     function startNewSimuladoFromResults() {
-        // RESETA A INTERFACE
         document.getElementById('results').style.display = 'none';
         document.getElementById('finish-btn').style.display = 'block';
         document.getElementById('restart-btn').style.display = 'none';
@@ -1662,7 +1918,6 @@
         document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
         document.querySelector('.nav-buttons').style.display = 'flex';
         
-        // Gera novo simulado normal (deixa a lógica normal decidir o número)
         currentQuestions = selectRandomQuestions(false);
         
         if (currentQuestions.length === 0) {
@@ -1696,7 +1951,6 @@
         updateVoltarInicioButton();
         updateNovoSimuladoReforcoButton();
         
-        // Mostra mensagem informativa
         const totalQuestions = masterBank.length;
         const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
         alert(`✅ NOVO SIMULADO INICIADO!\n\n${currentQuestions.length} questões selecionadas.\n\nRestam ${remainingQuestions} questões no banco.`);
@@ -1729,13 +1983,10 @@
     function updateSimuladoInfo() {
         const totalQuestions = masterBank.length;
         
-        // CORREÇÃO: Usa currentSimuladoIndices ou currentQuestions para contar questões atuais
         const currentQuestionsCount = currentQuestions ? currentQuestions.length : 0;
         
-        // CORREÇÃO: Calcula disponíveis corretamente
         let remaining = 0;
         if (currentQuestions && currentQuestions[0]?.isWrongQuestion) {
-            // Para simulado de reforço
             const wrongCount = wrongQuestionsHistory.length;
             const successRate = Math.round(((totalQuestions - wrongCount) / totalQuestions) * 100);
             
@@ -1751,8 +2002,6 @@
             return;
         }
         
-        // CORREÇÃO: Para simulado normal
-        // Removendo duplicatas do histórico
         const uniqueUsed = [...new Set(usedQuestionsHistory)];
         const recentUsed = uniqueUsed.length;
         remaining = Math.max(0, totalQuestions - recentUsed);
@@ -1778,7 +2027,6 @@
         `;
         document.getElementById('simulado-info').style.display = 'block';
         
-        // CORREÇÃO: Atualiza também os elementos específicos se existirem
         const questionsPerSimuladoEl = document.getElementById('questions-per-simulado');
         const remainingQuestionsEl = document.getElementById('remaining-questions');
         const recentUsedEl = document.getElementById('recent-used');
@@ -1804,16 +2052,10 @@
         const isReforco = currentQuestions[0]?.isWrongQuestion;
         const percent = parseInt(document.getElementById('final-percent')?.textContent?.replace('%', '') || 0);
         
-        // Mostra se:
-        // 1. Está na tela de resultados
-        // 2. Não é simulado de reforço
-        // 3. Atingiu 70% OU é simulado de reforço com 70%
-        // 4. Ainda há questões OU todas foram usadas
         if (isResultsVisible && !isReforco && remainingQuestions > 0) {
             continuarBtn.style.display = 'block';
             continuarBtn.innerHTML = `📚 Continuar com Banco (${remainingQuestions} restantes)`;
         } else if (isResultsVisible && isReforco && percent >= MIN_PERCENT_FOR_SUCCESS) {
-            // Para reforço bem-sucedido
             continuarBtn.style.display = 'block';
             continuarBtn.innerHTML = `📚 Voltar ao Banco (${remainingQuestions} restantes)`;
         } else {
@@ -1969,7 +2211,7 @@
             document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
             document.querySelector('.nav-buttons').style.display = 'flex';
             
-            currentQuestions = selectRandomQuestions(true); // true = forçar simulado 1
+            currentQuestions = selectRandomQuestions(true);
             
             if (currentQuestions.length === 0) {
                 alert("Erro ao gerar novo simulado.");
@@ -2018,7 +2260,6 @@
             timeLeft = TIME_LIMIT;
             currentQuestionIndex = 0;
             
-            // Volta para o modo de simulado ativo
             document.getElementById('results').style.display = 'none';
             document.getElementById('finish-btn').style.display = 'block';
             document.getElementById('restart-btn').style.display = 'none';
@@ -2030,7 +2271,6 @@
             document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
             document.querySelector('.nav-buttons').style.display = 'flex';
             
-            // Limpa o conteúdo das questões (remove o gabarito)
             document.getElementById('quiz-content').innerHTML = '';
             
             saveCurrentSessionState();
@@ -2052,7 +2292,6 @@
     // ============================================
     
     function startNewQuiz() {
-        // RESETA A INTERFACE
         document.getElementById('results').style.display = 'none';
         document.getElementById('finish-btn').style.display = 'block';
         document.getElementById('restart-btn').style.display = 'none';
@@ -2064,10 +2303,8 @@
         document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
         document.querySelector('.nav-buttons').style.display = 'flex';
         
-        // Limpa o conteúdo das questões
         document.getElementById('quiz-content').innerHTML = '';
         
-        // Usa as MESMAS questões
         userAnswers = new Array(currentQuestions.length).fill(null);
         timeLeft = TIME_LIMIT;
         currentQuestionIndex = 0;
@@ -2182,68 +2419,6 @@
     
     function saveOfferTimestamp() {
         localStorage.setItem(LAST_OFFER_KEY, Date.now().toString());
-    }
-    
-    function generateWrongQuestionsSimulado() {
-        console.log(`Gerando simulado de reforço com ${wrongQuestionsHistory.length} questões erradas...`);
-        
-        if (wrongQuestionsHistory.length === 0) {
-            console.error('Nenhuma questão errada no histórico');
-            return [];
-        }
-        
-        let availableWrongQuestions = [...wrongQuestionsHistory];
-        availableWrongQuestions = shuffleArray(availableWrongQuestions);
-        
-        const selectedIndices = availableWrongQuestions;
-        
-        console.log(`Selecionadas ${selectedIndices.length} questões para o simulado de reforço`);
-        
-        const questions = selectedIndices.map(index => {
-            if (index >= 0 && index < masterBank.length) {
-                return {
-                    ...masterBank[index],
-                    originalIndex: index,
-                    isWrongQuestion: true
-                };
-            }
-            return null;
-        }).filter(q => q !== null);
-        
-        return questions;
-    }
-    
-    function offerWrongQuestionsSimulado() {
-        if (!canOfferReforcoSimulado()) {
-            console.log('Não pode oferecer simulado de reforço no momento');
-            updateReforcoButton();
-            return false;
-        }
-        
-        const wrongCount = wrongQuestionsHistory.length;
-        
-        let title = "🎯 TEMPO DE REFORÇO";
-        let message = `Identificamos ${wrongCount} questões que você errou.\n\n`;
-        message += `⚡ SIMULADO DE REFORÇO DISPONÍVEL\n`;
-        message += `Deseja focar nessas ${wrongCount} questões?\n\n`;
-        message += `✅ Benefícios:\n`;
-        message += `• Foco nas suas dificuldades\n`;
-        message += `• Reforço da memória\n`;
-        message += `• Maior taxa de acerto`;
-        
-        const userWantsReforco = confirm(`${title}\n\n${message}`);
-        
-        saveOfferTimestamp();
-        
-        if (userWantsReforco) {
-            console.log('Usuário aceitou simulado de reforço');
-            startWrongQuestionsSimulado();
-            return true;
-        } else {
-            console.log('Usuário recusou simulado de reforço');
-            updateReforcoButton();
-            return false;
-        }
     }
     
     function isNewSession() {
@@ -2473,7 +2648,6 @@
             usedQuestionsHistory = [];
         }
         
-        // VERIFICA SE É UMA NOVA SESSÃO OU UM REFRESH
         if (isNewSession()) {
             console.log('Nova sessão - gerando questões');
             currentQuestions = selectRandomQuestions();
@@ -2534,38 +2708,6 @@
         updateContinuarBancoButton();
         updateVoltarInicioButton();
         updateNovoSimuladoReforcoButton();
-    }
-    
-    function renderCurrentQuestion() {
-        const container = document.getElementById('quiz-content');
-        
-        if (!currentQuestions || currentQuestions.length === 0) {
-            container.innerHTML = '<div class="question-block-mini">Erro: Nenhuma questão carregada.</div>';
-            return;
-        }
-        
-        const question = currentQuestions[currentQuestionIndex];
-        
-        container.innerHTML = `
-            <div class="question-block-mini">
-                <div class="question-text-mini">
-                    ${currentQuestionIndex + 1}. ${question.q}
-                </div>
-                <div class="options-mini">
-                    ${question.a.map((opt, i) => `
-                        <label class="option-mini" id="option-${i}">
-                            <input type="radio" name="currentQuestion" value="${i}" 
-                                   ${userAnswers[currentQuestionIndex] === i ? 'checked' : ''}
-                                   onchange="selectAnswer(${i})">
-                            ${opt}
-                        </label>
-                    `).join('')}
-                </div>
-                <button class="report-btn" onclick="openReportModal(${currentQuestionIndex})">
-                    <span>⚠️</span> Reportar Problema
-                </button>
-            </div>
-        `;
     }
     
     function selectAnswer(answerIndex) {
@@ -2680,178 +2822,6 @@
     }
     
     // ============================================
-    // FUNÇÃO FINALIZEQUIZ ATUALIZADA COM NOVO BOTÃO
-    // ============================================
-    
-    function finalizeQuiz() {
-        clearInterval(timerId);
-        
-        const answeredCount = getAnsweredCount();
-        if (answeredCount !== currentQuestions.length && !confirm(`Respondidas: ${answeredCount}/${currentQuestions.length}. Finalizar?`)) {
-            startTimer();
-            return;
-        }
-        
-        let finalScore = 0;
-        userAnswers.forEach((answer, index) => {
-            if (answer !== null && answer === currentQuestions[index].c) {
-                finalScore++;
-            }
-        });
-        
-        const percent = currentQuestions.length > 0 ? Math.round((finalScore / currentQuestions.length) * 100) : 0;
-        const feedback = document.getElementById('feedback-msg');
-        
-        if (percent >= 70) {
-            feedback.textContent = "🎉 Excelente!";
-            feedback.style.color = "var(--success)";
-        } else if (percent >= 50) {
-            feedback.textContent = "👍 Quase lá!";
-            feedback.style.color = "var(--accent)";
-        } else {
-            feedback.textContent = "💪 Continue!";
-            feedback.style.color = "var(--danger)";
-        }
-        
-        if (currentQuestions[0]?.isWrongQuestion) {
-            removeCorrectQuestionsFromHistory();
-        } else {
-            addWrongQuestionsToHistory();
-        }
-        
-        if (currentSimuladoIndices.length > 0 && !currentQuestions[0]?.isWrongQuestion) {
-            usedQuestionsHistory.push(...currentSimuladoIndices);
-            usedQuestionsHistory = [...new Set(usedQuestionsHistory)];
-            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-        }
-        
-        clearSessionData();
-        
-        let quizHTML = '';
-        currentQuestions.forEach((question, index) => {
-            const userAnswer = userAnswers[index];
-            const isCorrect = userAnswer === question.c;
-            
-            quizHTML += `
-                <div class="question-block-mini">
-                    <button class="report-gabarito-btn" onclick="openReportModal(${index})" title="Reportar problema">
-                        ⚠️
-                    </button>
-                    
-                    <div class="question-text-mini">
-                        ${index + 1}. ${question.q}
-                    </div>
-                    <div class="options-mini">
-                        ${question.a.map((opt, i) => {
-                            let classes = 'option-mini';
-                            if (i === question.c) classes += ' correct-answer';
-                            else if (userAnswer === i && !isCorrect) classes += ' wrong-answer';
-                            
-                            return `<label class="${classes}">
-                                <input type="radio" disabled ${userAnswer === i ? 'checked' : ''}>
-                                ${opt}
-                                ${userAnswer === i ? '<span style="margin-left: auto; font-size: 0.6rem; color: #6c757d;">(sua resposta)</span>' : ''}
-                                ${i === question.c && userAnswer !== i ? '<span style="margin-left: auto; font-size: 0.6rem; color: var(--success);">(correta)</span>' : ''}
-                            </label>`;
-                        }).join('')}
-                    </div>
-                </div>
-            `;
-        });
-        
-        document.getElementById('quiz-content').innerHTML = quizHTML;
-        document.getElementById('final-score').textContent = `${finalScore}/${currentQuestions.length}`;
-        document.getElementById('final-percent').textContent = `${percent}%`;
-        
-        const motivationElement = document.getElementById('motivation-message');
-        let motivationHTML = '';
-        
-        if (currentQuestions[0]?.isWrongQuestion) {
-            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
-                motivationHTML = `✅ <strong>PARABÉNS!</strong> Você superou suas dificuldades!`;
-                motivationElement.className = 'motivation-message motivation-success';
-            } else {
-                motivationHTML = `⚡ <strong>PRECISA MELHORAR</strong><br>`;
-                motivationHTML += `Você acertou ${finalScore} de ${currentQuestions.length}.<br>`;
-                motivationHTML += `Faltam ${MIN_PERCENT_FOR_SUCCESS - percent}% para a meta de ${MIN_PERCENT_FOR_SUCCESS}%.`;
-                motivationElement.className = 'motivation-message motivation-warning';
-            }
-        } else {
-            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
-                motivationHTML = `🎯 <strong>ÓTIMO DESEMPENHO!</strong>`;
-                motivationElement.className = 'motivation-message motivation-success';
-            } else {
-                motivationHTML = `📚 <strong>CONTINUE ESTUDANDO!</strong>`;
-                motivationElement.className = 'motivation-message motivation-warning';
-            }
-        }
-        
-        motivationElement.innerHTML = motivationHTML;
-        
-        const totalQuestions = masterBank.length;
-        const uniqueUsed = [...new Set(usedQuestionsHistory)];
-        const remainingQuestions = Math.max(0, totalQuestions - uniqueUsed.length);
-        const wrongCount = wrongQuestionsHistory.length;
-        
-        let summaryText = '';
-        let showNewSimuladoBtn = true;
-        let showReiniciarBancoBtn = false;
-        let showNovoSimuladoReforcoBtn = false;
-        
-        if (currentQuestions[0]?.isWrongQuestion) {
-            summaryText = `⚡ <strong>SIMULADO DE REFORÇO FINALIZADO</strong><br>`;
-            summaryText += `Você revisou ${currentQuestions.length} questões que errou anteriormente.<br>`;
-            summaryText += `Questões ainda erradas: <strong>${wrongCount}</strong>`;
-            showNewSimuladoBtn = false;
-            showNovoSimuladoReforcoBtn = true;
-            
-            if (percent < MIN_PERCENT_FOR_SUCCESS) {
-                showReiniciarBancoBtn = true;
-            }
-        } else if (remainingQuestions === 0) {
-            summaryText = `🎯 <strong>COMPLETOU TODAS AS ${totalQuestions} QUESTÕES!</strong><br>`;
-            summaryText += `Questões erradas: <strong>${wrongCount}</strong>`;
-            
-            if (wrongCount < MIN_WRONG_QUESTIONS_FOR_SIMULADO) {
-                showNewSimuladoBtn = false;
-            }
-        } else {
-            summaryText = `Restam: <strong>${remainingQuestions}</strong> | Usadas: <strong>${uniqueUsed.length}</strong><br>`;
-            summaryText += `Questões erradas: <strong>${wrongCount}</strong>`;
-        }
-        
-        document.getElementById('simulado-summary').innerHTML = summaryText;
-        
-        document.querySelector('.nav-buttons').style.display = 'none';
-        document.getElementById('results').style.display = 'block';
-        document.getElementById('finish-btn').style.display = 'none';
-        document.getElementById('restart-btn').style.display = 'block';
-        
-        document.getElementById('wrong-questions-btn').style.display = 'none';
-        document.getElementById('reiniciar-banco-btn').style.display = showReiniciarBancoBtn ? 'block' : 'none';
-        document.getElementById('new-simulado-btn').style.display = showNewSimuladoBtn ? 'block' : 'none';
-        document.getElementById('novo-simulado-reforco-btn').style.display = showNovoSimuladoReforcoBtn ? 'block' : 'none';
-        
-        updateSimuladoInfo();
-        updateReforcoButton();
-        updateReiniciarBancoButton();
-        updateContinuarBancoButton();
-        updateVoltarInicioButton();
-        updateNovoSimuladoReforcoButton();
-        
-        setTimeout(() => {
-            if (canOfferReforcoSimulado()) {
-                console.log('Oferecendo simulado de reforço...');
-                setTimeout(() => {
-                    offerWrongQuestionsSimulado();
-                }, 1500);
-            } else {
-                console.log('Não pode oferecer reforço no momento');
-            }
-        }, 500);
-    }
-    
-    // ============================================
     // SISTEMA DE REPORTE - CORRIGIDO
     // ============================================
     
@@ -2863,7 +2833,6 @@
             reportsHistory = [];
         }
         
-        // CORREÇÃO: Adiciona os event listeners diretamente
         document.getElementById('cancelReport').addEventListener('click', closeReportModal);
         document.getElementById('submitReport').addEventListener('click', submitReport);
         
