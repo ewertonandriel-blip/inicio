@@ -1125,321 +1125,327 @@
     // FORMATO: {q: "Pergunta?", a: ["Opção A", "Opção B", "Opção C", "Opção D"], c: 0}
     // Onde 'c' é o índice da resposta correta (0 = A, 1 = B, 2 = C, 3 = D)
     
-    const masterBank = [
- 
-   {q: "As posições da chave seletora do magneto que são utilizadas para testar o sistema de ignição dupla?", a: ["Esquerdo e direito", "Ambos e direito", "Desligado e ambos", "Esquerdo e ambos"], c: 0},
-    {q: "O tipo de conector, cujo invólucro é feito de aço, pertence à classe?", a: ["D", "K", "B", "C"], c: 1},
-    {q: "A posição do interruptor na qual os magnetos ficam aterrados é?", a: ["Ambos", "On", "Direito", "Off"], c: 3},
-    {q: "A válvula de alívio de uma bomba de combustível acionada pelo motor é projetada para abrir?", a: ["A uma tensão pré-ajustada da mola", "Após o corte do motor", "A uma determinada pressão atmosférica", "Quando a pressão de combustível for muito baixa"], c: 0},
-    {q: "É a sequência na qual o tempo motor ocorre nos diferentes cilindros, sendo projetada para proporcionar o balanceamento e para eliminar a vibração ao máximo possível:", a: ["Trabalho", "Ordem de fogo", "Razão de compressão", "Potência"], c: 1},
-    {q: "O aquecedor de combustível (fuel heater) opera como um?", a: ["Trocador de potência", "Trocador de calor", "Trocador de pressão", "Trocador de óleo"], c: 1},
-    {q: "Um ciclo de quatro tempos completo demanda duas voltas do virabrequim do motor, perfazendo um total de 720º de giro. Em tese, cada uma das fases equivale a quantos graus?", a: ["90 graus", "180 graus", "360 graus", "270 graus"], c: 1},
-    {q: "A mistura ar/combustível entra nos cilindros através das passagens das válvulas de?", a: ["Compressão", "Arrefecimento", "Admissão", "Refrigeração"], c: 2},
-    {q: "A sequência na qual o tempo motor ocorre nos diferentes cilindros denomina-se?", a: ["Claro de válvulas", "Claro de pistões", "Ordem de fogo", "Ordem de queima"], c: 2},
-    {q: "A função básica de uma hélice é converter a potência do motor em força de?", a: ["Tração", "Torção", "Arrasto", "Sustentação"], c: 0},
-    {q: "O mecanismo de um motor de cilindros opostos. O eixo de ressaltos sempre gira com a metade da velocidade do:", a: ["Eixo transversal", "Eixo da roda livre", "Eixo de manivelas", "Eixo cardan"], c: 2},
-    {q: "Para o acionamento inicial do conjunto compressor (axial e centrífugo), como também a turbina, usa-se:", a: ["Ignitores de partida", "Gerador de vortex", "Roda livre", "Start generation"], c: 3},
-    {q: "O componente do motor que transmite a força do pistão para o eixo de manivelas é o(a)?", a: ["Mancal", "Biela", "Pino do pistão", "Vela"], c: 1},
-    {q: "A finalidade das alhetas, na cabeça do cilindro de um motor convencional, é?", a: ["Arrefecer o cilindro", "Acoplar as molas das válvulas", "Reduzir o peso do cilindro", "Manter elevada a temperatura do cilindro"], c: 0},
-    {q: "No pistão, o anel de compressão do motor é instalado?", a: ["Na ranhura superior do pistão", "Em qualquer ranhura do pistão", "Na ranhura central do pistão", "Na ranhura inferior do pistão"], c: 0},
-    {q: "O objetivo principal do eixo de manivelas é transformar o movimento:", a: ["Linear do tucho em movimento axial do eixo de ressaltos", "Alternativo do eixo de ressaltos em movimento rotativo para orientar o curso do cilindro", "Alternativo do pistão em movimento rotativo para acionamento da hélice", "Flexível do balancim em movimento alternado das válvulas"], c: 2},
-    {q: "Responda com a alternativa certa. Several different types of fire detection system are installed in aircraft to detect engine fires. \"Installed\" quer dizer:", a: ["Alimentado", "Instalado", "Unido", "Inserido"], c: 1},
-    {q: "A turbina transforma a energia cinética dos gases de escapamento em energia:", a: ["Pneumática", "Mecânica", "Estática", "Elétrica"], c: 1},
-    {q: "Se o motor for operado como recomendado e a manutenção preventiva for executada, os cilindros normalmente resistirão até que o motor seja removido por:", a: ["Limite de torque", "Vontade do operador", "Limite de voo", "Limite de horas"], c: 3},
-    {q: "Em um sistema de ignição de um motor convencional, a alta tensão induzida na bobina secundária é, em seguida, enviada à (ao):", a: ["Vela", "Bobina primária", "Platinado", "Distribuidor"], c: 3},
-    {q: "Os dois principais elementos funcionais do compressor centrífugo são?", a: ["Turbina e difusor", "Carcaça e difusor", "Pistão e biela", "Impulsor e difusor"], c: 3},
-    {q: "A alta tensão induzida na bobina secundária é enviada ao distribuidor, o qual consiste em:", a: ["Quatro partes", "Duas partes", "Seis partes", "Três partes"], c: 1},
-    {q: "Quando a hélice dá uma volta completa e ocorre um recuo a mesma realiza o passo?", a: ["Bandeira", "Efetivo", "Ativo", "Teórico"], c: 1},
-    {q: "Os dois tipos mais comuns de compressor que encontramos nos motores a reação?", a: ["Fluxo centrífugo e axial", "Axial e tipo fly by stol", "Radial inconstante e centrífugo", "Caneca e canular"], c: 0},
-    {q: "O cruzamento das válvulas ocorre no?", a: ["Início da exaustão e final da compressão", "Final da exaustão e início da admissão", "Início da expansão e final da compressão", "Final da expansão e início da admissão"], c: 1},
-    {q: "A expansão dos gases cinéticos da queima, transforma energia calorífica em energia?", a: ["Cinética", "Pneumática", "Estática", "Mecânica"], c: 3},
-    {q: "As partes básicas que constituem uma turbina são?", a: ["Rotor e coletor", "Coletor e difusor", "Impelidor e estator", "Estator e rotor"], c: 3},
-    {q: "O combustível é fornecido para entrada da unidade de controle, vindo dos tanques do avião através de uma série de?", a: ["Bombas acionadas pelo motor", "Filtros", "Bombas de reforço", "Válvulas seletoras"], c: 2},
-    {q: "A seção da turbina de um motor turbojato ou turborreator está localizada na parte?", a: ["Superior", "Traseira", "Dianteira", "Inferior"], c: 1},
-    {q: "No motor a turbina, a seção que transforma a alta velocidade do ar da saída do compressor, em pressão estática, denomina-se seção?", a: ["De escapamento", "De combustão", "Difusora", "Acessória"], c: 2},
-    {q: "A maioria dos motores alternativos de aeronaves opera com ciclo de quantos tempos?", a: ["Cinco tempos", "Dois tempos yamaha", "Quatro tempos", "Um tempo"], c: 2},
-    {q: "O componente do motor que tem a finalidade de expulsar os gases de escapamento do cilindro denomina-se?", a: ["Pistão", "Válvula", "Anel de segmento", "Eixo de ressaltos"], c: 0},
-    {q: "Muitos motores correntemente fabricados utilizam velas com roscas?", a: ["Postiças (heli-coil) de borracha", "Postiças de alumínio", "Postiças (heli-coil) de aço inoxidável", "Postiças (heli-coil) de aço baquelite"], c: 2},
-    {q: "O mecanismo responsável pelo fechamento das válvulas do cilindro é?", a: ["Condutor e eixo", "Ressalto e pino", "Condutor e mola", "Mola"], c: 3},
-    {q: "Além dos a reação, os motores radial são fixados à nacele do avião através de(o)?", a: ["Tubo", "Suporte", "Montante", "Berço"], c: 3},
-    {q: "Many older model aircraft still operating have some type of thermal switch system or thermocouple system...", a: ["Sistema de ignição", "Sistema de detecção de calor", "Sistema de interruptor térmico", "Sistema de troca térmica"], c: 2},
-    {q: "Uma aeronave, impulsionada por grandes motores turbojato, requer algum tipo de dispositivo silenciador de ruídos...", a: ["Supressores de ruídos", "Supressores de atrito", "Supressores de ouvido", "Supressores de gases cinéticos stop by"], c: 0},
-    {q: "O servo do governador controla o fluxo de combustível com a função de ajustar a velocidade do:", a: ["Eixo", "Filtro", "Motor", "Carburador"], c: 2},
-    {q: "As posições da chave seletora do magneto, usadas para testar o sistema de ignição dupla, são?", a: ["On e both", "Right e both", "Left e right", "Off e on"], c: 2},
-    {q: "A turbina transforma uma quantidade de energia cinética dos gases de escapamento em energia mecânica, para acionar o?", a: ["Difusor e acessórios", "Compressor e acessórios", "Câmara de combustão e acessórios", "Distribuidor e difusor"], c: 1},
-    {q: "A quantidade ou a carga da mistura ar/combustível depende da abertura da?", a: ["Manete de dreno", "Manete de alijamento", "Manete de ângulo", "Manete de aceleração"], c: 3},
-    {q: "No sistema de combustível motor a reação, o aquecedor usa como fonte de aquecimento, ar sangrado do(a)?", a: ["Escapamento ou óleo do sistema de lubrificação", "Compressor ou óleo do sistema de lubrificação", "Seção da turbina ou óleo do sistema hidráulico", "Câmara de combustão ou óleo do sistema hidráulico"], c: 1},
-    {q: "Para se combater o desenvolvimento microbiológico no combustível deve-se?", a: ["Drenar o combustível diariamente", "Destanquear o avião antes do pernoite", "Vedar as entradas de ventilação sempre que o avião for pernoitar", "Adicionar bactericida diariamente"], c: 0},
-    {q: "A finalidade da ligação à massa encontrada nos sistemas elétricos do avião é?", a: ["Evitar a fadiga mecânica dos fios", "Proporcionar caminhos de retorno da corrente", "Aumentar a resistência total do circuito elétrico", "Acumular carga estática"], c: 1},
-    {q: "A parte do motor na qual a potência é desenvolvida, é chamada de?", a: ["As hastes de mudança de passo", "Válvulas", "Cilindro", "Rodas do trem de pouso"], c: 2},
-    {q: "Os cilindros dos motores radiais são instalados?", a: ["Em carreira, no eixo das manivelas", "Na parte traseira do cárter", "Ao redor de um cárter central", "Diretamente nas engrenagens de redução"], c: 2},
-    {q: "O pino do pistão une o pistão à?", a: ["Bengala", "Transmissor", "Biela", "Turbina"], c: 2},
-    {q: "O calço hidráulico no motor radial, ocorre normalmente?", a: ["Nos cilindros laterais", "Nos cilindros inferiores", "Nos cilindros superiores", "Em todos os cilindros"], c: 1},
-    {q: "O calço hidráulico ocorre normalmente em qual tipo de motor do ciclo otto?", a: ["A turbina de fluxo centrífugo", "Convencional do tipo cilindros em v", "A turbina de fluxo axial", "Alternativo do tipo radial"], c: 3},
-    {q: "O tempo que o êmbolo está se deslocando do pmb para o pma, e as válvulas estão fechadas, denomina-se?", a: ["Potência", "Admissão", "Escapamento", "Compressão"], c: 3},
-    {q: "A maneira para identificar o tipo de gasolina é pelo(a)?", a: ["Quantidade", "Temperatura", "Cor", "Pureza"], c: 2},
-    {q: "O componente do sistema de combustível, que tem a finalidade de cortar o fluxo de combustível que sai do tanque, é o(a)?", a: ["Válvula seletora", "Dreno", "Filtro", "Válvula de transferência"], c: 0},
-    {q: "O motor térmico transforma energia calorífica em energia?", a: ["Cinética", "Elétrica", "Hidráulica", "Mecânica"], c: 3},
-    {q: "A expressão \"overheat conditions\" quer dizer:", a: ["Condições de calor", "Condições de tempo", "Condições climáticas", "Condições de superaquecimento"], c: 3},
-    {q: "O componente de um motor convencional que tem a finalidade de transformar o movimento alternativo do pistão em movimento rotativo para acionamento da hélice, denomina-se?", a: ["Eixo de manivelas", "Mancal", "Eixo de ressaltos", "Caixa de engrenagem"], c: 0},
-    {q: "Em um motor a reação a potência indicada ou desenvolvida ocorre no(a)?", a: ["Seção de escapamento", "Compressor", "Super turbina weel", "Seção de combustão"], c: 3},
-    {q: "Nos motores em 'V' os cilindros são montados em duas carreiras em linha, geralmente ao um ângulo de quantos graus?", a: ["90º", "10º", "20º", "60º"], c: 3},
-    {q: "Equipamento responsável para modificar o nível de voltagem, aumentando-o ou diminuindo-o como necessário, denomina-se?", a: ["Gerador", "Voltímetro", "Potenciômetro", "Transformador"], c: 3},
-    {q: "Os motores a combustão interna são aqueles em que o combustível é queimado internamente. Um mecanismo constituído por pistão, biela e virabrequim é que transforma a energia térmica (calorífica) em?", a: ["Energia cinética", "Energia estática", "Energia quântica", "Energia mecânica"], c: 3},
-    {q: "O sistema de medição principal fornece combustível para o motor em todas?", a: ["As velocidades acima de marcha lenta", "As velocidades acima de marcha lenta após o disparo do motor de ciclo spacer", "As baixa rotação do rotor de ignição", "As velocidades de baixa marcha lenta"], c: 0},
-    {q: "Dentre as seções abaixo, aquela que converte velocidade em pressão no motor a reação, denomina-se?", a: ["Acessórios", "Eixo curto", "Difusora", "Turbina"], c: 2},
-    {q: "O tacômetro é um dispositivo que serve para fazer medição da quantidade de:", a: ["Potência por hora (PRH)", "Torque por hora (TPH)", "Temperatura por minuto (TPM)", "Rotação por minuto (RPM)"], c: 3},
-    {q: "As válvulas de admissão e escapamento são abertas e fechadas, nos tempos apropriados, por ação?", a: ["Elétrica", "Pneumática", "Hidráulica", "Mecânica"], c: 3},
-    {q: "A peça móvel do motor convencional responsável pela acomodação dos anéis de segmentos denomina-se?", a: ["Contrapeso", "Pistão", "Eixo de manivelas", "Moente da biela"], c: 1},
-    {q: "Responda com a alternativa certa. Some warning lights are push-to-test lights. The bulb is tested by pushing it in to check an auxiliary test circuit. \"Warning lights\" pode ser traduzido como:", a: ["Luzes de calor", "Luzes de aviso", "Luzes de indicação", "Luzes de superaquecimento"], c: 1},
-    {q: "Após a sua leitura, assinale a alternativa correta. If the temperature rises rapidly, the thermocouple produces a voltage because of the temperature difference between the reference junction and the hot junction. \"Hot junction\" quer dizer:", a: ["Junção de fogo", "Aviso de junção", "Junção quente", "Aviso de calor"], c: 2},
-    {q: "O difusor é a seção divergente do motor. Tem a importante função de trocar a alta velocidade do ar de descarga do compressor para a pressão?", a: ["Estática", "Nula", "Aerodinâmica", "Térmica"], c: 0},
-    {q: "No texto, a expressão \"cathode ray tube\" quer dizer: The analog signal produced by the sensing element loop as its temperature changes can readily be converted to signals suitable for meter or cathode ray tube.", a: ["Tubo de raios ultravioleta", "Tubo de raios catódicos", "Tubo de raios quentes", "Tubo de raios congelados"], c: 1},
-    {q: "A ordem de fogo de um motor é a sequência de queima que proporciona melhor?", a: ["Taxa de compressão", "Balanceamento com eliminação de vibração", "Rendimento térmico", "Queima do combustível"], c: 1},
-    {q: "A bolha de vapor pode ser perigosa o suficiente para bloquear o?", a: ["Start generation", "Pistão na compressão", "Fluxo de combustível e parar o motor", "Pinhão"], c: 2},
-    {q: "O que é recuo de hélice?", a: ["Igualdade entre passo geométrico e efetivo", "Diferença entre passo geométrico e efetivo", "Indiferença entre passo geométrico e teórico", "Diferença entre passo teórico e definitivo"], c: 1},
-    {q: "São requeridas duas voltas completas do eixo de manivelas (720º) para o motor de quantos tempos?", a: ["Seis tempos", "Dois tempos", "Um tempo", "Quatro tempos"], c: 3},
-    {q: "Nos motores a reação, a potência indicada desenvolve-se, no(a)?", a: ["Cárter e no rotor", "Cilindro e no compressor", "Câmara de combustão", "Carburador e na turbina"], c: 2},
-    {q: "Durante a partida de um motor a reação, deve-se monitorar o(a)?", a: ["Pressão de óleo, temperatura do compressor e a tit", "Temperatura do compressor e o tacômetro", "Tacômetro e a tit", "Pressão, temperatura e rpm"], c: 3},
-    {q: "O fluxo de ar para o motor é controlado através?", a: ["Magneto", "FCU", "Carburador", "UCP"], c: 2},
-    {q: "O cone interno de localização central é fixado junto à face traseira do disco da turbina evitando?", a: ["Orientar os gases para a turbina", "Turbulência dos gases", "Fixar a seção de escapamento no motor", "Reduzir a temperatura dos gases de exaustão"], c: 1},
-    {q: "Os tanques de combustíveis são adaptados com defletores internos, com a finalidade de?", a: ["Resistir às flutuações do combustível, causadas pelas mudanças de atitude da aeronave", "Manter a pressão atmosférica dentro do tanque", "Eliminar as impurezas no combustível, através da decantação", "Permitir o perfeito alijamento do combustível, em voo"], c: 0},
-    {q: "Dentre os instrumentos abaixo, aquele que é utilizado para verificar o desempenho e também o consumo de combustível do motor é o?", a: ["Torquímetro", "Fuel pressure", "Indicador de egt", "Fuel flow"], c: 3},
-    {q: "Os ignitores são instalados na câmara de combustão do tipo anular em quais posições, levando em consideração a ordem do relógio:", a: ["Olhando o motor por trás, nas posições três (3) e nove (9) horas", "Olhando o motor de frente, nas posições duas (2) e dez (10) horas", "Olhando o motor de lado, nas posições três (3) e nove (9) horas", "Olhando o motor de frente, nas posições doze (12) e seis (6) horas"], c: 1},
-    {q: "Alguns motores de aeronave incorporam tuchos:", a: ["Óptico", "Hidráulico", "Radiais", "Elétricos"], c: 1},
-    {q: "Qual a finalidade do compressor no motor a reação?", a: ["Diminuir a pressão e a temperatura do ar hidraulicamente", "Diminuir a pressão e a temperatura do ar mecanicamente?", "Aumenta a pressão e a potência do ar eletromagneticamente", "Aumenta a pressão e a temperatura do ar, mecanicamente"], c: 3},
-    {q: "É uma comparação do volume de um cilindro quando o êmbolo está no ponto morto inferior, e o volume quando ele está no o ponto morto superior denomina-se:", a: ["Aceleração", "Razão de compressão", "Potência indicada", "Ciclo"], c: 1},
-    {q: "Dentre os componentes abaixo, aquele que tem a finalidade de gerar a alta tensão para os sistema de ignição é o(a)?", a: ["Magneto", "Cablagem", "Distribuidor", "Vela"], c: 0},
-    {q: "Leia com atenção o texto e responda a alternativa correta. The thermocouple fire warning system operates on an entirely different principle than the thermal switch system. \"Fire warning\" quer dizer:", a: ["Aviso de pressurização", "Aviso de alerta", "Aviso de aquecimento", "Aviso de incêndio"], c: 3},
-    {q: "No motor a reação, o alinhamento dos gases de escapamento e a fixação do cone interno é feita pelo componente denominado?", a: ["Alheta ejetora da turbina", "Longarina radial", "Elemento estator do conjunto da turbina", "Manta de isolamento"], c: 1},
-    {q: "Num motor ciclo de otto, ocorrendo um calço hidráulico, este ocorrerá nos cilindros?", a: ["Inferiores", "Pares", "Ímpares", "Superiores"], c: 0},
-    {q: "A comparação do volume de um cilindro quando o êmbolo está no pma e o volume quando o êmbolo está no pmb denomina-se?", a: ["Balanceamento do eixo de manivelas", "Taxa de compressão", "Volume total", "Empuxo"], c: 1},
-    {q: "O carburador é instalado no motor, na seção de?", a: ["Acessórios", "Força", "Potência", "Difusora"], c: 3},
-    {q: "A formação de gelo no sistema de admissão pode ser impedida ou eliminada pelo aumento?", a: ["Da temperatura", "De estática", "Da altitude", "De qav"], c: 0},
-    {q: "O rendimento útil do motor que impele o avião denomina-se?", a: ["Mistura", "Consumo específico", "Taxa de compressão", "Empuxo"], c: 3},
-    {q: "Num motor axial, da entrada para a saída, o ar flui por um caminho axial e é comprimido a uma razão aproximadamente de?", a: ["12,5", "1,25", "137,7", "1512,5"], c: 1},
-    {q: "Em um motor a reação, o ar ao entrar na câmara de combustão diminui a velocidade e aumenta a pressão por qual componente?", a: ["Estator", "Venturi", "Compressor", "Difusor"], c: 3},
-    {q: "O mecanismo de um motor convencional(ciclo de otto), de cilindros opostos é acionado por qual eixo?", a: ["Eixo de ressaltos ou eixo de comando de válvulas", "Eixo longo concêntrico", "Eixo oculto", "Eixo de assaltos ou eixo de comando de válvulas"], c: 0},
-    {q: "Dentre as alternativas abaixo, aquele que indica o componente do motor convencional responsável pela expulsão dos gases queimados é o(a)?", a: ["Válvula de escapamento", "Pistão", "Cilindro", "Tubo de descarga"], c: 1},
-    {q: "Os anéis de segmento nos motores convencionais tem a função de?", a: ["Ventilação", "Limitar o movimento do eixo de manivelas", "Contração", "Vedação"], c: 3},
-    {q: "O fechamento das válvulas é realizado através de?", a: ["Hastes", "Pinos", "Molas", "Eixos"], c: 2},
-    {q: "A gasolina de aviação de grau115/145 é de cor?", a: ["Verde", "Cinza", "Azul", "Púrpura"], c: 3},
-    {q: "Dentre os componentes abaixo, aquele que tem a finalidade de transformar energia cinética dos gases de escapamentos em energia mecânica, denomina-se:", a: ["Coletor", "Compressor", "Turbina", "Estator"], c: 2},
-    {q: "A vela de ignição deve ser substituída sempre que?", a: ["Apresentar falha", "Ocorrer o claro de válvulas", "A mistura ar/combustível empobrecer", "A ignição ocorrer no tempo de escapamento"], c: 0},
-    {q: "Leia com atenção o texto e responda a alternativa correta. A complete fire protection system includes both a fire detection and a fire extinguishing system. To detect fires or overheat conditions, detectors are placed in the various zones to be monitored. A expressão \"overheat conditions\" quer dizer:", a: ["Condições de calor", "Condições de tempo", "Condições climáticas", "Condições de superaquecimento"], c: 3},
-    {q: "Geralmente de qual material de alta resistência é fabricado o corpo do cilindro no qual trabalha o pistão:", a: ["Amianto", "Aço", "Titânio", "Chumbo"], c: 1},
-    {q: "Os cabos de ignição possuem um fio isolado para cada?", a: ["Comutador", "Fusível", "Cilindro", "Induzido"], c: 2},
-    {q: "Quais os dois elementos principais do compressor de fluxo axial?", a: ["Turbina e fcu", "Rotor e estator", "Caixa redutora e duto de ar", "Válvula seletora e difusor"], c: 1},
-    {q: "A finalidade de se instalar duas ou mais molas nas válvulas do cilindro é?", a: ["Eliminar vibrações, em determinadas rotações do motor", "Permitir uma rápida abertura das válvulas, no tempo de admissão", "Fixar a válvula no balancim", "Fixar a válvula no cilindro"], c: 0},
-    {q: "A quantidade ou carga da mistura ar/combustível depende da abertura da manente de?", a: ["Dreno", "Corte de emergência", "Temperatura dos gases", "Aceleração"], c: 3},
-    {q: "A razão combustível/ar varia com a?", a: ["Tração", "RPM", "CTM", "Hidráulico"], c: 1},
-    {q: "Em um motor a reação, a redução da alta velocidade do ar que sai do compressor, transformada em pressão estática é causada pela presença do componente denominado?", a: ["Câmara de combustão", "Turbina", "Rotor do compressor", "Difusor"], c: 3},
-    {q: "A válvula de alijamento do sistema de combustível tem a finalidade de?", a: ["Facilitar o reabastecimento", "Reduzir o peso da aeronave", "Direcionar o combustível para o dreno", "Possibilitar o suspiro no interior do tanque"], c: 1},
-    {q: "O rotor do compressor tipo disco, consiste de uma série de discos usinados em?", a: ["Chumbo", "Alumínio em tratamento simples glasse", "Aço inoxidável", "Alumínio forjado"], c: 3},
-    {q: "Um combustível de jato, altamente volátil, apresenta características que são convenientes para?", a: ["Facilitar a partida em tempo frio", "Facilitar a possibilidade do calço de vapor", "Reduzir as perdas do combustível por evaporação", "Dificultar as partidas em voo"], c: 0},
-    {q: "O componente do cilindro que tem a finalidade de evitar o vazamento de óleo para o interior do cilindro, denomina-se?", a: ["Anel de segmento", "Válvula de admissão", "Eixo de manivelas", "Válvula de escapamento"], c: 0},
-    {q: "Qual a sequência do ciclo de 4 tempos no motor convencional ciclo de otto em sua ordem, é?", a: ["Admissão, potência, compressão, escapamento", "Escapamento, compressão, admissão, potência", "Compressão, admissão, potência, escapamento", "Admissão, compressão, expansão, escapamento"], c: 3},
-    {q: "No compressor de fluxo axial, quanto maior é o número de estágios, maior é a?", a: ["Rotação da turbina", "Quantidade de palhetas, na turbina", "Taxa de compressão", "Quantidade de combustível queimado"], c: 2},
-    {q: "Uma das finalidades da válvula seletora de combustível é?", a: ["Permitir a transferência de combustível entre os tanques", "Alijar o combustível em voo", "Permitir o fluxo de combustível, quando a bomba estiver inoperante", "Aliviar o excesso de combustível, na saída da bomba"], c: 0},
-    {q: "Num motor a reação a seção de escapamento está localizada logo após à seção?", a: ["Do compressor", "De acessórios", "Da turbina", "De combustão"], c: 2},
-    {q: "A válvula de admissão é aberta antes do pistão atingir o ponto morto?", a: ["Inferior no tempo de admissão", "Superior no tempo de escapamento", "Superior no tempo de compressão", "Inferior no tempo de compressão"], c: 1},
-    {q: "O eletrólito usado nas baterias de níquel-cádmio é uma solução de?", a: ["70% de hidróxido de níquel e 30% de aguardente destilada", "30% de hidróxido de potássio em água destilada", "130% de hidróxido de cátodo em água mineralizada", "70% de ácido bórico e 30% de água desmineralizada"], c: 1},
-    {q: "A finalidade dos anéis de compressão é evitar o escapamento de gases através do pistão, durante a operação do motor. Eles são colocados nas ranhuras localizado em qual parte do pistão?", a: ["Abaixo da cabeça do pistão", "Na face da cabeça do pistão", "Na vertical da cabeça da biela", "Na junção biela e eixo de manivelas"], c: 0},
-    {q: "De qual material é construído a parede de fogo?", a: ["Chumbo", "Alumínio", "Ferro doce", "Aço inoxidável"], c: 3},
-    {q: "Flexibilidade de operação é a capacidade de um motor funcionar de forma?", a: ["Neutra", "Suavemente", "Pobre", "Rígida"], c: 1},
-    {q: "O compressor é acionado pelo(a)?", a: ["Caixa de redução", "Difusora", "Turbina", "Roda livre"], c: 2},
-    {q: "Flexibilidade de operação é a capacidade de um motor funcionar suavemente, e a apresentar o desempenho desejado a cada regime de operação, desde a?", a: ["Medidor principal", "Marcha lenta até a potência máxima", "Acelerador", "Controle de mistura"], c: 1},
-    {q: "O primeiro disco de aletas estatoras na entrada do compressor axial recebe o nome de:", a: ["IGT (inlet guide turbine)", "(LPT) N1 eixo da turbina de baixa pressão", "IGV (inlet guide vanes)", "(HPT) N2 eixo da turbina de alta"], c: 2},
-    {q: "O tempo do motor em que \"não\" há válvulas ou válvula abertas são?", a: ["Escapamento e compressão", "Admissão", "Escapamento", "Compressão"], c: 3},
-    {q: "O componente do sistema, que define de qual dos tanques o combustível será liberado para suprir o motor, denomina-se:", a: ["Bomba de reforço", "Válvula seletora", "Filtro", "Bomba principal"], c: 1},
-    {q: "Leia com atenção o texto e responda a alternativa correta. \"Many older model aircraft still operating have some type of thermal switch system or thermocouple system. A thermal switch system has one or more lights energized by the aircraft power system and thermal switches.\" A expressão \"has one or more\" quer dizer:", a: ["Tem mais de um", "Precisa de um ou mais", "Romper um ou mais", "Tem um ou mais"], c: 3},
-    {q: "As cores que representam, respectivamente, os limites normal e máximo nos instrumentos são?", a: ["Branca e amarela", "Amarela e verde", "Vermelha e branca", "Verde e vermelha"], c: 3},
-    {q: "O indicador de temperatura dos gases de exaustão emprega como elemento sensitivo?", a: ["Sondas, que indicam a totalização das temperaturas", "Termopares, que indicam a média das temperaturas", "Termopares, que indicam a soma das temperaturas", "Sondas, que indicam a diferença das temperaturas"], c: 1},
-    {q: "Dentre as alternativas abaixo, aquela que define a corrente elétrica, é:", a: ["A distribuição uniforme de cargas iguais em metal", "O fluxo de elétrons de um ponto negativo para o positivo", "A direção de um campo elétrico em torno de cargas positivas e negativas", "Reação de cargas iguais através de um isolante"], c: 1},
-    {q: "Os físicos definem trabalho da seguinte forma:", a: ["Trabalho é força multiplicada por distância", "Trabalho é força multiplicada pelo C.G.", "Trabalho é força multiplicada pela lubrificação", "Trabalho é STOL multiplicada por distância"], c: 0},
-    {q: "O rendimento útil do motor que impele a aeronave, denomina-se?", a: ["Taxa de compressão", "Potência de empuxo", "Consumo específico", "Rendimento térmico"], c: 1},
-    {q: "A maioria dos motores de aeronaves é acionada por um dispositivo chamado motor de?", a: ["Partida (start) ou acumulador", "Partida (start) ou capacitor", "Partida (start) ou arranque", "Partida (start) ou suplay"], c: 2},
-    {q: "A unidade do carburador responsável pelo fluxo de ar do sistema de indução denomina-se?", a: ["Bóia", "Venturi", "Válvula de redução", "Marcha lenta"], c: 1},
-    {q: "No sistema de ignição por bateria, a parte rotativa do distribuidor denomina-se?", a: ["Cablagem", "Rotor", "Bloco", "Platinado"], c: 1},
-    {q: "A finalidade da bomba de combustível auxiliar (booster) é?", a: ["Suprir combustível sob pressão para o filtro principal", "Alijar o combustível", "Suprir combustível sob pressão para a bomba do motor", "Retornar o combustível excedente do motor para o tanque"], c: 2},
-    {q: "Nos motores convencionais a quatro tempos, a sequência de funcionamento é?", a: ["Motor, explosão, admissão e escapamento", "Admissão, motor, explosão e escapamento", "Motor, admissão, explosão e escapamento", "Admissão, compressão, explosão e escapamento"], c: 3},
-    {q: "O intervalo de tempo entre as revisões do motor denomina-se?", a: ["Controle de eficiência", "TBO", "Comparação", "Controle de fabricação"], c: 1},
-    {q: "No texto, a expressão \"slender inconel tube\" quer dizer: _the fenwal system uses a slender inconel tube packed with thermally sensitive eutectic salt and a nickel wire center conductor.", a: ["Tubo delgado inconel", "Tubo de isolamento inconel", "Tubo inconel de conexão", "Tubo detector de calor"], c: 0},
-    {q: "Para se combater o fungo que se desenvolve no querosene de aviação, deve-se drenar os tanques das aeronaves, na?", a: ["Entrada da bomba principal", "Parte mais inferior dos mesmos", "Entrada do fcu", "Saída da bomba auxiliar"], c: 1},
-    {q: "Venezianas e fendas em duas correntes principais: ar primário e ar secundário. Qual a finalidade do ar secundário no motor a reação?", a: ["Sustentação", "Refrigeração", "Para queima", "Girar os acessórios"], c: 1},
-    {q: "As palhetas do rotor são fabricadas geralmente em aço inoxidável e são fixadas aos discos por raiz tipo?", a: ["Por soldas de forma pinheiro", "Rebites tipo pinheiro", "Bulbo ou raiz tipo pinheiro", "Parafusos tipo bulbo"], c: 2},
-    {q: "O desenvolvimento microbial existente no combustível é combatido frequentemente com o procedimento de?", a: ["Inserir detergente no tanque, após o reabastecimento", "Filtrar as linhas de distribuição", "Drenar o combustível", "Inserir aditivo para melhorar a performance do motor"], c: 2},
-    {q: "No tempo de admissão, o pistão desloca-se do pma para o pmb provocando no interior do cilindro um(a)?", a: ["Aumento de pressão", "Redução de massa", "Aumento de temperatura", "Redução de pressão"], c: 3},
-    {q: "Dentre os componentes abaixo, aquele que protege o sistema elétrico é o(a)?", a: ["Lâmpada", "Fusível", "Bateria", "Capacitor"], c: 1},
-    {q: "No sistema de ignição a parte giratória do distribuidor é denominada?", a: ["Receptáculo", "Condutor", "Capacitor", "Rotor"], c: 3},
-    {q: "Quando um êmbolo vai do pmb para a pma, o mesmo desloca um volume específico que se denomina?", a: ["Rendimento", "Cilindrada", "Operação", "Desenvolvimento"], c: 1},
-    {q: "No motor a reação, o componente responsável pelo acionamento do compressor é o(a)?", a: ["Difusor", "Câmara", "Turbina", "Rotor"], c: 2},
-    {q: "As molas das válvulas são mantidas no lugar por meio de?", a: ["Pinho", "Trava do carter", "Travas tripartidas", "Travas bipartidas"], c: 3},
-    {q: "Em um motor radial com 18 cilindros, o qual tem duas carreiras, existem duas bielas mestras e quantas articuladas?", a: ["9 bielas mestras e 9 articuladas", "18 bielas articuladas", "16 bielas articuladas", "5 bielas articuladas"], c: 2},
-    {q: "As sondas distribuídas pelo motor a reação transmitem para o indicador de egt a:", a: ["Soma das temperaturas", "Menor dentre as temperaturas", "Maior dentre as temperaturas", "Média das temperaturas"], c: 3},
-    {q: "Durabilidade é o tempo de vida do motor, enquanto manter a?", a: ["Lubrificação", "Confiabilidade", "A capacidade de Consumo Mínimo de Óleo", "Redução do Fluxo de Combustível"], c: 1},
-    {q: "Durante o voo, ao ganhar altitude, esta será compensada no carburador pelo sistema?", a: ["De aceleração", "De marcha lenta", "De controle de mistura", "Economizador"], c: 2},
-    {q: "Em um motor convencional, a ordem de fogo é projetada para proporcionar?", a: ["Balanceamento", "Delineamento", "Alinhamento", "Nivelamento"], c: 0},
-    {q: "Indicadores de rotação (tacômetros), são exemplos de tacômetros usados em grande escala atualmente na aviação, exceto?", a: ["Mecânico", "Eletronico", "Elétrico", "Pneumático"], c: 3},
-    {q: "O princípio usado por um motor turbojato quando ele provê força para mover um avião, baseia-se no(a)?", a: ["Princípio de pascal", "Segunda lei de newton", "Princípio de venturi", "Teoria da inércia"], c: 1},
-    {q: "Mancais de roletes são fabricados de muitos tipos e formas, porém os dois tipos geralmente usados nos motores de aeronaves são?", a: ["Roletes retos e roletes transversal", "Soquetes retos e roletes cônicos", "Roletes retos e roletes cônicos", "Roletes retos e roletes redondos ovais"], c: 2},
-    {q: "O rotor de um motor a reação é uma combinação dos rotores do compressor e da turbina, unidos por?", a: ["Três eixos distintos", "Um eixo", "Em dois eixos distintos de cobre", "Rolamentos de travamento"], c: 1},
-    {q: "A identificação da tubulação de combustível, segundo o código de cores, é feita pela cor?", a: ["Azul", "Vermelha", "Laranja", "Verde"], c: 1},
-    {q: "A estrutura de tubo de aço, que fixa o motor à aeronave, denomina-se?", a: ["Anteparo", "Berço", "Parede de fogo", "Suporte"], c: 1},
-    {q: "No motor convencional, a centelha ocorre quando o pistão passa através do ponto morto?", a: ["Alto, no tempo de compressão", "Baixo, no tempo de admissão", "Alto, no tempo de escapamento", "Baixo, no tempo motor"], c: 0},
-    {q: "O mecanismo de um motor de cilindros opostos é acionado pelo eixo de?", a: ["Pino e ressalto", "Mola e pino", "Ressalto", "Eixo e condutor"], c: 2},
-    {q: "Indique abaixo, a origem da força resultante capaz de mover a turbina?", a: ["Energia cinética dos gases", "Pressão de combustível", "Pressão de ar atmosférico", "Fluxo de ar de impacto"], c: 0},
-    {q: "A alta tensão induzida na bobina secundária é enviada ao distribuidor, o qual consiste em duas partes. A parte rotativa é chamada de rotor do distribuidor e a estacionária de bloco do distribuidor. A parte rotativa pode ter o formato de um disco, tambor, ou lingueta, é confeccionado em material?", a: ["Ferro", "Não condutor", "Produtor", "Aço"], c: 1},
-    {q: "Se a mistura usada for mais pobre do que a especificada para o motor em uso, o cilindro com a mistura mais pobre estará sujeito?", a: ["A contaminação do sistema", "Ao calço de vapor", "A pré-ignição", "Ao retorno de chama"], c: 3},
-    {q: "Do 100% de ar admitido e comprimido no motor a reação, 1/4 é utilizado na queima dentro da câmara de combustão e 3/4 desse ar é utilizado para:", a: ["Lubrificação", "Queima", "Refrigeração", "Aquecimento"], c: 2},
-    {q: "A força exercida para mover uma aeronave, através de um motor a reação, é obtida pelo(a)?", a: ["Terceira lei de Newton", "Princípio de Venturi", "Princípio de Pascal", "Teoria da inerte"], c: 0},
-    {q: "O parâmetro básico para descrever a economia de combustível de motores aeronáuticos é geralmente discriminado como?", a: ["Consumo específico", "Consumo relativo", "Consumo pacífico", "Consumo progressivo"], c: 0},
-    {q: "O eixo de ressaltos sempre gira com a metade da velocidade do eixo de?", a: ["Manivelas", "Da caixa de acessórios", "Condutor", "Central"], c: 0},
-    {q: "Os tubos interconectores existentes nas câmaras de combustão do tipo caneca, têm a finalidade de:", a: ["Aumentar o poder da combustão", "Propagar a mistura combustível", "Diminuir o poder de combustão", "Propagar a chama"], c: 3},
-    {q: "As válvulas do motor convencional são abertas e fechadas através molas, sendo acionadas?", a: ["Pneumaticamente", "Mecanicamente", "Hidraulicamente", "Eletricamente"], c: 1},
-    {q: "Os componentes do cilindro responsáveis pela vedação dos gases de combustão durante o movimento do pistão denomina-se?", a: ["Pistão", "Vedadores", "Anéis", "Selos"], c: 2},
-    {q: "Tem a importante função de trocar a alta velocidade do ar de descarga do compressor para pressão estática:", a: ["Difusor", "Deflector", "Turbina geradora de gases", "Câmara de combustão"], c: 0},
-    {q: "Dentre os tempos abaixo, aponte aquele que caracteriza o momento em que ocorre o claro de válvulas?", a: ["Compressão", "Admissão", "Resfriamento", "Potência"], c: 1},
-    {q: "A hélice que ajusta o passo, sem atuação do operador, para manter constante a rpm do motor, denomina-se hélice?", a: ["Ajustável", "Automática", "De passo constante", "De passo controlável"], c: 1},
-    {q: "O mecanismo de mudança de passo das hélices hidromáticas é um sistema que atua com força?", a: ["Hidráulico-mecânico", "Hidráulico-elétrica", "Hidráulico-pressão", "Hidráulico e pneumática"], c: 0},
-    {q: "Se, durante a partida de um motor, no solo, a EGT subir além do previsto pelo fabricante, deve-se?", a: ["Checar se os instrumentos estão em pane", "Aumentar a potência", "Abortar a partida", "Reduzir a potência"], c: 2},
-    {q: "Num óleo do tipo sae 20w, a especificação de uso em clima frio é determinado pelo?", a: ["Sae", "W", "E", "20"], c: 1},
-    {q: "Para eliminar qualquer erro causado por um ou mais dos termopares do motor, é executado uma checagem?", a: ["Torque", "Visual", "Compressão", "De continuidade"], c: 3},
-    {q: "Se pequenas partículas metálicas forem encontradas no óleo de um motor convencional, o procedimento a ser adotado é?", a: ["Substituir o motor", "Drenar e substituir todo o óleo", "Girar o motor", "Apenas trocar o elemento filtrante"], c: 1},
-    {q: "Um sistema elétrico de controle do gelo da hélice (figura 7-26) consiste basicamente de uma fonte de energia, um elemento de resistência de aquecimento, controles do sistema e a?", a: ["Necessária fiação", "Necessária pressurização de cabine", "Necessária válvula de escape", "Necessária irradiação solar"], c: 0},
-    {q: "O corpo do cilindro geralmente é fabricado em aço ou?", a: ["Titânio", "Bronze", "Baquelite", "Alumínio forjado"], c: 3},
-    {q: "O motor que utiliza um sistema de biela mestra e bielas articuladas, é denominado motor?", a: ["Oposto", "Radial", "Em \"v\"", "Em linha"], c: 1},
-    {q: "O anteparo dianteiro da nacela da asa construída de aço inoxidável, com objetivo de retardar a propagação do fogo denominada de?", a: ["Parede da caverna", "Parede protetora", "Parede conectora", "Parede de fogo"], c: 3},
-    {q: "A unidade de controle de combustível (FCU -fuel control unit) de um típico motor turbojato é um aparelho?", a: ["Elétrico mecânico", "Hidromecânico", "Fly by wire stop", "Apenas mecânico"], c: 1},
-    {q: "O eixo de uma hélice de motor com potência de saída, geralmente é?", a: ["Oval", "Magnética", "Pneumática", "Estriado"], c: 3},
-    {q: "O componente do motor que é intermediário entre o pistão e o eixo de manivelas denomina-se?", a: ["Pino de articulação", "Pino de articulação flutuante", "Moente", "Biela"], c: 3},
-    {q: "A válvula de alívio do sistema de lubrificação tem a finalidade de?", a: ["Drenar o óleo em excesso para a linha de abastecimento", "Determinar que das vias de óleo será tomada em direção ao radiador", "Limitar a pressão de óleo do sistema", "Permitir que o óleo não entre no motor"], c: 2},
-    {q: "O embandeiramento da hélice é realizado pelo governador, através de?", a: ["Diminuição do rpm", "Comando elétrico", "Alívio da pressão de ar", "Alívio da pressão de óleo"], c: 3},
-    {q: "Os cilindros são instalados no motor na seção denominada?", a: ["Redução", "Acessórios", "Nariz", "Potência"], c: 3},
-    {q: "Caso um dos motores de uma aeronave entre em pane, a hélice correspondente deve ser comandada para o passo?", a: ["Mínimo", "Máximo", "Bandeira", "Reverso"], c: 2},
-    {q: "As hélices hidramáticas que operam com o óleo do motor não requerem lubrificação. As hélices elétricas necessitam de óleos e graxas para a lubrificação do cubo e dos mecanismos de operação da mudança de:", a: ["Grau de giro", "Temperatura", "Passo", "Lubrificação"], c: 2},
-    {q: "No sistema de lubrificação do motor, a válvula de alívio localizada na saída da bomba principal limita a pressão máxima do sistema, desviando o óleo para o reservatório ou para o (a):", a: ["Interior do filtro", "Saída do radiador", "Entrada da bomba", "Dreno"], c: 2},
-    {q: "No motor convencional, claro de válvulas ocorre em qual tempo?", a: ["No inicio do tempo de escapamento e início do tempo de admissão", "No final do tempo de compressão e final do tempo de admissão", "No final do tempo de admissão e no final do tempo de motor", "No final do tempo de escapamento e início do tempo de admissão"], c: 3},
-    {q: "Vários tipos de cubos são usados para montar hélice de madeira no eixo de?", a: ["Compressão", "Manivelas", "Transmissão da tgb", "Transmissão da mgb"], c: 1},
-    {q: "A válvula de controle de fluxo determina qual das vias de óleo será tomada em direção ao?", a: ["Filtro", "Radiador", "Tanque", "By-pass"], c: 1},
-    {q: "Estando as pás da hélice na mesma direção do vento relativo, a hélice estará em passo?", a: ["Embandeirada", "Mínimo", "Reverso", "Máximo"], c: 0},
-    {q: "A bomba de sucção do alojamento da caixa de acessórios é acionada por uma?", a: ["Caixa elétrica", "Alavanca de atuadores", "Engrenagem", "Turbina pneumática"], c: 2},
-    {q: "O componente do sistema de lubrificação que retira o óleo que circulou no motor e retorna-o para o reservatório, é a?", a: ["Válvula de alívio de pressão de óleo", "Bomba de pressão", "Válvula by-pass", "Bomba de sucção"], c: 3},
-    {q: "Entre os defeitos mais comuns na fiação de ignição, está?", a: ["Vazamento baixa temperatura", "Danos de caixa de redução", "O vazamento tensão nula", "O vazamento de alta tensão"], c: 3},
-    {q: "A distância que a hélice realmente percorre, denomina-se passo?", a: ["Efetivo", "Geométrico", "Teórico", "De recuo"], c: 0},
-    {q: "Os rolamentos dos motores a reação são lubrificados por?", a: ["Escoamento", "Pressão", "Imersão", "Salpique"], c: 1},
-    {q: "Para simplificar a seleção de óleos, eles frequentemente são classificados sob um sistema \"sae (society of automotive engineers), o qual divide os óleos em quantos grupos na aviação?", a: ["Em três grupos (sae 10 a 70, de acordo com a viscosidade a 130ºf ou 210ºf)", "Em quatro grupos (sae 10 a 70, de acordo com a viscosidade a 130ºf ou 210ºf)", "Em sete grupos (sae 10 a 70, de acordo com a viscosidade a 130ºf ou 210ºf)", "Em dez grupos (sae 10 a 70, de acordo com a viscosidade a 130ºf ou 210ºf)"], c: 2},
-    {q: "Na hélice hidromática, o que move as pás em direção ao passo máximo é o(a)?", a: ["Contrapeso", "Mola", "Óleo hidráulico", "Torção centrífuga"], c: 2},
-    {q: "Durante o funcionamento de um motor a quatro tempos, a compressão ocorrem em qual tempo?", a: ["Segundo tempo", "Terceiro tempo", "Primeiro tempo", "Quarto tempo"], c: 0},
-    {q: "A força centrífuga em grandes rotações tende a puxar as pás para fora do(a)?", a: ["Cubo", "Disco", "Ângulo de recuo", "Difusor"], c: 0},
-    {q: "Leia com atenção o texto e responda a alternativa correta. _a wide range of diagnostics are utilized to verify the fire extinguisher agent charge status. A palavra \"verify\" quer dizer:", a: ["Ver", "Revisar", "Verificar", "Descarregar"], c: 2},
-    {q: "Leia com atenção o texto e responda a alternativa correta. _the powerplant installation has several designated fire zones: (1) the engine power section; (2) the engine accessory section; (3) except for reciprocating engines, \"engine power section\" é traduzido como:", a: ["Seção de motor sem potência", "Seção de força do motor", "Seção de potência do motor", "Seção de motor e potência"], c: 2},
-    {q: "Leia com atenção o texto e responda a alternativa correta. _the analog signal produced by the sensing element loop as its temperature changes can readily be converted to signals suitable for meter or cathode ray tube podemos afirmar que \"temperature changes\", quer dizer:", a: ["Mudanças de temperatura", "Temperaturas amenas", "Temperaturas elevadas", "Mudanças climáticas"], c: 0},
-    {q: "No texto, a palavra \"cartridge\" quer dizer: _discharge valves are installed on the containers. a cartridge (squib) and frangible disk type valve are installed in the outlet of the discharge valve assembly.", a: ["Corretor", "Carro", "Conector", "Cartucho"], c: 3},
-    {q: "O eixo de manivela ou 180° é utilizado nos motores?", a: ["Elétrico", "Tesla", "A reação", "Radiais"], c: 3},
-    {q: "Nos sistemas que utilizam os radiadores de óleo são incluídas vávulas de desvio. Apesar destas válvulas poderem ser chamadas por nomes diferentes, seu objetivo é o de manter sempre uma temperatura adequada do óleo, através de uma?", a: ["Variação do fluxo de óleo que passar pelo carter seco", "Variação do fluxo de óleo que passar pelo dereador", "Variação do fluxo de óleo que passar pelo compressor", "Variação do fluxo de óleo que passar pelo radiador"], c: 3},
-    {q: "A corrente da bobina secundária do transformador é conduzida por um curto cabo de alta tensão blindado para a?", a: ["Vela", "Compressor", "Bateria", "Transmissor"], c: 0},
-    {q: "A finalidade do passo reverso é a de produzir em baixa velocidade, uma tração?", a: ["Negativa", "Positiva", "Neutra", "De stol"], c: 0},
-    {q: "O sistema de aviso de fogo, em par térmico, opera por um princípio completamente diferente do sistema de interruptores térmicos. Um par térmico depende da razão de:", a: ["Aumento de velocidade", "Aumento de pressão", "Aumento de viscosidade", "Aumento de temperatura"], c: 3},
-    {q: "Com relação ao compressor do motor a reação, é correto afirmar que?", a: ["Suprir ar em quantidade suficiente às necessidades dos queimadores sob pressão", "Diminui a pressão e diminui a temperatura do ar, pneumaticamente", "Diminui a pressão e a temperatura do sistema de combustível", "Aumenta a pressão e diminui a temperatura do ar, eletricamente"], c: 0},
-    {q: "O mecanismo de um motor convencional (ciclo de Otto), de cilindros opostos é acionado por qual eixo?", a: ["Eixo longo concêntrico", "Eixo oculto", "Eixo de assaltos ou eixo de comando de válvulas", "Eixo de ressaltos ou eixo de comando de válvulas"], c: 3},
-    {q: "Dentre as alternativas abaixo, aquela que tem a finalidade no sistema de ignição de conduzir um curto impulso de corrente de alta voltagem, através de um espaço dentro da câmara de combustão, dentro da câmara de combustão existe um espaço por onde o impulso pode produzir uma centelha elétrica para inflamar a carga de ar/combustível:", a: ["Dínamo", "Magneto", "Platinado", "Vela"], c: 3},
-    {q: "A entrada de ar é projetada de forma a dirigir o ar para o(a)?", a: ["Cambra inferior", "Hidráulico", "Asas", "Compressor"], c: 3},
-    {q: "Para dar partida num motor com as baterias do avião, a chave de partida é colocada na posição?", a: ["Neutra", "Start", "Off", "Two"], c: 1},
-    {q: "O componente do sistema de combustível que normalmente é instalado na entrada e na saída do tanque de combustível como também na entrada do carburador, denomina-se?", a: ["Filtro", "Válvula de distribuição", "Dreno", "Válvula de corte"], c: 0},
-    {q: "As bielas planas são usadas nos motores opostos e em?", a: ["Motores V8", "Linha", "Baixa ação", "Motores radiais well"], c: 1},
-    {q: "O parâmetro básico para descrever a economia de combustível de motores aeronáuticos é geralmente o?", a: ["Menor teto operacional", "Maior teto operacional", "Alto consumo específico", "Baixo consumo específico"], c: 3},
-    {q: "Na hélice de passo controlável, a pressão do óleo necessária à mudança do passo, é fornecida pelo(a)?", a: ["Aranha", "Governador/bomba", "Contrapeso", "Válvula piloto"], c: 1},
-    {q: "O passo geométrico é a distância que uma hélice deveria avançar. A distância realmente decorrida pela hélice recebe o nome de?", a: ["Geométrico", "Teórico", "Constante", "Efetivo"], c: 3},
-    {q: "Muitos motores à explosão (convencional), de aeronaves, possuem sistemas de lubrificação do tipo?", a: ["Cápsula aneroide", "Cárter seco sob pressão", "Diafragma seco", "Cápsula diferencial"], c: 1},
-    {q: "O passo teórico da hélice, também é denominado?", a: ["Recuo", "Avanço", "Passo geométrico", "Passo efetivo"], c: 2},
-    {q: "Vibração excessiva em um motor, resulta não apenas em falha por fadiga da estrutura metálica, mas também causa rápido desgaste das partes?", a: ["Neutras", "Pressurizada", "Móveis", "Fixas"], c: 2},
-    {q: "Em motores que tem compressor duplo, o fan é integral com o compressor de?", a: ["Turbina de baixa", "Turbina de alta", "Compressor de alta", "Compressor de baixa"], c: 3},
-    {q: "A combinação de uma hélice, um conjunto de caixa de redução e um motor a turbina é chamado de conjunto motopropulsor?", a: ["Turbo jato", "Turboélice", "Turbo fan", "Turbo otto"], c: 1},
-    {q: "Nos sistemas de extinção de fogo dos motores, os cartuchos das válvulas de descarga dos extintores são acionados?", a: ["Pneumaticamente", "Eletricamente", "Hidraulicamente", "Automaticamente"], c: 1},
-    {q: "Na construção de um motor a reação, qual peça tem características de maior influência na performance final do motor?", a: ["Difusora", "Câmara de combustão", "Turbina", "Compressor (axial e centrífugo)"], c: 3},
-    {q: "A resistência que o óleo lubrificante oferece ao escoamento denomina-se?", a: ["Elasticidade", "Compressibilidade", "Viscosidade", "Expansibilidade"], c: 2},
-    {q: "Um óleo que flui vagarosamente é viscoso ou tem?", a: ["Alta volatilidade", "Baixa viscosidade", "Baixa volatilidade", "Alta viscosidade"], c: 3},
-    {q: "Após a sua leitura, assinale a alternativa correta. \"The control unit for the simplest type of system typically contains the necessary electronic resistance monitoring and alarm output circuits, housed in a hermetically sealed aluminum case and filled with a mounting bracket and circular electrical connector.\" \"Control unit\" quer dizer:", a: ["Unidade de controle", "União de controle", "Unidade de controle único", "Controle único"], c: 0},
-    {q: "Após a sua leitura, assinale a alternativa correta. \"On many aircraft, means are usually provided for rapid access to the compressor, tailpipe, or burner compartments. Many aircraft systems are equipped with spring-loaded or pop-out access doors in the skin of the various compartments.\" \"Compressor\", pode ser traduzido como:", a: ["Conector", "Compressor", "Compensador", "Condensador"], c: 1},
-    {q: "Dentre as alternativas abaixo, aquela que é usada para travar as carenagens do motor?", a: ["Prendedor tipo Dzu", "Contrapino", "Parafuso com arruela", "Arame de freio"], c: 0},
-    {q: "O instrumento que mede a rpm do eixo de manivelas do motor denomina-se?", a: ["Variômetro", "Potenciômetro", "Manômetro", "Tacômetro"], c: 3},
-    {q: "Os cartuchos de descarga do extintor de fogo são fornecidos com um tempo de vida de, aproximadamente,", a: ["7.500 horas", "5.000 horas", "2.500 horas", "10.000 horas"], c: 1},
-    {q: "A diferença entre o passo geométrico e o passo efetivo da hélice é denominado?", a: ["Governador", "Recuo", "Avanço", "Teórico"], c: 1},
-    {q: "A flexibilidade de operação é a capacidade de um motor funcionar?", a: ["Stop fly", "Suavemente", "Condição \"on speed\"", "Potência máxima"], c: 1},
-    {q: "A turbina tem a finalidade de transformar a energia cinética dos gases de escapamento, em energia?", a: ["Pneumática", "Mecânica", "Térmica", "Estática"], c: 1},
-    {q: "Em um motor convencional, a potência é desenvolvida no(a)?", a: ["Biela mestra", "Cilindro", "Válvula", "Eixo de manivelas"], c: 1},
-    {q: "Os microorganismos que se desenvolvem nas interfaces de água do combustível denomina-se?", a: ["Alga", "Fungo", "Bactéria", "Vírus"], c: 1},
-    {q: "O arranque de turbina a ar, é montado em qual parte do motor?", a: ["No berço", "No deck", "Na entrada de ar do motor", "No bloco do motor"], c: 3},
-    {q: "O poder antidetonante da gasolina é indicado pela?", a: ["Viscosidade", "Pureza", "Volatilidade", "Octanas"], c: 3},
-    {q: "O corpo do acelerador contém: o venturi principal, venturi de apoio, tubos de impacto e?", a: ["Pistão", "Borboleta", "Controle de mistura rica", "Estáticas"], c: 1},
-    {q: "A capacidade de o motor apresentar o desempenho desejado a cada regime de operação, desde a marcha lenta até a potência máxima é chamada de?", a: ["Flexibilidade de operação", "Confiabilidade", "Compactação", "Durabilidade de operação"], c: 0},
-    {q: "As três causas gerais da formação de \"bolha de vapor\" no sistema de combustível é?", a: ["Produção de pressão estática, baixa temperatura e excessiva turbulência do combustível", "Redução da pressão, alta temperatura e excessiva turbulência do combustível", "Aumento da pressão, baixa temperatura e excessiva turbulência do combustível", "Redução da pressão dinâmica, redução de temperatura e excessiva potência do combustível"], c: 1},
-    {q: "Em um motor alternativo, onde ocorrem a admissão, a compressão, a combustão e o escapamento?", a: ["Tudo ocorre na câmara de combustão", "Fora da câmara de combustão", "Coletor", "No compressor axial"], c: 0},
-    {q: "Determinar qual das vias o óleo tomará em função do radiador, é objetivo da válvula?", a: ["De alívio", "By-pass", "Dreno", "De controle de fluxo"], c: 3},
-    {q: "A bomba de sucção do sistema de lubrificação tem a finalidade de?", a: ["Aliviar a pressão do sistema", "Garantir a ventilação do tanque", "Circular o óleo, através do motor", "Retornar o óleo para o tanque"], c: 3},
-    {q: "Aumentando-se o ângulo da pá da hélice, ocorrerá um(a)?", a: ["Diminuição de potência", "Aumento de rotação", "Diminuição de passo", "Aumento de passo"], c: 3},
-    {q: "Instrumento que indicar o fluxo de combustível em lbs/h, na unidade de controle de combustível do motor:", a: ["Fluxômetro", "Barômetro", "Totalizador", "Tacômetro"], c: 0},
-    {q: "Efeito da altitude, uma vez que o gradiente de temperatura é menor que o gradiente de pressão. Conforme se aumenta a altitude a densidade é?", a: ["Líquida", "Reduzida", "Neutra", "Aumentada"], c: 1},
-    {q: "O arco azul no tacômetro indica a faixa de?", a: ["Altitude", "Pressão", "Temperatura", "R.P.M."], c: 3},
-    {q: "Durante a partida no motor, se a pressão do óleo \"não subir\", a causa \"improvável\", que não impede de completar a partida?", a: ["Instrumento em pane", "Falha na bomba de óleo", "Filtro entupido", "Falta de óleo"], c: 2},
-    {q: "A resistência que o óleo oferece ao escoamento ou fluxo é uma propriedade denominada?", a: ["Compressibilidade", "Elasticidade", "Viscosidade", "Neutralidade"], c: 2},
-    {q: "O TBO (intervalo entre revisão) do motor é fixado pelo(a)?", a: ["Proprietário da aeronave", "Fabricante do motor", "Oficina de manutenção", "Fabricante da aeronave"], c: 1},
-    {q: "O fenômeno físico que atua numa hélice em movimento, que tende a expulsar as pás do cubo, denomina-se força?", a: ["Centrífuga", "De elevão de empuxo", "De torção centrífuga", "Anti-torque"], c: 0},
-    {q: "O componente que tem a finalidade de limitar a pressão de óleo do sistema de lubrificação denomina-se?", a: ["Válvula de alívio", "Bomba", "Radiador", "Válvula termostática"], c: 0},
-    {q: "A resistência de um óleo para fluir é conhecida como?", a: ["Octanas", "Viscosidade", "Visconde", "Neutra"], c: 1},
-    {q: "As hélices propulsoras são construídas como hélice fixas ou de passo?", a: ["Stop stol", "Variável", "Estável", "Invariável"], c: 1},
-    {q: "A seção de escapamento de um motor turbo jato está localizada atrás da seção da(o)?", a: ["Compressor", "Câmara de combustão", "Difusor", "Turbina"], c: 3},
-    {q: "Esse dispositivo é usado em sistema de ignição por magnetos de alta tensão, abre e fecha automaticamente o circuito primário no devido tempo, em relação à posição do pistão no cilindro, no qual está ocorrendo o centelhamento:", a: ["Conjunto de bobinas", "Cabo de ignição", "Conjunto de contatos platinados", "Distribuidor"], c: 2},
-    {q: "Alguns carburadores são equipados com parafusos excêntricos para ajuste da(do)?", a: ["Rpm", "Centelhamento", "HSI", "Ângulo de ataque"], c: 0},
-    {q: "Potência de atrito é a potência indicada menos a potência de?", a: ["Freio", "Estol", "Reduzida", "Gases cinéticos"], c: 0},
-    {q: "O indicador do \"EGT\" possui as suas sondas instaladas em qual parte do motor?", a: ["Antes do compressor", "Antes da turbina", "Após o compressor", "Após a turbina"], c: 3},
-    {q: "Torque é uma medida de carga, expressa em?", a: ["Newton polegada(nw.pol) ou libra-pé", "Libra-polegada(lb.pol) ou libra-pé", "Onça-polegada(on.pol) ou libra-pé", "Polegada-polegada(pol.pol) ou libra-pé"], c: 1},
-    {q: "Em relação a uma hélice, é correto afirmar que o passo efetivo é?", a: ["O passo que reconhece o recuo da hélice", "O passo que reconhece o retardado da hélice", "O passo que reconhece a torção da hélice", "O passo que reconhece o avanço da hélice"], c: 0},
-    {q: "Se uma determinada palheta de um disco de turbina requerer substituição, deverá também ser substituída a que estiver?", a: ["A 90 graus à direita", "Ao seu lado, do lado esquerdo", "Ao seu lado, do lado direito", "Diametralmente oposta"], c: 3},
-    {q: "A garrafa do sistema de extinção de fogo do motor é operada por cartucho, como é o acionado desse sistema?", a: ["Hidraulicamente", "Pneumaticamente", "Eletricamente", "Mecanicamente"], c: 2},
-    {q: "Quando a hélice está em movimento e há formação de gelo nas pás, a distorção do aerofólio poderá causar na hélice?", a: ["Mudança do passo para reverso", "Mudança do passo para o bandeira", "Vibração", "Aumento de rpm"], c: 2},
-    {q: "O eixo da hélice pode ser conectado por meio de engrenagens redutoras ao eixo?", a: ["Cardan", "Do comando de válvulas", "De manivelas", "De bielas"], c: 2},
-    {q: "Para absorver a vibração do motor para a célula da aeronave existe o(a)?", a: ["Coxim", "Rolamento", "Berço", "Nacele"], c: 0},
-    {q: "A finalidade do governador da hélice de passo controlável é?", a: ["Manter o ângulo da pá fixo", "Regular o passo", "Aumentar a potência do motor", "Reduzir a potência do motor"], c: 1},
-    {q: "No texto, a palavra \"wide\" quer dizer: _A wide range of diagnostics are utilized to verify the fire extinguisher agent charge status._", a: ["Alto", "Largo", "Curto", "Fino"], c: 1},
-    {q: "A RPM do eixo de manivelas é mostrada através do instrumento denominado:", a: ["Torquímetro", "Velocímetro", "Tacômetro", "Manômetro"], c: 2},
-    {q: "Preparação do motor para remoção, antes de se começar a trabalhar no avião ou motor, a chave dos magnetos devem estar?", a: ["Na posição ligada para ambos os motores", "Ligadas", "Desligadas", "Pode estar em qualquer posição"], c: 2},
-    {q: "Todos os motores térmicos têm em comum a capacidade de converter energia calorífica em?", a: ["Energia elétrica", "Energia estática", "Energia eólica", "Energia mecânica"], c: 3},
-    {q: "A distribuição de ignição e a abertura das válvulas são sempre especificadas em?", a: ["Milímetro", "Graus", "Ângulos", "Galão"], c: 1},
-    {q: "Teoricamente, a distância que uma hélice deveria avançar em uma revolução, denomina-se?", a: ["Avanço", "Passo geométrico", "Recuo", "Passo efetivo"], c: 1},
-    {q: "O que é ponto de vapor e ponto de chama?", a: ["São determinados a partir de testes em laboratórios, que mostram a temperatura em que o óleo começa a desprender o motor", "São determinados a partir de testes em laboratórios, que mostram a temperatura em que o óleo começa a desprender vapor...", "São determinados a partir de testes em laboratórios, que mostram a temperatura em que o óleo começa a desprender os aneis", "São determinados a partir de testes em laboratórios, que mostram a temperatura em que o óleo começa a desprender óleo"], c: 1},
-    {q: "Nos motores a reação, as câmaras de combustão do tipo caneca, dispõe de interconectores cuja finalidade é?", a: ["Isolar a chama", "Propagar a chama", "Reduzir a chama", "Eliminar a chama"], c: 1},
-    {q: "Quando um motor é guardado numa embalagem para transporte ou num container, alguns agentes desidratantes devem ser usados. A finalidade destes agentes é?", a: ["Eliminar poeira para preservar o motor", "Manter o interior do container com temperatura abaixo de zero grau", "Remover a umidade do ar no ambiente do motor", "Conservar a entrada de ar do motor livre de impurezas"], c: 2},
-    {q: "A operação de embandeiramento e desembandeiramento da hélice é controlada pelo(a)?", a: ["Governador", "Aranha", "Conjunto da cúpula", "Válvula distribuidora"], c: 0},
-    {q: "No texto, a palavra \"prevent\" quer dizer: _a complete line of two-way check values is available, manufactured from either lightweight aluminum or steel. these values are required in a two-shot system to prevent the agent in a reserve container from backing up into the previous emptied main container.", a: ["Evoluir", "Evitar", "Penetra", "Permitir"], c: 1},
-    {q: "O primeiro propósito da lubrificação é reduzir a fricção entre as partes?", a: ["Móveis", "Pressurizadas do sistema de oxigênio", "Externas do motor", "Imóveis"], c: 0},
-    {q: "Responda com a alternativa certa. _a complete line of two-way check valves is available, manufactured from either lightweight aluminum or steel. these values are required in a two-shot system to prevent the agent in a reserve container from backing up into the previous emptied main container. \"two-way check values\" quer dizer:", a: ["Válvulas de retenção de duas vias", "Válvulas de 2 saídas", "Válvulas de escape bidirecionais", "Válvulas de distribuição de duas vias"], c: 0},
-    {q: "O gelo que se forma nas pás da hélice desalinhando o fluxo de ar, é eliminado através do:", a: ["Sistema pneumático", "Sistema de combustível", "Sistema de lubrificação", "Sistema elétrico de degelo"], c: 3},
-    {q: "A condição de sobrevelocidade ocorrida numa turbina poderá ser observada pelo(a)?", a: ["vibração do motor", "indicação da tit", "estol do compressor", "tacômetro"], c: 3},
-    {q: "Teoricamente, a distância que uma hélice deveria avançar em uma revolução, denomina-se?", a: ["passo geométrico", "recuo", "avanço", "passo efetivo"], c: 0},
-    {q: "O indicador do \"EGT\" possui as suas sondas instaladas em qual parte do motor?", a: ["antes do compressor", "antes da turbina", "após o compressor", "após a turbina"], c: 3},
-    {q: "O dispositivo que tem como finalidade transformar a velocidade do ar em pressão estática denomina-se?", a: ["câmara", "difusor", "coletor", "turbina"], c: 1},
-    {q: "A expansão dos gases, ao movimentar o êmbolo, desenvolve no motor uma energia do tipo?", a: ["cinética", "mecânica", "pneumática", "estática"], c: 1},
-    {q: "Durante a partida no motor, se a pressão do óleo \"não subir\", a causa \"improvável\", que não impede de completar a partida?", a: ["falha na bomba de óleo", "instrumento em pane", "falta de óleo", "filtro entupido"], c: 3},
-    {q: "no motor convencional, o tempo de ignição varia de 20° a 35° antes de ponto morto?", a: ["baixo", "neutro", "variável", "alto"], c: 3},
-    {q: "a finalidade do compressor nos motores a jato é fornecer?", a: ["ar em quantidade suficiente à turbina", "pressão suficiente à caixa de acessórios", "ar em quantidade suficiente aos queimadores de combustão", "mistura ar/combustível à câmara de combustão"], c: 2},
-    {q: "É característica de óleo lubrificante com alta viscosidade?", a: ["É muito inflamável igual ao álcool", "Visconde", "Azul na coloração", "Viscoso"], c: 3},
-    {q: "O óleo que é drenado para dentro da câmara de combustão, quando o motor radial permanece cortado por longo período de tempo pode ocasionar calço hidráulico, para evitar danos ao motor, devemos?", a: ["Devemos remover os pistões e substituir os anéis", "Devemos substituir as válvulas", "Remover as velas inferiores e executar de duas a três voltas na hélice com a chave de ignição desligada", "Remover as velas inferiores e executar de duas a três voltas na hélice com a chave de ignição ligada"], c: 2},
-    {q: "Após a sua leitura, assinale a alternativa correta. _the thermal discharge indicator is connected to the fire container relief fitting and ejects a red disk to show when container contents have dumped overboard due to excessive heat. \"excessive heat\" quer dizer:", a: ["Temperatura excessiva", "Frio excessivo", "Calor em excesso", "Calor excessivo"], c: 3},
-    {q: "Leia com atenção o texto e responda a alternativa correta. _the power plant installation has several designated fire zones: (1) the engine power section; (2) the engine accessory section; (3) except for reciprocating engines, \"several designated fire zones\", quer dizer:", a: ["Várias zonas frias designadas", "Várias zonas de fogo designadas", "Várias zonas de superaquecimento designadas", "Várias zonas de resfriamento designadas"], c: 1},
-    {q: "A diferença entre o passo geométrico e o passo efetivo da hélice é denominado?", a: ["Recuo", "Governador", "Teórico", "Avanço"], c: 0},
-    {q: "Uma área desgastada ou com marcas, causadas por objetos estranhos entre as partes móveis ou superfícies:", a: ["Brunidura", "Mossas", "Abrasão", "Atrito"], c: 2},
-    {q: "Retificadores, muitos serviços nas aeronaves requerem altas amperagens e?", a: ["Médias voltagem c.c.", "Altas voltagens c.c.", "Baixas voltagens c.c.", "Acumulo de corrente reversa"], c: 2},
-    {q: "O componente onde é instalado o rolamento de apoio e suporte do eixo de manivelas, no cárter de um motor convencional, denomina-se?", a: ["Munhão", "Biela articulada", "Biela mestra", "Moente"], c: 0},
-    {q: "Proporcionar o balanceamento dinâmico do motor e eliminar as vibrações ao máximo possível é objetivo do(a)?", a: ["Ordem de fogo", "Admissão e compressão", "Anéis de segmentos", "Ciclo de quatro tempos"], c: 0},
-    {q: "A sequência do ciclo de operação do motor a quatro tempos é: Admissão,?", a: ["Compressão, escapamento e potência", "Compressão, potência e escapamento", "Potência, compressão e escapamento", "Escapamento, potência e compressão"], c: 1},
-    {q: "Em vôo, com a finalidade de reduzir o peso da aeronave ao seu peso máximo de pouso especificado, o piloto pode acionar qual dispositivo?", a: ["Distribuição", "Alijamento", "Alimentação cruzada", "Transferência"], c: 1},
-    {q: "A seção de escapamento do motor a reação está localizada após a saída do(a)?", a: ["Turbina", "Câmara de combustão", "Difusor", "Compressor"], c: 0},
-    {q: "Conforme o pistão se move para baixo no cilindro, ele aspira a mistura?", a: ["Ar/combustível", "Porcentagem de nitro", "H2o", "Co2"], c: 0},
-    {q: "As bombas que circulam o óleo através do motor e as que retornam o óleo para o reservatório são, respectivamente, do tipo?", a: ["Pressão e sucção", "Sucção e pressão", "Pressão e pressão", "Sucção e sucção"], c: 0},
-    {q: "No motor a reação, o trocador de calor combustível/óleo tem a finalidade de?", a: ["Pré aquecer o combustível e o óleo", "Pré-aquecer o combustível e resfriar o óleo", "Resfriar o combustível e aquecer o óleo", "Resfriar o combustível e o óleo"], c: 1}
+ const masterBank = [
 
+
+  {q: "As posições da chave seletora do magneto que são utilizadas para testar o sistema de ignição dupla?", a: ["Esquerdo e direito.", "Ambos e direito.", "Desligado e ambos.", "Esquerdo e ambos."], c: 3},
+{q: "O tipo de conector, cujo invólucro é feito de aço, pertence à classe?", a: ["D.", "K.", "B.", "C."], c: 1},
+  {q: "A posição do interruptor na qual os magnetos ficam aterrados é?", a: ["Ambos.", "On.", "Direito.", "Off."], c: 3},
+  {q: "A válvula de alívio de uma bomba de combustível acionada pelo motor é projetada para abrir?", a: ["A uma tensão pré-ajustada da mola.", "Após o corte do motor.", "A uma determinada pressão atmosférica.", "Quando a pressão de combustível for muito baixa."], c: 0},
+  {q: "É a sequência na qual o tempo motor ocorre nos diferentes cilindros, sendo projetada para proporcionar o balanceamento e para eliminar a vibração ao máximo possível:", a: ["Trabalho.", "Ordem de fogo.", "Razão de compressão.", "Potência."], c: 1},
+  {q: "O aquecedor de combustível (fuel heater) opera como um?", a: ["Trocador de potência.", "Trocador de calor.", "Trocador de pressão.", "Trocador de óleo."], c: 1},
+  {q: "Um ciclo de quatro tempos completo demanda duas voltas do virabrequim do motor, perfazendo um total de 720º de giro. Em tese, cada uma das fases equivale a quantos graus?", a: ["90 graus.", "180 graus.", "360 graus.", "270 graus."], c: 1},
+  {q: "A mistura ar/combustível entra nos cilindros através das passagens das válvulas de?", a: ["Compressão.", "Arrefecimento.", "Admissão.", "Refrigeração."], c: 2},
+  {q: "A sequência na qual o tempo motor ocorre nos diferentes cilindros denomina-se?", a: ["Claro de válvulas.", "Claro de pistões.", "Ordem de fogo.", "Ordem de queima."], c: 2},
+  {q: "A função básica de uma hélice é converter a potência do motor em força de?", a: ["Tração.", "Torção.", "Arrasto.", "Sustentação."], c: 0},
+  {q: "O mecanismo de um motor de cilindros opostos. O eixo de ressaltos sempre gira com a metade da velocidade do:", a: ["Eixo transversal.", "Eixo da roda livre.", "Eixo de manivelas.", "Eixo cardan."], c: 2},
+  {q: "Para o acionamento inicial do conjunto compressor (axial e centrífugo), como também a turbina, usa-se:", a: ["Ignitores de partida.", "Gerador de vortex.", "Roda livre.", "Start generation."], c: 3},
+  {q: "O componente do motor que transmite a força do pistão para o eixo de manivelas é o(a)?", a: ["Mancal.", "Biela.", "Pino do pistão.", "Vela."], c: 1},
+  {q: "A finalidade das alhetas, na cabeça do cilindro de um motor convencional, é?", a: ["Arrefecer o cilindro.", "Acoplar as molas das válvulas.", "Reduzir o peso do cilindro.", "Manter elevada a temperatura do cilindro."], c: 0},
+  {q: "No pistão, o anel de compressão do motor é instalado?", a: ["Na ranhura superior do pistão.", "Em qualquer ranhura do pistão.", "Na ranhura central do pistão.", "Na ranhura inferior do pistão."], c: 0},
+  {q: "O objetivo principal do eixo de manivelas é transformar o movimento:", a: ["Linear do tucho em movimento axial do eixo de ressaltos.", "Alternativo do eixo de ressaltos em movimento rotativo para orientar o curso do cilindro.", "Alternativo do pistão em movimento rotativo para acionamento da hélice.", "Flexível do balancim em movimento alternado das válvulas."], c: 2},
+  {q: "Responda com a alternativa certa. Several different types of fire detection system are installed in aircraft to detect engine fires. \"Installed\" quer dizer:", a: ["Alimentado.", "Instalado.", "Unido.", "Inserido."], c: 1},
+  {q: "A turbina transforma a energia cinética dos gases de escapamento em energia:", a: ["Pneumática.", "Mecânica.", "Estática.", "Elétrica."], c: 1},
+  {q: "Se o motor for operado como recomendado e a manutenção preventiva for executada, os cilindros normalmente resistirão até que o motor seja removido por:", a: ["Limite de torque.", "Vontade do operador.", "Limite de voo.", "Limite de horas."], c: 3},
+  {q: "Em um sistema de ignição de um motor convencional, a alta tensão induzida na bobina secundária é, em seguida, enviada à (ao):", a: ["Vela.", "Bobina primária.", "Platinado.", "Distribuidor."], c: 3},
+  {q: "Os dois principais elementos funcionais do compressor centrífugo são?", a: ["Turbina e difusor.", "Carcaça e difusor.", "Pistão e biela.", "Impulsor e difusor."], c: 3},
+  {q: "A alta tensão induzida na bobina secundária é enviada ao distribuidor, o qual consiste em:", a: ["Quatro partes.", "Duas partes.", "Seis partes.", "Três partes."], c: 1},
+  {q: "Quando a hélice dá uma volta completa e ocorre um recuo a mesma realiza o passo?", a: ["Bandeira.", "Efetivo.", "Ativo.", "Teórico."], c: 1},
+  {q: "Os dois tipos mais comuns de compressor que encontramos nos motores a reação?", a: ["Fluxo centrífugo e axial.", "Axial e tipo fly by stol.", "Radial inconstante e centrífugo.", "Caneca e canular."], c: 0},
+  {q: "O cruzamento das válvulas ocorre no?", a: ["Início da exaustão e final da compressão.", "Final da exaustão e início da admissão.", "Início da expansão e final da compressão.", "Final da expansão e início da admissão."], c: 1},
+  {q: "A expansão dos gases cinéticos da queima, transforma energia calorífica em energia?", a: ["Cinética.", "Pneumática.", "Estática.", "Mecânica."], c: 3},
+  {q: "As partes básicas que constituem uma turbina são?", a: ["Rotor e coletor.", "Coletor e difusor.", "Impelidor e estator.", "Estator e rotor."], c: 3},
+  {q: "O combustível é fornecido para entrada da unidade de controle, vindo dos tanques do avião através de uma série de?", a: ["Bombas acionadas pelo motor.", "Filtros.", "Bombas de reforço.", "Válvulas seletoras."], c: 2},
+  {q: "A seção da turbina de um motor turbojato ou turborreator está localizada na parte?", a: ["Superior.", "Traseira.", "Dianteira.", "Inferior."], c: 1},
+  {q: "No motor a turbina, a seção que transforma a alta velocidade do ar da saída do compressor, em pressão estática, denomina-se seção?", a: ["De escapamento.", "De combustão.", "Difusora.", "Acessória."], c: 2},
+  {q: "A maioria dos motores alternativos de aeronaves opera com ciclo de quantos tempos?", a: ["Cinco tempos.", "Dois tempos yamaha.", "Quatro tempos.", "Um tempo."], c: 2},
+  {q: "O componente do motor que tem a finalidade de expulsar os gases de escapamento do cilindro denomina-se?", a: ["Pistão.", "Válvula.", "Anel de segmento.", "Eixo de ressaltos."], c: 1},
+  {q: "Muitos motores correntemente fabricados utilizam velas com roscas?", a: ["Postiças (heli-coil) de borracha.", "Postiças de alumínio.", "Postiças (heli-coil) de aço inoxidável.", "Postiças (heli-coil) de aço baquelite."], c: 2},
+  {q: "O mecanismo responsável pelo fechamento das válvulas do cilindro é?", a: ["Condutor e eixo.", "Ressalto e pino.", "Condutor e mola.", "Mola."], c: 3},
+  {q: "Além dos a reação, os motores radial são fixados à nacele do avião através de(o)?", a: ["Tubo.", "Suporte.", "Montante.", "Berço."], c: 3},
+  {q: "Many older model aircraft still operating have some type of thermal switch system or thermocouple system...", a: ["Sistema de ignição.", "Sistema de detecção de calor.", "Sistema de interruptor térmico.", "Sistema de troca térmica."], c: 1},
+  {q: "Uma aeronave, impulsionada por grandes motores turbojato, requer algum tipo de dispositivo silenciador de ruídos...", a: ["Supressores de ruídos.", "Supressores de atrito.", "Supressores de ouvido.", "Supressores de gases cinéticos stop by."], c: 0},
+  {q: "O servo do governador controla o fluxo de combustível com a função de ajustar a velocidade do:", a: ["Eixo.", "Filtro.", "Motor.", "Carburador."], c: 2},
+  {q: "As posições da chave seletora do magneto, usadas para testar o sistema de ignição dupla, são?", a: ["On e both.", "Right e both.", "Left e right.", "Off e on."], c: 2},
+  {q: "A turbina transforma uma quantidade de energia cinética dos gases de escapamento em energia mecânica, para acionar o?", a: ["Difusor e acessórios.", "Compressor e acessórios.", "Câmara de combustão e acessórios.", "Distribuidor e difusor."], c: 1},
+  {q: "A quantidade ou a carga da mistura ar/combustível depende da abertura da?", a: ["Manete de dreno.", "Manete de alijamento.", "Manete de ângulo.", "Manete de aceleração."], c: 3},
+  {q: "No sistema de combustível motor a reação, o aquecedor usa como fonte de aquecimento, ar sangrado do(a)?", a: ["Escapamento ou óleo do sistema de lubrificação.", "Compressor ou óleo do sistema de lubrificação.", "Seção da turbina ou óleo do sistema hidráulico.", "Câmara de combustão ou óleo do sistema hidráulico."], c: 1},
+  {q: "Para se combater o desenvolvimento microbiológico no combustível deve-se?", a: ["Drenar o combustível diariamente.", "Destanquear o avião antes do pernoite.", "Vedar as entradas de ventilação sempre que o avião for pernoitar.", "Adicionar bactericida diariamente."], c: 0},
+  {q: "A finalidade da ligação à massa encontrada nos sistemas elétricos do avião é?", a: ["Evitar a fadiga mecânica dos fios.", "Proporcionar caminhos de retorno da corrente.", "Aumentar a resistência total do circuito elétrico.", "Acumular carga estática."], c: 1},
+  {q: "A parte do motor na qual a potência é desenvolvida, é chamada de?", a: ["As hastes de mudança de passo.", "Válvulas.", "Cilindro.", "Rodas do trem de pouso."], c: 2},
+  {q: "Os cilindros dos motores radiais são instalados?", a: ["Em carreira, no eixo das manivelas.", "Na parte traseira do cárter.", "Ao redor de um cárter central.", "Diretamente nas engrenagens de redução."], c: 2},
+  {q: "O pino do pistão une o pistão à?", a: ["Bengala.", "Transmissor.", "Biela.", "Turbina."], c: 2},
+  {q: "O calço hidráulico no motor radial, ocorre normalmente?", a: ["Nos cilindros laterais.", "Nos cilindros inferiores.", "Nos cilindros superiores.", "Em todos os cilindros."], c: 1},
+  {q: "O calço hidráulico ocorre normalmente em qual tipo de motor do ciclo otto?", a: ["A turbina de fluxo centrífugo.", "Convencional do tipo cilindros em v.", "A turbina de fluxo axial.", "Alternativo do tipo radial."], c: 3},
+  {q: "O tempo que o êmbolo está se deslocando do pmb para o pma, e as válvulas estão fechadas, denomina-se?", a: ["Potência.", "Admissão.", "Escapamento.", "Compressão."], c: 3},
+  {q: "A maneira para identificar o tipo de gasolina é pelo(a)?", a: ["Quantidade.", "Temperatura.", "Cor.", "Pureza."], c: 2},
+  {q: "O componente do sistema de combustível, que tem a finalidade de cortar o fluxo de combustível que sai do tanque, é o(a)?", a: ["Válvula seletora.", "Dreno.", "Filtro.", "Válvula de transferência."], c: 0},
+  {q: "O motor térmico transforma energia calorífica em energia?", a: ["Cinética.", "Elétrica.", "Hidráulica.", "Mecânica."], c: 3},
+  {q: "A expressão \"overheat conditions\" quer dizer:", a: ["Condições de calor.", "Condições de tempo.", "Condições climáticas.", "Condições de superaquecimento."], c: 3},
+  {q: "O componente de um motor convencional que tem a finalidade de transformar o movimento alternativo do pistão em movimento rotativo para acionamento da hélice, denomina-se?", a: ["Eixo de manivelas.", "Mancal.", "Eixo de ressaltos.", "Caixa de engrenagem."], c: 0},
+  {q: "Em um motor a reação a potência indicada ou desenvolvida ocorre no(a)?", a: ["Seção de escapamento.", "Compressor.", "Super turbina weel.", "Seção de combustão."], c: 3},
+  {q: "Nos motores em 'V' os cilindros são montados em duas carreiras em linha, geralmente ao um ângulo de quantos graus?", a: ["90º.", "10º.", "20º.", "60º."], c: 3},
+  {q: "Equipamento responsável para modificar o nível de voltagem, aumentando-o ou diminuindo-o como necessário, denomina-se?", a: ["Gerador.", "Voltímetro.", "Potenciômetro.", "Transformador."], c: 3},
+  {q: "Os motores a combustão interna são aqueles em que o combustível é queimado internamente. Um mecanismo constituído por pistão, biela e virabrequim é que transforma a energia térmica (calorífica) em?", a: ["Energia cinética.", "Energia estática.", "Energia quântica.", "Energia mecânica."], c: 3},
+  {q: "O sistema de medição principal fornece combustível para o motor em todas?", a: ["As velocidades acima de marcha lenta.", "As velocidades acima de marcha lenta após o disparo do motor de ciclo spacer.", "As baixa rotação do rotor de ignição.", "As velocidades de baixa marcha lenta."], c: 0},
+  {q: "Dentre as seções abaixo, aquela que converte velocidade em pressão no motor a reação, denomina-se?", a: ["Acessórios.", "Eixo curto.", "Difusora.", "Turbina."], c: 2},
+  {q: "O tacômetro é um dispositivo que serve para fazer medição da quantidade de:", a: ["Potência por hora (PRH).", "Torque por hora (TPH).", "Temperatura por minuto (TPM).", "Rotação por minuto (RPM)."], c: 3},
+  {q: "As válvulas de admissão e escapamento são abertas e fechadas, nos tempos apropriados, por ação?", a: ["Elétrica.", "Pneumática.", "Hidráulica.", "Mecânica."], c: 3},
+  {q: "A peça móvel do motor convencional responsável pela acomodação dos anéis de segmentos denomina-se?", a: ["Contrapeso.", "Pistão.", "Eixo de manivelas.", "Moente da biela."], c: 1},
+  {q: "Responda com a alternativa certa. Some warning lights are push-to-test lights. The bulb is tested by pushing it in to check an auxiliary test circuit. \"Warning lights\" pode ser traduzido como:", a: ["Luzes de calor.", "Luzes de aviso.", "Luzes de indicação.", "Luzes de superaquecimento."], c: 1},
+  {q: "Após a sua leitura, assinale a alternativa correta. If the temperature rises rapidly, the thermocouple produces a voltage because of the temperature difference between the reference junction and the hot junction. \"Hot junction\" quer dizer:", a: ["Junção de fogo.", "Aviso de junção.", "Junção quente.", "Aviso de calor."], c: 2},
+  {q: "O difusor é a seção divergente do motor. Tem a importante função de trocar a alta velocidade do ar de descarga do compressor para a pressão?", a: ["Estática.", "Nula.", "Aerodinâmica.", "Térmica."], c: 0},
+  {q: "No texto, a expressão \"cathode ray tube\" quer dizer: The analog signal produced by the sensing element loop as its temperature changes can readily be converted to signals suitable for meter or cathode ray tube.", a: ["Tubo de raios ultravioleta.", "Tubo de raios catódicos.", "Tubo de raios quentes.", "Tubo de raios congelados."], c: 1},
+  {q: "A ordem de fogo de um motor é a sequência de queima que proporciona melhor?", a: ["Taxa de compressão.", "Balanceamento com eliminação de vibração.", "Rendimento térmico.", "Queima do combustível."], c: 1},
+  {q: "A bolha de vapor pode ser perigosa o suficiente para bloquear o?", a: ["Start generation.", "Pistão na compressão.", "Fluxo de combustível e parar o motor.", "Pinhão."], c: 2},
+  {q: "O que é recuo de hélice?", a: ["Igualdade entre passo geométrico e efetivo.", "Diferença entre passo geométrico e efetivo.", "Indiferença entre passo geométrico e teórico.", "Diferença entre passo teórico e definitivo."], c: 1},
+  {q: "São requeridas duas voltas completas do eixo de manivelas (720º) para o motor de quantos tempos?", a: ["Seis tempos.", "Dois tempos.", "Um tempo.", "Quatro tempos."], c: 3},
+  {q: "Nos motores a reação, a potência indicada desenvolve-se, no(a)?", a: ["Cárter e no rotor.", "Cilindro e no compressor.", "Câmara de combustão.", "Carburador e na turbina."], c: 2},
+  {q: "Durante a partida de um motor a reação, deve-se monitorar o(a)?", a: ["Pressão de óleo, temperatura do compressor e a tit.", "Temperatura do compressor e o tacômetro.", "Tacômetro e a tit.", "Pressão, temperatura e rpm."], c: 3},
+  {q: "O fluxo de ar para o motor é controlado através?", a: ["Magneto.", "FCU.", "Carburador.", "UCP."], c: 1},
+  {q: "O cone interno de localização central é fixado junto à face traseira do disco da turbina evitando?", a: ["Orientar os gases para a turbina.", "Turbulência dos gases.", "Fixar a seção de escapamento no motor.", "Reduzir a temperatura dos gases de exaustão."], c: 1},
+  {q: "Os tanques de combustíveis são adaptados com defletores internos, com a finalidade de?", a: ["Resistir às flutuações do combustível, causadas pelas mudanças de atitude da aeronave.", "Manter a pressão atmosférica dentro do tanque.", "Eliminar as impurezas no combustível, através da decantação.", "Permitir o perfeito alijamento do combustível, em voo."], c: 0},
+  {q: "Dentre os instrumentos abaixo, aquele que é utilizado para verificar o desempenho e também o consumo de combustível do motor é o?", a: ["Torquímetro.", "Fuel pressure.", "Indicador de egt.", "Fuel flow."], c: 3},
+  {q: "Os ignitores são instalados na câmara de combustão do tipo anular em quais posições, levando em consideração a ordem do relógio:", a: ["Olhando o motor por trás, nas posições três (3) e nove (9) horas.", "Olhando o motor de frente, nas posições duas (2) e dez (10) horas.", "Olhando o motor de lado, nas posições três (3) e nove (9) horas.", "Olhando o motor de frente, nas posições doze (12) e seis (6) horas."], c: 3},
+  {q: "Alguns motores de aeronave incorporam tuchos:", a: ["Óptico.", "Hidráulico.", "Radiais.", "Elétricos."], c: 1},
+  {q: "Qual a finalidade do compressor no motor a reação?", a: ["Diminuir a pressão e a temperatura do ar hidraulicamente.", "Diminuir a pressão e a temperatura do ar mecanicamente?", "Aumenta a pressão e a potência do ar eletromagneticamente.", "Aumenta a pressão e a temperatura do ar, mecanicamente."], c: 3},
+  {q: "É uma comparação do volume de um cilindro quando o êmbolo está no ponto morto inferior, e o volume quando ele está no o ponto morto superior denomina-se:", a: ["Aceleração.", "Razão de compressão.", "Potência indicada.", "Ciclo."], c: 1},
+  {q: "Dentre os componentes abaixo, aquele que tem a finalidade de gerar a alta tensão para os sistema de ignição é o(a)?", a: ["Magneto.", "Cablagem.", "Distribuidor.", "Vela."], c: 0},
+  {q: "Leia com atenção o texto e responda a alternativa correta. The thermocouple fire warning system operates on an entirely different principle than the thermal switch system. \"Fire warning\" quer dizer:", a: ["Aviso de pressurização.", "Aviso de alerta.", "Aviso de aquecimento.", "Aviso de incêndio."], c: 3},
+  {q: "No motor a reação, o alinhamento dos gases de escapamento e a fixação do cone interno é feita pelo componente denominado?", a: ["Alheta ejetora da turbina.", "Longarina radial.", "Elemento estator do conjunto da turbina.", "Manta de isolamento."], c: 1},
+  {q: "Num motor ciclo de otto, ocorrendo um calço hidráulico, este ocorrerá nos cilindros?", a: ["Inferiores.", "Pares.", "Ímpares.", "Superiores."], c: 0},
+  {q: "A comparação do volume de um cilindro quando o êmbolo está no pma e o volume quando o êmbolo está no pmb denomina-se?", a: ["Balanceamento do eixo de manivelas.", "Taxa de compressão.", "Volume total.", "Empuxo."], c: 1},
+  {q: "O carburador é instalado no motor, na seção de?", a: ["Acessórios.", "Força.", "Potência.", "Difusora."], c: 0},
+  {q: "A formação de gelo no sistema de admissão pode ser impedida ou eliminada pelo aumento?", a: ["Da temperatura.", "De estática.", "Da altitude.", "De qav."], c: 0},
+  {q: "O rendimento útil do motor que impele o avião denomina-se?", a: ["Mistura.", "Consumo específico.", "Taxa de compressão.", "Empuxo."], c: 3},
+  {q: "Num motor axial, da entrada para a saída, o ar flui por um caminho axial e é comprimido a uma razão aproximadamente de?", a: ["12,5.", "1,25.", "137,7.", "1512,5."], c: 0},
+  {q: "Em um motor a reação, o ar ao entrar na câmara de combustão diminui a velocidade e aumenta a pressão por qual componente?", a: ["Estator.", "Venturi.", "Compressor.", "Difusor."], c: 3},
+  {q: "O mecanismo de um motor convencional(ciclo de otto), de cilindros opostos é acionado por qual eixo?", a: ["Eixo de ressaltos ou eixo de comando de válvulas.", "Eixo longo concêntrico.", "Eixo oculto.", "Eixo de assaltos ou eixo de comando de válvulas."], c: 0},
+  {q: "Dentre as alternativas abaixo, aquele que indica o componente do motor convencional responsável pela expulsão dos gases queimados é o(a)?", a: ["Válvula de escapamento.", "Pistão.", "Cilindro.", "Tubo de descarga."], c: 0},
+  {q: "Os anéis de segmento nos motores convencionais tem a função de?", a: ["Ventilação.", "Limitar o movimento do eixo de manivelas.", "Contração.", "Vedação."], c: 3},
+  {q: "O fechamento das válvulas é realizado através de?", a: ["Hastes.", "Pinos.", "Molas.", "Eixos."], c: 2},
+  {q: "A gasolina de aviação de grau115/145 é de cor?", a: ["Verde.", "Cinza.", "Azul.", "Púrpura."], c: 3},
+  {q: "Dentre os componentes abaixo, aquele que tem a finalidade de transformar energia cinética dos gases de escapamentos em energia mecânica, denomina-se:", a: ["Coletor.", "Compressor.", "Turbina.", "Estator."], c: 2},
+  {q: "A vela de ignição deve ser substituída sempre que?", a: ["Apresentar falha.", "Ocorrer o claro de válvulas.", "A mistura ar/combustível empobrecer.", "A ignição ocorrer no tempo de escapamento."], c: 0},
+  {q: "O motor a reação do tipo turbo-fan, é um motor?", a: ["Turboélice com fan.", "Turbojato com fan.", "Turboeixo com fan.", "Turbohélice com fan."], c: 1},
+  {q: "O motor a reação que desenvolve maior empuxo em baixas velocidades e baixas altitudes denomina-se?", a: ["Turbojato.", "Turboeixo.", "Turbofan.", "Estatojato."], c: 2},
+  {q: "A biela é o elo que transmite a força entre?", a: ["O pistão e o anel.", "O pistão e o cilindro.", "O pistão e a biela.", "O pistão e o eixo de manivelas."], c: 3},
+  {q: "É o maior componente do motor, e eleva a temperatura do ar através da queima?", a: ["Turbina.", "Compressor.", "Escapamento.", "Câmara de combustão."], c: 3},
+  {q: "É o maior componente do motor convencional, no qual as demais partes são instaladas?", a: ["Bloco.", "Cárter.", "Cilindro.", "Eixo de manivelas."], c: 1},
+  {q: "Quando a hélice dá uma volta completa e não ocorre o recuo a mesma realiza o passo?", a: ["Bandeira.", "Efetivo.", "Ativo.", "Teórico."], c: 3},
+  {q: "Qual o instrumento que faz a medição da rotação do motor?", a: ["Torquímetro.", "Horímetro.", "Tacômetro.", "Pressão de admissão."], c: 2},
+  {q: "O combustível é atomizado e pulverizado na câmara de combustão através do(a)?", a: ["Bico injetor.", "Bomba de pressão.", "Bomba de recalque.", "Válvula de fluxo."], c: 0},
+  {q: "O eixo de ressalto de um motor de cilindros opostos sempre gira com?", a: ["O dobro da velocidade do eixo de manivelas.", "A mesma velocidade do eixo de manivelas.", "Metade da velocidade do eixo de manivelas.", "Um quarto da velocidade do eixo de manivelas."], c: 2},
+  {q: "A seção do motor a reação que tem a finalidade de aumentar a pressão do ar, denomina-se?", a: ["Turbina.", "Difusora.", "Compressor.", "De combustão."], c: 2},
+  {q: "Nos motores turboélices, a hélice é acionada pelo(a)?", a: ["Compressor.", "Eixo do rotor.", "Eixo da turbina.", "Trem de engrenagens de redução."], c: 2},
+  {q: "Os dois principais elementos que formam o compressor centrífugo são?", a: ["Impulsor e difusor.", "Rotor e estator.", "Impulsor e rotor.", "Rotor e difusor."], c: 0},
+  {q: "Na câmara de combustão, o ar é dividido em fluxo primário e secundário. O fluxo primário tem a função de?", a: ["Arrefecer a câmara.", "Arrefecer o motor.", "Manter a combustão.", "Isolar o calor da câmara."], c: 2},
+  {q: "No ciclo de quatro tempos, o pistão realiza quantos cursos?", a: ["Um curso.", "Dois cursos.", "Três cursos.", "Quatro cursos."], c: 3},
+  {q: "Nos motores a reação, a hélice é acionada por um eixo ligado ao conjunto?", a: ["Do compressor.", "Do estator.", "Da turbina.", "Do bico injetor."], c: 2},
+  {q: "A seção do motor turbojato que tem por finalidade transformar a alta velocidade do ar em pressão estática denomina-se?", a: ["De admissão.", "De compressão.", "Difusora.", "De combustão."], c: 2},
+  {q: "O combustível de aviação deve possuir baixo ponto de congelamento e alto?", a: ["Poder de fulgor.", "Poder calorífico.", "Ponto de gota.", "Índice de octana."], c: 1},
+  {q: "O objetivo principal do eixo de manivelas é transformar o movimento alternativo do pistão em movimento?", a: ["Axial.", "Linear.", "Rotativo.", "Transversal."], c: 2},
+  {q: "A abertura e o fechamento das válvulas de admissão e escapamento, no tempo apropriado, são feitos pelo?", a: ["Virabrequim.", "Eixo de manivelas.", "Eixo de ressaltos.", "Balancim."], c: 2},
+  {q: "Qual o instrumento utilizado para monitorar a integridade das palhetas da turbina e do compressor?", a: ["Tacômetro.", "Torquímetro.", "EGT / TIT.", "Pressão de combustível."], c: 2},
+  {q: "O componente que tem a finalidade de fornecer a centelha elétrica para que ocorra a queima denomina-se?", a: ["Vela.", "Bobina.", "Distribuidor.", "Magneto."], c: 0},
+  {q: "Nos motores radiais, o cilindro número um (1) é sempre o cilindro?", a: ["De baixo.", "De cima.", "Da direita.", "Da esquerda."], c: 1},
+  {q: "A parte do cilindro onde as velas são instaladas denomina-se?", a: ["Saia do cilindro.", "Camisa do cilindro.", "Cabeça do cilindro.", "Base do cilindro."], c: 2},
+  {q: "Os anéis que têm a função de impedir a passagem dos gases para o cárter são os anéis de?", a: ["Compressão.", "Raspadores.", "Lubrificação.", "Segmento."], c: 0},
+  {q: "A distância entre o ponto morto superior (PMS) e o ponto morto inferior (PMI) denomina-se?", a: ["Diâmetro.", "Raio.", "Curso.", "Tempo."], c: 2},
+  {q: "A hélice que permite ao piloto selecionar o ângulo das pás durante o voo denomina-se hélice de?", a: ["Passo fixo.", "Passo ajustável.", "Passo variável.", "Velocidade constante."], c: 2},
+  {q: "O excesso de calor em um motor convencional pode causar?", a: ["Aumento da potência.", "Redução do consumo.", "Detonação e pré-ignição.", "Melhora na lubrificação."], c: 2},
+  {q: "O tipo de motor que utiliza a energia dos gases de escapamento para acionar um compressor de ar denomina-se?", a: ["Superalimentado.", "Turboalimentado.", "Injetado.", "Aspirado."], c: 1},
+  {q: "No motor a reação, a seção que direciona os gases de escapamento para a atmosfera com a velocidade adequada denomina-se?", a: ["Turbina.", "Difusor.", "Escapamento.", "Câmara de combustão."], c: 2},
+  {q: "O componente que liga o pistão à biela denomina-se?", a: ["Pino do pistão.", "Mancal.", "Tucho.", "Vareta."], c: 0},
+  {q: "A hélice de passo variável que mantém a rotação do motor constante, independentemente da atitude da aeronave, é controlada pelo?", a: ["Manete de mistura.", "Carburador.", "Governador.", "Distribuidor."], c: 2},
+  {q: "O sistema de lubrificação de cárter seco utiliza?", a: ["Apenas uma bomba de pressão.", "O próprio cárter como reservatório.", "Um reservatório separado e bombas de recuperação.", "Óleo derivado de gordura animal."], c: 2},
+  {q: "Qual a cor da gasolina de aviação (AVGAS) 100LL?", a: ["Verde.", "Azul.", "Púrpura.", "Incolor."], c: 1},
+  {q: "O dispositivo que mede a pressão do óleo do motor é o?", a: ["Manômetro.", "Termômetro.", "Fluxômetro.", "Voltímetro."], c: 0},
+  {q: "Em um motor a reação, a queima do combustível ocorre de forma?", a: ["Intermitente.", "Contínua.", "Alternada.", "Sob pressão negativa."], c: 1},
+  {q: "O compressor axial é composto por?", a: ["Impulsores e difusores.", "Rotores e estatores.", "Pistões e bielas.", "Palhetas fixas e móveis."], c: 1},
+  {q: "O componente que protege o sistema elétrico contra sobrecargas, podendo ser rearmado, é o?", a: ["Fusível.", "Disjuntor (Circuit Breaker).", "Relé.", "Alternador."], c: 1},
+  {q: "A hélice em posição de \"bandeira\" é utilizada para?", a: ["Reduzir o arrasto em caso de falha do motor.", "Aumentar a tração na decolagem.", "Facilitar a partida do motor.", "Frear a aeronave no pouso."], c: 0},
+  {q: "O sistema que evita a formação de gelo no carburador utiliza?", a: ["Ar quente proveniente de uma mufla no escapamento.", "Álcool injetado na admissão.", "Resistências elétricas no venturi.", "O calor do óleo lubrificante."], c: 0},
+  {q: "A unidade de medida de potência dos motores a reação (turbojato/turbofan) é o?", a: ["Cavalo-vapor (CV).", "Horsepower (HP).", "Libras de empuxo (Lbs).", "Quilowatt (kW)."], c: 2},
+  {q: "A parte do motor a reação onde a energia cinética é convertida em energia mecânica é a?", a: ["Câmara de combustão.", "Seção difusora.", "Turbina.", "Seção de acessórios."], c: 2},
+  {q: "O tipo de ignição utilizado nos motores a reação para a partida denomina-se?", a: ["Ignição por magneto.", "Ignição de alta energia (capacitiva).", "Ignição por platinado.", "Ignição por compressão."], c: 1},
+  {q: "O componente que permite o movimento das pás da hélice para mudar o passo é o?", a: ["Cubo da hélice.", "Spinner.", "Governador.", "Eixo de manivelas."], c: 0},
+  {q: "O \"overhaul\" de um motor significa?", a: ["Revisão geral.", "Inspeção de pré-voo.", "Troca de óleo.", "Limpeza externa."], c: 0},
+  {q: "O sistema que fornece combustível sob pressão para os bicos injetores denomina-se?", a: ["Carburador.", "Sistema de injeção.", "Sistema de gravidade.", "Sistema de dreno."], c: 1},
+  {q: "A função do óleo lubrificante, além de lubrificar, é?", a: ["Arrefecer, vedar e limpar.", "Aumentar o atrito.", "Fornecer energia para a centelha.", "Auxiliar na combustão."], c: 0},
+  {q: "O que indica uma queda excessiva de RPM ao testar os magnetos?", a: ["Mistura rica.", "Mau funcionamento do sistema de ignição ou velas sujas.", "Motor superaquecido.", "Hélice fora de passo."], c: 1},
+  {q: "O ar secundário no motor a reação representa cerca de?", a: ["10% do ar total.", "25% do ar total.", "75% do ar total.", "100% do ar total."], c: 2},
+  {q: "O \"venturi\" no carburador tem a função de?", a: ["Aumentar a velocidade do ar e diminuir a pressão.", "Diminuir a velocidade do ar e aumentar a pressão.", "Filtrar o ar de admissão.", "Controlar a marcha lenta."], c: 0},
+  {q: "A pré-ignição é causada por?", a: ["Pontos quentes na câmara de combustão.", "Uso de combustível de alta octanagem.", "Mistura excessivamente rica.", "Magnetos atrasados."], c: 0},
+  {q: "O componente que sincroniza a abertura das válvulas com a posição do pistão é?", a: ["A biela.", "O eixo de ressaltos.", "O governador.", "O distribuidor."], c: 1},
+  {q: "Nos motores turboélices, a maior parte do empuxo é produzida?", a: ["Pela hélice.", "Pelo jato de escapamento.", "Pelo compressor.", "Pela turbina de acessórios."], c: 0},
+  {q: "A válvula que controla a saída dos gases de escapamento para o turboalimentador denomina-se?", a: ["Válvula de alívio.", "Wastegate.", "Válvula seletora.", "Válvula de retenção."], c: 1},
+  {q: "O instrumento que indica a relação entre a pressão de admissão e a pressão atmosférica é o?", a: ["Altímetro.", "Manifold Pressure (Pressão de Admissão).", "Tacômetro.", "Velocímetro."], c: 1},
+  {q: "O uso de combustível de octanagem inferior à recomendada pode causar?", a: ["Detonação.", "Aumento de potência.", "Redução da temperatura.", "Economia de combustível."], c: 0},
+  {q: "O \"pitch\" de uma hélice refere-se ao seu?", a: ["Diâmetro.", "Passo.", "Peso.", "Comprimento."], c: 1},
+  {q: "O sistema de exaustão tem a função de?", a: ["Remover os gases queimados e reduzir o ruído.", "Fornecer ar para o compressor.", "Resfriar os cilindros.", "Filtrar o combustível."], c: 0},
+  {q: "O componente que transforma a corrente alternada em corrente contínua é o?", a: ["Transformador.", "Retificador.", "Inversor.", "Comutador."], c: 1},
+  {q: "No motor a reação, a seção de acessórios é geralmente acionada pelo?", a: ["Eixo do compressor.", "Fluxo de ar externo.", "Eixo da hélice.", "Ar sangrado."], c: 0},
+  {q: "A mistura \"pobre\" contém?", a: ["Excesso de combustível.", "Excesso de ar.", "Excesso de óleo.", "Baixa pressão."], c: 1},
+  {q: "O \"firewall\" (parede de fogo) localiza-se entre?", a: ["O motor e a cabine/fuselagem.", "O compressor e a turbina.", "O cárter e o cilindro.", "O tanque de combustível e a bomba."], c: 0},
+  {q: "O compressor centrífugo é caracterizado por?", a: ["Grande aumento de pressão por estágio.", "Pequeno diâmetro frontal.", "Fluxo de ar em linha reta.", "Grande número de estágios."], c: 0},
+  {q: "O teto operacional de um motor turboalimentado é?", a: ["Maior que o de um motor aspirado.", "Menor que o de um motor aspirado.", "Igual ao de um motor aspirado.", "Limitado apenas pela hélice."], c: 0},
+  {q: "O componente que distribui a alta tensão para as velas na ordem correta é o?", a: ["Platinado.", "Condensador.", "Distribuidor.", "Bobina."], c: 2},
+  {q: "O combustível JET A-1 é utilizado em motores?", a: ["Convencionais (pistão).", "A reação (turbina).", "Radiais.", "Elétricos."], c: 1},
+  {q: "A \"sangria de ar\" (bleed air) do compressor é utilizada para?", a: ["Pressurização, degelo e aquecimento.", "Lubrificação das turbinas.", "Aumentar o empuxo.", "Refrigeração do óleo."], c: 0},
+  {q: "O rolamento que suporta cargas paralelas ao eixo denomina-se?", a: ["Rolamento de roletes.", "Rolamento de esferas (ou de encosto).", "Bucha.", "Mancal de deslizamento."], c: 1},
+  {q: "O curso do pistão é definido pelo?", a: ["Diâmetro do cilindro.", "Desenho do eixo de manivelas (virabrequim).", "Tamanho da biela.", "Eixo de ressaltos."], c: 1},
+  {q: "O \"FOD\" (Foreign Object Damage) refere-se a danos causados por?", a: ["Objetos estranhos ingeridos pelo motor.", "Falta de lubrificação.", "Combustível contaminado.", "Erro de pilotagem."], c: 0},
+  {q: "O que acontece com a densidade do ar à medida que a altitude aumenta?", a: ["Aumenta.", "Diminui.", "Permanece constante.", "Dobra a cada 1000 pés."], c: 1},
+  {q: "A função das palhetas estatoras no compressor axial é?", a: ["Direcionar o ar para o próximo estágio e converter velocidade em pressão.", "Girar o rotor.", "Queimar o combustível.", "Arrefecer o motor."], c: 0},
+  {q: "O motor que possui os cilindros dispostos em duas fileiras paralelas denomina-se motor?", a: ["Radial.", "Em V.", "Em linha.", "Oposto."], c: 2},
+  {q: "A \"manete de mistura\" controla a proporção de?", a: ["Combustível em relação ao ar.", "Óleo em relação ao combustível.", "Ar primário em relação ao secundário.", "Rotação da hélice."], c: 0},
+  {q: "O motor turboeixo (turboshaft) é amplamente utilizado em?", a: ["Caças supersônicos.", "Aviões agrícolas.", "Helicópteros.", "Planadores."], c: 2},
+  {q: "A \"folga de válvulas\" (claro) é necessária para?", a: ["Permitir a expansão térmica dos componentes.", "Aumentar a potência.", "Reduzir o ruído.", "Facilitar a lubrificação."], c: 0},
+  {q: "O sistema de ignição de um motor convencional é?", a: ["Independente do sistema elétrico da aeronave.", "Dependente da bateria.", "Dependente do alternador.", "Acionado pelo fluxo de ar."], c: 0},
+  {q: "A carcaça de admissão do motor a reação tem a função de?", a: ["Conduzir o ar para o compressor com o mínimo de turbulência.", "Filtrar o ar.", "Comprimir o ar.", "Aquecer o ar."], c: 0},
+  {q: "O termo \"TBO\" (Time Between Overhaul) significa?", a: ["Tempo entre revisões gerais.", "Tempo total de voo.", "Tempo de garantia.", "Tempo de aquecimento do motor."], c: 0},
+  {q: "A \"detonação\" é caracterizada por?", a: ["Explosão repentina e violenta da mistura.", "Queima lenta e progressiva.", "Falta de centelha.", "Excesso de óleo na câmara."], c: 0},
+  {q: "O governador de hélice utiliza qual força para alterar o passo das pás?", a: ["Elétrica.", "Manual.", "Pressão de óleo e força centrífuga.", "Pressão de ar."], c: 2},
+  {q: "Qual a função do dreno de combustível?", a: ["Remover água e sedimentos.", "Alijar combustível em emergência.", "Medir a pressão.", "Transferir combustível entre tanques."], c: 0},
+  {q: "No motor radial, o cárter é dividido em quantas seções principais?", a: ["Uma.", "Duas.", "Três.", "Quatro ou cinco."], c: 3},
+  {q: "O tipo de câmara de combustão que consiste em várias câmaras cilíndricas independentes denomina-se?", a: ["Caneca (tipo can).", "Anular.", "Canular.", "Radial."], c: 0},
+  {q: "A eficiência térmica de um motor é a relação entre?", a: ["A energia do combustível e a energia útil produzida.", "O peso e a potência.", "O consumo e a velocidade.", "O ar e o combustível."], c: 0},
+  {q: "O componente que mantém a pressão constante no sistema de combustível é a?", a: ["Válvula de alívio.", "Válvula de corte.", "Válvula de retenção.", "Válvula seletora."], c: 0},
+  {q: "O \"estol de compressor\" ocorre quando?", a: ["O ângulo de ataque das palhetas do rotor excede o limite.", "O motor para por falta de combustível.", "A turbina derrete.", "O óleo acaba."], c: 0},
+  {q: "A hélice de passo fixo é projetada para ter melhor rendimento em?", a: ["Apenas na decolagem.", "Apenas no cruzeiro.", "Em uma condição específica de voo (conforme o projeto).", "Em todas as altitudes."], c: 2},
+  {q: "O sensor que detecta vibrações excessivas no motor é o?", a: ["Transmissor de vibração (Vibrometer).", "Tacômetro.", "Termopar.", "Chip detector."], c: 0},
+  {q: "O sistema de partida pneumático utiliza?", a: ["Ar comprimido para girar o motor.", "Um motor elétrico de alta potência.", "Inércia de um volante.", "Combustão de um cartucho."], c: 0},
+  {q: "O pistão atinge o ponto máximo de sua trajetória no?", a: ["PMS.", "PMI.", "Curso médio.", "Tempo de exaustão."], c: 0},
+  {q: "A finalidade do sistema de \"supercharging\" é?", a: ["Manter a potência do motor em altitudes elevadas.", "Reduzir o peso do motor.", "Aumentar o consumo de combustível.", "Facilitar a descida."], c: 0},
+  {q: "O óleo lubrificante de baixa viscosidade é?", a: ["Mais fino e flui mais facilmente.", "Mais grosso e resistente.", "Utilizado apenas em climas quentes.", "De origem mineral pura."], c: 0},
+  {q: "A parte da turbina que permanece fixa é o?", a: ["Rotor.", "Estator (ou bocal de entrada).", "Disco.", "Eixo."], c: 1},
+  {q: "O \"vapor lock\" (bolha de vapor) é mais comum em?", a: ["Dias quentes com combustíveis voláteis.", "Dias frios com alta umidade.", "Voos de alta altitude.", "Motores a reação."], c: 0},
+  {q: "O componente que converte o movimento rotativo do eixo em movimento linear para abrir as válvulas é o?", a: ["Ressalto (came).", "Pistão.", "Biela.", "Mancal."], c: 0},
+  {q: "A ordem de fogo em um motor de 4 cilindros opostos é geralmente?", a: ["1-3-2-4.", "1-2-3-4.", "1-4-3-2.", "4-3-2-1."], c: 0},
+  {q: "O instrumento que indica a temperatura dos gases logo após a turbina é o?", a: ["EGT.", "CHT.", "Oil Temp.", "Carb Temp."], c: 0},
+  {q: "A \"manta térmica\" no motor a reação serve para?", a: ["Isolar o calor e proteger a estrutura da aeronave.", "Aumentar a temperatura da combustão.", "Reduzir o arrasto.", "Filtrar o ar."], c: 0},
+  {q: "O que ocorre se a mistura estiver muito rica?", a: ["Perda de potência e carbonização das velas.", "Superaquecimento do motor.", "Aumento excessivo de RPM.", "Detonação imediata."], c: 0},
+  {q: "O eixo que interliga o compressor à turbina denomina-se?", a: ["Eixo do rotor.", "Eixo de manivelas.", "Eixo de ressaltos.", "Eixo de acessórios."], c: 0},
+  {q: "O motor turbojato que possui dois ou mais conjuntos de compressores independentes, acionados por turbinas independentes, denomina-se?", a: ["Monobloco.", "Simples.", "Dual-spool (ou de dois eixos).", "Axial-reverso."], c: 2},
+  {q: "A finalidade do sistema de ignição em um motor a reação é?", a: ["Inflamar a mistura ar/combustível durante a partida.", "Manter a centelha constante em todas as fases do voo.", "Gerar energia para os acessórios.", "Sincronizar os magnetos."], c: 0},
+  {q: "A unidade de controle de combustível (FCU) nos motores a reação responde principalmente a?", a: ["Rotação do motor (RPM) e pressão/temperatura do ar.", "Quantidade de óleo no cárter.", "Altitude de cruzeiro apenas.", "Pressão hidráulica dos freios."], c: 0},
+  {q: "O empuxo reverso (reverse thrust) é utilizado principalmente para?", a: ["Aumentar a velocidade de subida.", "Auxiliar na frenagem da aeronave após o pouso.", "Economizar combustível em voo.", "Facilitar o taxiamento de ré."], c: 1},
+  {q: "Qual componente do motor a reação suporta as maiores temperaturas de trabalho?", a: ["Compressor de baixa.", "Câmara de combustão.", "Palhetas da turbina (primeiro estágio).", "Cone de exaustão."], c: 2},
+  {q: "A função das varetas de comando (push rods) em um motor convencional é?", a: ["Transmitir o movimento do tucho para o balancim.", "Girar o eixo de manivelas.", "Comprimir o anel de segmento.", "Abrir a válvula de alívio de óleo."], c: 0},
+  {q: "O fenômeno de \"cocking\" nos anéis de segmento refere-se a?", a: ["Quebra por excesso de RPM.", "Acúmulo de carbono que prende o anel na ranhura.", "Desgaste natural por tempo de uso.", "Instalação invertida do anel."], c: 1},
+  {q: "O sistema de lubrificação por \"salpico\" utiliza?", a: ["O movimento das partes móveis para espalhar o óleo.", "Uma bomba de alta pressão dedicada.", "A gravidade apenas.", "Jatos injetores controlados eletronicamente."], c: 0},
+  {q: "O filtro de combustível tem a função de remover partículas sólidas e?", a: ["Água (através da decantação).", "Excesso de octanagem.", "Chumbo tetraetila.", "Ar do sistema."], c: 0},
+  {q: "A \"razão de mistura ideal\" (estequiométrica) para a combustão completa é de aproximadamente?", a: ["1:1.", "15:1 (15 partes de ar para 1 de combustível).", "8:1.", "20:1."], c: 1},
+  {q: "O instrumento de \"CHT\" (Cylinder Head Temperature) mede a temperatura?", a: ["Da cabeça do cilindro.", "Do óleo lubrificante.", "Do ar de admissão.", "Dos gases de exaustão."], c: 0},
+  {q: "O que acontece se o respiro do tanque de combustível ficar obstruído?", a: ["O fluxo de combustível para o motor pode ser interrompido por vácuo.", "O tanque pode explodir por sobrepressão.", "O combustível congela.", "A mistura enriquecerá automaticamente."], c: 0},
+  {q: "As hélices de madeira são geralmente protegidas nas pontas e bordos de ataque por?", a: ["Verniz extra.", "Revestimento de metal (latão ou aço inoxidável).", "Fita plástica.", "Borracha vulcanizada."], c: 1},
+  {q: "O componente que une o cabeçote ao cilindro em motores menores é geralmente?", a: ["Cola epóxi.", "Prisioneiros e porcas.", "Solda elétrica.", "Rebites."], c: 1},
+  {q: "A válvula de admissão geralmente é maior que a de escapamento para?", a: ["Facilitar a entrada da carga de mistura ar/combustível.", "Aguentar mais calor.", "Reduzir o peso do cabeçote.", "Evitar a pré-ignição."], c: 0},
+  {q: "O \"EGT\" (Exhaust Gas Temperature) é usado pelo piloto para?", a: ["Ajustar corretamente a mistura (ajuste de pico).", "Medir a rotação do motor.", "Controlar a pressão do óleo.", "Verificar o nível de combustível."], c: 0},
+  {q: "Motores a reação que utilizam um duto de contorno (bypass) são chamados de?", a: ["Turbojatos puros.", "Turbofans.", "Turboélices.", "Turboeixos."], c: 1},
+  {q: "O rolamento de roletes é mais adequado para suportar cargas?", a: ["Radiais.", "De encosto (axiais).", "Mínimas.", "Apenas em alta temperatura."], c: 0},
+  {q: "O \"check de magnetos\" deve ser feito?", a: ["Com a aeronave voltada contra o vento, se possível, e seguindo o manual.", "Apenas após o primeiro pouso do dia.", "Com o motor em marcha lenta.", "Somente se o piloto sentir vibração."], c: 0},
+  {q: "A \"flutuação de válvulas\" ocorre quando?", a: ["A mola da válvula não consegue fechá-la rapidamente em alta rotação.", "O óleo está muito viscoso.", "O motor está desligado.", "A hélice está em passo bandeira."], c: 0},
+  {q: "O \"bico injetor\" de um motor a reação tem a função de?", a: ["Atomizar o combustível para uma queima eficiente.", "Medir a rotação da turbina.", "Filtrar as impurezas do JET A-1.", "Resfriar o ar primário."], c: 0},
+  {q: "O cárter úmido é aquele que?", a: ["Carrega o suprimento de óleo na sua própria base.", "Não utiliza óleo lubrificante.", "Possui um tanque de óleo externo na fuselagem.", "É refrigerado por água."], c: 0},
+  {q: "A \"correção de altitude\" no carburador serve para?", a: ["Empobrecer a mistura conforme a densidade do ar diminui.", "Enriquecer a mistura conforme o avião sobe.", "Aumentar a pressão de admissão.", "Fechar a borboleta de aceleração."], c: 0},
+  {q: "O sistema de ignição dupla (dois magnetos e duas velas por cilindro) serve para?", a: ["Segurança (redundância) e melhor eficiência na combustão.", "Aumentar o consumo de combustível.", "Facilitar a limpeza das velas.", "Reduzir a temperatura do motor."], c: 0},
+  {q: "O \"impulsor\" do compressor centrífugo gira em?", a: ["Alta velocidade para acelerar o ar para fora radialmente.", "Baixa velocidade para economizar torque.", "Sentido oposto ao da turbina.", "Movimento alternativo."], c: 0},
+  {q: "O motor turboélice é mais eficiente que o turbojato em?", a: ["Velocidades baixas e médias.", "Velocidades supersônicas.", "Voos estratosféricos.", "Decolagens curtas apenas."], c: 0},
+  {q: "A formação de gelo no carburador é indicada inicialmente por?", a: ["Queda de RPM (passo fixo) ou queda de pressão de admissão (passo variável).", "Aumento súbito da temperatura do óleo.", "Vibração violenta na hélice.", "Fumaça preta no escapamento."], c: 0},
+  {q: "O \"starter-generator\" tem a função dupla de?", a: ["Dar partida no motor e gerar eletricidade após o acionamento.", "Bombear combustível e óleo simultaneamente.", "Resfriar a turbina e o compressor.", "Controlar o passo da hélice e a RPM."], c: 0},
+  {q: "A seção de combustão de fluxo reverso é usada para?", a: ["Encurtar o comprimento total do motor.", "Aumentar a velocidade dos gases.", "Reduzir a emissão de poluentes.", "Evitar o estol de compressor."], c: 0},
+  {q: "O \"ponto morto inferior\" (PMI) é a posição onde o pistão está?", a: ["No ponto mais baixo do seu curso.", "No ponto mais alto do seu curso.", "Exatamente no meio do cilindro.", "Com as duas válvulas abertas."], c: 0},
+  {q: "A viscosidade do óleo lubrificante deve ser escolhida de acordo com?", a: ["A temperatura ambiente de operação.", "A cor da aeronave.", "O tipo de hélice instalado.", "O número de passageiros."], c: 0},
+  {q: "O que é o \"claro de ponta\" dos anéis de segmento?", a: ["O espaço entre as extremidades do anel quando instalado no cilindro.", "A distância entre o pistão e a biela.", "O diâmetro externo do anel.", "A folga entre o anel e a ranhura."], c: 0},
+  {q: "O \"turbocompressor\" é acionado por?", a: ["Gases de escapamento.", "Correias ligadas ao virabrequim.", "Motores elétricos independentes.", "Pressão hidráulica."], c: 0},
+  {q: "A \"tração\" gerada pela hélice é uma força?", a: ["Paralela ao eixo de rotação e para frente.", "Perpendicular ao eixo de rotação.", "Que puxa a aeronave para baixo.", "De torção pura no motor."], c: 0},
+  {q: "O sistema de drenagem de um motor a reação serve para?", a: ["Remover combustível acumulado após uma partida abortada.", "Limpar o óleo usado.", "Eliminar o excesso de ar do compressor.", "Drenar a água da chuva da nacele."], c: 0},
+  {q: "A hélice de \"velocidade constante\" altera o passo para?", a: ["Manter a RPM selecionada pelo piloto.", "Aumentar a resistência do ar.", "Evitar que o avião perca altitude.", "Economizar óleo do motor."], c: 0},
+  {q: "O componente que \"sangra\" o ar do compressor para evitar o estol denomina-se?", a: ["Válvula de sangria (Bleed Valve).", "Válvula de alívio de pressão.", "Wastegate.", "Válvula de corte."], c: 0},
+  {q: "Os mancais de um motor a reação são geralmente do tipo?", a: ["Antifricção (esferas ou roletes).", "Deslizamento (buchas de bronze).", "Madeira tratada.", "Plástico de alta resistência."], c: 0},
+  {q: "O \"impulso de partida\" (Starter) desengata do motor quando?", a: ["O motor atinge uma rotação de auto-sustentação.", "O piloto solta o manete.", "O tanque de combustível está cheio.", "A aeronave começa a se mover."], c: 0},
+  {q: "Qual o principal contaminante do óleo lubrificante?", a: ["Resíduos de carbono, partículas metálicas e umidade.", "Nitrogênio atmosférico.", "Chumbo da gasolina azul.", "Excesso de pressão."], c: 0},
+  {q: "O \"difusor\" da câmara de combustão tem como objetivo?", a: ["Reduzir a velocidade do ar e aumentar a pressão estática.", "Aumentar a velocidade do ar para 1 Mach.", "Filtrar partículas de poeira.", "Injetar o combustível no fluxo de ar."], c: 0},
+  {q: "O que caracteriza um \"ciclo motor\" em um motor de 4 tempos?", a: ["Admissão, Compressão, Potência (Expansão) e Escapamento.", "Partida, Táxi, Decolagem e Pouso.", "Rotação, Ignição e Combustão.", "Sucção, Pressão e Exaustão."], c: 0},
+  {q: "O motor \"boxer\" é um sinônimo comum para?", a: ["Motor de cilindros opostos.", "Motor radial de duas estrelas.", "Motor em linha invertido.", "Motor a reação de fluxo axial."], c: 0},
+  {q: "A função do \"condensador\" no magneto é?", a: ["Evitar o arco elétrico no platinado e auxiliar no colapso do campo magnético.", "Esfriar a bobina primária.", "Transformar CC em CA.", "Armazenar combustível para a partida."], c: 0},
+  {q: "O bocal de escapamento de um motor supersônico é do tipo?", a: ["Convergente-divergente.", "Apenas divergente.", "Reto e curto.", "Em formato de caracol."], c: 0},
+  {q: "O \"módulo\" de um motor a reação refere-se a?", a: ["Uma seção principal completa que pode ser substituída individualmente.", "O computador de bordo.", "A unidade de medida de empuxo.", "O painel de instrumentos."], c: 0},
+  {q: "A \"alavanca de hélice\" no cockpit controla?", a: ["O ajuste do governador de hélice.", "A abertura da borboleta de admissão.", "A quantidade de combustível injetado.", "O freio das rodas."], c: 0},
+  {q: "O \"estator\" da turbina também é conhecido como?", a: ["Palhetas guias de entrada da turbina (Nozzle Guide Vanes).", "Rotor de exaustão.", "Disco de força.", "Impulsor traseiro."], c: 0},
+  {q: "O \"torque\" de um motor turboélice é medido através de?", a: ["Pressão de óleo em um mecanismo de engrenagens planetárias.", "Um velocímetro no eixo da hélice.", "Sensores magnéticos nas pás.", "Balanças de mola no berço do motor."], c: 0},
+  {q: "O \"intercooler\" é usado nos sistemas superalimentados para?", a: ["Resfriar o ar de admissão após a compressão.", "Resfriar o óleo lubrificante.", "Aquecer o combustível.", "Resfriar a cabine de comando."], c: 0},
+  {q: "A vela de ignição \"fria\" é aquela que?", a: ["Dissipa o calor rapidamente para o cabeçote.", "Opera melhor em climas de inverno.", "Não gera centelha quente.", "Possui isolador de porcelana curto."], c: 0},
+  {q: "O que ocorre no tempo de \"compressão\"?", a: ["Ambas as válvulas estão fechadas e o pistão sobe.", "A válvula de admissão abre e o pistão desce.", "A válvula de escapamento abre e o pistão sobe.", "O pistão está parado no PMS."], c: 0},
+  {q: "O componente que permite que o motor continue girando se a hélice parar bruscamente denomina-se?", a: ["Roda livre (ou embreagem de sobre-velocidade).", "Eixo cardan.", "Tucho hidráulico.", "Pinhão de redução."], c: 0},
+  {q: "A \"razão de desvio\" (bypass ratio) em um turbofan é?", a: ["A razão entre a massa de ar que passa pelo fan e a que passa pelo núcleo.", "A quantidade de ar que vaza pelas juntas.", "A velocidade do avião dividida pela do som.", "O consumo de óleo por hora de voo."], c: 0},
+  {q: "O uso de \"água-metanol\" em alguns motores serve para?", a: ["Aumentar a potência temporariamente na decolagem (resfriamento e densidade).", "Limpar as câmaras de combustão.", "Apagar incêndios internos.", "Lubrificar as palhetas da turbina."], c: 0},
+  {q: "A seção de \"admissão\" de um motor a reação deve transformar?", a: ["Pressão dinâmica em pressão estática.", "Calor em movimento.", "Óleo em névoa.", "Combustível em gás."], c: 0},
+  {q: "O \"recuo\" da hélice é maior quando?", a: ["A aeronave está parada e o motor em alta potência.", "A aeronave está em voo de cruzeiro rápido.", "O motor está desligado.", "A hélice está em passo bandeira."], c: 0},
+  {q: "O sistema de \"fire detection\" do tipo laço contínuo (continuous loop)?", a: ["Detecta fogo em qualquer ponto ao longo do seu comprimento.", "Detecta apenas fumaça.", "Precisa ser substituído após cada voo.", "Funciona apenas por radiação UV."], c: 0},
+  {q: "A \"camisa de cilindro\" de aço nitretado possui?", a: ["Superfície extremamente dura e resistente ao desgaste.", "Flexibilidade para dobrar sem quebrar.", "Cor azul brilhante natural.", "Baixa condutividade térmica."], c: 0},
+  {q: "O componente que mantém a pressão do combustível acima da pressão de vapor é?", a: ["Bomba de reforço (boost pump) no tanque.", "Válvula de dreno.", "Filtro principal.", "Injetor de partida."], c: 0},
+  {q: "No motor radial, o cilindro mestre (master rod cylinder)?", a: ["Aloja a biela mestra onde as bielas articuladas são presas.", "É o único que recebe centelha.", "É o cilindro que fica na posição de 6 horas.", "Não possui anéis de segmento."], c: 0},
+  {q: "A \"titânio\" é frequentemente usado no compressor devido à sua?", a: ["Alta resistência e baixo peso (razão resistência/peso).", "Baixa temperatura de fusão.", "Cor prateada que facilita a inspeção.", "Facilidade de soldagem manual."], c: 0},
+  {q: "O \"magneto de baixa tensão\" utiliza?", a: ["Um transformador externo perto da vela para elevar a voltagem.", "Baterias de 12 volts.", "Cabos de ignição sem isolamento.", "Apenas um platinado de cobre."], c: 0},
+  {q: "O \"empuxo específico\" é?", a: ["O empuxo produzido por unidade de massa de ar.", "O peso total do motor.", "A força da hélice no vácuo.", "O consumo de combustível na marcha lenta."], c: 0},
+  {q: "O que causa a \"carbonização\" excessiva das velas?", a: ["Operação prolongada em marcha lenta ou mistura muito rica.", "Uso de gasolina de alta octanagem.", "Voos em altitudes elevadas.", "Magnetos muito adiantados."], c: 0},
+  {q: "A \"vedação de labirinto\" no motor a reação serve para?", a: ["Reter o óleo nos mancais sem contato físico direto.", "Evitar que pássaros entrem no motor.", "Travar as palhetas no disco.", "Aumentar o ruído do escapamento."], c: 0},
+  {q: "O \"ponto de fulgor\" (flash point) de um lubrificante é a temperatura onde?", a: ["O óleo libera vapores que se inflamam momentaneamente.", "O óleo vira gelatina.", "O óleo começa a ferver.", "O óleo perde toda a sua cor."], c: 0},
+  {q: "O sistema de \"fethering\" (embandeiramento) é obrigatório em?", a: ["Aeronaves multimotores para garantir segurança em caso de pane.", "Aeronaves monomotores leves.", "Helicópteros de pequeno porte.", "Planadores de instrução."], c: 0},
+  {q: "A \"caixa de engrenagens de redução\" da hélice serve para?", a: ["Permitir que o motor gire rápido enquanto a hélice gira mais devagar.", "Aumentar a rotação da hélice acima da do motor.", "Inverter o sentido de rotação da hélice.", "Ligar o motor de partida."], c: 0},
+  {q: "O termo \"hot start\" em motores a reação indica?", a: ["Temperatura de exaustão (EGT/TIT) excedendo os limites na partida.", "Que o motor pegou fogo externamente.", "Que a bateria está muito quente.", "Que o combustível está fervendo no tanque."], c: 0},
+  {q: "A \"mistura rica\" é usada na decolagem para?", a: ["Fornecer potência máxima e auxiliar no resfriamento interno.", "Economizar combustível.", "Evitar que o motor pare por excesso de ar.", "Reduzir a fumaça no aeroporto."], c: 0},
+  {q: "O \"shroud\" (anel de contorno) nas palhetas da turbina serve para?", a: ["Reduzir a vibração e aumentar a eficiência aerodinâmica.", "Proteger contra a ingestão de gelo.", "Facilitar a pintura das palhetas.", "Diminuir o peso do disco."], c: 0},
+  {q: "O \"tucho\" (lifter) está localizado entre?", a: ["O ressalto do eixo e a vareta de comando.", "O pistão e a biela.", "A hélice e o motor.", "O magneto e a vela."], c: 0},
+  {q: "A \"contrapressão\" no sistema de exaustão deve ser?", a: ["A menor possível para não roubar potência do motor.", "A maior possível para aquecer o ar.", "Igual à pressão atmosférica no nível do mar.", "Controlada pelo piloto via manete."], c: 0},
+  {q: "O \"sistema de cárter seco\" é superior ao \"úmido\" em voo acrobático porque?", a: ["Garante a lubrificação em qualquer atitude da aeronave.", "Pesa menos.", "Não utiliza filtros.", "Usa óleo mais barato."], c: 0},
+  {q: "O compressor \"axial\" é preferido em aviões de alta velocidade porque?", a: ["Permite uma menor área frontal (menos arrasto).", "É mais simples de construir que o centrífugo.", "Não sofre estol.", "Funciona sem óleo."], c: 0},
+  {q: "O \"passo geométrico\" da hélice é?", a: ["A distância teórica que a hélice avançaria em uma volta.", "O comprimento da pá.", "O peso da hélice em gramas.", "A distância real percorrida no ar."], c: 0},
+  {q: "A \"auto-ignição\" ou \"detonação\" pode ser identificada pelo?", a: ["Som de batida metálica (\"batida de pino\").", "Silêncio absoluto do motor.", "Aumento da pressão de óleo.", "Cor branca da fumaça."], c: 0},
+  {q: "O \"magneto\" é basicamente um?", a: ["Gerador de corrente alternada de alta voltagem.", "Motor elétrico de corrente contínua.", "Transformador de pressão.", "Acumulador de carga estática."], c: 0},
+  {q: "O \"estágio\" de um compressor axial consiste em?", a: ["Uma fileira de palhetas rotativas e uma de estáticas.", "Dois rotores girando em sentidos opostos.", "Um bico injetor e uma vela.", "Uma turbina e um eixo."], c: 0},
+  {q: "O combustível que sobra e não é queimado na partida vai para?", a: ["O tanque de dreno (drain tank) ou para o solo.", "De volta para o tanque principal de asa.", "Para o sistema de lubrificação.", "Para o radiador de óleo."], c: 0},
+  {q: "O \"governador de hélice\" atua como um?", a: ["Sensor de velocidade que ajusta o passo hidraulicamente.", "Freio para parar a hélice em emergência.", "Carburador de alta precisão.", "Alternador de emergência."], c: 0},
+  {q: "A \"folga entre o pistão e o cilindro\" é necessária para?", a: ["A expansão térmica do pistão de alumínio.", "Permitir que o óleo vaze para fora do motor.", "Facilitar a montagem manual.", "Reduzir a taxa de compressão."], c: 0},
+  {q: "O \"chip detector\" magnético no sistema de óleo serve para?", a: ["Detectar partículas metálicas ferrosas indicando desgaste interno.", "Medir a temperatura do óleo eletronicamente.", "Filtrar a areia do deserto.", "Controlar a pressão da bomba."], c: 0},
+  {q: "A \"câmara de combustão anular\" possui a vantagem de?", a: ["Melhor distribuição de temperatura e menor peso.", "Ser mais fácil de reparar em campo.", "Não precisar de ignitores.", "Operar apenas com gasolina verde."], c: 0},
+  {q: "O tempo de \"trabalho\" ou \"potência\" começa quando?", a: ["A centelha inflama a mistura perto do PMS.", "O pistão atinge o PMI.", "A válvula de admissão abre.", "O motor de partida é acionado."], c: 0},
+  {q: "O \"passo reverso\" da hélice cria uma tração?", a: ["Para trás, auxiliando na parada da aeronave.", "Para cima, aumentando a sustentação.", "Nula.", "Que faz o motor girar ao contrário."], c: 0},
+  {q: "O ar que \"contorna\" o núcleo do motor turbofan (bypass air)?", a: ["Gera a maior parte do empuxo em motores de alto bypass.", "É usado para pressurizar a cabine.", "Não serve para nada, é apenas arrasto.", "Sai pela frente do motor."], c: 0},
+  {q: "O \"platinado\" abre para?", a: ["Interromper a corrente primária e induzir alta tensão na secundária.", "Ligar as luzes de navegação.", "Injetar combustível no cilindro.", "Aliviar a pressão do cárter."], c: 0},
+  {q: "O \"moente\" é a parte do eixo de manivelas onde?", a: ["A biela é conectada.", "O eixo é apoiado nos mancais principais.", "A hélice é parafusada.", "O magneto é instalado."], c: 0},
+  {q: "A \"zona primária\" da câmara de combustão é onde?", a: ["Ocorre a queima real da mistura.", "O ar é resfriado para entrar na turbina.", "O óleo é pulverizado.", "Os gases saem para a atmosfera."], c: 0},
+  {q: "O \"conector de ignição\" (spark plug lead) é blindado para?", a: ["Evitar interferência de rádio (EMI).", "Não quebrar com a vibração.", "Manter os cabos aquecidos.", "Evitar choque elétrico no mecânico."], c: 0},
+  {q: "A \"alheta de refrigeração\" quebrada em um cilindro pode causar?", a: ["Um ponto quente no cilindro e possível falha estrutural.", "Aumento imediato da velocidade da aeronave.", "Vazamento de combustível.", "Queda da pressão de óleo."], c: 0},
+  {q: "O \"indicador de fluxo de combustível\" (fuel flow) em motores injetados mede?", a: ["A pressão nos bicos, calibrada em galões ou libras por hora.", "O nível no tanque de asa.", "A temperatura da gasolina.", "A rotação da bomba mecânica."], c: 0},
+  {q: "O \"disco de turbina\" é fixado ao eixo através de?", a: ["Estrias, parafusos ou acoplamentos de precisão.", "Pregos de aço.", "Solda de estanho.", "Cordas de nylon de alta resistência."], c: 0},
+  {q: "A hélice \"hidromática\" utiliza?", a: ["Óleo sob pressão para todas as mudanças de passo.", "Contrapesos e força centrífuga apenas.", "Cabos de aço ligados à manete.", "Motores elétricos de passo a passo."], c: 0},
+  {q: "O \"vazamento interno\" em um tucho hidráulico causa?", a: ["Ruído metálico (batida) e perda de eficiência na abertura da válvula.", "Aumento da compressão do cilindro.", "Quebra imediata do pistão.", "Fogo no carburador."], c: 0},
+  {q: "A seção de \"estiramento\" (diffuser) no compressor centrífugo serve para?", a: ["Converter a energia de velocidade em energia de pressão.", "Aumentar a velocidade do som.", "Diminuir o consumo de óleo.", "Separar o ar do combustível."], c: 0},
+  {q: "O \"selo de óleo\" (oil seal) do tipo anel de carbono é usado em?", a: ["Eixos de alta rotação em motores a reação.", "Pneus do trem de pouso.", "Janelas da cabine.", "Portas de serviço."], c: 0},
+  {q: "O \"período de amaciamento\" de um motor novo serve para?", a: ["Permitir o assentamento correto dos anéis de segmento e cilindros.", "Queimar o excesso de tinta interna.", "Testar se a hélice não vai cair.", "Gastar o combustível antigo."], c: 0},
+  {q: "Para que a hélice hidromática entre em bandeira, a válvula distribuidora deve ser deslocada por?", a: ["Pressão de ar.", "Ação mecânica.", "Força centrífuga.", "Pressão de óleo."], c: 3},
+  {q: "O motor a reação que possui apenas um conjunto rotativo, denomina-se?", a: ["Dual-spool.", "Misto.", "Simples (single-spool).", "Composto."], c: 2},
+  {q: "No motor a reação, a queima ocorre na seção de?", a: ["Compressão.", "Difusora.", "Combustão.", "Turbina."], c: 2},
+  {q: "O componente que tem a função de transformar o movimento retilíneo do pistão em movimento circular é o?", a: ["Eixo de manivelas.", "Eixo de ressaltos.", "Tucho.", "Balancim."], c: 0},
+  {q: "A função do sistema de lubrificação é reduzir o atrito e?", a: ["Arrefecer as partes móveis.", "Aumentar a temperatura.", "Diminuir a folga dos anéis.", "Facilitar a detonação."], c: 0},
+  {q: "A cor do combustível JET A-1 é?", a: ["Azul.", "Verde.", "Incolor ou levemente palha.", "Púrpura."], c: 2},
+  {q: "O componente que fornece ar sob pressão para a cabine em aviões a jato é o?", a: ["Compressor (bleed air).", "Escapamento.", "Fan frontal.", "Difusor."], c: 0},
+  {q: "O passo da hélice que proporciona melhor desempenho na decolagem é o?", a: ["Passo mínimo (ângulo pequeno).", "Passo máximo.", "Passo bandeira.", "Passo reverso."], c: 0},
+  {q: "O dispositivo que evita o retorno da chama para o carburador denomina-se?", a: ["Abafador de chamas (flame arrester).", "Válvula de corte.", "Injetor.", "Dreno de duto."], c: 0},
+  {q: "O motor radial possui os cilindros dispostos?", a: ["Em círculo ao redor do cárter.", "Em duas fileiras opostas.", "Em linha vertical.", "Em formato de \"X\"."], c: 0},
+  {q: "A finalidade do intercooler nos motores turboalimentados é?", a: ["Reduzir a temperatura do ar de admissão.", "Aumentar a temperatura do combustível.", "Resfriar o óleo do governador.", "Lubrificar o compressor."], c: 0},
+  {q: "O instrumento que indica a pressão do ar que entra nos cilindros é o?", a: ["Manifold Pressure.", "Tacômetro.", "EGT.", "CHT."], c: 0},
+  {q: "A queima do combustível no motor convencional ocorre no tempo de?", a: ["Expansão (potência).", "Compressão.", "Admissão.", "Escapamento."], c: 0},
+  {q: "Conforme o pistão se move para baixo no cilindro, ele aspira a mistura?", a: ["Ar/combustível.", "Porcentagem de nitro.", "H2o.", "Co2."], c: 0},
+  {q: "As bombas que circulam o óleo através do motor e as que retornam o óleo para o reservatório são, respectivamente, do tipo?", a: ["Pressão e sucção (scavenge).", "Sucção e pressão.", "Pressão e pressão.", "Sucção e sucção."], c: 0},
+  {q: "No motor a reação, o trocador de calor combustível/óleo tem a finalidade de?", a: ["Pré aquecer o combustível e o óleo.", "Pré-aquecer o combustível e resfriar o óleo.", "Resfriar o combustível e aquecer o óleo.", "Resfriar o combustível e o óleo."], c: 1},
+  {q: "O sistema de detecção de fogo que consiste de pontos de junção de metais diferentes é chamado de?", a: ["Spot.", "Termopar ou par térmico.", "Interruptor térmico.", "Circuito contínuo."], c: 1},
+  {q: "Havendo necessidade de substituir uma palheta danificada no disco de turbina de um motor a reação, além da palheta danificada deveremos substituir qual palheta?", a: ["Todas as palhetas.", "A palheta seguinte.", "A palheta oposta (para balanceamento).", "Somente a palheta defeituosa."], c: 2},
+  {q: "Se durante o funcionamento normal do motor \"não\" ocorrer entupimento no filtro de óleo a?", a: ["Válvula by-pass permanecerá fechada.", "Válvula by-pass abrirá.", "Pressão de óleo cairá a zero.", "Bomba de óleo parará de girar."], c: 0}
 ];
     // ============================================
     // CONFIGURAÇÕES DO SISTEMA
@@ -1498,6 +1504,379 @@
     const AUTO_NAV_KEY = 'auto_nav';
     const SIMULADO_STARTED_KEY = 'simulado_started';
     const CURRENT_SIMULADO_NUMBER_KEY = 'current_simulado_number';
+    
+    // ============================================
+    // NOVA FUNÇÃO: EMBARALHAR ALTERNATIVAS
+    // ============================================
+    
+    function shuffleAlternatives(question) {
+        // Cria uma cópia da questão
+        const shuffledQuestion = { ...question };
+        
+        // Cria um array de índices [0, 1, 2, 3...]
+        const indices = Array.from({ length: question.a.length }, (_, i) => i);
+        
+        // Embaralha os índices
+        const shuffledIndices = shuffleArray(indices);
+        
+        // Cria novas alternativas com a ordem embaralhada
+        const shuffledAlternatives = shuffledIndices.map(index => question.a[index]);
+        
+        // Encontra o novo índice da resposta correta
+        const newCorrectIndex = shuffledIndices.indexOf(question.c);
+        
+        // Atualiza a questão com as alternativas embaralhadas e o novo índice correto
+        shuffledQuestion.a = shuffledAlternatives;
+        shuffledQuestion.c = newCorrectIndex;
+        shuffledQuestion.shuffledIndices = shuffledIndices; // Guarda o mapeamento para o gabarito
+        shuffledQuestion.originalCorrectIndex = question.c; // Guarda o índice original para referência
+        
+        return shuffledQuestion;
+    }
+    
+    // ============================================
+    // FUNÇÃO SELECTRANDOMQUESTIONS ATUALIZADA
+    // ============================================
+
+    function selectRandomQuestions(forceFirstSimulado = false) {
+        const totalQuestions = masterBank.length;
+        
+        if (totalQuestions === 0) {
+            alert("⚠️ O banco de questões está vazio! Adicione questões no código.");
+            return [];
+        }
+        
+        const config = calcularConfiguracaoSimulados();
+        console.log(config.mensagem);
+        
+        let availableQuestions = [];
+        for (let i = 0; i < totalQuestions; i++) {
+            availableQuestions.push(i);
+        }
+        
+        // Remove as já usadas
+        if (usedQuestionsHistory.length > 0 && !forceFirstSimulado) {
+            availableQuestions = availableQuestions.filter(index => 
+                !usedQuestionsHistory.includes(index)
+            );
+        }
+        
+        const availableCount = availableQuestions.length;
+        let questionsToSelect;
+        
+        if (availableCount === 0) {
+            if (confirm(`Todas as ${totalQuestions} questões já foram usadas!\n\nDeseja reiniciar o histórico?`)) {
+                usedQuestionsHistory = [];
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
+                alert('Histórico reiniciado!');
+                forceFirstSimulado = true;
+            } else {
+                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
+            }
+        } else if (availableCount >= QUESTIONS_PER_SIMULADO) {
+            questionsToSelect = QUESTIONS_PER_SIMULADO;
+        } else if (availableCount >= 5) {
+            questionsToSelect = availableCount;
+        } else {
+            if (confirm(`Só restam ${availableCount} questões!\n\nDeseja fazer simulado com essas questões?`)) {
+                questionsToSelect = availableCount;
+            } else {
+                if (confirm(`Deseja reiniciar o histórico?`)) {
+                    usedQuestionsHistory = [];
+                    localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                    availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+                    questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
+                    forceFirstSimulado = true;
+                } else {
+                    questionsToSelect = availableCount;
+                }
+            }
+        }
+        
+        if (totalQuestions <= 27) {
+            questionsToSelect = totalQuestions;
+            availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+        }
+        
+        const shuffledQuestions = shuffleArray(availableQuestions);
+        const selectedIndices = shuffledQuestions.slice(0, questionsToSelect);
+        
+        currentSimuladoIndices = selectedIndices;
+        
+        if (forceFirstSimulado || usedQuestionsHistory.length === 0) {
+            currentSimuladoNumber = 1;
+        } else if (selectedIndices.length > 0) {
+            const usedCount = usedQuestionsHistory.length;
+            const simuladoIndex = Math.floor(usedCount / QUESTIONS_PER_SIMULADO);
+            currentSimuladoNumber = Math.min(simuladoIndex + 1, totalSimulados);
+        } else {
+            currentSimuladoNumber = 1;
+        }
+        
+        if (currentSimuladoNumber > totalSimulados) {
+            currentSimuladoNumber = totalSimulados;
+        }
+        
+        console.log(`Simulado configurado: ${currentSimuladoNumber}/${totalSimulados}`);
+        
+        // ALTERAÇÃO: Embaralha as alternativas de cada questão selecionada
+        const selectedQuestions = selectedIndices.map(index => {
+            const originalQuestion = masterBank[index];
+            return shuffleAlternatives({
+                ...originalQuestion, 
+                originalIndex: index
+            });
+        });
+        
+        return selectedQuestions;
+    }
+
+    // ============================================
+    // FUNÇÃO: GENERATE WRONG QUESTIONS SIMULADO ATUALIZADA
+    // ============================================
+    
+    function generateWrongQuestionsSimulado() {
+        console.log(`Gerando simulado de reforço com ${wrongQuestionsHistory.length} questões erradas...`);
+        
+        if (wrongQuestionsHistory.length === 0) {
+            console.error('Nenhuma questão errada no histórico');
+            return [];
+        }
+        
+        let availableWrongQuestions = [...wrongQuestionsHistory];
+        availableWrongQuestions = shuffleArray(availableWrongQuestions);
+        
+        const selectedIndices = availableWrongQuestions;
+        
+        console.log(`Selecionadas ${selectedIndices.length} questões para o simulado de reforço`);
+        
+        // ALTERAÇÃO: Embaralha as alternativas de cada questão de reforço
+        const questions = selectedIndices.map(index => {
+            if (index >= 0 && index < masterBank.length) {
+                const originalQuestion = masterBank[index];
+                return shuffleAlternatives({
+                    ...originalQuestion,
+                    originalIndex: index,
+                    isWrongQuestion: true
+                });
+            }
+            return null;
+        }).filter(q => q !== null);
+        
+        return questions;
+    }
+    
+    // ============================================
+    // FUNÇÃO RENDERCURRENTQUESTION ATUALIZADA
+    // ============================================
+    
+    function renderCurrentQuestion() {
+        const container = document.getElementById('quiz-content');
+        
+        if (!currentQuestions || currentQuestions.length === 0) {
+            container.innerHTML = '<div class="question-block-mini">Erro: Nenhuma questão carregada.</div>';
+            return;
+        }
+        
+        const question = currentQuestions[currentQuestionIndex];
+        
+        container.innerHTML = `
+            <div class="question-block-mini">
+                <div class="question-text-mini">
+                    ${currentQuestionIndex + 1}. ${question.q}
+                </div>
+                <div class="options-mini">
+                    ${question.a.map((opt, i) => `
+                        <label class="option-mini" id="option-${i}">
+                            <input type="radio" name="currentQuestion" value="${i}" 
+                                   ${userAnswers[currentQuestionIndex] === i ? 'checked' : ''}
+                                   onchange="selectAnswer(${i})">
+                            ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+                <button class="report-btn" onclick="openReportModal(${currentQuestionIndex})">
+                    <span>⚠️</span> Reportar Problema
+                </button>
+            </div>
+        `;
+    }
+    
+    // ============================================
+    // FUNÇÃO FINALIZEQUIZ ATUALIZADA
+    // ============================================
+    
+    function finalizeQuiz() {
+        clearInterval(timerId);
+        
+        const answeredCount = getAnsweredCount();
+        if (answeredCount !== currentQuestions.length && !confirm(`Respondidas: ${answeredCount}/${currentQuestions.length}. Finalizar?`)) {
+            startTimer();
+            return;
+        }
+        
+        let finalScore = 0;
+        userAnswers.forEach((answer, index) => {
+            if (answer !== null && answer === currentQuestions[index].c) {
+                finalScore++;
+            }
+        });
+        
+        const percent = currentQuestions.length > 0 ? Math.round((finalScore / currentQuestions.length) * 100) : 0;
+        const feedback = document.getElementById('feedback-msg');
+        
+        if (percent >= 70) {
+            feedback.textContent = "🎉 Excelente!";
+            feedback.style.color = "var(--success)";
+        } else if (percent >= 50) {
+            feedback.textContent = "👍 Quase lá!";
+            feedback.style.color = "var(--accent)";
+        } else {
+            feedback.textContent = "💪 Continue!";
+            feedback.style.color = "var(--danger)";
+        }
+        
+        if (currentQuestions[0]?.isWrongQuestion) {
+            removeCorrectQuestionsFromHistory();
+        } else {
+            addWrongQuestionsToHistory();
+        }
+        
+        if (currentSimuladoIndices.length > 0 && !currentQuestions[0]?.isWrongQuestion) {
+            usedQuestionsHistory.push(...currentSimuladoIndices);
+            usedQuestionsHistory = [...new Set(usedQuestionsHistory)];
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+        }
+        
+        clearSessionData();
+        
+        let quizHTML = '';
+        currentQuestions.forEach((question, index) => {
+            const userAnswer = userAnswers[index];
+            const isCorrect = userAnswer === question.c;
+            
+            // Para o gabarito, usamos as alternativas como foram mostradas
+            quizHTML += `
+                <div class="question-block-mini">
+                    <button class="report-gabarito-btn" onclick="openReportModal(${index})" title="Reportar problema">
+                        ⚠️
+                    </button>
+                    
+                    <div class="question-text-mini">
+                        ${index + 1}. ${question.q}
+                    </div>
+                    <div class="options-mini">
+                        ${question.a.map((opt, i) => {
+                            let classes = 'option-mini';
+                            if (i === question.c) classes += ' correct-answer';
+                            else if (userAnswer === i && !isCorrect) classes += ' wrong-answer';
+                            
+                            return `<label class="${classes}">
+                                <input type="radio" disabled ${userAnswer === i ? 'checked' : ''}>
+                                ${opt}
+                                ${userAnswer === i ? '<span style="margin-left: auto; font-size: 0.6rem; color: #6c757d;">(sua resposta)</span>' : ''}
+                                ${i === question.c && userAnswer !== i ? '<span style="margin-left: auto; font-size: 0.6rem; color: var(--success);">(correta)</span>' : ''}
+                            </label>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        });
+        
+        document.getElementById('quiz-content').innerHTML = quizHTML;
+        document.getElementById('final-score').textContent = `${finalScore}/${currentQuestions.length}`;
+        document.getElementById('final-percent').textContent = `${percent}%`;
+        
+        const motivationElement = document.getElementById('motivation-message');
+        let motivationHTML = '';
+        
+        if (currentQuestions[0]?.isWrongQuestion) {
+            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
+                motivationHTML = `✅ <strong>PARABÉNS!</strong> Você superou suas dificuldades!`;
+                motivationElement.className = 'motivation-message motivation-success';
+            } else {
+                motivationHTML = `⚡ <strong>PRECISA MELHORAR</strong><br>`;
+                motivationHTML += `Você acertou ${finalScore} de ${currentQuestions.length}.<br>`;
+                motivationHTML += `Faltam ${MIN_PERCENT_FOR_SUCCESS - percent}% para a meta de ${MIN_PERCENT_FOR_SUCCESS}%.`;
+                motivationElement.className = 'motivation-message motivation-warning';
+            }
+        } else {
+            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
+                motivationHTML = `🎯 <strong>ÓTIMO DESEMPENHO!</strong>`;
+                motivationElement.className = 'motivation-message motivation-success';
+            } else {
+                motivationHTML = `📚 <strong>CONTINUE ESTUDANDO!</strong>`;
+                motivationElement.className = 'motivation-message motivation-warning';
+            }
+        }
+        
+        motivationElement.innerHTML = motivationHTML;
+        
+        const totalQuestions = masterBank.length;
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        const remainingQuestions = Math.max(0, totalQuestions - uniqueUsed.length);
+        const wrongCount = wrongQuestionsHistory.length;
+        
+        let summaryText = '';
+        let showNewSimuladoBtn = true;
+        let showReiniciarBancoBtn = false;
+        let showNovoSimuladoReforcoBtn = false;
+        
+        if (currentQuestions[0]?.isWrongQuestion) {
+            summaryText = `⚡ <strong>SIMULADO DE REFORÇO FINALIZADO</strong><br>`;
+            summaryText += `Você revisou ${currentQuestions.length} questões que errou anteriormente.<br>`;
+            summaryText += `Questões ainda erradas: <strong>${wrongCount}</strong>`;
+            showNewSimuladoBtn = false;
+            showNovoSimuladoReforcoBtn = true;
+            
+            if (percent < MIN_PERCENT_FOR_SUCCESS) {
+                showReiniciarBancoBtn = true;
+            }
+        } else if (remainingQuestions === 0) {
+            summaryText = `🎯 <strong>COMPLETOU TODAS AS ${totalQuestions} QUESTÕES!</strong><br>`;
+            summaryText += `Questões erradas: <strong>${wrongCount}</strong>`;
+            
+            if (wrongCount < MIN_WRONG_QUESTIONS_FOR_SIMULADO) {
+                showNewSimuladoBtn = false;
+            }
+        } else {
+            summaryText = `Restam: <strong>${remainingQuestions}</strong> | Usadas: <strong>${uniqueUsed.length}</strong><br>`;
+            summaryText += `Questões erradas: <strong>${wrongCount}</strong>`;
+        }
+        
+        document.getElementById('simulado-summary').innerHTML = summaryText;
+        
+        document.querySelector('.nav-buttons').style.display = 'none';
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('finish-btn').style.display = 'none';
+        document.getElementById('restart-btn').style.display = 'block';
+        
+        document.getElementById('wrong-questions-btn').style.display = 'none';
+        document.getElementById('reiniciar-banco-btn').style.display = showReiniciarBancoBtn ? 'block' : 'none';
+        document.getElementById('new-simulado-btn').style.display = showNewSimuladoBtn ? 'block' : 'none';
+        document.getElementById('novo-simulado-reforco-btn').style.display = showNovoSimuladoReforcoBtn ? 'block' : 'none';
+        
+        updateSimuladoInfo();
+        updateReforcoButton();
+        updateReiniciarBancoButton();
+        updateContinuarBancoButton();
+        updateVoltarInicioButton();
+        updateNovoSimuladoReforcoButton();
+        
+        setTimeout(() => {
+            if (canOfferReforcoSimulado()) {
+                console.log('Oferecendo simulado de reforço...');
+                setTimeout(() => {
+                    offerWrongQuestionsSimulado();
+                }, 1500);
+            } else {
+                console.log('Não pode oferecer reforço no momento');
+            }
+        }, 500);
+    }
     
     // ============================================
     // FUNÇÕES DE CONFIGURAÇÃO DO SIMULADO
@@ -1568,10 +1947,6 @@
         const totalQuestions = masterBank.length;
         const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
         
-        // Mostra o botão se:
-        // 1. É um simulado de reforço que acabou
-        // 2. Está na tela de resultados
-        // 3. Ainda há questões no banco OU todas foram usadas
         if (isReforco && isResultsVisible) {
             novoSimuladoBtn.style.display = 'block';
             
@@ -1600,11 +1975,8 @@
             message += `Deseja reiniciar o histórico e começar um novo simulado?`;
             
             if (confirm(message)) {
-                // Limpa histórico e começa novo
                 usedQuestionsHistory = [];
                 localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-                
-                // Gera novo simulado
                 startNewSimuladoFromResults();
             }
         } else {
@@ -1613,7 +1985,6 @@
             message += `Deseja continuar com as próximas questões do banco?`;
             
             if (confirm(message)) {
-                // Continua com próximo simulado
                 startNewSimuladoFromResults();
             }
         }
@@ -1656,7 +2027,7 @@
             document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
             document.querySelector('.nav-buttons').style.display = 'flex';
             
-            currentQuestions = selectRandomQuestions(true); // true = forçar simulado 1
+            currentQuestions = selectRandomQuestions(true);
             
             if (currentQuestions.length === 0) {
                 alert("Erro ao gerar novo simulado.");
@@ -1701,7 +2072,6 @@
 
     function clearHistory() {
         if (confirm(`Limpar histórico completo?`)) {
-            // Limpa histórico
             usedQuestionsHistory = [];
             localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
             
@@ -1710,7 +2080,6 @@
             
             clearSessionData();
             
-            // RESETA INTERFACE
             document.getElementById('results').style.display = 'none';
             document.getElementById('finish-btn').style.display = 'block';
             document.getElementById('restart-btn').style.display = 'none';
@@ -1722,8 +2091,7 @@
             document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
             document.querySelector('.nav-buttons').style.display = 'flex';
             
-            // Gera NOVO simulado começando do 1
-            currentQuestions = selectRandomQuestions(true); // true = forçar simulado 1
+            currentQuestions = selectRandomQuestions(true);
             
             if (currentQuestions.length === 0) {
                 alert("Não foi possível gerar o simulado.");
@@ -1735,8 +2103,6 @@
             TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
             timeLeft = TIME_LIMIT;
             autoNavEnabled = true;
-            
-            // IMPORTANTE: Garante que começa no simulado 1
             currentSimuladoNumber = 1;
             
             saveCurrentSessionState();
@@ -1759,108 +2125,6 @@
             
             alert('Histórico limpo! Novo simulado gerado.');
         }
-    }
-
-    // ============================================
-    // FUNÇÃO SELECTRANDOMQUESTIONS CORRIGIDA
-    // ============================================
-
-    function selectRandomQuestions(forceFirstSimulado = false) {
-        const totalQuestions = masterBank.length;
-        
-        if (totalQuestions === 0) {
-            alert("⚠️ O banco de questões está vazio! Adicione questões no código.");
-            return [];
-        }
-        
-        const config = calcularConfiguracaoSimulados();
-        console.log(config.mensagem);
-        
-        let availableQuestions = [];
-        for (let i = 0; i < totalQuestions; i++) {
-            availableQuestions.push(i);
-        }
-        
-        // Remove as já usadas
-        if (usedQuestionsHistory.length > 0 && !forceFirstSimulado) {
-            availableQuestions = availableQuestions.filter(index => 
-                !usedQuestionsHistory.includes(index)
-            );
-        }
-        
-        const availableCount = availableQuestions.length;
-        let questionsToSelect;
-        
-        if (availableCount === 0) {
-            if (confirm(`Todas as ${totalQuestions} questões já foram usadas!\n\nDeseja reiniciar o histórico?`)) {
-                usedQuestionsHistory = [];
-                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
-                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
-                alert('Histórico reiniciado!');
-                // Quando reinicia, força começar do simulado 1
-                forceFirstSimulado = true;
-            } else {
-                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
-                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
-            }
-        } else if (availableCount >= QUESTIONS_PER_SIMULADO) {
-            questionsToSelect = QUESTIONS_PER_SIMULADO;
-        } else if (availableCount >= 5) {
-            questionsToSelect = availableCount;
-        } else {
-            if (confirm(`Só restam ${availableCount} questões!\n\nDeseja fazer simulado com essas questões?`)) {
-                questionsToSelect = availableCount;
-            } else {
-                if (confirm(`Deseja reiniciar o histórico?`)) {
-                    usedQuestionsHistory = [];
-                    localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-                    availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
-                    questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
-                    // Quando reinicia, força começar do simulado 1
-                    forceFirstSimulado = true;
-                } else {
-                    questionsToSelect = availableCount;
-                }
-            }
-        }
-        
-        // Para bancos pequenos (≤ 27), usa todas as questões
-        if (totalQuestions <= 27) {
-            questionsToSelect = totalQuestions;
-            availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
-        }
-        
-        const shuffledQuestions = shuffleArray(availableQuestions);
-        const selectedIndices = shuffledQuestions.slice(0, questionsToSelect);
-        
-        currentSimuladoIndices = selectedIndices;
-        
-        // CORREÇÃO: Lógica aprimorada para calcular o número do simulado
-        if (forceFirstSimulado || usedQuestionsHistory.length === 0) {
-            // Se forçado ou histórico vazio, começa do simulado 1
-            currentSimuladoNumber = 1;
-        } else if (selectedIndices.length > 0) {
-            // Calcula baseado nas questões já usadas
-            const usedCount = usedQuestionsHistory.length;
-            const simuladoIndex = Math.floor(usedCount / QUESTIONS_PER_SIMULADO);
-            currentSimuladoNumber = Math.min(simuladoIndex + 1, totalSimulados);
-        } else {
-            // Fallback
-            currentSimuladoNumber = 1;
-        }
-        
-        // Garante que não ultrapassa o total de simulados
-        if (currentSimuladoNumber > totalSimulados) {
-            currentSimuladoNumber = totalSimulados;
-        }
-        
-        console.log(`Simulado configurado: ${currentSimuladoNumber}/${totalSimulados}`);
-        
-        return selectedIndices.map(index => ({
-            ...masterBank[index], 
-            originalIndex: index
-        }));
     }
 
     // ============================================
@@ -1887,7 +2151,6 @@
                 alert('Histórico reiniciado!');
             }
             
-            // RESETA INTERFACE
             document.getElementById('results').style.display = 'none';
             document.getElementById('finish-btn').style.display = 'block';
             document.getElementById('restart-btn').style.display = 'none';
@@ -1899,7 +2162,6 @@
             document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
             document.querySelector('.nav-buttons').style.display = 'flex';
             
-            // Gera novo simulado SEM forçar o primeiro (deixa a lógica normal decidir)
             currentQuestions = selectRandomQuestions(false);
             
             if (currentQuestions.length === 0) {
@@ -1940,7 +2202,6 @@
     // ============================================
 
     function startNewSimuladoFromResults() {
-        // RESETA A INTERFACE
         document.getElementById('results').style.display = 'none';
         document.getElementById('finish-btn').style.display = 'block';
         document.getElementById('restart-btn').style.display = 'none';
@@ -1952,7 +2213,6 @@
         document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
         document.querySelector('.nav-buttons').style.display = 'flex';
         
-        // Gera novo simulado normal (deixa a lógica normal decidir o número)
         currentQuestions = selectRandomQuestions(false);
         
         if (currentQuestions.length === 0) {
@@ -1986,7 +2246,6 @@
         updateVoltarInicioButton();
         updateNovoSimuladoReforcoButton();
         
-        // Mostra mensagem informativa
         const totalQuestions = masterBank.length;
         const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
         alert(`✅ NOVO SIMULADO INICIADO!\n\n${currentQuestions.length} questões selecionadas.\n\nRestam ${remainingQuestions} questões no banco.`);
@@ -2019,13 +2278,10 @@
     function updateSimuladoInfo() {
         const totalQuestions = masterBank.length;
         
-        // CORREÇÃO: Usa currentSimuladoIndices ou currentQuestions para contar questões atuais
         const currentQuestionsCount = currentQuestions ? currentQuestions.length : 0;
         
-        // CORREÇÃO: Calcula disponíveis corretamente
         let remaining = 0;
         if (currentQuestions && currentQuestions[0]?.isWrongQuestion) {
-            // Para simulado de reforço
             const wrongCount = wrongQuestionsHistory.length;
             const successRate = Math.round(((totalQuestions - wrongCount) / totalQuestions) * 100);
             
@@ -2041,8 +2297,6 @@
             return;
         }
         
-        // CORREÇÃO: Para simulado normal
-        // Removendo duplicatas do histórico
         const uniqueUsed = [...new Set(usedQuestionsHistory)];
         const recentUsed = uniqueUsed.length;
         remaining = Math.max(0, totalQuestions - recentUsed);
@@ -2068,7 +2322,6 @@
         `;
         document.getElementById('simulado-info').style.display = 'block';
         
-        // CORREÇÃO: Atualiza também os elementos específicos se existirem
         const questionsPerSimuladoEl = document.getElementById('questions-per-simulado');
         const remainingQuestionsEl = document.getElementById('remaining-questions');
         const recentUsedEl = document.getElementById('recent-used');
@@ -2094,16 +2347,10 @@
         const isReforco = currentQuestions[0]?.isWrongQuestion;
         const percent = parseInt(document.getElementById('final-percent')?.textContent?.replace('%', '') || 0);
         
-        // Mostra se:
-        // 1. Está na tela de resultados
-        // 2. Não é simulado de reforço
-        // 3. Atingiu 70% OU é simulado de reforço com 70%
-        // 4. Ainda há questões OU todas foram usadas
         if (isResultsVisible && !isReforco && remainingQuestions > 0) {
             continuarBtn.style.display = 'block';
             continuarBtn.innerHTML = `📚 Continuar com Banco (${remainingQuestions} restantes)`;
         } else if (isResultsVisible && isReforco && percent >= MIN_PERCENT_FOR_SUCCESS) {
-            // Para reforço bem-sucedido
             continuarBtn.style.display = 'block';
             continuarBtn.innerHTML = `📚 Voltar ao Banco (${remainingQuestions} restantes)`;
         } else {
@@ -2259,7 +2506,7 @@
             document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
             document.querySelector('.nav-buttons').style.display = 'flex';
             
-            currentQuestions = selectRandomQuestions(true); // true = forçar simulado 1
+            currentQuestions = selectRandomQuestions(true);
             
             if (currentQuestions.length === 0) {
                 alert("Erro ao gerar novo simulado.");
@@ -2308,7 +2555,6 @@
             timeLeft = TIME_LIMIT;
             currentQuestionIndex = 0;
             
-            // Volta para o modo de simulado ativo
             document.getElementById('results').style.display = 'none';
             document.getElementById('finish-btn').style.display = 'block';
             document.getElementById('restart-btn').style.display = 'none';
@@ -2320,7 +2566,6 @@
             document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
             document.querySelector('.nav-buttons').style.display = 'flex';
             
-            // Limpa o conteúdo das questões (remove o gabarito)
             document.getElementById('quiz-content').innerHTML = '';
             
             saveCurrentSessionState();
@@ -2342,7 +2587,6 @@
     // ============================================
     
     function startNewQuiz() {
-        // RESETA A INTERFACE
         document.getElementById('results').style.display = 'none';
         document.getElementById('finish-btn').style.display = 'block';
         document.getElementById('restart-btn').style.display = 'none';
@@ -2354,10 +2598,8 @@
         document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
         document.querySelector('.nav-buttons').style.display = 'flex';
         
-        // Limpa o conteúdo das questões
         document.getElementById('quiz-content').innerHTML = '';
         
-        // Usa as MESMAS questões
         userAnswers = new Array(currentQuestions.length).fill(null);
         timeLeft = TIME_LIMIT;
         currentQuestionIndex = 0;
@@ -2472,68 +2714,6 @@
     
     function saveOfferTimestamp() {
         localStorage.setItem(LAST_OFFER_KEY, Date.now().toString());
-    }
-    
-    function generateWrongQuestionsSimulado() {
-        console.log(`Gerando simulado de reforço com ${wrongQuestionsHistory.length} questões erradas...`);
-        
-        if (wrongQuestionsHistory.length === 0) {
-            console.error('Nenhuma questão errada no histórico');
-            return [];
-        }
-        
-        let availableWrongQuestions = [...wrongQuestionsHistory];
-        availableWrongQuestions = shuffleArray(availableWrongQuestions);
-        
-        const selectedIndices = availableWrongQuestions;
-        
-        console.log(`Selecionadas ${selectedIndices.length} questões para o simulado de reforço`);
-        
-        const questions = selectedIndices.map(index => {
-            if (index >= 0 && index < masterBank.length) {
-                return {
-                    ...masterBank[index],
-                    originalIndex: index,
-                    isWrongQuestion: true
-                };
-            }
-            return null;
-        }).filter(q => q !== null);
-        
-        return questions;
-    }
-    
-    function offerWrongQuestionsSimulado() {
-        if (!canOfferReforcoSimulado()) {
-            console.log('Não pode oferecer simulado de reforço no momento');
-            updateReforcoButton();
-            return false;
-        }
-        
-        const wrongCount = wrongQuestionsHistory.length;
-        
-        let title = "🎯 TEMPO DE REFORÇO";
-        let message = `Identificamos ${wrongCount} questões que você errou.\n\n`;
-        message += `⚡ SIMULADO DE REFORÇO DISPONÍVEL\n`;
-        message += `Deseja focar nessas ${wrongCount} questões?\n\n`;
-        message += `✅ Benefícios:\n`;
-        message += `• Foco nas suas dificuldades\n`;
-        message += `• Reforço da memória\n`;
-        message += `• Maior taxa de acerto`;
-        
-        const userWantsReforco = confirm(`${title}\n\n${message}`);
-        
-        saveOfferTimestamp();
-        
-        if (userWantsReforco) {
-            console.log('Usuário aceitou simulado de reforço');
-            startWrongQuestionsSimulado();
-            return true;
-        } else {
-            console.log('Usuário recusou simulado de reforço');
-            updateReforcoButton();
-            return false;
-        }
     }
     
     function isNewSession() {
@@ -2763,7 +2943,6 @@
             usedQuestionsHistory = [];
         }
         
-        // VERIFICA SE É UMA NOVA SESSÃO OU UM REFRESH
         if (isNewSession()) {
             console.log('Nova sessão - gerando questões');
             currentQuestions = selectRandomQuestions();
@@ -2824,38 +3003,6 @@
         updateContinuarBancoButton();
         updateVoltarInicioButton();
         updateNovoSimuladoReforcoButton();
-    }
-    
-    function renderCurrentQuestion() {
-        const container = document.getElementById('quiz-content');
-        
-        if (!currentQuestions || currentQuestions.length === 0) {
-            container.innerHTML = '<div class="question-block-mini">Erro: Nenhuma questão carregada.</div>';
-            return;
-        }
-        
-        const question = currentQuestions[currentQuestionIndex];
-        
-        container.innerHTML = `
-            <div class="question-block-mini">
-                <div class="question-text-mini">
-                    ${currentQuestionIndex + 1}. ${question.q}
-                </div>
-                <div class="options-mini">
-                    ${question.a.map((opt, i) => `
-                        <label class="option-mini" id="option-${i}">
-                            <input type="radio" name="currentQuestion" value="${i}" 
-                                   ${userAnswers[currentQuestionIndex] === i ? 'checked' : ''}
-                                   onchange="selectAnswer(${i})">
-                            ${opt}
-                        </label>
-                    `).join('')}
-                </div>
-                <button class="report-btn" onclick="openReportModal(${currentQuestionIndex})">
-                    <span>⚠️</span> Reportar Problema
-                </button>
-            </div>
-        `;
     }
     
     function selectAnswer(answerIndex) {
@@ -2970,178 +3117,6 @@
     }
     
     // ============================================
-    // FUNÇÃO FINALIZEQUIZ ATUALIZADA COM NOVO BOTÃO
-    // ============================================
-    
-    function finalizeQuiz() {
-        clearInterval(timerId);
-        
-        const answeredCount = getAnsweredCount();
-        if (answeredCount !== currentQuestions.length && !confirm(`Respondidas: ${answeredCount}/${currentQuestions.length}. Finalizar?`)) {
-            startTimer();
-            return;
-        }
-        
-        let finalScore = 0;
-        userAnswers.forEach((answer, index) => {
-            if (answer !== null && answer === currentQuestions[index].c) {
-                finalScore++;
-            }
-        });
-        
-        const percent = currentQuestions.length > 0 ? Math.round((finalScore / currentQuestions.length) * 100) : 0;
-        const feedback = document.getElementById('feedback-msg');
-        
-        if (percent >= 70) {
-            feedback.textContent = "🎉 Excelente!";
-            feedback.style.color = "var(--success)";
-        } else if (percent >= 50) {
-            feedback.textContent = "👍 Quase lá!";
-            feedback.style.color = "var(--accent)";
-        } else {
-            feedback.textContent = "💪 Continue!";
-            feedback.style.color = "var(--danger)";
-        }
-        
-        if (currentQuestions[0]?.isWrongQuestion) {
-            removeCorrectQuestionsFromHistory();
-        } else {
-            addWrongQuestionsToHistory();
-        }
-        
-        if (currentSimuladoIndices.length > 0 && !currentQuestions[0]?.isWrongQuestion) {
-            usedQuestionsHistory.push(...currentSimuladoIndices);
-            usedQuestionsHistory = [...new Set(usedQuestionsHistory)];
-            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-        }
-        
-        clearSessionData();
-        
-        let quizHTML = '';
-        currentQuestions.forEach((question, index) => {
-            const userAnswer = userAnswers[index];
-            const isCorrect = userAnswer === question.c;
-            
-            quizHTML += `
-                <div class="question-block-mini">
-                    <button class="report-gabarito-btn" onclick="openReportModal(${index})" title="Reportar problema">
-                        ⚠️
-                    </button>
-                    
-                    <div class="question-text-mini">
-                        ${index + 1}. ${question.q}
-                    </div>
-                    <div class="options-mini">
-                        ${question.a.map((opt, i) => {
-                            let classes = 'option-mini';
-                            if (i === question.c) classes += ' correct-answer';
-                            else if (userAnswer === i && !isCorrect) classes += ' wrong-answer';
-                            
-                            return `<label class="${classes}">
-                                <input type="radio" disabled ${userAnswer === i ? 'checked' : ''}>
-                                ${opt}
-                                ${userAnswer === i ? '<span style="margin-left: auto; font-size: 0.6rem; color: #6c757d;">(sua resposta)</span>' : ''}
-                                ${i === question.c && userAnswer !== i ? '<span style="margin-left: auto; font-size: 0.6rem; color: var(--success);">(correta)</span>' : ''}
-                            </label>`;
-                        }).join('')}
-                    </div>
-                </div>
-            `;
-        });
-        
-        document.getElementById('quiz-content').innerHTML = quizHTML;
-        document.getElementById('final-score').textContent = `${finalScore}/${currentQuestions.length}`;
-        document.getElementById('final-percent').textContent = `${percent}%`;
-        
-        const motivationElement = document.getElementById('motivation-message');
-        let motivationHTML = '';
-        
-        if (currentQuestions[0]?.isWrongQuestion) {
-            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
-                motivationHTML = `✅ <strong>PARABÉNS!</strong> Você superou suas dificuldades!`;
-                motivationElement.className = 'motivation-message motivation-success';
-            } else {
-                motivationHTML = `⚡ <strong>PRECISA MELHORAR</strong><br>`;
-                motivationHTML += `Você acertou ${finalScore} de ${currentQuestions.length}.<br>`;
-                motivationHTML += `Faltam ${MIN_PERCENT_FOR_SUCCESS - percent}% para a meta de ${MIN_PERCENT_FOR_SUCCESS}%.`;
-                motivationElement.className = 'motivation-message motivation-warning';
-            }
-        } else {
-            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
-                motivationHTML = `🎯 <strong>ÓTIMO DESEMPENHO!</strong>`;
-                motivationElement.className = 'motivation-message motivation-success';
-            } else {
-                motivationHTML = `📚 <strong>CONTINUE ESTUDANDO!</strong>`;
-                motivationElement.className = 'motivation-message motivation-warning';
-            }
-        }
-        
-        motivationElement.innerHTML = motivationHTML;
-        
-        const totalQuestions = masterBank.length;
-        const uniqueUsed = [...new Set(usedQuestionsHistory)];
-        const remainingQuestions = Math.max(0, totalQuestions - uniqueUsed.length);
-        const wrongCount = wrongQuestionsHistory.length;
-        
-        let summaryText = '';
-        let showNewSimuladoBtn = true;
-        let showReiniciarBancoBtn = false;
-        let showNovoSimuladoReforcoBtn = false;
-        
-        if (currentQuestions[0]?.isWrongQuestion) {
-            summaryText = `⚡ <strong>SIMULADO DE REFORÇO FINALIZADO</strong><br>`;
-            summaryText += `Você revisou ${currentQuestions.length} questões que errou anteriormente.<br>`;
-            summaryText += `Questões ainda erradas: <strong>${wrongCount}</strong>`;
-            showNewSimuladoBtn = false;
-            showNovoSimuladoReforcoBtn = true;
-            
-            if (percent < MIN_PERCENT_FOR_SUCCESS) {
-                showReiniciarBancoBtn = true;
-            }
-        } else if (remainingQuestions === 0) {
-            summaryText = `🎯 <strong>COMPLETOU TODAS AS ${totalQuestions} QUESTÕES!</strong><br>`;
-            summaryText += `Questões erradas: <strong>${wrongCount}</strong>`;
-            
-            if (wrongCount < MIN_WRONG_QUESTIONS_FOR_SIMULADO) {
-                showNewSimuladoBtn = false;
-            }
-        } else {
-            summaryText = `Restam: <strong>${remainingQuestions}</strong> | Usadas: <strong>${uniqueUsed.length}</strong><br>`;
-            summaryText += `Questões erradas: <strong>${wrongCount}</strong>`;
-        }
-        
-        document.getElementById('simulado-summary').innerHTML = summaryText;
-        
-        document.querySelector('.nav-buttons').style.display = 'none';
-        document.getElementById('results').style.display = 'block';
-        document.getElementById('finish-btn').style.display = 'none';
-        document.getElementById('restart-btn').style.display = 'block';
-        
-        document.getElementById('wrong-questions-btn').style.display = 'none';
-        document.getElementById('reiniciar-banco-btn').style.display = showReiniciarBancoBtn ? 'block' : 'none';
-        document.getElementById('new-simulado-btn').style.display = showNewSimuladoBtn ? 'block' : 'none';
-        document.getElementById('novo-simulado-reforco-btn').style.display = showNovoSimuladoReforcoBtn ? 'block' : 'none';
-        
-        updateSimuladoInfo();
-        updateReforcoButton();
-        updateReiniciarBancoButton();
-        updateContinuarBancoButton();
-        updateVoltarInicioButton();
-        updateNovoSimuladoReforcoButton();
-        
-        setTimeout(() => {
-            if (canOfferReforcoSimulado()) {
-                console.log('Oferecendo simulado de reforço...');
-                setTimeout(() => {
-                    offerWrongQuestionsSimulado();
-                }, 1500);
-            } else {
-                console.log('Não pode oferecer reforço no momento');
-            }
-        }, 500);
-    }
-    
-    // ============================================
     // SISTEMA DE REPORTE - CORRIGIDO
     // ============================================
     
@@ -3153,7 +3128,6 @@
             reportsHistory = [];
         }
         
-        // CORREÇÃO: Adiciona os event listeners diretamente
         document.getElementById('cancelReport').addEventListener('click', closeReportModal);
         document.getElementById('submitReport').addEventListener('click', submitReport);
         
