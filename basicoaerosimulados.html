@@ -1,0 +1,3236 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BASICO AEROSIMULADOS</title>
+    <style>
+        :root {
+            --primary: #1a3a5a;
+            --accent: #007bff;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --info: #17a2b8;
+            --purple: #6f42c1;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 4px;
+            font-size: 13px;
+            line-height: 1.3;
+        }
+
+        .container {
+            max-width: 100%;
+            background: white;
+            padding: 6px;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            position: relative;
+            margin: 0 auto;
+        }
+
+        .credits-integrated {
+            position: absolute;
+            top: 2px;
+            right: 6px;
+            background: var(--primary);
+            color: white;
+            padding: 1px 3px;
+            font-size: 0.5rem;
+            font-weight: bold;
+            border-radius: 1px;
+            z-index: 10;
+        }
+
+        /* CABEÇALHO SUPER COMPACTO */
+        .header-mini {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--primary);
+            z-index: 5;
+            margin-bottom: 6px;
+            padding-top: 16px;
+        }
+
+        .header-mini-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .page-title-mini {
+            margin: 0;
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: bold;
+            line-height: 1.1;
+            max-width: 65%;
+        }
+
+        .timer-compact {
+            background: #f8f9fa;
+            color: var(--primary);
+            padding: 2px 4px;
+            border-radius: 2px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            border: 1px solid #dee2e6;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .timer-warning {
+            background: #fff5f5 !important;
+            color: var(--danger) !important;
+            border-color: var(--danger) !important;
+        }
+
+        /* INFO DO SIMULADO MAIS COMPACTA */
+        .simulado-info {
+            background: #e7f3ff;
+            border: 1px solid var(--accent);
+            border-radius: 3px;
+            padding: 4px 5px;
+            margin-bottom: 5px;
+            font-size: 0.65rem;
+            color: var(--primary);
+            display: none;
+        }
+
+        .simulado-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2px;
+            font-weight: 600;
+        }
+
+        /* CONTROLES DE HISTÓRICO COMPACTOS */
+        .history-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            margin-top: 4px;
+        }
+
+        .history-controls button {
+            padding: 2px 4px;
+            font-size: 0.6rem;
+            border-radius: 2px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .clear-history-btn {
+            background: var(--warning);
+            color: #856404;
+            border: 1px solid #ffc107;
+        }
+
+        .info-history-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        /* INFO BÁSICA SUPER COMPACTA */
+        .quiz-info-mini {
+            background: #f8f9fa;
+            border-radius: 3px;
+            padding: 5px 6px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 4px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            font-size: 0.55rem;
+            color: #6c757d;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0;
+        }
+
+        .info-value {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* CONTROLES COMPACTOS */
+        .controls-compact {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 4px;
+        }
+
+        .auto-nav-toggle {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 4px;
+            background: #e9ecef;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 0.65rem;
+        }
+
+        .auto-nav-checkbox {
+            transform: scale(0.8);
+            accent-color: var(--primary);
+        }
+
+        .auto-nav-label {
+            font-weight: 600;
+            color: var(--primary);
+            white-space: nowrap;
+        }
+
+        .reset-btn-mini {
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 2px;
+            padding: 2px 4px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        /* STATUS COMPACTO */
+        .completion-status {
+            background: #f8f9fa;
+            border-radius: 3px;
+            padding: 4px 5px;
+            margin: 5px 0;
+            border: 1px solid #dee2e6;
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2px;
+        }
+
+        .status-text {
+            font-size: 0.65rem;
+            font-weight: 600;
+        }
+
+        .status-count {
+            font-size: 0.65rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* PENDENTES SUPER COMPACTOS */
+        .pending-compact {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 2px;
+            padding: 2px 3px;
+            font-size: 0.6rem;
+        }
+
+        .pending-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1px;
+        }
+
+        .pending-count {
+            font-weight: bold;
+            color: #856404;
+            font-size: 0.65rem;
+        }
+
+        .pending-list-compact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            max-height: 18px;
+            overflow-y: auto;
+            padding: 1px 0;
+        }
+
+        .pending-number {
+            background: #ffc107;
+            color: #856404;
+            font-weight: bold;
+            padding: 0 2px;
+            border-radius: 1px;
+            font-size: 0.55rem;
+            min-width: 12px;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .pending-number.answered {
+            background: #28a745;
+            color: white;
+            opacity: 0.5;
+        }
+
+        /* QUESTÕES COMPACTAS */
+        .question-block-mini {
+            margin: 6px 0;
+            padding: 8px;
+            border: 1px solid #e0e0e0;
+            border-radius: 3px;
+            background: #fff;
+            position: relative;
+        }
+
+        .question-text-mini {
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .options-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .option-mini {
+            padding: 5px 6px;
+            border: 1px solid #eee;
+            border-radius: 2px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 0.75rem;
+            min-height: 28px;
+            position: relative;
+        }
+
+        input[type="radio"] {
+            margin-right: 4px;
+            transform: scale(0.8);
+            accent-color: var(--primary);
+        }
+
+        .correct-answer {
+            background-color: #d4edda !important;
+            border-color: #28a745 !important;
+            color: #155724;
+        }
+
+        .wrong-answer {
+            background-color: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #721c24;
+        }
+
+        /* BOTÃO DE REPORTAR NAS QUESTÕES */
+        .report-btn {
+            background: transparent;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+            border-radius: 2px;
+            padding: 2px 6px;
+            font-size: 0.55rem;
+            cursor: pointer;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            transition: all 0.2s;
+        }
+
+        .report-btn:hover {
+            background: #f8f9fa;
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        /* BOTÃO DE REPORTAR NO GABARITO (canto superior direito) */
+        .report-gabarito-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: transparent;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+            border-radius: 2px;
+            padding: 1px 4px;
+            font-size: 0.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            transition: all 0.2s;
+            z-index: 2;
+        }
+
+        .report-gabarito-btn:hover {
+            background: #f8f9fa;
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        /* BOTÕES DE NAVEGAÇÃO COMPACTOS */
+        .nav-buttons {
+            display: flex;
+            gap: 4px;
+            margin: 8px 0;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 6px 4px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 2px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-align: center;
+            min-height: 32px;
+        }
+
+        .nav-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        /* BOTÕES PRINCIPAIS COMPACTOS */
+        .btn {
+            padding: 8px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 8px;
+            min-height: 36px;
+        }
+
+        .btn-finish {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-finish:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-restart {
+            background: var(--success);
+            color: white;
+            display: none;
+        }
+
+        .btn-restart-success {
+            background: linear-gradient(135deg, var(--success), #1e7e34);
+            color: white;
+            display: none;
+        }
+
+        /* BOTÃO VOLTAR AO INÍCIO */
+        .btn-voltar-inicio {
+            background: linear-gradient(135deg, var(--accent), #0056b3);
+            color: white;
+            border: none;
+            display: none;
+        }
+
+        /* BOTÃO CONTINUAR BANCO */
+        .btn-continuar-banco {
+            background: linear-gradient(135deg, var(--info), #138496);
+            color: white;
+            border: none;
+            display: none;
+        }
+
+        /* BOTÃO DE SIMULADO DE REFORÇO */
+        .btn-reforco {
+            background: linear-gradient(135deg, var(--danger), #c82333);
+            color: white;
+            border: none;
+            display: none;
+        }
+
+        /* BOTÃO DE REINICIAR BANCO */
+        .btn-reiniciar-banco {
+            background: linear-gradient(135deg, var(--purple), #5a32a3);
+            color: white;
+            border: none;
+            display: none;
+        }
+
+        /* BOTÃO DE NOVO SIMULADO NO REFORÇO */
+        .btn-novo-simulado-reforco {
+            background: linear-gradient(135deg, var(--warning), #e0a800);
+            color: #856404;
+            border: none;
+            display: none;
+        }
+
+        /* RESULTADOS COMPACTOS */
+        #results {
+            display: none;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--primary);
+            margin: 8px 0;
+            border-radius: 3px;
+            background: #f8f9fa;
+        }
+
+        .result-title {
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: var(--primary);
+        }
+
+        .score-mini {
+            font-size: 1.1rem;
+            margin: 4px 0;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        /* MENSAGEM DE MOTIVAÇÃO */
+        .motivation-message {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 3px;
+            padding: 8px 10px;
+            margin: 8px 0;
+            font-size: 0.7rem;
+            color: #856404;
+            text-align: center;
+        }
+
+        .motivation-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .motivation-warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+        }
+
+        .motivation-danger {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        /* MODAL DE REPORTE - ATUALIZADO */
+        .report-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .report-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 95%;
+            max-width: 500px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .report-title {
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 10px;
+        }
+
+        .report-question-info {
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .report-section {
+            margin-bottom: 15px;
+        }
+
+        .report-section-title {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .report-options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .report-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .report-option:hover {
+            background: #f8f9fa;
+            border-color: var(--accent);
+        }
+
+        .report-option input[type="radio"] {
+            margin: 0;
+            transform: scale(0.9);
+        }
+
+        .report-option label {
+            font-size: 0.75rem;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        /* FORMULÁRIO DE IDENTIFICAÇÃO */
+        .user-info-form {
+            background: #f0f8ff;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid #cce5ff;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.1);
+        }
+
+        .form-input.error {
+            border-color: var(--danger);
+            background-color: #fff5f5;
+        }
+
+        .form-hint {
+            font-size: 0.65rem;
+            color: #6c757d;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .required-star {
+            color: var(--danger);
+            font-weight: bold;
+        }
+
+        .report-textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            resize: vertical;
+            font-family: inherit;
+            transition: border-color 0.2s;
+        }
+
+        .report-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(0,123,255,0.1);
+        }
+
+        .report-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .report-submit {
+            flex: 2;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .report-submit:hover {
+            background: #0d2c4a;
+        }
+
+        .report-submit:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .report-cancel {
+            flex: 1;
+            background: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .report-cancel:hover {
+            background: #545b62;
+        }
+
+        .report-success {
+            background: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 15px;
+            border: 1px solid #c3e6cb;
+            display: none;
+        }
+
+        .report-error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            text-align: center;
+            margin-top: 10px;
+            border: 1px solid #f5c6cb;
+            display: none;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* SCROLL PERSONALIZADO */
+        .pending-list-compact::-webkit-scrollbar {
+            height: 2px;
+        }
+        
+        .pending-list-compact::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 1px;
+        }
+        
+        .pending-list-compact::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 1px;
+        }
+
+        /* AJUSTES PARA TELAS MUITO PEQUENAS */
+        @media (max-width: 320px) {
+            body {
+                padding: 2px;
+                font-size: 12px;
+            }
+            
+            .container {
+                padding: 4px;
+            }
+            
+            .page-title-mini {
+                font-size: 0.75rem;
+                max-width: 60%;
+            }
+            
+            .timer-compact {
+                font-size: 0.7rem;
+                min-width: 35px;
+                padding: 1px 3px;
+            }
+            
+            .info-grid {
+                gap: 3px;
+            }
+            
+            .info-label {
+                font-size: 0.5rem;
+            }
+            
+            .info-value {
+                font-size: 0.7rem;
+            }
+            
+            .question-text-mini {
+                font-size: 0.75rem;
+            }
+            
+            .option-mini {
+                padding: 4px 5px;
+                font-size: 0.7rem;
+                min-height: 26px;
+            }
+            
+            .nav-btn, .btn {
+                font-size: 0.7rem;
+                padding: 5px 3px;
+            }
+            
+            .pending-list-compact {
+                max-height: 16px;
+            }
+            
+            .pending-number {
+                font-size: 0.5rem;
+                min-width: 10px;
+            }
+            
+            .report-gabarito-btn {
+                font-size: 0.45rem;
+                padding: 1px 3px;
+            }
+            
+            .report-content {
+                padding: 15px;
+            }
+            
+            .report-buttons {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-height: 600px) {
+            .header-mini {
+                padding-top: 10px;
+            }
+            
+            .question-block-mini {
+                margin: 4px 0;
+                padding: 6px;
+            }
+            
+            .nav-buttons {
+                margin: 6px 0;
+            }
+            
+            .btn {
+                margin-top: 6px;
+                min-height: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="main-container">
+    <div class="credits-integrated">BY EWERTON</div>
+    
+    <div class="header-mini">
+        <div class="header-mini-top">
+            <h1 class="page-title-mini" id="page-title">Carregando...</h1>
+            <div id="timer" class="timer-compact">00:00</div>
+        </div>
+        
+        <div class="simulado-info" id="simulado-info">
+            <div>Simulado: <span id="questions-per-simulado">20</span> questões</div>
+            <div class="simulado-stats">
+                <span id="remaining-questions">Disponíveis: 0</span>
+                <span id="recent-used">Usadas: 0</span>
+            </div>
+            
+            <div class="history-controls">
+                <button class="clear-history-btn" onclick="clearHistory()">
+                    🗑️ Limpar Histórico
+                </button>
+                <button class="info-history-btn" onclick="showHistoryInfo()">
+                    ℹ️ Info
+                </button>
+            </div>
+        </div>
+        
+        <div class="quiz-info-mini">
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Questão</div>
+                    <div class="info-value" id="question-counter">0/0</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Respondidas</div>
+                    <div class="info-value" id="answered-counter">0/0</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Progresso</div>
+                    <div class="info-value" id="progress-percent">0%</div>
+                </div>
+            </div>
+            
+            <div class="controls-compact">
+                <div class="auto-nav-toggle" onclick="toggleAutoNav()">
+                    <input type="checkbox" id="auto-nav-checkbox" class="auto-nav-checkbox" checked>
+                    <label class="auto-nav-label">Auto-navegação</label>
+                </div>
+                <button class="reset-btn-mini" onclick="resetQuiz()">
+                    ↻ Reiniciar
+                </button>
+            </div>
+        </div>
+
+        <div class="completion-status">
+            <div class="status-header">
+                <span class="status-text">Status:</span>
+                <span class="status-count" id="status-count">0/0</span>
+            </div>
+            <div class="pending-compact" id="pending-questions">
+                <div class="pending-summary">
+                    <span>Pendentes:</span>
+                    <span class="pending-count" id="pending-count">0</span>
+                </div>
+                <div class="pending-list-compact" id="pending-list">
+                    <span style="color: #6c757d; font-style: italic;">Nenhuma pendente</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="results">
+        <div class="result-title" id="feedback-msg"></div>
+        <div class="score-mini" id="final-score"></div>
+        <div id="final-percent" style="font-size: 0.8rem; font-weight: bold; margin-bottom: 6px; color: var(--accent);"></div>
+        <div id="motivation-message" class="motivation-message"></div>
+        <div id="simulado-summary" style="margin-bottom: 8px; font-size: 0.7rem; color: var(--primary);"></div>
+        
+        <button id="restart-btn" class="btn btn-restart" onclick="startNewQuiz()">🔄 Refazer Simulado</button>
+        <button id="voltar-inicio-btn" class="btn btn-voltar-inicio" onclick="voltarAoInicio()">
+            🏁 Voltar ao Início
+        </button>
+        <button id="continuar-banco-btn" class="btn btn-continuar-banco" onclick="continuarComBanco()">
+            📚 Continuar com Banco
+        </button>
+        <button id="wrong-questions-btn" class="btn btn-reforco" onclick="startWrongQuestionsSimulado()">
+            ⚡ Simulado de Reforço
+        </button>
+        <button id="reiniciar-banco-btn" class="btn btn-reiniciar-banco" onclick="reiniciarBancoCompleto()">
+            🔄 Reiniciar Banco Completo
+        </button>
+        <button id="new-simulado-btn" class="btn" style="background: var(--accent); color: white; margin-top: 4px; display: none;" onclick="generateNewSimulado()">🎲 Novo Simulado</button>
+        <!-- NOVO BOTÃO PARA SIMULADO DE REFORÇO -->
+        <button id="novo-simulado-reforco-btn" class="btn btn-novo-simulado-reforco" onclick="novoSimuladoAposReforco()">
+            🎯 Novo Simulado
+        </button>
+    </div>
+
+    <div id="quiz-content"></div>
+
+    <div class="nav-buttons">
+        <button id="prev-btn" class="nav-btn" onclick="prevQuestion()" disabled>
+            ← Anterior
+        </button>
+        <button id="next-btn" class="nav-btn" onclick="nextQuestion()">
+            Próximo →
+        </button>
+    </div>
+
+    <button id="finish-btn" class="btn btn-finish" onclick="finalizeQuiz()" disabled>
+        🏁 Finalizar
+    </button>
+</div>
+
+<!-- MODAL DE REPORTE ATUALIZADO -->
+<div id="reportModal" class="report-modal">
+    <div class="report-content">
+        <div class="report-title">📝 Reportar Questão</div>
+        
+        <div class="report-question-info">
+            <div><strong>Questão #<span id="reportQuestionNumber">1</span></strong></div>
+            <div id="reportQuestionText" style="font-size: 0.75rem; margin-top: 5px;">Carregando...</div>
+        </div>
+        
+        <!-- SEÇÃO: TIPO DE PROBLEMA -->
+        <div class="report-section">
+            <div class="report-section-title">📌 Tipo de Problema</div>
+            <div class="report-options">
+                <div class="report-option">
+                    <input type="radio" id="reportError" name="reportType" value="error">
+                    <label for="reportError">❌ Questão com erro</label>
+                </div>
+                <div class="report-option">
+                    <input type="radio" id="reportWrongAnswer" name="reportType" value="wrong_answer">
+                    <label for="reportWrongAnswer">⚠️ Resposta incorreta</label>
+                </div>
+                <div class="report-option">
+                    <input type="radio" id="reportConfusing" name="reportType" value="confusing">
+                    <label for="reportConfusing">🤔 Enunciado confuso</label>
+                </div>
+                <div class="report-option">
+                    <input type="radio" id="reportAlternative" name="reportType" value="alternative">
+                    <label for="reportAlternative">🔤 Alternativas erradas</label>
+                </div>
+                <div class="report-option">
+                    <input type="radio" id="reportOther" name="reportType" value="other">
+                    <label for="reportOther">📝 Outro problema</label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SEÇÃO: SUA IDENTIFICAÇÃO -->
+        <div class="report-section">
+            <div class="report-section-title">👤 Sua Identificação <span class="required-star">*</span></div>
+            <div class="user-info-form">
+                <div class="form-group">
+                    <label class="form-label" for="userName">Nome Completo <span class="required-star">*</span></label>
+                    <input type="text" id="userName" class="form-input" placeholder="Digite seu nome completo" maxlength="100">
+                    <span class="form-hint">Para podermos entrar em contato com você</span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="userEmail">E-mail <span class="required-star">*</span></label>
+                    <input type="email" id="userEmail" class="form-input" placeholder="seu.email@exemplo.com" maxlength="100">
+                    <span class="form-hint">Para enviarmos o feedback sobre sua solicitação</span>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="userInfo">Instituição/Curso (opcional)</label>
+                    <input type="text" id="userInfo" class="form-input" placeholder="Ex: SENAI, Engenharia Mecânica" maxlength="100">
+                    <span class="form-hint">Ajuda a identificar o contexto do reporte</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- SEÇÃO: DETALHES -->
+        <div class="report-section">
+            <div class="report-section-title">📋 Detalhes do Problema</div>
+            <textarea 
+                id="reportDetails" 
+                class="report-textarea" 
+                placeholder="Descreva detalhadamente o problema encontrado na questão. Se achar que há erro na resposta, explique sua justificativa..."
+                maxlength="1000"
+            ></textarea>
+            <div class="form-hint" style="text-align: right;">
+                <span id="charCount">0</span>/1000 caracteres
+            </div>
+        </div>
+        
+        <div id="reportErrorMsg" class="report-error"></div>
+        
+        <div class="report-buttons">
+            <button id="cancelReport" class="report-cancel" onclick="closeReportModal()">Cancelar</button>
+            <button id="submitReport" class="report-submit" onclick="submitReport()">
+                <span id="submitText">Enviar Reporte</span>
+                <span id="submitLoading" class="loading-spinner" style="display: none;"></span>
+            </button>
+        </div>
+        
+        <div id="reportSuccess" class="report-success">
+            ✅ Reporte enviado com sucesso! Obrigado pela contribuição.<br>
+            <small>Você receberá um feedback por email em breve.</small>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ============================================
+    // BANCO DE QUESTÕES - ADICIONE AS SUAS AQUI
+    // ============================================
+    
+    // FORMATO: {q: "Pergunta?", a: ["Opção A", "Opção B", "Opção C", "Opção D"], c: 0}
+    // Onde 'c' é o índice da resposta correta (0 = A, 1 = B, 2 = C, 3 = D)
+    
+ const masterBank = [
+
+  {q: "A chave soquete é feita em quantas partes?", a: ["6 partes.", "12 partes.", "2 partes.", "3 partes."], c: 2},
+  {q: "Na análise e pesquisa de pane em um circuito elétrico, quando esse se encontra incompleto ou interrompido disse-se que o mesmo está:", a: ["Em curto.", "Neutro.", "Aberto.", "Fechado."], c: 2},
+  {q: "Um dos metais amplamente usados na fabricação de chaves como chaves allen é o?", a: ["Aço com alto teor de carbono.", "Alumínio.", "Aço com baixo teor de carbono.", "Aço cromo-vanádio."], c: 3},
+  {q: "Havendo hipóxia anóxia em paciente consciente, o tratamento adequado será a administração de?", a: ["Respiração boca a boca.", "Estimulante cardíaco.", "Vasodilatador.", "Oxigênio."], c: 3},
+  {q: "Paquímetro, micrômetro e relógio comparador são ferramentas?", a: ["De torque.", "De indicação.", "Comuns.", "De precisão."], c: 3},
+  {q: "Uma bateria com capacidade de 120 amperes-hora, instalada em um sistema que requeira 20 amperes-hora, irá se descarregar completamente, ao final de?", a: ["60 minutos.", "6 minutos.", "400 minutos.", "360 minutos."], c: 3},
+  {q: "Considerando um circuito elétrico com duas resistências em série medindo 4 e 6 ohm e uma tensão total de 15 volt, a amperagem total do circuito será?", a: ["1,5 Α.", "5,0 A.", "2,5 A.", "25,0 A."], c: 0},
+  {q: "A ferramenta \"martelo\", como se escreve em inglês?", a: ["Hammer.", "Jack.", "Socket.", "Joint."], c: 0},
+  {q: "Quantas posições de ajuste tem um alicate gasista?", a: ["12 posições.", "2 posições.", "5 posições.", "10 posições."], c: 2},
+  {q: "A aeronave tem uma tendência de ganhar peso devido à (ao)?", a: ["Acúmulo de sujeiras e graxas.", "Número de passageiros.", "Poucas horas de voo.", "Forma aerodinâmica."], c: 0},
+  {q: "A finalidade principal do controle do peso e balanceamento das aeronaves, é?", a: ["O balanceamento.", "A segurança.", "O peso.", "Eficiência durante o voo."], c: 1},
+  {q: "O que é investigação do fator humano?", a: ["É a área de abordagem da segurança de voo de manutenção da aeronave.", "É a área de abordagem da segurança de voo que se refere ao complexo biológico do ser humano, nos aspectos fisiológicos e psicológicos que possam ter refletido nas ações da tripulação e demais pessoas envolvidas no acidente, servindo para clarificar a sequência dos acontecimentos na ocorrência.", "É a manutenção da aeronave com abordagem da segurança de voo que se refere ao complexo biológico do ser humano, nos aspectos fisiológicos e psicológicos que possam ter refletido nas ações da tripulação e demais pessoas envolvidas no acidente, servindo para clarificar a sequência dos acontecimentos na ocorrência.", "É a pista de rolagem e abordagem da segurança de voo que se refere ao complexo biológico do ser humano, nos aspectos fisiológicos e psicológicos que possam ter refletido nas ações da tripulação e demais pessoas envolvidas no acidente, servindo para clarificar a sequência dos acontecimentos na ocorrência."], c: 1},
+  {q: "No sistema de comando o cabo de especificação 7x19 é feito com?", a: ["19mm de diâmetro e 7 m de comprimento.", "19 pernas de 7 fios.", "7mm de diâmetro e 19 m de comprimento.", "7 pernas de 19 fios."], c: 3},
+  {q: "A superfície de comando primária articulada ao bordo de fuga das asas é o?", a: ["Aileron.", "Profundor.", "Leme de direção.", "Compensador."], c: 0},
+  {q: "Régua é um instrumento utilizado em geometria, próprio para traçar segmentos de retas e medir distâncias pequenas, normalmente é composta por uma lâmina de madeira, plástico ou metal e pode conter uma escala geralmente graduada em?", a: ["Milímetro e graus.", "Metro e centímetro.", "Ângulos e centímetro.", "Centimétrica e milimétrica."], c: 3},
+  {q: "Na maioria das regiões do Brasil, os telefones de emergência são?", a: ["Bombeiros 190; SAMU 191; e polícia militar 192.", "Bombeiros 163; SAMU 182; e polícia militar 191.", "Bombeiros 193; SAMU 192; e polícia militar 190.", "Bombeiros 911; SAMU 156; e polícia militar 190."], c: 2},
+  {q: "After tightening a nut, it must be locked with?", a: ["Hoses.", "Rivets.", "Cotter pins or safety wire.", "Drill."], c: 2},
+  {q: "Em relação a lesões, qual a definição de fratura?", a: ["Entende-se por fratura a ruptura total ou parcial do tecido ósseo, podendo ser classificada em fechada ou aberta (exposta).", "Entende-se por fratura a ruptura total ou parcial do tecido ósseo, podendo ser classificada em apenas fechada.", "Entende-se por fratura a ruptura total ou parcial do tecido ósseo, podendo ser classificada em apenas por arranhões.", "Entende-se por fratura a ruptura total ou parcial do tecido ósseo, podendo ser classificada em apenas aberta."], c: 0},
+  {q: "É sabido que, quanto maior a envergadura da asa quando comparada com a corda, maior é a sustentação obtida, essa comparação é chamada de?", a: ["Asa.", "Espessura.", "Enflechamento.", "Alongamento."], c: 3},
+  {q: "A força de sustentação sempre age?", a: ["Na direção da força resultante.", "Perpendicularmente ao vento relativo.", "Perpendicularmente ao ângulo de ataque.", "Na direção oposta à força resultante."], c: 1},
+  {q: "O sistema de numeração universal, dá os meios de identificação de desenhos do tamanho?", a: ["Grande.", "Pequeno.", "Padrão.", "Médio."], c: 2},
+  {q: "A ANAC deverá elaborar um plano para comunicação e disseminação do programa de segurança operacional específico (PSOE). Essas ações de comunicação e disseminação \"não\" tem como objetivo:", a: ["Cultura de segurança operacional, seu desenvolvimento e aprimoramento.", "Critérios recomendados para responsabilização da equipe em prol da segurança operacional.", "Disseminação de boas práticas de segurança operacional.", "Conscientização das responsabilidades individuais em relação a segurança operacional."], c: 1},
+  {q: "As linhas de tubulações de aeronave usualmente são feitas de tubos de metal, as tubulações de metal são medidas pelo?", a: ["Comprimento.", "Raio interno.", "Diâmetro interno.", "Diâmetro externo."], c: 3},
+  {q: "A parte de uma broca que fixa-se ao mandril de uma máquina de furar é o(a)?", a: ["Corpo.", "Punho.", "Espiga.", "Haste."], c: 3},
+  {q: "É assegurado ao aeroviário uma folga semanal remunerada de quantas horas?", a: ["24 (vinte e quatro) horas contínuas de preferência aos domingos.", "72 (setenta e duas) horas contínuas de preferência aos finais de semana.", "48 (quarenta e oito) horas contínuas.", "12 (doze) horas contínuas de preferência aos sábados."], c: 0},
+  {q: "Desenhos de grande tamanho podem ser reproduzidos em moldes individuais ou em?", a: ["Corqui.", "Em papel carbono.", "Slide.", "Spoiler."], c: 2},
+  {q: "O tipo de punção utilizado para extrair parafusos que algumas vezes ficam presos em orifícios, é o?", a: ["De bico.", "Tocapinos.", "Vazador.", "De centro."], c: 1},
+  {q: "A borracha natural é usada como material selante para?", a: ["Água e sistema de metanol.", "Óleos vegetais e solventes.", "Isolar equipamentos elétricos e eletrônicos.", "Solventes e sistemas de combustível."], c: 0},
+  {q: "No desenho técnico de esquema elétrico, como é representado o símbolo de um amperímetro?", a: ["Um traço com um círculo no meio destacando a letra \"V\".", "Um traço com um círculo no meio destacando a letra \"P\".", "Um traço com um círculo no meio destacando a letra \"A\".", "Um traço com um círculo no meio destacando a letra \"B\"."], c: 2},
+  {q: "No sistema hidráulico de alta pressão para operação do trem de pouso, flapes e linhas externas de freio, utilizam tubulações feitas de?", a: ["Teflon.", "Liga de alumínio 2024-T.", "Neoprene.", "Aço resistente à corrosão."], c: 3},
+  {q: "O controle do rotor de cauda de um helicóptero é comandado pelo?", a: ["Manche.", "Cíclico.", "Pedais.", "Coletivo."], c: 2},
+  {q: "Eletricidade estática pode ser produzida por?", a: ["Contato, fricção ou indução.", "Contabando, flexão e indução.", "Relé do alternador.", "Potência."], c: 0},
+  {q: "O dispositivo de segurança satisfatório para travar dois ou mais parafusos, de forma que qualquer tendência de afrouxar um deles seja anulada pelo aperto de um outro, é o(a)?", a: ["Pino.", "Frenagem com arame.", "Contra-pino.", "Arruela especial."], c: 1},
+  {q: "Num circuito elétrico com 4 baterias ligadas em série, medindo 1,5 volts cada, a tensão total é de?", a: ["4,5 volts.", "6,0 volts.", "1,5 volts.", "3,0 volts."], c: 1},
+  {q: "Assinale a alternativa que indica o significado do primeiro e do segundo número no combustível de grau 100/130?", a: ["100% de grau de pureza, e 130% de heptana normal.", "O grau 100 para a mistura pobre, e o grau 130 para a mistura rica.", "100% de grau de pureza, e 130% de potência efetiva.", "O grau 100 para a mistura rica, e o grau 130 para a mistura pobre."], c: 1},
+  {q: "Quais são as atribuições do CENIPA?", a: ["Desorganizar, planejar, gerenciar, controlar as atividades relacionadas com a prevenção e investigação de acidentes aeronáuticos.", "Planejar, gerenciar, controlar as atividades relacionadas com a prevenção e investigação de acidentes na estação brasileira e na nasa.", "Gerenciar a força aérea brasileira e a anac.", "Planejar, gerenciar, controlar as atividades relacionadas com a prevenção e investigação de acidentes aeronáuticos."], c: 3},
+  {q: "Se numa chave combinada a extremidade colar mede 1/4 da polegada, logo a extremidade em boca medirá:", a: ["1/4 da polegada.", "1/2 da polegada.", "1/8 da polegada.", "5/16 da polegada."], c: 0},
+  {q: "Hemorragias são classificadas como?", a: ["Externa, internalto, venosa e labial.", "Esponsola, externa, inteira, venosa e arterial.", "Externa, interna, sistema dos dentes de ouro.", "Externa, interna, venosa e arterial."], c: 3},
+  {q: "A gasolina de aviação de grau 91/96 e a e grau 100/130, possuem respectivamente, a coloração?", a: ["Incolor e azul.", "Púrpura e verde.", "Vermelha e azul.", "Azul e verde."], c: 3},
+  {q: "Qual tesoura que é designada especialmente para cortar ligas de alumínio tratadas a quente e aço inoxidável?", a: ["Tesouras retas.", "Tesouras bico curvo.", "Tesouras de aviação.", "Tesoura bico de falção."], c: 2},
+  {q: "Os alicates de bico chato, são mais adequados para fazer?", a: ["Flange.", "Torque.", "Corte.", "Decapagem."], c: 0},
+  {q: "É a descrição de uma peça simples, dada de forma a descrever através de linhas, notas, símbolos, especificações como tamanho, material e método de manufatura, que devem ser usados para fazer a peças:", a: ["Descreve através do desenho de detalhes.", "Descreve através do desenho de conjunto.", "Descreve através do desenho pictorial.", "Descreve através do desenho alternativo."], c: 0},
+  {q: "No sistema de combustível, o componente responsável pela distribuição, denomina-se?", a: ["Carburador.", "Bomba principal.", "Tanque.", "Válvula seletora."], c: 3},
+  {q: "Chave que tem seu crescimento de 1/64\" a 1/64\" de chave para chave da menor para maior, tem seu formato hexagonal, que se encaixa na cabeça dos parafusos sem cabeça:", a: ["Soquetes.", "Boca.", "Cachimbo ou allen.", "Colar."], c: 2},
+  {q: "No transformador, aumentando-se o número de espiras do enrolamento secundário, em relação ao primário, a tensão de saída gerada será?", a: ["A mesma.", "Menor.", "Nula.", "Maior."], c: 3},
+  {q: "O desmaio é uma perda transitória de?", a: ["O desmaio é uma perda transitória de consciência e, normalmente, não constituem uma situação que pode ser considerada uma ameaça à vida. Geralmente, as consequências do desmaio são lesões decorrentes da queda, portanto, ao perceber que uma pessoa irá desmaiar, é importante colocá-la em um local em que não haverá riscos.", "O desmaio é uma perda transitória da direção da aeronave e normalmente, não constituem uma situação que pode ser considerada uma ameaça à vida. Geralmente, as consequências do desmaio são lesões decorrentes da queda, portanto, ao perceber que uma pessoa irá desmaiar, é importante colocá-la em um local em que não haverá riscos.", "O desmaio é uma perda transitória de transparência na programação diária, normalmente, não constituem uma situação que pode ser considerada uma ameaça à vida. Geralmente, as consequências do desmaio são lesões decorrentes da queda, portanto, ao perceber que uma pessoa irá desmaiar, é importante colocá-la em um local em que não haverá riscos.", "O desmaio é uma perda transitória de paciência de voar e, normalmente, não constituem uma situação que pode ser considerada uma ameaça à vida. Geralmente, as consequências do desmaio são lesões decorrentes da queda, portanto, ao perceber que uma pessoa irá desmaiar, é importante colocá-la em um local em que não haverá riscos."], c: 0},
+  {q: "Dentre as ferramentas abaixo, aquela que é utilizada em trabalho de ação rápida é o(a)?", a: ["Chave de fenda de catraca.", "Alicate gasista.", "Alicate universal.", "Chave de fenda em \"Z\"."], c: 0},
+  {q: "Entre os três eixos imaginários que cruzam a aeronave, identifique qual deles é referência no movimento de guinada:", a: ["Lateral.", "Longitudinal.", "Vertical.", "Transversal."], c: 2},
+  {q: "No caso do combustível estar contaminado, as impurezas depositar-se-ão no elemento filtrante. Assim sendo, a by pass se abrirá devido a pressão no sistema ter:", a: ["Aumentado.", "Diminuído.", "Permane", "Tornando-se nula."], c: 0},
+  {q: "Quanto a instalação da fiação elétrica, é correto afirmar que?", a: ["Um fio com isolamento de baixa temperatura pode substituir outro, que tenha isolamento para alta temperatura.", "Na instalação paralela, em pontos próximos das tubulações de combustível, a fiação deve ficar abaixo das citadas tubulações.", "O fio nunca deve passar por baixo da bateria do avião.", "Os fios paralelos, em qualquer hipótese, não podem ser trançados."], c: 2},
+  {q: "Num circuito elétrico de três resistências em série, a resistência total é representada pelo(a)?", a: ["Produto das três resistências, dividido por três.", "Produto das três resistências.", "Soma das três resistências, dividida por três.", "Soma das três resistências."], c: 3},
+  {q: "O magnetismo produzido por uma corrente elétrica é chamado de?", a: ["Retentividade.", "Auto-indução.", "Indução mútua.", "Eletromagnetismo."], c: 3},
+  {q: "Identifique as partes móveis do micrômetro:", a: ["Tarraxa e tambor.", "Encosto e arco.", "Arco e bainha.", "Tambor e haste."], c: 3},
+  {q: "As 3 forças mencionadas no texto abaixo são: The flapping motion is the result of the constantly changing balance between lift, centrifugal, and inertial forces.", a: ["Forças de elevação, centrífugas e inerciais", "Forças de elevação, sustentação e centrífugas", "Forças centrífugas, atmosféricas e atmosféricas", "Forças de sustentação, centrífugas e elevação"], c: 0},
+  {q: "As grandezas fundamentais em eletricidade são a tensão elétrica, a corrente elétrica, a resistência elétrica e a potência elétrica. Essas grandezas sempre estão presentes em qualquer circuito elétrico e não podem ser dissociadas. Dentre as alternativas, marque a resposta que não faz parte das grandezas elétricas básicas:", a: ["Volt.", "Densímetro", "Ohm.", "Ampére."], c: 1},
+  {q: "As réguas graduadas pelo sistema métrico tem como menor divisão:", a: ["Amperímetro digital.", "Metro.", "Milímetro.", "Centímetro."], c: 2},
+  {q: "A forma de corrosão que tem como característica apresentar uma profundidade sempre maior que o diâmetro da base, denomina-se?", a: ["Transgranular.", "Intergranular.", "Violar.", "Pitting."], c: 3},
+  {q: "Qual tipo de parafuso que é usado somente onde ocorrem cargas de cisalhamento e nunca de tensão?", a: ["Parafuso francês.", "Parafusos clevis.", "Parafusos torx.", "Parafusos screw bolt."], c: 1},
+  {q: "Qual a definição de desenho técnico de aeronave?", a: ["É uma regra de importação de ideias que dizem respeito à construção ou montagem de objetos.", "O método é realizado com ajuda de computadores, notas, abreviação e montagem.", "É um método de transposição de ideias que dizem respeito à construção ou montagem de objetos. O método é realizado com ajuda de linhas, notas, abreviações e símbolos.", "É uma suposta transposição de ideias que dizem respeito à construção ou montagem de objetos. O método é realizado com ajuda de linhas, notas, abreviações e símbolos."], c: 2},
+  {q: "Existem dois tipos de vistorias de segurança de voo, e as mesmas são classificadas quanto às circunstâncias em que são realizadas, sendo elas?", a: ["Periódicas ou anuais.", "Periódicas ou casuais.", "Periódicas ou especiais.", "Periódicas ou semanais."], c: 2},
+  {q: "A força necessária para girar a hélice é fornecida pelo (a)?", a: ["Motor.", "Bomba by pass.", "Compressor.", "Governador."], c: 0},
+  {q: "Qual é a parte do alicate, que entra em contato com o material a ser manuseado?", a: ["Aderentes.", "Raiz.", "Haste.", "Mordente."], c: 3},
+  {q: "Numa bateria de chumbo-ácida nova, totalmente carregada, o eletrólito é composto de, aproximadamente?", a: ["1% de ácido e 99% de água.", "50% de ácido e 50% de água.", "30% de ácido e 70% de água.", "10% de ácido e 90% de água."], c: 2},
+  {q: "Conforme artigo 107 da lei 7565 de 19 de dezembro de 1986 do \"CBA\", no Brasil como são classificadas as aeronaves?", a: ["Esportivas.", "Civis e militares.", "Turbo jato e convencionais.", "Aeróstatos e aeródinos."], c: 1},
+  {q: "As lâminas de serra geralmente são fabricadas em aço?", a: ["De alto teor ou aço tungstênio.", "Tungstênio ou alumínio.", "Inoxidável ou latão.", "Cromo-vandádio ou alumínio."], c: 0},
+  {q: "Dentre os agentes extintores abaixo, indique qual agente extintor que jamais poderá ser utilizado em locais incendiados contendo equipamentos energizados:", a: ["Espuma.", "Pó químico especial.", "Gás carbônico.", "Hallon."], c: 0},
+  {q: "Quantos e quais os movimentos existentes num rotor articulado?", a: ["Uma mudança de ângulo das pás.", "Dois; mudança de ângulo das pás e batimento(flaping).", "Não tem influência alguma sobre o movimento do rotor.", "Três mudança de ângulo das pás, batimento (flaping) e avanço e recuo das pás."], c: 3},
+  {q: "Determine a tensão de saída de um transformador cujo enrolamento primário, de 20 espiras, recebe 220V de tensão. Saiba que o enrolamento secundário desse transformador é formado por 10 espiras:", a: ["120 V.", "110 V.", "480 V.", "250 V."], c: 1},
+  {q: "A bomba de combustível fornece mais combustível que o requerido pelo motor. O dispositivo que evita o excesso de pressão de combustível na entrada do carburador é denominado?", a: ["Dreno.", "Válvula de derivação.", "Suspiro.", "Válvula de alívio."], c: 3},
+  {q: "A propriedade que o combustível possui, que pode causar a formação do calço de vapor nas tubulações, denomina-se?", a: ["Volatilidade.", "Poder calorífico.", "Poder antidetonante.", "Viscosidade."], c: 0},
+  {q: "As válvulas de corte de combustível são operadas?", a: ["Pneumaticamente.", "Eletricamente ou manualmente.", "Automaticamente.", "Pneumaticamente ou hidraulicamente."], c: 1},
+  {q: "Ferramenta utilizada para executar furos é o(a)?", a: ["Broca.", "Alargador.", "Cossinete.", "Riscador."], c: 0},
+  {q: "O efeito fundamental que possibilita a produção de eletricidade por uma pilha primária é a?", a: ["Absorção de eletricidade estática da atmosfera.", "Ação química entre o eletrólito e as placas.", "Ação da luz ao incidir sobre os terminais.", "Repulsão entre cargas opostas nas duas placas."], c: 1},
+  {q: "Qual tipo de queimadura que atinge a pele e apresenta bolhas?", a: ["Quarto grau.", "Segundo grau.", "Primeiro grau.", "Terceiro grau."], c: 1},
+  {q: "Qual é o nome do alicate especialmente empregado para trabalhos em porcas circulares serrilhadas dos conectores elétricos das aeronaves, fabricados com facilidade de regulagem com 5, 6 ou 7 posições?", a: ["Francês.", "Pressão.", "Bomba d'água , bico de papagaio ou gasista.", "De freio."], c: 2},
+  {q: "Com aumento da altitude, a pressão atmosférica?", a: ["Diminui.", "Permanece constante.", "Tende a se igualar à do nível do mar.", "Aumenta."], c: 0},
+  {q: "São dispositivos de proteção utilizados para proteger circuitos elétricos contra sobrecargas e curtos-circuitos:", a: ["Relé.", "Fusível.", "Protetor térmico.", "Quebra-circuito."], c: 1},
+  {q: "Qual a distância de segurança, que devemos utilizar como regra, para realizar cortes com a tesoura de aviação, em relação a linha marcada na chapa?", a: ["Cortes deverão ser feitos a 1/32\" de polegada, afastado da linha marcada.", "Cortes deverão ser feitos a 5/32\" de polegada, afastado da linha marcada.", "Cortes deverão ser feitos a 11/32\" de polegada, afastado da linha marcada.", "Cortes deverão ser feitos a 1/64\" de polegada, afastado da linha marcada."], c: 0},
+  {q: "Quanto ao conteúdo do cba, o direito aeronáutico é regulamentado pelos?", a: ["Apenas por tratados e convenções", "Tratados, convenções e atos internacionais de que o Brasil seja parte, por este código e pela legislação complementar.", "Convenções.", "Tratados."], c: 1},
+  {q: "Qual a chave de fenda que sua ponta encaixa e forma uma perfeita cruz na cabeça do parafuso?", a: ["Reed and prince.", "Phillips.", "Catraca.", "Comum."], c: 0},
+  {q: "Num jogo de ferramentas do tipo soquete, se uma das peças mede 9/16 da polegada, a peça imediatamente inferior mede:", a: ["5/8 da polegada.", "1/2 polegada.", "7/8 da polegada.", "7/16 da polegada."], c: 1},
+  {q: "É toda pessoa natural ou jurídica a quem a anac tenhas outorgado o direito de administrar ou prestar serviços em aeródromo público ou privado, próprio ou não, com ou sem fins lucrativos:", a: ["Operador.", "Tripulação.", "Sipaer.", "Anac."], c: 0},
+  {q: "Diminuindo-se a tensão da fonte em um circuito em série, a?", a: ["Potência total sofrerá uma diminuição.", "Corrente total não sofrerá alteração.", "Potência total permanecerá a mesma.", "A coroa total não altera."], c: 0},
+  {q: "All crew has work with a lot of dedication: qual significado da palavra \"crew\" em português?", a: ["Equipe.", "Turbulência.", "Lavatório.", "Assento."], c: 0},
+  {q: "Quando em aeronaves for utilizado combustível armazenados em tambores ou latões, deve-se ter o cuidado de?", a: ["Efetuar o perfeito aterramento e colocá-lo diretamente nos tanques.", "Checar a octanagem e colocá-lo diretamente nos tanques.", "Passá-lo em um funil de plástico.", "Passá-lo em um funil-coador."], c: 3},
+  {q: "Quanto a manutenção de baterias de níquel-cádmio é correto afirmar?", a: ["Para estocagem e manutenção das baterias de níquel-cádmio e chumbo-ácido pode-se usar a mesma área.", "A carga pode ser realizada apenas pelo método da corrente constante.", "Para trabalhar em baterias é necessário usar óculos de proteção, luvas e avental de borracha.", "O estado de carga da bateria é determinado através do densímetro."], c: 2},
+  {q: "Segundo a \"ICAO\" qual a definição de incidente aeronáutico?", a: ["Uma potência aeronáutica, classificada como um incidente, associada à operação de uma aeronave, que afete ou possa afetar a segurança da operação. Nota - Os tipos de incidentes que são de interesse principal à ICAO para estudos de prevenção de acidentes estão listados no adendo c do anexo 13 à convenção sobre aviação civil internacional. Uma tradução livre desta lista encontra-se no anexo b desta norma.", "Uma transferência aeronáutica, classificada como um voo em baixa altitude, associada à operação de uma aeronave, que afete ou possa afetar a segurança da operação. Nota - Os tipos de incidentes que são de interesse principal à icao para estudos de prevenção de acidentes estão listados no adendo c do anexo 13 à convenção sobre aviação civil internacional. Uma tradução livre desta lista encontra-se no anexo b desta norma.", "\"Uma audiência aeronáutica, classificada como voo livre, associada à operação de uma aeronave, que afete ou possa afetar a segurança da operação. Nota - Os tipos de incidentes que são de interesse principal à icao para estudos de prevenção de acidentes estão listados no adendo c do anexo 13 à convenção sobre aviação civil internacional. Uma tradução livre desta lista encontra-se no anexo b desta norma.", "Uma ocorrência aeronáutica, não classificada como um acidente, associada à operação de uma aeronave, que afete ou possa afetar a segurança da operação. Nota - Os tipos de incidentes que são de interesse principal à icao para estudos de prevenção de acidentes estão listados no adendo c do anexo 13 à convenção sobre aviação civil internacional. Uma tradução livre desta lista encontra-se no anexo b desta norma."], c: 3},
+  {q: "Dentre as alternativas abaixo, aquela que define a corrente elétrica é?", a: ["A direção de um campo elétrico em torno de cargas positivas e negativas.", "A distribuição uniforme de cargas iguais em metal.", "O fluxo de elétrons de um ponto negativo para o positivo.", "Reação de cargas iguais através de um isolante."], c: 2},
+  {q: "Características dos parafusos do tipo soberba:", a: ["São os do tipo bolt e podem ter a ponta da rosca pontuda.", "São os screw e são usados quando a firmeza não é um fator importante.", "Bolt e os do tipo screw são projetados para serem usados com porcas.", "Bolt e os do tipo screw são intercambiáveis, sem prejuízo à segurança."], c: 1},
+  {q: "Durante a manutenção no sistema de oxigênio, o mecânico deve tomar muito cuidado para não deixar a graxa ou óleo entrar em contato com o sistema, caso contrário poderá ocorrer?", a: ["Surgimento de gelo seco.", "Incêndio ou explosão.", "Água oxigenada.", "Produção de oxigênio líquido."], c: 1},
+  {q: "Which instrument that indicates the aircraft's altitude in relation to the ground?", a: ["Compass.", "Altimeter.", "Pitot.", "Climb."], c: 1},
+  {q: "Qual significado de \"flight safety\"?", a: ["Cinto de segurança.", "Segurança de voo.", "Voo com segurança.", "Segurança de manutenção."], c: 1},
+  {q: "As talhadeiras são utilizadas para?", a: ["Cortar e desbastar qualquer metal mais macio do que ela.", "Desbastar, limar, cortar metais mais pesados do que ela.", "Cortar, dobrar, desbastar qualquer material mais duro do que ela.", "Cortar e desbastar qualquer metal mais duro do que ela."], c: 0},
+  {q: "A parte do paquímetro que faz medições externas denomina-se?", a: ["Orelha.", "Impulsor.", "Bico.", "Vernier."], c: 2},
+  {q: "Um circuito resistivo com 2 resistências em paralelo, medindo 8 e 12 ohms, terá uma resistência total de?", a: ["20,5 ohms.", "10,0 ohms.", "4,0 ohms.", "4,8 ohms."], c: 3},
+  {q: "Como é determinado o tamanho de uma lima?", a: ["Face para a extremidade da espiga.", "Face para a base do cabo.", "Comprimento total excluindo a espiga.", "Ponta para extremidade da espiga."], c: 2},
+  {q: "Quantidade de coulomb por segundo (quantidade de elétrons que passam em um", a: ["Watts.", "Voltagem.", "Amperimetro.", "Ampere."], c: 3},
+  {q: "Inclui todos os equipamentos operacionais que possuem localização fixa e, que estejam realmente instalados na aeronave. Este peso inclui o peso da célula, grupo motopropulsor, equipamento necessários, lastro fixo, fluido hidráulico, óleo e combustível residuais:", a: ["Peso vazio.", "Peso máximo.", "Carga útil.", "Peso de combustível zero."], c: 0},
+  {q: "Em um ramo de um circuito, há 10 resistores ôhmicos ligados em série. Sabendo-se que a corrente elétrica que passa no primeiro é igual a 10 âmpere, a corrente que passa", a: ["Igual a 10A em todos os pontos, considerando que estão ligados em série.", "Menor que o primeiro resistor, inferior a 5A.", "Maior, porque estão ligados em série-paralelo.", "Será maior que o primeiro resistor, superior a 10A."], c: 0},
+  {q: "Uma aeronave considerada desaparecida configura uma situação tecnicamente", a: ["Incidente aeronáutico.", "Sequestrada.", "Perigo aeronáutico.", "Acidente aeronáutico."], c: 3}
+];    
+    // ============================================
+    // CONFIGURAÇÕES DO SISTEMA
+    // ============================================
+    const QUESTIONS_PER_SIMULADO_PADRAO = 20;
+    const MIN_WRONG_QUESTIONS_FOR_SIMULADO = 1;
+    const MIN_PERCENT_FOR_SUCCESS = 70;
+    
+    // ============================================
+    // VARIÁVEIS GLOBAIS
+    // ============================================
+    let QUESTIONS_PER_SIMULADO = QUESTIONS_PER_SIMULADO_PADRAO;
+    let API_URL = "https://script.google.com/macros/s/AKfycbwcX8bNdrDQZ6sRB1sbG0COJe7aGYyBlOCPkno2JxbM-59_-FsWt4LCccUQ8DBLTy1S5g/exec";
+    let EMAIL_DESTINO = "ewerton.andriel@hotmail.com";
+    
+    let TIME_LIMIT = 0;
+    let currentQuestions = [];
+    let userAnswers = [];
+    let timeLeft = 0;
+    let timerId;
+    let currentQuestionIndex = 0;
+    let autoNavEnabled = true;
+    let usedQuestionsHistory = [];
+    let currentSimuladoIndices = [];
+    let totalSimulados = 1;
+    let currentSimuladoNumber = 1;
+    
+    // VARIÁVEIS DO SISTEMA DE REPORTE
+    let currentReportQuestionIndex = null;
+    let reportsHistory = [];
+
+    // TIPOS DE REPORTE
+    const REPORT_TYPES = {
+        error: "❌ Questão com erro",
+        wrong_answer: "⚠️ Resposta incorreta", 
+        confusing: "🤔 Enunciado confuso",
+        alternative: "🔤 Alternativas erradas",
+        other: "📝 Outro problema"
+    };
+    
+    // ============================================
+    // VARIÁVEIS PARA SISTEMA DE REFORÇO
+    // ============================================
+    let wrongQuestionsHistory = [];
+    const WRONG_QUESTIONS_KEY = 'wrong_questions_history';
+    const LAST_OFFER_KEY = 'last_reforco_offer';
+    
+    // ============================================
+    // CHAVE PARA SESSÃO ATUAL
+    // ============================================
+    const SESSION_ID_KEY = 'current_session_id';
+    const CURRENT_QUESTIONS_KEY = 'current_session_questions';
+    const CURRENT_QUESTION_INDEX_KEY = 'current_question_index';
+    const USER_ANSWERS_KEY = 'user_answers';
+    const TIME_LEFT_KEY = 'time_left';
+    const AUTO_NAV_KEY = 'auto_nav';
+    const SIMULADO_STARTED_KEY = 'simulado_started';
+    const CURRENT_SIMULADO_NUMBER_KEY = 'current_simulado_number';
+    
+    // ============================================
+    // NOVA FUNÇÃO: EMBARALHAR ALTERNATIVAS
+    // ============================================
+    
+    function shuffleAlternatives(question) {
+        // Cria uma cópia da questão
+        const shuffledQuestion = { ...question };
+        
+        // Cria um array de índices [0, 1, 2, 3...]
+        const indices = Array.from({ length: question.a.length }, (_, i) => i);
+        
+        // Embaralha os índices
+        const shuffledIndices = shuffleArray(indices);
+        
+        // Cria novas alternativas com a ordem embaralhada
+        const shuffledAlternatives = shuffledIndices.map(index => question.a[index]);
+        
+        // Encontra o novo índice da resposta correta
+        const newCorrectIndex = shuffledIndices.indexOf(question.c);
+        
+        // Atualiza a questão com as alternativas embaralhadas e o novo índice correto
+        shuffledQuestion.a = shuffledAlternatives;
+        shuffledQuestion.c = newCorrectIndex;
+        shuffledQuestion.shuffledIndices = shuffledIndices; // Guarda o mapeamento para o gabarito
+        shuffledQuestion.originalCorrectIndex = question.c; // Guarda o índice original para referência
+        
+        return shuffledQuestion;
+    }
+    
+    // ============================================
+    // FUNÇÃO SELECTRANDOMQUESTIONS ATUALIZADA
+    // ============================================
+
+    function selectRandomQuestions(forceFirstSimulado = false) {
+        const totalQuestions = masterBank.length;
+        
+        if (totalQuestions === 0) {
+            alert("⚠️ O banco de questões está vazio! Adicione questões no código.");
+            return [];
+        }
+        
+        const config = calcularConfiguracaoSimulados();
+        console.log(config.mensagem);
+        
+        let availableQuestions = [];
+        for (let i = 0; i < totalQuestions; i++) {
+            availableQuestions.push(i);
+        }
+        
+        // Remove as já usadas
+        if (usedQuestionsHistory.length > 0 && !forceFirstSimulado) {
+            availableQuestions = availableQuestions.filter(index => 
+                !usedQuestionsHistory.includes(index)
+            );
+        }
+        
+        const availableCount = availableQuestions.length;
+        let questionsToSelect;
+        
+        if (availableCount === 0) {
+            if (confirm(`Todas as ${totalQuestions} questões já foram usadas!\n\nDeseja reiniciar o histórico?`)) {
+                usedQuestionsHistory = [];
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
+                alert('Histórico reiniciado!');
+                forceFirstSimulado = true;
+            } else {
+                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
+            }
+        } else if (availableCount >= QUESTIONS_PER_SIMULADO) {
+            questionsToSelect = QUESTIONS_PER_SIMULADO;
+        } else if (availableCount >= 5) {
+            questionsToSelect = availableCount;
+        } else {
+            if (confirm(`Só restam ${availableCount} questões!\n\nDeseja fazer simulado com essas questões?`)) {
+                questionsToSelect = availableCount;
+            } else {
+                if (confirm(`Deseja reiniciar o histórico?`)) {
+                    usedQuestionsHistory = [];
+                    localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                    availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+                    questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
+                    forceFirstSimulado = true;
+                } else {
+                    questionsToSelect = availableCount;
+                }
+            }
+        }
+        
+        if (totalQuestions <= 27) {
+            questionsToSelect = totalQuestions;
+            availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
+        }
+        
+        const shuffledQuestions = shuffleArray(availableQuestions);
+        const selectedIndices = shuffledQuestions.slice(0, questionsToSelect);
+        
+        currentSimuladoIndices = selectedIndices;
+        
+        if (forceFirstSimulado || usedQuestionsHistory.length === 0) {
+            currentSimuladoNumber = 1;
+        } else if (selectedIndices.length > 0) {
+            const usedCount = usedQuestionsHistory.length;
+            const simuladoIndex = Math.floor(usedCount / QUESTIONS_PER_SIMULADO);
+            currentSimuladoNumber = Math.min(simuladoIndex + 1, totalSimulados);
+        } else {
+            currentSimuladoNumber = 1;
+        }
+        
+        if (currentSimuladoNumber > totalSimulados) {
+            currentSimuladoNumber = totalSimulados;
+        }
+        
+        console.log(`Simulado configurado: ${currentSimuladoNumber}/${totalSimulados}`);
+        
+        // ALTERAÇÃO: Embaralha as alternativas de cada questão selecionada
+        const selectedQuestions = selectedIndices.map(index => {
+            const originalQuestion = masterBank[index];
+            return shuffleAlternatives({
+                ...originalQuestion, 
+                originalIndex: index
+            });
+        });
+        
+        return selectedQuestions;
+    }
+
+    // ============================================
+    // FUNÇÃO: GENERATE WRONG QUESTIONS SIMULADO ATUALIZADA
+    // ============================================
+    
+    function generateWrongQuestionsSimulado() {
+        console.log(`Gerando simulado de reforço com ${wrongQuestionsHistory.length} questões erradas...`);
+        
+        if (wrongQuestionsHistory.length === 0) {
+            console.error('Nenhuma questão errada no histórico');
+            return [];
+        }
+        
+        let availableWrongQuestions = [...wrongQuestionsHistory];
+        availableWrongQuestions = shuffleArray(availableWrongQuestions);
+        
+        const selectedIndices = availableWrongQuestions;
+        
+        console.log(`Selecionadas ${selectedIndices.length} questões para o simulado de reforço`);
+        
+        // ALTERAÇÃO: Embaralha as alternativas de cada questão de reforço
+        const questions = selectedIndices.map(index => {
+            if (index >= 0 && index < masterBank.length) {
+                const originalQuestion = masterBank[index];
+                return shuffleAlternatives({
+                    ...originalQuestion,
+                    originalIndex: index,
+                    isWrongQuestion: true
+                });
+            }
+            return null;
+        }).filter(q => q !== null);
+        
+        return questions;
+    }
+    
+    // ============================================
+    // FUNÇÃO RENDERCURRENTQUESTION ATUALIZADA
+    // ============================================
+    
+    function renderCurrentQuestion() {
+        const container = document.getElementById('quiz-content');
+        
+        if (!currentQuestions || currentQuestions.length === 0) {
+            container.innerHTML = '<div class="question-block-mini">Erro: Nenhuma questão carregada.</div>';
+            return;
+        }
+        
+        const question = currentQuestions[currentQuestionIndex];
+        
+        container.innerHTML = `
+            <div class="question-block-mini">
+                <div class="question-text-mini">
+                    ${currentQuestionIndex + 1}. ${question.q}
+                </div>
+                <div class="options-mini">
+                    ${question.a.map((opt, i) => `
+                        <label class="option-mini" id="option-${i}">
+                            <input type="radio" name="currentQuestion" value="${i}" 
+                                   ${userAnswers[currentQuestionIndex] === i ? 'checked' : ''}
+                                   onchange="selectAnswer(${i})">
+                            ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+                <button class="report-btn" onclick="openReportModal(${currentQuestionIndex})">
+                    <span>⚠️</span> Reportar Problema
+                </button>
+            </div>
+        `;
+    }
+    
+    // ============================================
+    // FUNÇÃO FINALIZEQUIZ ATUALIZADA
+    // ============================================
+    
+    function finalizeQuiz() {
+        clearInterval(timerId);
+        
+        const answeredCount = getAnsweredCount();
+        if (answeredCount !== currentQuestions.length && !confirm(`Respondidas: ${answeredCount}/${currentQuestions.length}. Finalizar?`)) {
+            startTimer();
+            return;
+        }
+        
+        let finalScore = 0;
+        userAnswers.forEach((answer, index) => {
+            if (answer !== null && answer === currentQuestions[index].c) {
+                finalScore++;
+            }
+        });
+        
+        const percent = currentQuestions.length > 0 ? Math.round((finalScore / currentQuestions.length) * 100) : 0;
+        const feedback = document.getElementById('feedback-msg');
+        
+        if (percent >= 70) {
+            feedback.textContent = "🎉 Excelente!";
+            feedback.style.color = "var(--success)";
+        } else if (percent >= 50) {
+            feedback.textContent = "👍 Quase lá!";
+            feedback.style.color = "var(--accent)";
+        } else {
+            feedback.textContent = "💪 Continue!";
+            feedback.style.color = "var(--danger)";
+        }
+        
+        if (currentQuestions[0]?.isWrongQuestion) {
+            removeCorrectQuestionsFromHistory();
+        } else {
+            addWrongQuestionsToHistory();
+        }
+        
+        if (currentSimuladoIndices.length > 0 && !currentQuestions[0]?.isWrongQuestion) {
+            usedQuestionsHistory.push(...currentSimuladoIndices);
+            usedQuestionsHistory = [...new Set(usedQuestionsHistory)];
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+        }
+        
+        clearSessionData();
+        
+        let quizHTML = '';
+        currentQuestions.forEach((question, index) => {
+            const userAnswer = userAnswers[index];
+            const isCorrect = userAnswer === question.c;
+            
+            // Para o gabarito, usamos as alternativas como foram mostradas
+            quizHTML += `
+                <div class="question-block-mini">
+                    <button class="report-gabarito-btn" onclick="openReportModal(${index})" title="Reportar problema">
+                        ⚠️
+                    </button>
+                    
+                    <div class="question-text-mini">
+                        ${index + 1}. ${question.q}
+                    </div>
+                    <div class="options-mini">
+                        ${question.a.map((opt, i) => {
+                            let classes = 'option-mini';
+                            if (i === question.c) classes += ' correct-answer';
+                            else if (userAnswer === i && !isCorrect) classes += ' wrong-answer';
+                            
+                            return `<label class="${classes}">
+                                <input type="radio" disabled ${userAnswer === i ? 'checked' : ''}>
+                                ${opt}
+                                ${userAnswer === i ? '<span style="margin-left: auto; font-size: 0.6rem; color: #6c757d;">(sua resposta)</span>' : ''}
+                                ${i === question.c && userAnswer !== i ? '<span style="margin-left: auto; font-size: 0.6rem; color: var(--success);">(correta)</span>' : ''}
+                            </label>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        });
+        
+        document.getElementById('quiz-content').innerHTML = quizHTML;
+        document.getElementById('final-score').textContent = `${finalScore}/${currentQuestions.length}`;
+        document.getElementById('final-percent').textContent = `${percent}%`;
+        
+        const motivationElement = document.getElementById('motivation-message');
+        let motivationHTML = '';
+        
+        if (currentQuestions[0]?.isWrongQuestion) {
+            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
+                motivationHTML = `✅ <strong>PARABÉNS!</strong> Você superou suas dificuldades!`;
+                motivationElement.className = 'motivation-message motivation-success';
+            } else {
+                motivationHTML = `⚡ <strong>PRECISA MELHORAR</strong><br>`;
+                motivationHTML += `Você acertou ${finalScore} de ${currentQuestions.length}.<br>`;
+                motivationHTML += `Faltam ${MIN_PERCENT_FOR_SUCCESS - percent}% para a meta de ${MIN_PERCENT_FOR_SUCCESS}%.`;
+                motivationElement.className = 'motivation-message motivation-warning';
+            }
+        } else {
+            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
+                motivationHTML = `🎯 <strong>ÓTIMO DESEMPENHO!</strong>`;
+                motivationElement.className = 'motivation-message motivation-success';
+            } else {
+                motivationHTML = `📚 <strong>CONTINUE ESTUDANDO!</strong>`;
+                motivationElement.className = 'motivation-message motivation-warning';
+            }
+        }
+        
+        motivationElement.innerHTML = motivationHTML;
+        
+        const totalQuestions = masterBank.length;
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        const remainingQuestions = Math.max(0, totalQuestions - uniqueUsed.length);
+        const wrongCount = wrongQuestionsHistory.length;
+        
+        let summaryText = '';
+        let showNewSimuladoBtn = true;
+        let showReiniciarBancoBtn = false;
+        let showNovoSimuladoReforcoBtn = false;
+        
+        if (currentQuestions[0]?.isWrongQuestion) {
+            summaryText = `⚡ <strong>SIMULADO DE REFORÇO FINALIZADO</strong><br>`;
+            summaryText += `Você revisou ${currentQuestions.length} questões que errou anteriormente.<br>`;
+            summaryText += `Questões ainda erradas: <strong>${wrongCount}</strong>`;
+            showNewSimuladoBtn = false;
+            showNovoSimuladoReforcoBtn = true;
+            
+            if (percent < MIN_PERCENT_FOR_SUCCESS) {
+                showReiniciarBancoBtn = true;
+            }
+        } else if (remainingQuestions === 0) {
+            summaryText = `🎯 <strong>COMPLETOU TODAS AS ${totalQuestions} QUESTÕES!</strong><br>`;
+            summaryText += `Questões erradas: <strong>${wrongCount}</strong>`;
+            
+            if (wrongCount < MIN_WRONG_QUESTIONS_FOR_SIMULADO) {
+                showNewSimuladoBtn = false;
+            }
+        } else {
+            summaryText = `Restam: <strong>${remainingQuestions}</strong> | Usadas: <strong>${uniqueUsed.length}</strong><br>`;
+            summaryText += `Questões erradas: <strong>${wrongCount}</strong>`;
+        }
+        
+        document.getElementById('simulado-summary').innerHTML = summaryText;
+        
+        document.querySelector('.nav-buttons').style.display = 'none';
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('finish-btn').style.display = 'none';
+        document.getElementById('restart-btn').style.display = 'block';
+        
+        document.getElementById('wrong-questions-btn').style.display = 'none';
+        document.getElementById('reiniciar-banco-btn').style.display = showReiniciarBancoBtn ? 'block' : 'none';
+        document.getElementById('new-simulado-btn').style.display = showNewSimuladoBtn ? 'block' : 'none';
+        document.getElementById('novo-simulado-reforco-btn').style.display = showNovoSimuladoReforcoBtn ? 'block' : 'none';
+        
+        updateSimuladoInfo();
+        updateReforcoButton();
+        updateReiniciarBancoButton();
+        updateContinuarBancoButton();
+        updateVoltarInicioButton();
+        updateNovoSimuladoReforcoButton();
+        
+        setTimeout(() => {
+            if (canOfferReforcoSimulado()) {
+                console.log('Oferecendo simulado de reforço...');
+                setTimeout(() => {
+                    offerWrongQuestionsSimulado();
+                }, 1500);
+            } else {
+                console.log('Não pode oferecer reforço no momento');
+            }
+        }, 500);
+    }
+    
+    // ============================================
+    // FUNÇÕES DE CONFIGURAÇÃO DO SIMULADO
+    // ============================================
+    
+    function calcularConfiguracaoSimulados() {
+        const totalQuestions = masterBank.length;
+        
+        if (totalQuestions <= 27) {
+            totalSimulados = 1;
+            QUESTIONS_PER_SIMULADO = totalQuestions;
+            return {
+                totalSimulados: 1,
+                questionsPerSimulado: totalQuestions,
+                mensagem: `Banco com ${totalQuestions} questões → 1 único simulado`
+            };
+        } else if (totalQuestions >= 28 && totalQuestions <= 39) {
+            totalSimulados = 2;
+            const questionsPerSimulado = Math.ceil(totalQuestions / 2);
+            QUESTIONS_PER_SIMULADO = questionsPerSimulado;
+            return {
+                totalSimulados: 2,
+                questionsPerSimulado: questionsPerSimulado,
+                mensagem: `Banco com ${totalQuestions} questões → 2 simulados de ~${questionsPerSimulado} questões cada`
+            };
+        } else {
+            totalSimulados = Math.ceil(totalQuestions / QUESTIONS_PER_SIMULADO_PADRAO);
+            QUESTIONS_PER_SIMULADO = QUESTIONS_PER_SIMULADO_PADRAO;
+            return {
+                totalSimulados: totalSimulados,
+                questionsPerSimulado: QUESTIONS_PER_SIMULADO_PADRAO,
+                mensagem: `Banco com ${totalQuestions} questões → ${totalSimulados} simulados de 20 questões`
+            };
+        }
+    }
+    
+    // ============================================
+    // NOVA FUNÇÃO: NOVO SIMULADO APÓS REFORÇO
+    // ============================================
+    
+    function novoSimuladoAposReforco() {
+        const totalQuestions = masterBank.length;
+        const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
+        
+        if (remainingQuestions === 0) {
+            if (confirm(`Você já completou todas as ${totalQuestions} questões!\n\nDeseja reiniciar o histórico e começar um novo simulado?`)) {
+                usedQuestionsHistory = [];
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                startNewSimuladoFromResults();
+            }
+        } else {
+            if (confirm(`Deseja continuar com as próximas questões do banco?\n\nRestam: ${remainingQuestions} questões\nUsadas: ${usedQuestionsHistory.length} questões`)) {
+                startNewSimuladoFromResults();
+            }
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO: ATUALIZAR BOTÃO NOVO SIMULADO REFORÇO
+    // ============================================
+    
+    function updateNovoSimuladoReforcoButton() {
+        const novoSimuladoBtn = document.getElementById('novo-simulado-reforco-btn');
+        if (!novoSimuladoBtn) return;
+        
+        const isReforco = currentQuestions[0]?.isWrongQuestion;
+        const isResultsVisible = document.getElementById('results').style.display === 'block';
+        const totalQuestions = masterBank.length;
+        const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
+        
+        if (isReforco && isResultsVisible) {
+            novoSimuladoBtn.style.display = 'block';
+            
+            if (remainingQuestions === 0) {
+                novoSimuladoBtn.innerHTML = `🎯 Novo Simulado (Reiniciar Banco)`;
+            } else {
+                novoSimuladoBtn.innerHTML = `🎯 Novo Simulado (${remainingQuestions} restantes)`;
+            }
+        } else {
+            novoSimuladoBtn.style.display = 'none';
+        }
+    }
+    
+    // ============================================
+    // NOVA FUNÇÃO: CONTINUAR COM BANCO
+    // ============================================
+    
+    function continuarComBanco() {
+        const totalQuestions = masterBank.length;
+        const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
+        
+        let message = `📚 CONTINUAR COM BANCO\n\n`;
+        
+        if (remainingQuestions === 0) {
+            message += `Você já completou todas as ${totalQuestions} questões!\n`;
+            message += `Deseja reiniciar o histórico e começar um novo simulado?`;
+            
+            if (confirm(message)) {
+                usedQuestionsHistory = [];
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                startNewSimuladoFromResults();
+            }
+        } else {
+            message += `Restam ${remainingQuestions} questões no banco.\n`;
+            message += `Você já completou ${usedQuestionsHistory.length} questões.\n\n`;
+            message += `Deseja continuar com as próximas questões do banco?`;
+            
+            if (confirm(message)) {
+                startNewSimuladoFromResults();
+            }
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO: VOLTAR AO INÍCIO
+    // ============================================
+    
+    function voltarAoInicio() {
+        const totalQuestions = masterBank.length;
+        
+        let message = `🏁 VOLTAR AO INÍCIO\n\n`;
+        message += `Esta ação vai:\n`;
+        message += `• Limpar TODO o histórico de progresso\n`;
+        message += `• Limpar TODO o histórico de questões erradas\n`;
+        message += `• Reiniciar completamente o sistema\n`;
+        message += `• Começar um NOVO simulado do zero\n\n`;
+        message += `Tem certeza que deseja voltar ao início?`;
+        
+        if (confirm(message)) {
+            usedQuestionsHistory = [];
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+            
+            wrongQuestionsHistory = [];
+            saveWrongQuestionsHistory();
+            
+            localStorage.removeItem(LAST_OFFER_KEY);
+            
+            clearSessionData();
+            
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('finish-btn').style.display = 'block';
+            document.getElementById('restart-btn').style.display = 'none';
+            document.getElementById('voltar-inicio-btn').style.display = 'none';
+            document.getElementById('continuar-banco-btn').style.display = 'none';
+            document.getElementById('wrong-questions-btn').style.display = 'none';
+            document.getElementById('reiniciar-banco-btn').style.display = 'none';
+            document.getElementById('new-simulado-btn').style.display = 'none';
+            document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+            document.querySelector('.nav-buttons').style.display = 'flex';
+            
+            currentQuestions = selectRandomQuestions(true);
+            
+            if (currentQuestions.length === 0) {
+                alert("Erro ao gerar novo simulado.");
+                return;
+            }
+            
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            currentQuestionIndex = 0;
+            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+            timeLeft = TIME_LIMIT;
+            autoNavEnabled = true;
+            currentSimuladoNumber = 1;
+            
+            saveCurrentSessionState();
+            
+            updatePageTitle();
+            document.getElementById('timer').textContent = formatTime(timeLeft);
+            document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+            
+            startTimer();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+            updateFinishButton();
+            updatePendingQuestions();
+            updateSimuladoInfo();
+            updateReforcoButton();
+            updateContinuarBancoButton();
+            updateVoltarInicioButton();
+            updateNovoSimuladoReforcoButton();
+            
+            document.getElementById('motivation-message').innerHTML = '';
+            document.getElementById('motivation-message').className = 'motivation-message';
+            
+            alert(`✅ SISTEMA REINICIADO!\n\n${totalQuestions} questões disponíveis.\nBoa sorte!`);
+        }
+    }
+    
+    // ============================================
+    // FUNÇÕES DE HISTÓRICO CORRIGIDAS
+    // ============================================
+
+    function clearHistory() {
+        if (confirm(`Limpar histórico completo?`)) {
+            usedQuestionsHistory = [];
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+            
+            wrongQuestionsHistory = [];
+            saveWrongQuestionsHistory();
+            
+            clearSessionData();
+            
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('finish-btn').style.display = 'block';
+            document.getElementById('restart-btn').style.display = 'none';
+            document.getElementById('voltar-inicio-btn').style.display = 'none';
+            document.getElementById('continuar-banco-btn').style.display = 'none';
+            document.getElementById('wrong-questions-btn').style.display = 'none';
+            document.getElementById('reiniciar-banco-btn').style.display = 'none';
+            document.getElementById('new-simulado-btn').style.display = 'none';
+            document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+            document.querySelector('.nav-buttons').style.display = 'flex';
+            
+            currentQuestions = selectRandomQuestions(true);
+            
+            if (currentQuestions.length === 0) {
+                alert("Não foi possível gerar o simulado.");
+                return;
+            }
+            
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            currentQuestionIndex = 0;
+            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+            timeLeft = TIME_LIMIT;
+            autoNavEnabled = true;
+            currentSimuladoNumber = 1;
+            
+            saveCurrentSessionState();
+            
+            updatePageTitle();
+            document.getElementById('timer').textContent = formatTime(timeLeft);
+            document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+            updateSimuladoInfo();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+            updateFinishButton();
+            updatePendingQuestions();
+            updateReforcoButton();
+            updateContinuarBancoButton();
+            updateVoltarInicioButton();
+            updateNovoSimuladoReforcoButton();
+            
+            startTimer();
+            
+            alert('Histórico limpo! Novo simulado gerado.');
+        }
+    }
+
+    // ============================================
+    // FUNÇÃO GENERATENEWSIMULADO CORRIGIDA
+    // ============================================
+
+    function generateNewSimulado() {
+        const totalQuestions = masterBank.length;
+        const totalAvailable = Math.max(0, totalQuestions - usedQuestionsHistory.length);
+        
+        let message;
+        if (totalAvailable === 0) {
+            message = `Todas as questões já foram usadas!\n\nDeseja reiniciar o histórico?`;
+        } else if (totalAvailable < QUESTIONS_PER_SIMULADO) {
+            message = `Só restam ${totalAvailable} questões.\n\nDeseja fazer simulado com elas?`;
+        } else {
+            message = `Gerar novo simulado com ${Math.min(QUESTIONS_PER_SIMULADO, totalAvailable)} questões?`;
+        }
+        
+        if (confirm(message)) {
+            if (totalAvailable === 0) {
+                usedQuestionsHistory = [];
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                alert('Histórico reiniciado!');
+            }
+            
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('finish-btn').style.display = 'block';
+            document.getElementById('restart-btn').style.display = 'none';
+            document.getElementById('voltar-inicio-btn').style.display = 'none';
+            document.getElementById('continuar-banco-btn').style.display = 'none';
+            document.getElementById('wrong-questions-btn').style.display = 'none';
+            document.getElementById('reiniciar-banco-btn').style.display = 'none';
+            document.getElementById('new-simulado-btn').style.display = 'none';
+            document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+            document.querySelector('.nav-buttons').style.display = 'flex';
+            
+            currentQuestions = selectRandomQuestions(false);
+            
+            if (currentQuestions.length === 0) {
+                alert("Erro ao gerar simulado.");
+                return;
+            }
+            
+            const newSessionId = 'session_' + Date.now();
+            sessionStorage.setItem(SESSION_ID_KEY, newSessionId);
+            
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            currentQuestionIndex = 0;
+            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+            timeLeft = TIME_LIMIT;
+            autoNavEnabled = true;
+            
+            saveCurrentSessionState();
+            
+            updatePageTitle();
+            document.getElementById('timer').textContent = formatTime(timeLeft);
+            document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+            startTimer();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+            updateFinishButton();
+            updatePendingQuestions();
+            updateSimuladoInfo();
+            updateReforcoButton();
+            updateContinuarBancoButton();
+            updateVoltarInicioButton();
+            updateNovoSimuladoReforcoButton();
+        }
+    }
+
+    // ============================================
+    // FUNÇÃO STARTSIMULADOFROMBANCO CORRIGIDA
+    // ============================================
+
+    function startNewSimuladoFromResults() {
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        document.getElementById('restart-btn').style.display = 'none';
+        document.getElementById('voltar-inicio-btn').style.display = 'none';
+        document.getElementById('continuar-banco-btn').style.display = 'none';
+        document.getElementById('wrong-questions-btn').style.display = 'none';
+        document.getElementById('reiniciar-banco-btn').style.display = 'none';
+        document.getElementById('new-simulado-btn').style.display = 'none';
+        document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+        document.querySelector('.nav-buttons').style.display = 'flex';
+        
+        currentQuestions = selectRandomQuestions(false);
+        
+        if (currentQuestions.length === 0) {
+            alert("Não foi possível gerar novo simulado.");
+            return;
+        }
+        
+        const newSessionId = 'session_' + Date.now();
+        sessionStorage.setItem(SESSION_ID_KEY, newSessionId);
+        
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        currentQuestionIndex = 0;
+        TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+        timeLeft = TIME_LIMIT;
+        autoNavEnabled = true;
+        
+        saveCurrentSessionState();
+        
+        updatePageTitle();
+        document.getElementById('timer').textContent = formatTime(timeLeft);
+        document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+        updatePendingQuestions();
+        updateSimuladoInfo();
+        updateReforcoButton();
+        updateContinuarBancoButton();
+        updateVoltarInicioButton();
+        updateNovoSimuladoReforcoButton();
+        
+        const totalQuestions = masterBank.length;
+        const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
+        alert(`✅ NOVO SIMULADO INICIADO!\n\n${currentQuestions.length} questões selecionadas.\n\nRestam ${remainingQuestions} questões no banco.`);
+    }
+    
+    // ============================================
+    // FUNÇÃO: ATUALIZAR BOTÃO VOLTAR AO INÍCIO
+    // ============================================
+    
+    function updateVoltarInicioButton() {
+        const voltarBtn = document.getElementById('voltar-inicio-btn');
+        if (!voltarBtn) return;
+        
+        const isReforco = currentQuestions[0]?.isWrongQuestion;
+        const isResultsVisible = document.getElementById('results').style.display === 'block';
+        const percent = parseInt(document.getElementById('final-percent')?.textContent?.replace('%', '') || 0);
+        
+        if (isReforco && isResultsVisible && percent >= MIN_PERCENT_FOR_SUCCESS) {
+            voltarBtn.style.display = 'block';
+            voltarBtn.innerHTML = `🏁 Voltar ao Início (Limpar Tudo)`;
+        } else {
+            voltarBtn.style.display = 'none';
+        }
+    }
+    
+    // ============================================
+    // CORREÇÃO PRINCIPAL: FUNÇÃO UPDATESIMULADOINFO
+    // ============================================
+    
+    function updateSimuladoInfo() {
+        const totalQuestions = masterBank.length;
+        
+        const currentQuestionsCount = currentQuestions ? currentQuestions.length : 0;
+        
+        let remaining = 0;
+        if (currentQuestions && currentQuestions[0]?.isWrongQuestion) {
+            const wrongCount = wrongQuestionsHistory.length;
+            const successRate = Math.round(((totalQuestions - wrongCount) / totalQuestions) * 100);
+            
+            document.getElementById('simulado-info').innerHTML = `
+                <div style="color: var(--danger); font-weight: bold; text-align: center;">⚡ SIMULADO DE REFORÇO</div>
+                <div style="text-align: center; font-size: 0.6rem;">Questões que você errou anteriormente</div>
+                <div class="simulado-stats">
+                    <span>Questões: ${currentQuestionsCount}</span>
+                    <span>Acertos gerais: ${successRate}%</span>
+                </div>
+            `;
+            document.getElementById('simulado-info').style.display = 'block';
+            return;
+        }
+        
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        const recentUsed = uniqueUsed.length;
+        remaining = Math.max(0, totalQuestions - recentUsed);
+        const percentUsed = totalQuestions > 0 ? Math.round((recentUsed / totalQuestions) * 100) : 0;
+        
+        let simuladoNumberText = '';
+        if (totalSimulados > 1) {
+            const simuladoAtual = Math.min(currentSimuladoNumber, totalSimulados);
+            simuladoNumberText = ` (${simuladoAtual}/${totalSimulados})`;
+        }
+        
+        document.getElementById('simulado-info').innerHTML = `
+            <div>Simulado${simuladoNumberText}: <span id="questions-per-simulado">${currentQuestionsCount}</span> questões</div>
+            <div class="simulado-stats">
+                <span id="remaining-questions">Disponíveis: ${remaining}</span>
+                <span id="recent-used">Usadas: ${recentUsed} (${percentUsed}%)</span>
+            </div>
+            
+            <div class="history-controls">
+                <button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar Histórico</button>
+                <button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button>
+            </div>
+        `;
+        document.getElementById('simulado-info').style.display = 'block';
+        
+        const questionsPerSimuladoEl = document.getElementById('questions-per-simulado');
+        const remainingQuestionsEl = document.getElementById('remaining-questions');
+        const recentUsedEl = document.getElementById('recent-used');
+        
+        if (questionsPerSimuladoEl) questionsPerSimuladoEl.textContent = currentQuestionsCount;
+        if (remainingQuestionsEl) remainingQuestionsEl.textContent = `Disponíveis: ${remaining}`;
+        if (recentUsedEl) recentUsedEl.textContent = `Usadas: ${recentUsed} (${percentUsed}%)`;
+    }
+    
+    // ============================================
+    // CORREÇÃO: FUNÇÃO UPDATECONTINUARBANCOBUTTON
+    // ============================================
+    
+    function updateContinuarBancoButton() {
+        const continuarBtn = document.getElementById('continuar-banco-btn');
+        if (!continuarBtn) return;
+        
+        const totalQuestions = masterBank.length;
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        const remainingQuestions = Math.max(0, totalQuestions - uniqueUsed.length);
+        
+        const isResultsVisible = document.getElementById('results').style.display === 'block';
+        const isReforco = currentQuestions[0]?.isWrongQuestion;
+        const percent = parseInt(document.getElementById('final-percent')?.textContent?.replace('%', '') || 0);
+        
+        if (isResultsVisible && !isReforco && remainingQuestions > 0) {
+            continuarBtn.style.display = 'block';
+            continuarBtn.innerHTML = `📚 Continuar com Banco (${remainingQuestions} restantes)`;
+        } else if (isResultsVisible && isReforco && percent >= MIN_PERCENT_FOR_SUCCESS) {
+            continuarBtn.style.display = 'block';
+            continuarBtn.innerHTML = `📚 Voltar ao Banco (${remainingQuestions} restantes)`;
+        } else {
+            continuarBtn.style.display = 'none';
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO: START WRONG QUESTIONS SIMULADO
+    // ============================================
+    
+    function startWrongQuestionsSimulado() {
+        console.log('Iniciando simulado de reforço...');
+        
+        currentQuestions = generateWrongQuestionsSimulado();
+        
+        if (currentQuestions.length === 0) {
+            alert('Não há questões erradas para fazer o simulado de reforço.');
+            updateReforcoButton();
+            return;
+        }
+        
+        currentSimuladoNumber = totalSimulados + 1;
+        
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        currentQuestionIndex = 0;
+        TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+        timeLeft = TIME_LIMIT;
+        autoNavEnabled = true;
+        
+        saveCurrentSessionState();
+        
+        updatePageTitle();
+        document.getElementById('timer').textContent = formatTime(timeLeft);
+        document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+        
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        document.getElementById('restart-btn').style.display = 'none';
+        document.getElementById('voltar-inicio-btn').style.display = 'none';
+        document.getElementById('continuar-banco-btn').style.display = 'none';
+        document.getElementById('wrong-questions-btn').style.display = 'none';
+        document.getElementById('reiniciar-banco-btn').style.display = 'none';
+        document.getElementById('new-simulado-btn').style.display = 'none';
+        document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+        document.querySelector('.nav-buttons').style.display = 'flex';
+        
+        const wrongCount = wrongQuestionsHistory.length;
+        const totalQuestions = masterBank.length;
+        const successRate = Math.round(((totalQuestions - wrongCount) / totalQuestions) * 100);
+        
+        document.getElementById('simulado-info').innerHTML = `
+            <div style="color: var(--danger); font-weight: bold; text-align: center;">⚡ SIMULADO DE REFORÇO</div>
+            <div style="text-align: center; font-size: 0.6rem;">Questões que você errou anteriormente</div>
+            <div class="simulado-stats">
+                <span>Questões: ${currentQuestions.length}</span>
+                <span>Acertos anteriores: ${successRate}%</span>
+            </div>
+        `;
+        document.getElementById('simulado-info').style.display = 'block';
+        
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+        updatePendingQuestions();
+        
+        updateReforcoButton();
+        updateReiniciarBancoButton();
+        updateContinuarBancoButton();
+        updateVoltarInicioButton();
+        updateNovoSimuladoReforcoButton();
+        
+        alert(`🎯 SIMULADO DE REFORÇO INICIADO!\n\n${currentQuestions.length} questões que você errou anteriormente.\nBoa sorte!`);
+    }
+    
+    // ============================================
+    // FUNÇÃO: UPDATE REFORCO BUTTON
+    // ============================================
+    
+    function updateReforcoButton() {
+        const wrongBtn = document.getElementById('wrong-questions-btn');
+        if (!wrongBtn) return;
+        
+        const hasEnough = hasEnoughWrongQuestionsForSimulado();
+        const isReforcoActive = currentQuestions[0]?.isWrongQuestion;
+        const isResultsVisible = document.getElementById('results').style.display === 'block';
+        
+        if (hasEnough && !isReforcoActive && isResultsVisible) {
+            wrongBtn.style.display = 'block';
+            wrongBtn.innerHTML = `⚡ Simulado de Reforço (${wrongQuestionsHistory.length})`;
+        } else {
+            wrongBtn.style.display = 'none';
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO: UPDATE REINICIAR BANCO BUTTON
+    // ============================================
+    
+    function updateReiniciarBancoButton() {
+        const reiniciarBtn = document.getElementById('reiniciar-banco-btn');
+        if (!reiniciarBtn) return;
+        
+        const isReforco = currentQuestions[0]?.isWrongQuestion;
+        const isResultsVisible = document.getElementById('results').style.display === 'block';
+        const percent = parseInt(document.getElementById('final-percent')?.textContent?.replace('%', '') || 0);
+        
+        if (isReforco && isResultsVisible && percent < MIN_PERCENT_FOR_SUCCESS) {
+            reiniciarBtn.style.display = 'block';
+            reiniciarBtn.innerHTML = `🔄 Reiniciar Banco (${masterBank.length} questões)`;
+        } else {
+            reiniciarBtn.style.display = 'none';
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO: REINICIAR BANCO COMPLETO
+    // ============================================
+    
+    function reiniciarBancoCompleto() {
+        const totalQuestions = masterBank.length;
+        const wrongCount = wrongQuestionsHistory.length;
+        
+        let message = `🔄 REINICIAR BANCO COMPLETO\n\n`;
+        message += `Você não atingiu 70% no simulado de reforço.\n\n`;
+        message += `Esta ação vai:\n`;
+        message += `• Limpar TODO o histórico (${usedQuestionsHistory.length} questões usadas)\n`;
+        message += `• Limpar TODO o histórico de erros (${wrongCount} questões)\n`;
+        message += `• Reiniciar o progresso do ZERO\n\n`;
+        message += `Deseja reiniciar completamente?`;
+        
+        if (confirm(message)) {
+            usedQuestionsHistory = [];
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+            
+            wrongQuestionsHistory = [];
+            saveWrongQuestionsHistory();
+            
+            localStorage.removeItem(LAST_OFFER_KEY);
+            
+            clearSessionData();
+            
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('finish-btn').style.display = 'block';
+            document.getElementById('restart-btn').style.display = 'none';
+            document.getElementById('voltar-inicio-btn').style.display = 'none';
+            document.getElementById('continuar-banco-btn').style.display = 'none';
+            document.getElementById('wrong-questions-btn').style.display = 'none';
+            document.getElementById('reiniciar-banco-btn').style.display = 'none';
+            document.getElementById('new-simulado-btn').style.display = 'none';
+            document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+            document.querySelector('.nav-buttons').style.display = 'flex';
+            
+            currentQuestions = selectRandomQuestions(true);
+            
+            if (currentQuestions.length === 0) {
+                alert("Erro ao gerar novo simulado.");
+                return;
+            }
+            
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            currentQuestionIndex = 0;
+            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+            timeLeft = TIME_LIMIT;
+            autoNavEnabled = true;
+            currentSimuladoNumber = 1;
+            
+            saveCurrentSessionState();
+            
+            updatePageTitle();
+            document.getElementById('timer').textContent = formatTime(timeLeft);
+            document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+            
+            startTimer();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+            updateFinishButton();
+            updatePendingQuestions();
+            updateSimuladoInfo();
+            updateReforcoButton();
+            updateContinuarBancoButton();
+            updateVoltarInicioButton();
+            updateNovoSimuladoReforcoButton();
+            
+            document.getElementById('motivation-message').innerHTML = '';
+            document.getElementById('motivation-message').className = 'motivation-message';
+            
+            alert(`✅ BANCO REINICIADO!\n\n${totalQuestions} questões disponíveis.\nBoa sorte!`);
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO RESETQUIZ CORRIGIDA
+    // ============================================
+    
+    function resetQuiz() {
+        if (confirm('Reiniciar este simulado?')) {
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            timeLeft = TIME_LIMIT;
+            currentQuestionIndex = 0;
+            
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('finish-btn').style.display = 'block';
+            document.getElementById('restart-btn').style.display = 'none';
+            document.getElementById('voltar-inicio-btn').style.display = 'none';
+            document.getElementById('continuar-banco-btn').style.display = 'none';
+            document.getElementById('wrong-questions-btn').style.display = 'none';
+            document.getElementById('reiniciar-banco-btn').style.display = 'none';
+            document.getElementById('new-simulado-btn').style.display = 'none';
+            document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+            document.querySelector('.nav-buttons').style.display = 'flex';
+            
+            document.getElementById('quiz-content').innerHTML = '';
+            
+            saveCurrentSessionState();
+            
+            startTimer();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+            updateFinishButton();
+            updatePendingQuestions();
+            updateContinuarBancoButton();
+            updateVoltarInicioButton();
+            updateNovoSimuladoReforcoButton();
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO STARTNEWQUIZ CORRIGIDA
+    // ============================================
+    
+    function startNewQuiz() {
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        document.getElementById('restart-btn').style.display = 'none';
+        document.getElementById('voltar-inicio-btn').style.display = 'none';
+        document.getElementById('continuar-banco-btn').style.display = 'none';
+        document.getElementById('wrong-questions-btn').style.display = 'none';
+        document.getElementById('reiniciar-banco-btn').style.display = 'none';
+        document.getElementById('new-simulado-btn').style.display = 'none';
+        document.getElementById('novo-simulado-reforco-btn').style.display = 'none';
+        document.querySelector('.nav-buttons').style.display = 'flex';
+        
+        document.getElementById('quiz-content').innerHTML = '';
+        
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        timeLeft = TIME_LIMIT;
+        currentQuestionIndex = 0;
+        
+        saveCurrentSessionState();
+        
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+        updatePendingQuestions();
+        updateContinuarBancoButton();
+        updateVoltarInicioButton();
+        updateNovoSimuladoReforcoButton();
+    }
+    
+    // ============================================
+    // RESTANTE DAS FUNÇÕES EXISTENTES
+    // ============================================
+    
+    function loadWrongQuestionsHistory() {
+        const saved = localStorage.getItem(WRONG_QUESTIONS_KEY);
+        if (saved) {
+            try {
+                wrongQuestionsHistory = JSON.parse(saved);
+                console.log(`Histórico de questões erradas carregado: ${wrongQuestionsHistory.length} questões`);
+            } catch (e) {
+                console.error('Erro ao carregar histórico de questões erradas:', e);
+                wrongQuestionsHistory = [];
+            }
+        } else {
+            wrongQuestionsHistory = [];
+            console.log('Nenhum histórico de questões erradas encontrado');
+        }
+    }
+    
+    function saveWrongQuestionsHistory() {
+        localStorage.setItem(WRONG_QUESTIONS_KEY, JSON.stringify(wrongQuestionsHistory));
+    }
+    
+    function addWrongQuestionsToHistory() {
+        if (!currentQuestions || currentQuestions.length === 0) return;
+        
+        currentQuestions.forEach((question, index) => {
+            const userAnswer = userAnswers[index];
+            const isCorrect = userAnswer !== null && userAnswer === question.c;
+            
+            if (!isCorrect && question.originalIndex !== undefined) {
+                if (!wrongQuestionsHistory.includes(question.originalIndex)) {
+                    wrongQuestionsHistory.push(question.originalIndex);
+                }
+            }
+        });
+        
+        wrongQuestionsHistory = [...new Set(wrongQuestionsHistory)];
+        saveWrongQuestionsHistory();
+        
+        console.log(`Questões erradas adicionadas ao histórico. Total: ${wrongQuestionsHistory.length}`);
+    }
+    
+    function removeCorrectQuestionsFromHistory() {
+        const initialCount = wrongQuestionsHistory.length;
+        
+        if (!currentQuestions || currentQuestions.length === 0) return;
+        
+        currentQuestions.forEach((question, index) => {
+            const userAnswer = userAnswers[index];
+            const isCorrect = userAnswer !== null && userAnswer === question.c;
+            
+            if (isCorrect && question.originalIndex !== undefined) {
+                const indexInHistory = wrongQuestionsHistory.indexOf(question.originalIndex);
+                if (indexInHistory !== -1) {
+                    wrongQuestionsHistory.splice(indexInHistory, 1);
+                }
+            }
+        });
+        
+        saveWrongQuestionsHistory();
+        
+        console.log(`Questões removidas do histórico de erradas: ${initialCount - wrongQuestionsHistory.length}`);
+    }
+    
+    function allQuestionsUsed() {
+        const totalQuestions = masterBank.length;
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        return uniqueUsed.length >= totalQuestions;
+    }
+    
+    function hasEnoughWrongQuestionsForSimulado() {
+        return wrongQuestionsHistory.length >= MIN_WRONG_QUESTIONS_FOR_SIMULADO;
+    }
+    
+    function canOfferReforcoSimulado() {
+        const condition1 = hasEnoughWrongQuestionsForSimulado();
+        const condition2 = !currentQuestions[0]?.isWrongQuestion;
+        const condition3 = !hasRecentOffer();
+        
+        return condition1 && condition2 && condition3;
+    }
+    
+    function hasRecentOffer() {
+        const lastOffer = localStorage.getItem(LAST_OFFER_KEY);
+        if (!lastOffer) return false;
+        
+        const now = Date.now();
+        const lastOfferTime = parseInt(lastOffer);
+        const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
+        
+        return (now - lastOfferTime) < TWO_HOURS_MS;
+    }
+    
+    function saveOfferTimestamp() {
+        localStorage.setItem(LAST_OFFER_KEY, Date.now().toString());
+    }
+    
+    function isNewSession() {
+        const sessionId = sessionStorage.getItem(SESSION_ID_KEY);
+        const simuladoStarted = sessionStorage.getItem(SIMULADO_STARTED_KEY);
+        
+        if (!sessionId || !simuladoStarted) {
+            const newSessionId = 'session_' + Date.now();
+            sessionStorage.setItem(SESSION_ID_KEY, newSessionId);
+            sessionStorage.setItem(SIMULADO_STARTED_KEY, 'true');
+            return true;
+        }
+        return false;
+    }
+    
+    function clearSessionData() {
+        sessionStorage.removeItem(CURRENT_QUESTIONS_KEY);
+        sessionStorage.removeItem(CURRENT_QUESTION_INDEX_KEY);
+        sessionStorage.removeItem(USER_ANSWERS_KEY);
+        sessionStorage.removeItem(TIME_LEFT_KEY);
+        sessionStorage.removeItem(AUTO_NAV_KEY);
+        sessionStorage.removeItem(SIMULADO_STARTED_KEY);
+        sessionStorage.removeItem(CURRENT_SIMULADO_NUMBER_KEY);
+    }
+    
+    function saveCurrentSessionState() {
+        try {
+            sessionStorage.setItem(CURRENT_QUESTIONS_KEY, JSON.stringify(currentQuestions));
+            sessionStorage.setItem(CURRENT_QUESTION_INDEX_KEY, currentQuestionIndex.toString());
+            sessionStorage.setItem(USER_ANSWERS_KEY, JSON.stringify(userAnswers));
+            sessionStorage.setItem(TIME_LEFT_KEY, timeLeft.toString());
+            sessionStorage.setItem(AUTO_NAV_KEY, autoNavEnabled.toString());
+            sessionStorage.setItem(SIMULADO_STARTED_KEY, 'true');
+            sessionStorage.setItem(CURRENT_SIMULADO_NUMBER_KEY, currentSimuladoNumber.toString());
+        } catch (e) {
+            console.error('Erro ao salvar estado da sessão:', e);
+        }
+    }
+    
+    function loadCurrentSessionState() {
+        try {
+            const savedQuestions = sessionStorage.getItem(CURRENT_QUESTIONS_KEY);
+            const savedIndex = sessionStorage.getItem(CURRENT_QUESTION_INDEX_KEY);
+            const savedAnswers = sessionStorage.getItem(USER_ANSWERS_KEY);
+            const savedTime = sessionStorage.getItem(TIME_LEFT_KEY);
+            const savedAutoNav = sessionStorage.getItem(AUTO_NAV_KEY);
+            const savedSimuladoNumber = sessionStorage.getItem(CURRENT_SIMULADO_NUMBER_KEY);
+            
+            if (savedQuestions) currentQuestions = JSON.parse(savedQuestions);
+            if (savedIndex) currentQuestionIndex = parseInt(savedIndex);
+            if (savedAnswers) userAnswers = JSON.parse(savedAnswers);
+            if (savedTime) timeLeft = parseInt(savedTime);
+            if (savedAutoNav) autoNavEnabled = savedAutoNav === 'true';
+            if (savedSimuladoNumber) currentSimuladoNumber = parseInt(savedSimuladoNumber);
+            
+            return {
+                hasQuestions: !!savedQuestions,
+                hasState: !!(savedQuestions && savedIndex !== null)
+            };
+        } catch (e) {
+            console.error('Erro ao carregar estado da sessão:', e);
+            return { hasQuestions: false, hasState: false };
+        }
+    }
+    
+    function generateQuizId() {
+        const pageTitle = document.title || "Quiz";
+        const cleanTitle = pageTitle
+            .replace(/[^a-zA-Z0-9\s]/g, '')
+            .replace(/\s+/g, '_')
+            .toLowerCase()
+            .substring(0, 30);
+        const titleHash = pageTitle.length.toString(36);
+        return `quiz_${cleanTitle}_${titleHash}`;
+    }
+    
+    const QUIZ_ID = generateQuizId();
+    const HISTORY_KEY = `${QUIZ_ID}_history`;
+    const REPORTS_KEY = `${QUIZ_ID}_reports`;
+    
+    function updatePageTitle() {
+        const totalQuestions = masterBank.length;
+        let simuladoText = '';
+        
+        if (currentQuestions && currentQuestions[0]?.isWrongQuestion) {
+            simuladoText = ' (⚡ Reforço)';
+        } else if (totalSimulados > 1) {
+            simuladoText = ` (Simulado ${currentSimuladoNumber}/${totalSimulados})`;
+        }
+        
+        const pageTitle = document.title || "Quiz Simulado";
+        let cleanTitle = pageTitle
+            .replace(/^GMP\s*[-–—]\s*/i, '')
+            .replace(/^Simulado\s*[-–—]\s*/i, '')
+            .replace(/^Quiz\s*[-–—]\s*/i, '')
+            .replace(/\s*[-–—]\s*Simulado$/i, '')
+            .replace(/\s*[-–—]\s*Quiz$/i, '')
+            .replace(/\s*[-–—]\s*Teste$/i, '')
+            .trim();
+        
+        if (!cleanTitle) cleanTitle = pageTitle;
+        if (cleanTitle.length > 40) cleanTitle = cleanTitle.substring(0, 37) + '...';
+        
+        const questionCount = currentQuestions ? currentQuestions.length : 0;
+        document.getElementById('page-title').textContent = 
+            `${cleanTitle}${simuladoText} (${questionCount}/${totalQuestions})`;
+    }
+    
+    function calculateTimeLimit(questionsCount) {
+        return questionsCount * 60;
+    }
+    
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+    
+    function shuffleArray(array) {
+        const shuffled = [...array];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
+    }
+    
+    function showHistoryInfo() {
+        const totalQuestions = masterBank.length;
+        const uniqueUsed = [...new Set(usedQuestionsHistory)];
+        const usedCount = uniqueUsed.length;
+        const availableCount = Math.max(0, totalQuestions - usedCount);
+        const percentUsed = totalQuestions > 0 ? Math.round((usedCount / totalQuestions) * 100) : 0;
+        const wrongCount = wrongQuestionsHistory.length;
+        
+        let message = `📊 ESTATÍSTICAS:\n\n`;
+        message += `• Total: ${totalQuestions} questões\n`;
+        message += `• Usadas: ${usedCount} (${percentUsed}%)\n`;
+        message += `• Disponíveis: ${availableCount}\n`;
+        message += `• Erradas: ${wrongCount}\n`;
+        
+        if (currentQuestions && currentQuestions[0]?.isWrongQuestion) {
+            message += `\n⚡ SIMULADO DE REFORÇO ATIVO\n`;
+        }
+        
+        if (wrongCount >= MIN_WRONG_QUESTIONS_FOR_SIMULADO) {
+            message += `\n⚡ SIMULADO DE REFORÇO DISPONÍVEL\n`;
+            message += `• ${wrongCount} questões para revisar\n`;
+        }
+        
+        alert(message);
+    }
+    
+    function updatePendingQuestions() {
+        const pendingList = document.getElementById('pending-list');
+        const pendingCount = document.getElementById('pending-count');
+        const answeredCount = getAnsweredCount();
+        const pending = currentQuestions ? currentQuestions.length - answeredCount : 0;
+        
+        if (pendingCount) pendingCount.textContent = pending;
+        
+        if (pending === 0) {
+            if (pendingList) pendingList.innerHTML = '<span style="color: #28a745;">✅ Todas</span>';
+            return;
+        }
+        
+        let html = '';
+        let pendingNumbers = [];
+        
+        if (currentQuestions) {
+            for (let i = 0; i < currentQuestions.length; i++) {
+                if (userAnswers[i] === null) {
+                    pendingNumbers.push(i + 1);
+                }
+            }
+        }
+        
+        const maxToShow = 10;
+        const numbersToShow = pendingNumbers.slice(0, maxToShow);
+        
+        numbersToShow.forEach(num => {
+            html += `<span class="pending-number">${num}</span>`;
+        });
+        
+        if (pendingNumbers.length > maxToShow) {
+            html += `<span style="color: #6c757d; font-size: 0.55rem;"> +${pendingNumbers.length - maxToShow}</span>`;
+        }
+        
+        if (pendingList) {
+            pendingList.innerHTML = html || '<span style="color: #6c757d;">Nenhuma</span>';
+        }
+    }
+    
+    // ============================================
+    // FUNÇÃO INITQUIZ ATUALIZADA
+    // ============================================
+
+    function initQuiz() {
+        loadWrongQuestionsHistory();
+        
+        if (masterBank.length === 0) {
+            document.getElementById('page-title').textContent = "⚠️ BANCO VAZIO";
+            document.getElementById('quiz-content').innerHTML = `
+                <div class="question-block-mini">
+                    <div class="question-text-mini" style="color: var(--danger);">
+                        ⚠️ ERRO: Banco de questões vazio!
+                    </div>
+                </div>
+            `;
+            return;
+        }
+        
+        const config = calcularConfiguracaoSimulados();
+        console.log('Configuração:', config.mensagem);
+        totalSimulados = config.totalSimulados;
+        QUESTIONS_PER_SIMULADO = config.questionsPerSimulado;
+        
+        const savedHistory = localStorage.getItem(HISTORY_KEY);
+        if (savedHistory) {
+            try {
+                usedQuestionsHistory = JSON.parse(savedHistory);
+            } catch (e) {
+                console.error('Erro ao carregar histórico:', e);
+                usedQuestionsHistory = [];
+            }
+        } else {
+            usedQuestionsHistory = [];
+        }
+        
+        if (isNewSession()) {
+            console.log('Nova sessão - gerando questões');
+            currentQuestions = selectRandomQuestions();
+            
+            if (currentQuestions.length === 0) {
+                alert("Não foi possível selecionar questões.");
+                return;
+            }
+            
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            currentQuestionIndex = 0;
+            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+            timeLeft = TIME_LIMIT;
+            autoNavEnabled = true;
+            
+            saveCurrentSessionState();
+        } else {
+            console.log('Sessão existente - restaurando');
+            const state = loadCurrentSessionState();
+            
+            if (state.hasQuestions && state.hasState) {
+                console.log('Estado restaurado');
+                if (timeLeft <= 0) {
+                    TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+                    timeLeft = TIME_LIMIT;
+                }
+            } else {
+                console.log('Não há estado - gerando novo');
+                currentQuestions = selectRandomQuestions();
+                if (currentQuestions.length === 0) {
+                    alert("Não foi possível gerar o simulado.");
+                    return;
+                }
+                
+                userAnswers = new Array(currentQuestions.length).fill(null);
+                currentQuestionIndex = 0;
+                TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+                timeLeft = TIME_LIMIT;
+                autoNavEnabled = true;
+                
+                saveCurrentSessionState();
+            }
+        }
+        
+        updatePageTitle();
+        document.getElementById('timer').textContent = formatTime(timeLeft);
+        document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+        
+        updateSimuladoInfo();
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+        updatePendingQuestions();
+        updateReforcoButton();
+        updateReiniciarBancoButton();
+        updateContinuarBancoButton();
+        updateVoltarInicioButton();
+        updateNovoSimuladoReforcoButton();
+    }
+    
+    function selectAnswer(answerIndex) {
+        userAnswers[currentQuestionIndex] = answerIndex;
+        saveCurrentSessionState();
+        
+        updateCounters();
+        updateFinishButton();
+        updatePendingQuestions();
+        
+        if (autoNavEnabled && currentQuestionIndex < currentQuestions.length - 1) {
+            setTimeout(() => {
+                nextQuestion();
+            }, 200);
+        }
+    }
+    
+    function toggleAutoNav() {
+        autoNavEnabled = !autoNavEnabled;
+        document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+        saveCurrentSessionState();
+    }
+    
+    function getAnsweredCount() {
+        return userAnswers.filter(answer => answer !== null).length;
+    }
+    
+    function updateFinishButton() {
+        const finishBtn = document.getElementById('finish-btn');
+        const answeredCount = getAnsweredCount();
+        const allAnswered = currentQuestions && answeredCount === currentQuestions.length;
+        
+        finishBtn.disabled = !allAnswered;
+        finishBtn.innerHTML = allAnswered ? '🏁 Finalizar' : `❌ Faltam ${currentQuestions ? currentQuestions.length - answeredCount : 0}`;
+    }
+    
+    function updateNavButtons() {
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        
+        prevBtn.disabled = currentQuestionIndex === 0;
+        nextBtn.disabled = currentQuestions ? currentQuestionIndex === currentQuestions.length - 1 : true;
+        nextBtn.innerHTML = currentQuestions && currentQuestionIndex === currentQuestions.length - 1 ? 'Última' : 'Próximo →';
+    }
+    
+    function updateCounters() {
+        const answeredCount = getAnsweredCount();
+        const totalQuestions = currentQuestions ? currentQuestions.length : 0;
+        
+        document.getElementById('question-counter').textContent = `${currentQuestionIndex + 1}/${totalQuestions}`;
+        document.getElementById('answered-counter').textContent = `${answeredCount}/${totalQuestions}`;
+        document.getElementById('progress-percent').textContent = `${totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0}%`;
+        document.getElementById('status-count').textContent = `${answeredCount}/${totalQuestions}`;
+        
+        updateTimerDisplay();
+    }
+    
+    function updateTimerDisplay() {
+        const timerElement = document.getElementById('timer');
+        timerElement.textContent = formatTime(timeLeft);
+        
+        if (timeLeft <= Math.min(300, Math.floor(TIME_LIMIT * 0.25))) {
+            timerElement.classList.add('timer-warning');
+        } else {
+            timerElement.classList.remove('timer-warning');
+        }
+    }
+    
+    function startTimer() {
+        clearInterval(timerId);
+        
+        timerId = setInterval(() => {
+            timeLeft--;
+            
+            if (timeLeft % 5 === 0) {
+                saveCurrentSessionState();
+            }
+            
+            updateTimerDisplay();
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerId);
+                if (getAnsweredCount() === currentQuestions.length) {
+                    finalizeQuiz();
+                } else {
+                    if (confirm('Tempo esgotado! Finalizar?')) {
+                        finalizeQuiz();
+                    }
+                }
+            }
+        }, 1000);
+    }
+    
+    function nextQuestion() {
+        if (currentQuestions && currentQuestionIndex < currentQuestions.length - 1) {
+            currentQuestionIndex++;
+            saveCurrentSessionState();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+        }
+    }
+    
+    function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            saveCurrentSessionState();
+            renderCurrentQuestion();
+            updateCounters();
+            updateNavButtons();
+        }
+    }
+    
+    // ============================================
+    // SISTEMA DE REPORTE - CORRIGIDO
+    // ============================================
+    
+    function initReportSystem() {
+        const savedReports = localStorage.getItem(REPORTS_KEY);
+        if (savedReports) {
+            reportsHistory = JSON.parse(savedReports);
+        } else {
+            reportsHistory = [];
+        }
+        
+        document.getElementById('cancelReport').addEventListener('click', closeReportModal);
+        document.getElementById('submitReport').addEventListener('click', submitReport);
+        
+        document.getElementById('reportModal').addEventListener('click', function(e) {
+            if (e.target.id === 'reportModal') {
+                closeReportModal();
+            }
+        });
+        
+        const reportDetails = document.getElementById('reportDetails');
+        const charCount = document.getElementById('charCount');
+        
+        if (reportDetails && charCount) {
+            reportDetails.addEventListener('input', function() {
+                charCount.textContent = this.value.length;
+                if (this.value.length > 1000) {
+                    this.value = this.value.substring(0, 1000);
+                    charCount.textContent = 1000;
+                }
+            });
+        }
+        
+        const inputs = document.querySelectorAll('.form-input');
+        inputs.forEach(input => {
+            input.addEventListener('input', function() {
+                if (this.classList.contains('error')) {
+                    this.classList.remove('error');
+                    hideError();
+                }
+            });
+        });
+    }
+    
+    function openReportModal(questionIndex) {
+        currentReportQuestionIndex = questionIndex;
+        
+        if (!currentQuestions || currentQuestions.length === 0) {
+            alert("Não há questões carregadas.");
+            return;
+        }
+        
+        const question = currentQuestions[questionIndex];
+        
+        document.getElementById('reportQuestionNumber').textContent = questionIndex + 1;
+        
+        let questionText = question.q;
+        if (questionText.length > 150) {
+            questionText = questionText.substring(0, 147) + '...';
+        }
+        document.getElementById('reportQuestionText').textContent = questionText;
+        
+        document.querySelectorAll('input[name="reportType"]').forEach(radio => {
+            radio.checked = false;
+        });
+        document.getElementById('reportDetails').value = '';
+        document.getElementById('userName').value = '';
+        document.getElementById('userEmail').value = '';
+        document.getElementById('userInfo').value = '';
+        document.getElementById('charCount').textContent = '0';
+        document.getElementById('reportSuccess').style.display = 'none';
+        document.getElementById('reportErrorMsg').style.display = 'none';
+        
+        document.getElementById('submitReport').disabled = false;
+        document.getElementById('submitText').textContent = 'Enviar Reporte';
+        document.getElementById('submitLoading').style.display = 'none';
+        
+        document.getElementById('reportModal').style.display = 'flex';
+        
+        setTimeout(() => {
+            document.getElementById('userName').focus();
+        }, 100);
+    }
+    
+    function closeReportModal() {
+        document.getElementById('reportModal').style.display = 'none';
+        currentReportQuestionIndex = null;
+    }
+    
+    function showError(message) {
+        const errorElement = document.getElementById('reportErrorMsg');
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+        errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    function hideError() {
+        document.getElementById('reportErrorMsg').style.display = 'none';
+    }
+    
+    function validateForm() {
+        const name = document.getElementById('userName').value.trim();
+        const email = document.getElementById('userEmail').value.trim();
+        const reportType = document.querySelector('input[name="reportType"]:checked');
+        
+        if (!name) {
+            document.getElementById('userName').classList.add('error');
+            showError('Por favor, preencha seu nome completo.');
+            return false;
+        }
+        
+        if (!email) {
+            document.getElementById('userEmail').classList.add('error');
+            showError('Por favor, preencha seu e-mail.');
+            return false;
+        }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            document.getElementById('userEmail').classList.add('error');
+            showError('Por favor, insira um e-mail válido.');
+            return false;
+        }
+        
+        if (!reportType) {
+            showError('Por favor, selecione o tipo de problema.');
+            return false;
+        }
+        
+        return true;
+    }
+    
+    async function submitReport() {
+        if (!validateForm()) {
+            return;
+        }
+        
+        const questionIndex = currentReportQuestionIndex;
+        const question = currentQuestions[questionIndex];
+        
+        const reportData = {
+            quizId: QUIZ_ID,
+            materia: document.title || "Quiz",
+            questionIndex: questionIndex + 1,
+            originalIndex: question.originalIndex,
+            questionText: question.q,
+            reportType: document.querySelector('input[name="reportType"]:checked').value,
+            reportLabel: REPORT_TYPES[document.querySelector('input[name="reportType"]:checked').value],
+            details: document.getElementById('reportDetails').value.trim(),
+            userName: document.getElementById('userName').value.trim(),
+            userEmail: document.getElementById('userEmail').value.trim(),
+            userInfo: document.getElementById('userInfo').value.trim(),
+            userAnswer: userAnswers[questionIndex] !== null ? 
+                question.a[userAnswers[questionIndex]] : 'Não respondida',
+            correctAnswer: question.a[question.c],
+            userAnswerIndex: userAnswers[questionIndex],
+            correctAnswerIndex: question.c,
+            timestamp: new Date().toLocaleString('pt-BR'),
+            url: window.location.href,
+            userAgent: navigator.userAgent
+        };
+        
+        document.getElementById('submitReport').disabled = true;
+        document.getElementById('submitText').textContent = 'Enviando...';
+        document.getElementById('submitLoading').style.display = 'inline-block';
+        
+        try {
+            const response = await sendToGoogleSheets(reportData);
+            
+            if (response.success) {
+                const report = {
+                    ...reportData,
+                    id: Date.now(),
+                    timestamp: new Date().toISOString(),
+                    sentToGoogleSheets: true
+                };
+                
+                reportsHistory.push(report);
+                localStorage.setItem(REPORTS_KEY, JSON.stringify(reportsHistory));
+                
+                document.getElementById('reportSuccess').style.display = 'block';
+                document.getElementById('submitText').textContent = 'Enviado!';
+                
+                setTimeout(() => {
+                    closeReportModal();
+                }, 3000);
+            } else {
+                throw new Error(response.message || 'Erro ao enviar');
+            }
+        } catch (error) {
+            console.error('Erro ao enviar reporte:', error);
+            
+            const emailSent = sendReportByEmailFallback(reportData);
+            
+            if (emailSent) {
+                const report = {
+                    ...reportData,
+                    id: Date.now(),
+                    timestamp: new Date().toISOString(),
+                    sentByEmail: true
+                };
+                
+                reportsHistory.push(report);
+                localStorage.setItem(REPORTS_KEY, JSON.stringify(reportsHistory));
+                
+                document.getElementById('reportSuccess').innerHTML = 
+                    '✅ Reporte enviado por email! Obrigado pela contribuição.<br>' +
+                    '<small>Você receberá um feedback por email em breve.</small>';
+                document.getElementById('reportSuccess').style.display = 'block';
+                document.getElementById('submitText').textContent = 'Enviado!';
+                
+                setTimeout(() => {
+                    closeReportModal();
+                }, 3000);
+            } else {
+                const report = {
+                    ...reportData,
+                    id: Date.now(),
+                    timestamp: new Date().toISOString(),
+                    savedLocally: true
+                };
+                
+                reportsHistory.push(report);
+                localStorage.setItem(REPORTS_KEY, JSON.stringify(reportsHistory));
+                
+                showError('Erro de conexão. Reporte salvo localmente. Tente novamente mais tarde.');
+                document.getElementById('submitReport').disabled = false;
+                document.getElementById('submitText').textContent = 'Enviar Reporte';
+                document.getElementById('submitLoading').style.display = 'none';
+            }
+        }
+    }
+    
+    async function sendToGoogleSheets(reportData) {
+        const formData = new FormData();
+        
+        Object.keys(reportData).forEach(key => {
+            formData.append(key, reportData[key]);
+        });
+        
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors'
+        });
+        
+        return { success: true, message: 'Enviado com sucesso' };
+    }
+    
+    function sendReportByEmailFallback(reportData) {
+        try {
+            const subject = `[REPORTE] ${reportData.materia} - Questão #${reportData.questionIndex}`;
+            
+            let body = `NOVO REPORTE DE QUESTÃO\n`;
+            body += `=======================\n\n`;
+            body += `MATÉRIA: ${reportData.materia}\n`;
+            body += `ID DO QUIZ: ${reportData.quizId}\n`;
+            body += `QUESTÃO #${reportData.questionIndex}\n`;
+            body += `ÍNDICE ORIGINAL: ${reportData.originalIndex}\n\n`;
+            body += `ENUNCIADO:\n${reportData.questionText}\n\n`;
+            body += `TIPO DE PROBLEMA: ${reportData.reportLabel}\n\n`;
+            body += `RESPOSTA DO USUÁRIO: ${reportData.userAnswer}\n`;
+            body += `RESPOSTA CORRETA: ${reportData.correctAnswer}\n\n`;
+            
+            body += `INFORMAÇÕES DO USUÁRIO:\n`;
+            body += `Nome: ${reportData.userName}\n`;
+            body += `E-mail: ${reportData.userEmail}\n`;
+            body += `Instituição/Curso: ${reportData.userInfo || 'Não informado'}\n\n`;
+            
+            if (reportData.details) {
+                body += `DETALHES ADICIONAIS:\n${reportData.details}\n\n`;
+            }
+            
+            body += `DATA/HORA: ${reportData.timestamp}\n`;
+            body += `URL DA PÁGINA: ${reportData.url}\n`;
+            
+            const encodedSubject = encodeURIComponent(subject);
+            const encodedBody = encodeURIComponent(body);
+            
+            const mailtoLink = `mailto:${EMAIL_DESTINO}?subject=${encodedSubject}&body=${encodedBody}`;
+            
+            window.open(mailtoLink, '_blank');
+            return true;
+        } catch (error) {
+            console.error('Erro ao enviar email:', error);
+            return false;
+        }
+    }
+    
+    // ============================================
+    // INICIALIZAÇÃO
+    // ============================================
+    
+    function hasUnsavedProgress() {
+        const answeredCount = getAnsweredCount();
+        return answeredCount > 0 && answeredCount < currentQuestions.length;
+    }
+    
+    function showCloseWarning(event) {
+        if (hasUnsavedProgress()) {
+            const message = '⚠️ ATENÇÃO!\n\nVocê tem um simulado em andamento.\nSe sair agora, todo o seu progresso será perdido!\n\nTem certeza que deseja sair?';
+            
+            if (event) {
+                event.preventDefault();
+                event.returnValue = message;
+            }
+            
+            return message;
+        }
+    }
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ') nextQuestion();
+        if (e.key === 'ArrowLeft') prevQuestion();
+    });
+    
+    window.addEventListener('beforeunload', function(event) {
+        if (hasUnsavedProgress()) {
+            try {
+                saveCurrentSessionState();
+            } catch (e) {
+                console.error('Erro ao salvar estado antes de sair:', e);
+            }
+            
+            return showCloseWarning(event);
+        }
+    });
+    
+    window.onload = function() {
+        initQuiz();
+        initReportSystem();
+    };
+</script>
+
+</body>
+</html>
