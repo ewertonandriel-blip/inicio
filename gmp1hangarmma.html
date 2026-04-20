@@ -74,7 +74,6 @@
             margin-right: auto;
         }
 
-        /* CABEÇALHO MAIS COMPACTO */
         .header-mini {
             position: sticky;
             top: 2px;
@@ -129,7 +128,6 @@
             50% { opacity: 0.8; }
         }
 
-        /* SIMULADO INFO MAIS COMPACTO */
         .simulado-info {
             background: var(--gray-100);
             border-radius: var(--radius-sm);
@@ -177,7 +175,6 @@
             border: 1px solid #cbd5e1;
         }
 
-        /* INFO GRID MAIS COMPACTO - SEM ESPAÇO INFERIOR */
         .quiz-info-mini {
             background: var(--gray-100);
             border-radius: var(--radius-sm);
@@ -213,7 +210,6 @@
             color: var(--primary); 
         }
 
-        /* CONTROLES COMPACTOS */
         .controls-compact { 
             display: flex; 
             justify-content: space-between; 
@@ -253,7 +249,6 @@
             color: var(--text-main);
         }
 
-        /* QUESTÕES MAIS COMPACTAS */
         .question-block-mini {
             background: var(--bg-card);
             padding: 14px;
@@ -343,7 +338,6 @@
             color: #991b1b !important;
         }
 
-        /* BOTÃO DE REPORTAR COMPACTO */
         .report-btn {
             background: white;
             border: 1px solid var(--gray-300);
@@ -379,7 +373,6 @@
             box-shadow: var(--shadow-sm);
         }
 
-        /* NAVEGAÇÃO MAIS COMPACTA */
         .nav-buttons { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
@@ -434,7 +427,6 @@
             transform: translateY(2px); 
         }
 
-        /* RESULTADOS MAIS COMPACTOS - INICIALMENTE OCULTO */
         #results {
             background: white;
             border-radius: var(--radius-md);
@@ -478,7 +470,6 @@
             color: #92400e;
         }
 
-        /* BOTÃO FLUTUANTE PARA MOBILE - APENAS NO FINAL */
         .pending-shortcut {
             position: fixed;
             bottom: 20px;
@@ -558,7 +549,6 @@
             }
         }
 
-        /* MOBILE OPTIMIZATION EXTREME */
         @media (max-width: 480px) {
             body { padding: 2px; }
             .header-mini { top: 0; padding: 4px 8px; }
@@ -577,7 +567,6 @@
             }
         }
 
-        /* MODAL DE REPORTE */
         .report-modal {
             display: none;
             position: fixed;
@@ -895,7 +884,6 @@
     <button id="finish-btn" class="btn-finish" onclick="finalizeQuiz()" disabled>FINALIZAR SIMULADO</button>
 </div>
 
-<!-- MODAL DE REPORTE -->
 <div id="reportModal" class="report-modal">
     <div class="report-content">
         <div class="report-title">📝 Reportar Questão</div>
@@ -982,12 +970,12 @@
 
 <script>
     // ============================================
-    // BANCO DE QUESTÕES
+    // BANCO DE QUESTÕES - ADICIONE SUAS QUESTÕES AQUI
     // ============================================
     
-  const masterBank = [
- 
-  {q: "Em um motor real, quando o pistão está no ponto morto alto, no fim do ciclo:", a: ["a válvula de admissão está fechada", "a válvula de escapamento está aberta", "ambas as válvulas estão abertas", "a abertura das válvulas é alternada"], c: 2},
+    const masterBank = [
+        
+ {q: "Em um motor real, quando o pistão está no ponto morto alto, no fim do ciclo:", a: ["a válvula de admissão está fechada", "a válvula de escapamento está aberta", "ambas as válvulas estão abertas", "a abertura das válvulas é alternada"], c: 2},
   {q: "Qual é a principal função operacional de um reversor de empuxo em aeronaves comerciais turbojato durante o pouso?", a: ["Empurrar a aeronave em sentido contrário ao fluxo de ar resultando na desaceleração e parada aeronave.", "Fornecer força de frenagem adicional, reduzindo a dependência exclusiva dos freios das rodas.", "Empurrar a aeronave na direção contrária ao fluxo de ar resultando na desaceleração e parada aeronave.", "Fornecer força de frenagem principal, reduzindo a dependência exclusiva dos freios das rodas."], c: 1},
   {q: "Todos os motores devem obedecer as exigências gerais de?", a: ["Eficiência, gastronomia e confiabilidade", "Deficiência, economia e confiabilidade", "Eficiência, economia e confiabilidade", "Eficiência, economia e não confiabilidade"], c: 2},
   {q: "Os dois tipos mais comuns de compressor que encontramos nos motores a reação?", a: ["Radial inconstante e centrífugo", "Fluxo centrífugo e axial", "Axial e tipo fly by stol", "Caneca e canular"], c: 1},
@@ -1232,7 +1220,8 @@
   {q: "O uso inadequado do aquecimento do carburador pode ser tão perigoso quanto uma grande formação de gelo nos sistema de admissão. O aumento da temperatura do ar de admissão faz com que o ar:", a: ["se comprima e diminua a densidade, e pode causar detonação e falha do motor", "se expanda e perca a densidade, e pode causar detonação e falha do motor", "se expanda e perca a densidade, e pode causar pré-ignição e falha do motor", "se expanda e diminua a densidade, e pode causar pré-ignição e falha do motor"], c: 1},
   {q: "Em um carburador, o venturi é um tubo com uma passagem estreita no meio, conhecida como garganta. Quando o ar passa por essa passagem estreita resulta em velocidade do ar:", a: ["diminuir e a pressão aumentar", "aumentar e a pressão estática também", "aumentar e a pressão estática diminuir", "diminuir e a pressão dinâmica aumentar"], c: 2},
   {q: "A RPM do eixo de manivelas é mostrada através do instrumento denominado:", a: ["manômetro", "tacômetro", "torquímetro", "velocímetro"], c: 1}
-]
+];
+    
     // ============================================
     // CONFIGURAÇÕES DO SISTEMA
     // ============================================
@@ -1345,11 +1334,21 @@
     }
     
     // ============================================
-    // FUNÇÕES DE SELEÇÃO DE QUESTÕES
+    // FUNÇÕES DE SELEÇÃO DE QUESTÕES - COM MARCAÇÃO IMEDIATA
     // ============================================
     
     function calcularConfiguracaoSimulados() {
         const totalQuestions = masterBank.length;
+        
+        if (totalQuestions === 0) {
+            totalSimulados = 1;
+            QUESTIONS_PER_SIMULADO = 20;
+            return {
+                totalSimulados: 1,
+                questionsPerSimulado: 20,
+                mensagem: `Banco vazio - aguardando questões`
+            };
+        }
         
         if (totalQuestions <= 27) {
             totalSimulados = 1;
@@ -1446,7 +1445,18 @@
         
         currentSimuladoIndices = selectedIndices;
         
-        if (forceFirstSimulado || usedQuestionsHistory.length === 0) {
+        // ============================================
+        // MARCAR QUESTÕES COMO USADAS IMEDIATAMENTE
+        // ============================================
+        if (selectedIndices.length > 0) {
+            usedQuestionsHistory.push(...selectedIndices);
+            usedQuestionsHistory = [...new Set(usedQuestionsHistory)];
+            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+            console.log(`✅ Questões marcadas como usadas imediatamente: ${selectedIndices.length} questões`);
+            console.log(`Total de questões usadas até agora: ${usedQuestionsHistory.length}`);
+        }
+        
+        if (forceFirstSimulado || usedQuestionsHistory.length === selectedIndices.length) {
             currentSimuladoNumber = 1;
         } else if (selectedIndices.length > 0) {
             const usedCount = usedQuestionsHistory.length;
@@ -1666,12 +1676,10 @@
     function checkAndHighlightPendingQuestions() {
         if (!currentQuestions || currentQuestions.length === 0) return;
         
-        // Verifica se o usuário chegou ao final
         if (currentQuestionIndex === currentQuestions.length - 1) {
             hasReachedEnd = true;
         }
         
-        // Se chegou ao final, verifica questões pendentes e aplica destaque
         if (hasReachedEnd) {
             const currentBlock = document.querySelector('.question-block-mini');
             if (currentBlock) {
@@ -1779,7 +1787,7 @@
         let remaining = 0;
         if (currentQuestions && currentQuestions[0]?.isWrongQuestion) {
             const wrongCount = wrongQuestionsHistory.length;
-            const successRate = Math.round(((totalQuestions - wrongCount) / totalQuestions) * 100);
+            const successRate = totalQuestions > 0 ? Math.round(((totalQuestions - wrongCount) / totalQuestions) * 100) : 0;
             
             document.getElementById('simulado-info').innerHTML = `
                 <div style="color: var(--danger); font-weight: bold; text-align: center;">⚡ SIMULADO DE REFORÇO</div>
@@ -1919,7 +1927,6 @@
     function goToNextPendingQuestion() {
         if (!currentQuestions || currentQuestions.length === 0) return;
         
-        // Encontra todas as questões não respondidas
         const pendingIndices = [];
         for (let i = 0; i < currentQuestions.length; i++) {
             if (userAnswers[i] === null) {
@@ -1936,14 +1943,10 @@
             return;
         }
         
-        // CASO 1: Está na última questão
         if (currentQuestionIndex === currentQuestions.length - 1) {
-            // Vai para a primeira pendente
             currentQuestionIndex = pendingIndices[0];
         } 
-        // CASO 2: Não está na última
         else {
-            // Procura a próxima pendente depois da atual
             let nextFound = -1;
             for (let i = 0; i < pendingIndices.length; i++) {
                 if (pendingIndices[i] > currentQuestionIndex) {
@@ -1955,20 +1958,17 @@
             if (nextFound !== -1) {
                 currentQuestionIndex = nextFound;
             } else {
-                // Se não achou depois, volta para a primeira
                 currentQuestionIndex = pendingIndices[0];
             }
         }
         
         console.log('Indo para:', currentQuestionIndex);
         
-        // Atualiza a interface
         saveCurrentSessionState();
         renderCurrentQuestion();
         updateCounters();
         updateNavButtons();
         
-        // Reavalia se deve mostrar o botão
         setTimeout(() => {
             checkAndShowPendingButton();
         }, 100);
@@ -1981,16 +1981,12 @@
         }
     }
     
-    // ============================================
-    // FUNÇÃO CORRIGIDA - BOTÃO SÓ APARECE DEPOIS DE RESPONDER A ÚLTIMA
-    // ============================================
-    
     function checkAndShowPendingButton() {
         if (!currentQuestions || currentQuestions.length === 0) return;
         
         const pendingCount = userAnswers.filter(a => a === null).length;
         const isLastQuestion = currentQuestionIndex === currentQuestions.length - 1;
-        const hasAnsweredLast = userAnswers[currentQuestions.length - 1] !== null; // VERIFICA SE A ÚLTIMA FOI RESPONDIDA
+        const hasAnsweredLast = userAnswers[currentQuestions.length - 1] !== null;
         const resultsVisible = document.getElementById('results').style.display === 'block';
         
         console.log('Verificando botão:', { 
@@ -2003,14 +1999,8 @@
             lastQuestionAnswer: userAnswers[currentQuestions.length - 1]
         });
         
-        // Remove qualquer botão existente primeiro
         removePendingShortcut();
         
-        // REGRA CORRETA: 
-        // 1. Está na última questão
-        // 2. A última questão JÁ FOI RESPONDIDA
-        // 3. Ainda existem outras questões pendentes
-        // 4. Não está na tela de resultados
         if (isLastQuestion && hasAnsweredLast && pendingCount > 0 && !resultsVisible) {
             console.log('✅ MOSTRANDO BOTÃO!');
             
@@ -2087,7 +2077,6 @@
         userAnswers[currentQuestionIndex] = answerIndex;
         saveCurrentSessionState();
         
-        // Remove destaque desta questão
         removeHighlightFromQuestion();
         
         updateCounters();
@@ -2099,7 +2088,6 @@
             }, 250);
         }
         
-        // Verifica destaques e botão após responder
         checkAndHighlightPendingQuestions();
         checkAndShowPendingButton();
     }
@@ -2124,7 +2112,6 @@
         
         const question = currentQuestions[currentQuestionIndex];
         
-        // Verifica se esta questão deve estar destacada
         const shouldHighlight = hasReachedEnd && userAnswers[currentQuestionIndex] === null;
         
         container.innerHTML = `
@@ -2148,17 +2135,15 @@
             </div>
         `;
         
-        // Atualiza a variável hasReachedEnd se estiver na última questão
         if (currentQuestionIndex === currentQuestions.length - 1) {
             hasReachedEnd = true;
         }
         
-        // Verifica se deve mostrar o botão de pendentes
         checkAndShowPendingButton();
     }
     
     // ============================================
-    // FUNÇÃO DE FINALIZAÇÃO
+    // FUNÇÃO DE FINALIZAÇÃO - SEM MARCAÇÃO DE USADAS
     // ============================================
     
     function finalizeQuiz() {
@@ -2170,7 +2155,6 @@
             return;
         }
         
-        // Remove botão pendente
         removePendingShortcut();
         
         let finalScore = 0;
@@ -2198,12 +2182,8 @@
             removeCorrectQuestionsFromHistory();
         } else {
             addWrongQuestionsToHistory();
-        }
-        
-        if (currentSimuladoIndices.length > 0 && !currentQuestions[0]?.isWrongQuestion) {
-            usedQuestionsHistory.push(...currentSimuladoIndices);
-            usedQuestionsHistory = [...new Set(usedQuestionsHistory)];
-            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+            // NOTA: As questões NÃO são mais marcadas como usadas aqui
+            // Elas já foram marcadas quando o simulado foi GERADO
         }
         
         clearSessionData();
@@ -2345,7 +2325,6 @@
             
             document.getElementById('quiz-content').innerHTML = '';
             
-            // Remove botão pendente
             removePendingShortcut();
             
             saveCurrentSessionState();
@@ -2374,7 +2353,6 @@
         currentQuestionIndex = 0;
         hasReachedEnd = false;
         
-        // Remove botão pendente
         removePendingShortcut();
         
         saveCurrentSessionState();
@@ -2445,7 +2423,6 @@
             currentSimuladoNumber = 1;
             hasReachedEnd = false;
             
-            // Remove botão pendente
             removePendingShortcut();
             
             saveCurrentSessionState();
@@ -2507,7 +2484,6 @@
             autoNavEnabled = true;
             hasReachedEnd = false;
             
-            // Remove botão pendente
             removePendingShortcut();
             
             saveCurrentSessionState();
@@ -2545,7 +2521,6 @@
         autoNavEnabled = true;
         hasReachedEnd = false;
         
-        // Remove botão pendente
         removePendingShortcut();
         
         saveCurrentSessionState();
@@ -2561,7 +2536,7 @@
         
         const wrongCount = wrongQuestionsHistory.length;
         const totalQuestions = masterBank.length;
-        const successRate = Math.round(((totalQuestions - wrongCount) / totalQuestions) * 100);
+        const successRate = totalQuestions > 0 ? Math.round(((totalQuestions - wrongCount) / totalQuestions) * 100) : 0;
         
         document.getElementById('simulado-info').innerHTML = `
             <div style="color: var(--danger); font-weight: bold; text-align: center;">⚡ SIMULADO DE REFORÇO</div>
@@ -2636,7 +2611,6 @@
         autoNavEnabled = true;
         hasReachedEnd = false;
         
-        // Remove botão pendente
         removePendingShortcut();
         
         saveCurrentSessionState();
@@ -2676,7 +2650,6 @@
     
     function reiniciarBancoCompleto() {
         const totalQuestions = masterBank.length;
-        const wrongCount = wrongQuestionsHistory.length;
         
         let message = `🔄 REINICIAR BANCO COMPLETO\n\n`;
         message += `Esta ação vai limpar TODO o progresso.\n\n`;
@@ -2713,7 +2686,6 @@
             currentSimuladoNumber = 1;
             hasReachedEnd = false;
             
-            // Remove botão pendente
             removePendingShortcut();
             
             saveCurrentSessionState();
@@ -2771,7 +2743,6 @@
             currentSimuladoNumber = 1;
             hasReachedEnd = false;
             
-            // Remove botão pendente
             removePendingShortcut();
             
             saveCurrentSessionState();
@@ -3120,7 +3091,8 @@
             document.getElementById('quiz-content').innerHTML = `
                 <div class="question-block-mini" style="text-align:center;">
                     <div class="question-text-mini" style="color: var(--danger);">
-                        ⚠️ ERRO: Banco de questões vazio!
+                        ⚠️ ERRO: Banco de questões vazio!<br><br>
+                        Adicione questões no array <strong>masterBank</strong>
                     </div>
                 </div>
             `;
