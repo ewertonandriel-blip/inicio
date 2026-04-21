@@ -34,6 +34,85 @@
             --shadow-lg: 0 4px 6px -2px rgb(0 0 0 / 0.1);
         }
 
+        /* Dark Mode */
+        body.dark-mode {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --gray-100: #334155;
+            --gray-200: #475569;
+            --gray-300: #64748b;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+            --shadow-md: 0 2px 4px -1px rgb(0 0 0 / 0.3);
+            --shadow-lg: 0 4px 6px -2px rgb(0 0 0 / 0.3);
+        }
+
+        body.dark-mode .header-mini {
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(8px);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .timer-compact,
+        body.dark-mode .auto-nav-toggle,
+        body.dark-mode .reset-btn-mini,
+        body.dark-mode .report-btn,
+        body.dark-mode .results-report-btn {
+            background: #334155;
+            color: #e2e8f0;
+            border-color: #475569;
+        }
+
+        body.dark-mode .option-mini {
+            background: #334155;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+
+        body.dark-mode .option-mini:has(input:checked) {
+            background-color: #1e3a5f;
+            border-color: var(--primary);
+        }
+
+        body.dark-mode .info-item {
+            background: #334155;
+        }
+
+        body.dark-mode .simulado-info,
+        body.dark-mode .quiz-info-mini {
+            background: #334155;
+            border-color: #475569;
+        }
+
+        body.dark-mode .question-block-mini {
+            background: #1e293b;
+        }
+
+        body.dark-mode .report-content {
+            background: #1e293b;
+        }
+
+        body.dark-mode .user-info-form {
+            background: #334155;
+        }
+
+        body.dark-mode .form-input,
+        body.dark-mode .report-textarea {
+            background: #0f172a;
+            border-color: #475569;
+            color: #f1f5f9;
+        }
+
+        body.dark-mode .report-option {
+            background: #334155;
+            border-color: #475569;
+        }
+
+        body.dark-mode .report-question-info {
+            background: #334155;
+        }
+
         * { 
             box-sizing: border-box; 
             -webkit-tap-highlight-color: transparent; 
@@ -49,6 +128,7 @@
             padding: 4px;
             line-height: 1.3;
             min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .container { 
@@ -86,6 +166,7 @@
             z-index: 100;
             margin-bottom: 4px;
             border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: background 0.3s;
         }
 
         .header-mini-top {
@@ -135,6 +216,7 @@
             margin-bottom: 4px;
             border: 1px solid var(--gray-200);
             font-size: 0.7rem;
+            transition: background 0.3s;
         }
 
         .simulado-stats {
@@ -147,10 +229,10 @@
         }
 
         .history-controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
             gap: 4px;
             margin-top: 4px;
+            flex-wrap: wrap;
         }
 
         .history-controls button {
@@ -169,10 +251,22 @@
             border: 1px solid #fcd34d;
         }
 
+        body.dark-mode .clear-history-btn {
+            background: #7c2d12;
+            color: #fed7aa;
+            border-color: #9a3412;
+        }
+
         .info-history-btn {
             background: #e2e8f0;
             color: var(--text-main);
             border: 1px solid #cbd5e1;
+        }
+
+        .dark-mode-btn {
+            background: #6366f1;
+            color: white;
+            border: 1px solid #818cf8;
         }
 
         .quiz-info-mini {
@@ -180,6 +274,7 @@
             border-radius: var(--radius-sm);
             padding: 6px 8px;
             margin-bottom: 0;
+            transition: background 0.3s;
         }
 
         .info-grid {
@@ -195,6 +290,7 @@
             padding: 4px 2px;
             border-radius: var(--radius-sm);
             box-shadow: var(--shadow-sm);
+            transition: background 0.3s;
         }
 
         .info-label { 
@@ -214,6 +310,8 @@
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .auto-nav-toggle {
@@ -259,7 +357,7 @@
             animation: slideIn 0.3s ease-out;
             border: 2px solid transparent;
             position: relative;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: background 0.3s, border-color 0.3s;
         }
 
         .question-block-mini.pending-highlight {
@@ -308,7 +406,6 @@
 
         .option-mini:active { 
             transform: scale(0.98); 
-            background: var(--gray-200);
         }
 
         .option-mini input[type="radio"] {
@@ -325,10 +422,19 @@
             box-shadow: 0 0 0 1px var(--primary);
         }
 
+        body.dark-mode .option-mini:has(input:checked) {
+            background-color: #1e3a5f;
+        }
+
         .correct-answer {
             background-color: #dcfce7 !important;
             border-color: var(--success) !important;
             color: #166534 !important;
+        }
+
+        body.dark-mode .correct-answer {
+            background-color: #14532d !important;
+            color: #86efac !important;
         }
 
         .wrong-answer {
@@ -337,7 +443,11 @@
             color: #991b1b !important;
         }
 
-        /* Botão reportar padrão - abaixo das alternativas (tanto no simulado quanto no gabarito) */
+        body.dark-mode .wrong-answer {
+            background-color: #7f1d1d !important;
+            color: #fca5a5 !important;
+        }
+
         .report-btn, .results-report-btn {
             background: white;
             border: 1px solid var(--gray-300);
@@ -423,6 +533,12 @@
             margin-bottom: 10px;
             border: 1px solid var(--gray-200);
             display: none;
+            transition: background 0.3s;
+        }
+
+        body.dark-mode #results {
+            background: #1e293b;
+            border-color: #334155;
         }
 
         .result-title { 
@@ -455,6 +571,12 @@
             background: #fffbeb;
             border: 1px solid #fde68a;
             color: #92400e;
+        }
+
+        body.dark-mode .motivation-message {
+            background: #451a03;
+            border-color: #78350f;
+            color: #fde68a;
         }
 
         .pending-shortcut {
@@ -512,6 +634,7 @@
             .question-block-mini { padding: 12px; }
             .option-mini { padding: 8px; font-size: 0.75rem; }
             .pending-shortcut { padding: 12px 22px; font-size: 0.9rem; bottom: 15px; }
+            .history-controls { flex-wrap: wrap; }
         }
 
         .report-modal {
@@ -538,6 +661,7 @@
             max-height: 85vh;
             overflow-y: auto;
             box-shadow: var(--shadow-lg);
+            transition: background 0.3s;
         }
 
         .report-title {
@@ -776,6 +900,7 @@
             <div class="history-controls">
                 <button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar Histórico</button>
                 <button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button>
+                <button class="dark-mode-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
             </div>
         </div>
         
@@ -869,8 +994,8 @@
     // ============================================
     // BANCO DE QUESTÕES - COLOQUE SUAS QUESTÕES AQUI
     // ============================================
-    const masterBank = [
- 
+ const masterBank = [
+
 {q: "A chave soquete é feita em quantas partes?", a: ["6 partes.", "12 partes.", "2 partes.", "3 partes."], c: 2},
   {q: "Na análise e pesquisa de pane em um circuito elétrico, quando esse se encontra incompleto ou interrompido disse-se que o mesmo está:", a: ["Em curto.", "Neutro.", "Aberto.", "Fechado."], c: 2},
   {q: "Um dos metais amplamente usados na fabricação de chaves como chaves allen é o?", a: ["Aço com alto teor de carbono.", "Alumínio.", "Aço com baixo teor de carbono.", "Aço cromo-vanádio."], c: 3},
@@ -1232,7 +1357,8 @@
   {q: "Em um sistema de extinção de fogo, que utiliza as garrafas de dióxido de carbono, equipadas com tubos sifão reto e rígido, as garrafas devem ser instaladas na posição vertical observa-se que o tubo sifão reto e rígido tem uma tolerância de inclinação de quantos graus?", a: ["De 90 graus.", "De 25º graus.", "De 60 graus.", "De 15º graus."], c: 2},
   {q: "Qual manual de orientação sobre a implementação de um gerenciamento da segurança operacional (smm) para a aviação geral internacional?", a: ["17.", "9861.", "2022.", "Doc 9859."], c: 3}
     
-];
+
+    ];
     // ============================================
     
     // CONFIGURAÇÕES
@@ -1258,7 +1384,7 @@
     let hasReachedEnd = false;
     let currentReportQuestionIndex = null;
     let reportsHistory = [];
-    let wrongQuestionsHistory = [];
+    let currentSessionWrongQuestions = [];
     
     const WRONG_QUESTIONS_KEY = 'wrong_questions_history';
     const HISTORY_KEY = `quiz_historico`;
@@ -1271,8 +1397,105 @@
     const AUTO_NAV_KEY = 'auto_nav';
     const SIMULADO_STARTED_KEY = 'simulado_started';
     const CURRENT_SIMULADO_NUMBER_KEY = 'current_simulado_number';
+    const DARK_MODE_KEY = 'dark_mode_enabled';
+    const AUTO_SAVE_KEY = 'auto_save_progress';
     
+    // ============================================
+    // DARK MODE
+    // ============================================
+    function toggleDarkMode() {
+        const isDark = document.body.classList.toggle('dark-mode');
+        localStorage.setItem(DARK_MODE_KEY, isDark);
+        const btn = document.querySelector('.dark-mode-btn');
+        if (btn) {
+            btn.innerHTML = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+        }
+    }
+    
+    function loadDarkModePreference() {
+        const saved = localStorage.getItem(DARK_MODE_KEY);
+        if (saved === 'true') {
+            document.body.classList.add('dark-mode');
+            const btn = document.querySelector('.dark-mode-btn');
+            if (btn) btn.innerHTML = '☀️ Light Mode';
+        } else {
+            document.body.classList.remove('dark-mode');
+            const btn = document.querySelector('.dark-mode-btn');
+            if (btn) btn.innerHTML = '🌙 Dark Mode';
+        }
+    }
+    
+    // ============================================
+    // AUTO-SAVE PROGRESS
+    // ============================================
+    function autoSaveProgress() {
+        if (!currentQuestions || currentQuestions.length === 0) return;
+        
+        const progress = {
+            currentQuestions: currentQuestions,
+            userAnswers: userAnswers,
+            currentQuestionIndex: currentQuestionIndex,
+            timeLeft: timeLeft,
+            autoNavEnabled: autoNavEnabled,
+            currentSimuladoNumber: currentSimuladoNumber,
+            usedQuestionsHistory: usedQuestionsHistory,
+            currentSessionWrongQuestions: currentSessionWrongQuestions,
+            timestamp: Date.now(),
+            savedAt: new Date().toLocaleString()
+        };
+        localStorage.setItem(AUTO_SAVE_KEY, JSON.stringify(progress));
+        console.log('💾 Progresso salvo automaticamente');
+    }
+    
+    function loadAutoSaveProgress() {
+        const saved = localStorage.getItem(AUTO_SAVE_KEY);
+        if (!saved) return false;
+        
+        try {
+            const progress = JSON.parse(saved);
+            const minutesPassed = (Date.now() - progress.timestamp) / 60000;
+            
+            if (minutesPassed < 60 && progress.currentQuestions && progress.currentQuestions.length > 0) {
+                if (confirm(`📀 Você tem um simulado em andamento de ${progress.currentQuestions.length} questões (salvo em ${progress.savedAt}).\n\nDeseja continuar de onde parou?`)) {
+                    currentQuestions = progress.currentQuestions;
+                    userAnswers = progress.userAnswers;
+                    currentQuestionIndex = progress.currentQuestionIndex;
+                    timeLeft = progress.timeLeft;
+                    autoNavEnabled = progress.autoNavEnabled !== undefined ? progress.autoNavEnabled : true;
+                    currentSimuladoNumber = progress.currentSimuladoNumber || 1;
+                    if (progress.usedQuestionsHistory) usedQuestionsHistory = progress.usedQuestionsHistory;
+                    if (progress.currentSessionWrongQuestions) currentSessionWrongQuestions = progress.currentSessionWrongQuestions;
+                    
+                    TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+                    if (timeLeft <= 0 || timeLeft > TIME_LIMIT) timeLeft = TIME_LIMIT;
+                    
+                    document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+                    updateSimuladoInfo();
+                    renderCurrentQuestion();
+                    updateCounters();
+                    updateNavButtons();
+                    updateFinishButton();
+                    startTimer();
+                    
+                    return true;
+                }
+            }
+            localStorage.removeItem(AUTO_SAVE_KEY);
+        } catch(e) {
+            console.error('Erro ao carregar progresso salvo:', e);
+            localStorage.removeItem(AUTO_SAVE_KEY);
+        }
+        return false;
+    }
+    
+    function clearAutoSave() {
+        localStorage.removeItem(AUTO_SAVE_KEY);
+        console.log('🗑️ Progresso salvo removido');
+    }
+    
+    // ============================================
     // FUNÇÕES AUXILIARES
+    // ============================================
     function shuffleArray(array) {
         const shuffled = [...array];
         for (let i = shuffled.length - 1; i > 0; i--) {
@@ -1309,44 +1532,22 @@
         return shuffledQuestion;
     }
     
-    // FUNÇÕES DE HISTÓRICO
-    function loadWrongQuestionsHistory() {
-        const saved = localStorage.getItem(WRONG_QUESTIONS_KEY);
-        if (saved) {
-            try {
-                wrongQuestionsHistory = JSON.parse(saved);
-            } catch (e) {
-                wrongQuestionsHistory = [];
-            }
-        } else {
-            wrongQuestionsHistory = [];
+    function syncPageTitle() {
+        const pageTitle = document.title;
+        const titleElement = document.getElementById('page-title');
+        if (titleElement && pageTitle) {
+            titleElement.textContent = pageTitle;
         }
     }
     
-    function saveWrongQuestionsHistory() {
-        localStorage.setItem(WRONG_QUESTIONS_KEY, JSON.stringify(wrongQuestionsHistory));
+    function resetCurrentSessionWrongQuestions() {
+        currentSessionWrongQuestions = [];
+        console.log('✅ Array de erros da sessão resetado');
     }
     
-    function addWrongQuestionsToHistory() {
-        if (!currentQuestions || currentQuestions.length === 0) return;
-        currentQuestions.forEach((question, index) => {
-            const userAnswer = userAnswers[index];
-            const isCorrect = userAnswer !== null && userAnswer === question.c;
-            if (!isCorrect && question.originalIndex !== undefined) {
-                if (!wrongQuestionsHistory.includes(question.originalIndex)) {
-                    wrongQuestionsHistory.push(question.originalIndex);
-                }
-            }
-        });
-        wrongQuestionsHistory = [...new Set(wrongQuestionsHistory)];
-        saveWrongQuestionsHistory();
-    }
-    
-    function hasEnoughWrongQuestionsForSimulado() {
-        return wrongQuestionsHistory.length >= MIN_WRONG_QUESTIONS_FOR_SIMULADO;
-    }
-    
+    // ============================================
     // SELEÇÃO DE QUESTÕES
+    // ============================================
     function calcularConfiguracaoSimulados() {
         const totalQuestions = masterBank.length;
         if (totalQuestions === 0) {
@@ -1401,7 +1602,6 @@
         const selectedIndices = shuffledQuestions.slice(0, questionsToSelect);
         currentSimuladoIndices = selectedIndices;
         
-        // Marca como usadas imediatamente
         usedQuestionsHistory.push(...selectedIndices);
         usedQuestionsHistory = [...new Set(usedQuestionsHistory)];
         localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
@@ -1417,9 +1617,10 @@
         return selectedQuestions;
     }
     
-    function generateWrongQuestionsSimulado() {
-        if (wrongQuestionsHistory.length === 0) return [];
-        let availableWrongQuestions = shuffleArray([...wrongQuestionsHistory]);
+    function generateWrongQuestionsSimuladoFromSession() {
+        if (currentSessionWrongQuestions.length === 0) return [];
+        
+        let availableWrongQuestions = shuffleArray([...currentSessionWrongQuestions]);
         const questions = availableWrongQuestions.map(index => {
             if (index >= 0 && index < masterBank.length) {
                 const originalQuestion = masterBank[index];
@@ -1431,10 +1632,13 @@
             }
             return null;
         }).filter(q => q !== null);
+        
         return questions;
     }
     
-    // SESSÃO
+    // ============================================
+    // FUNÇÕES DE SESSÃO
+    // ============================================
     function saveCurrentSessionState() {
         try {
             sessionStorage.setItem(CURRENT_QUESTIONS_KEY, JSON.stringify(currentQuestions));
@@ -1489,7 +1693,9 @@
         return false;
     }
     
+    // ============================================
     // UI UPDATES
+    // ============================================
     function updatePageTitle() {
         const totalQuestions = masterBank.length;
         let simuladoText = '';
@@ -1499,7 +1705,8 @@
             simuladoText = ` (Simulado ${currentSimuladoNumber}/${totalSimulados})`;
         }
         const questionCount = currentQuestions ? currentQuestions.length : 0;
-        document.getElementById('page-title').textContent = `BASICO AEROSIMULADOS${simuladoText} (${questionCount}/${totalQuestions})`;
+        const baseTitle = document.title;
+        document.getElementById('page-title').textContent = `${baseTitle}${simuladoText} (${questionCount}/${totalQuestions})`;
     }
     
     function updateCounters() {
@@ -1551,8 +1758,13 @@
         if (currentQuestions && currentQuestions[0]?.isWrongQuestion) {
             document.getElementById('simulado-info').innerHTML = `
                 <div style="color: var(--danger); font-weight: bold; text-align: center;">⚡ SIMULADO DE REFORÇO</div>
-                <div style="text-align: center; font-size: 0.8rem; margin-top:4px;">Questões que você errou anteriormente</div>
-                <div class="simulado-stats"><span>Questões: ${currentQuestionsCount}</span><span>Acertos gerais: ${Math.round(((totalQuestions - wrongQuestionsHistory.length)/totalQuestions)*100)}%</span></div>
+                <div style="text-align: center; font-size: 0.8rem; margin-top:4px;">Questões que você errou neste simulado</div>
+                <div class="simulado-stats"><span>Questões: ${currentQuestionsCount}</span><span>Para revisão: ${currentSessionWrongQuestions.length}</span></div>
+                <div class="history-controls">
+                    <button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar Histórico</button>
+                    <button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button>
+                    <button class="dark-mode-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+                </div>
             `;
             return;
         }
@@ -1564,19 +1776,23 @@
         document.getElementById('simulado-info').innerHTML = `
             <div style="font-weight:600;">Simulado: ${currentQuestionsCount} questões</div>
             <div class="simulado-stats"><span>📦 Disponíveis: ${remaining}</span><span>✅ Usadas: ${uniqueUsed.length} (${percentUsed}%)</span></div>
-            <div class="history-controls"><button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar Histórico</button><button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button></div>
+            <div class="history-controls">
+                <button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar Histórico</button>
+                <button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button>
+                <button class="dark-mode-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+            </div>
         `;
     }
     
     function updateReforcoButton() {
         const wrongBtn = document.getElementById('wrong-questions-btn');
         if (!wrongBtn) return;
-        const hasEnough = hasEnoughWrongQuestionsForSimulado();
+        const hasEnough = currentSessionWrongQuestions.length >= MIN_WRONG_QUESTIONS_FOR_SIMULADO;
         const isReforcoActive = currentQuestions[0]?.isWrongQuestion;
         const isResultsVisible = document.getElementById('results').style.display === 'block';
         if (hasEnough && !isReforcoActive && isResultsVisible) {
             wrongBtn.style.display = 'block';
-            wrongBtn.innerHTML = `⚡ Simulado de Reforço (${wrongQuestionsHistory.length})`;
+            wrongBtn.innerHTML = `⚡ Simulado de Reforço (${currentSessionWrongQuestions.length})`;
         } else {
             wrongBtn.style.display = 'none';
         }
@@ -1658,18 +1874,24 @@
             currentQuestionIndex = nextFound !== -1 ? nextFound : pendingIndices[0];
         }
         saveCurrentSessionState();
+        autoSaveProgress();
         renderCurrentQuestion();
         updateCounters();
         updateNavButtons();
         setTimeout(() => checkAndShowPendingButton(), 100);
     }
     
+    // ============================================
     // NAVEGAÇÃO E RESPOSTAS
+    // ============================================
     function startTimer() {
         clearInterval(timerId);
         timerId = setInterval(() => {
             timeLeft--;
-            if (timeLeft % 5 === 0) saveCurrentSessionState();
+            if (timeLeft % 5 === 0) {
+                saveCurrentSessionState();
+                autoSaveProgress();
+            }
             updateTimerDisplay();
             if (timeLeft <= 0) {
                 clearInterval(timerId);
@@ -1686,6 +1908,7 @@
         if (currentQuestions && currentQuestionIndex < currentQuestions.length - 1) {
             currentQuestionIndex++;
             saveCurrentSessionState();
+            autoSaveProgress();
             renderCurrentQuestion();
             updateCounters();
             updateNavButtons();
@@ -1696,6 +1919,7 @@
         if (currentQuestionIndex > 0) {
             currentQuestionIndex--;
             saveCurrentSessionState();
+            autoSaveProgress();
             renderCurrentQuestion();
             updateCounters();
             updateNavButtons();
@@ -1705,6 +1929,7 @@
     function selectAnswer(answerIndex) {
         userAnswers[currentQuestionIndex] = answerIndex;
         saveCurrentSessionState();
+        autoSaveProgress();
         updateCounters();
         updateFinishButton();
         if (autoNavEnabled && currentQuestionIndex < currentQuestions.length - 1) {
@@ -1717,6 +1942,7 @@
         autoNavEnabled = !autoNavEnabled;
         document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
         saveCurrentSessionState();
+        autoSaveProgress();
     }
     
     function renderCurrentQuestion() {
@@ -1743,7 +1969,9 @@
         checkAndShowPendingButton();
     }
     
+    // ============================================
     // FINALIZAR
+    // ============================================
     function finalizeQuiz() {
         clearInterval(timerId);
         const answeredCount = getAnsweredCount();
@@ -1754,9 +1982,19 @@
         removePendingShortcut();
         
         let finalScore = 0;
+        const sessionErrors = [];
+        
         userAnswers.forEach((answer, index) => {
-            if (answer !== null && answer === currentQuestions[index].c) finalScore++;
+            const isCorrect = answer !== null && answer === currentQuestions[index].c;
+            if (isCorrect) {
+                finalScore++;
+            } else if (answer !== null && currentQuestions[index].originalIndex !== undefined) {
+                sessionErrors.push(currentQuestions[index].originalIndex);
+            }
         });
+        
+        currentSessionWrongQuestions = [...new Set(sessionErrors)];
+        
         const percent = currentQuestions.length > 0 ? Math.round((finalScore / currentQuestions.length) * 100) : 0;
         
         const feedback = document.getElementById('feedback-msg');
@@ -1764,11 +2002,8 @@
         else if (percent >= 50) feedback.innerHTML = "👍 Quase lá!";
         else feedback.innerHTML = "💪 Continue praticando!";
         
-        if (!currentQuestions[0]?.isWrongQuestion) {
-            addWrongQuestionsToHistory();
-        }
-        
         clearSessionData();
+        clearAutoSave();
         
         let quizHTML = '';
         currentQuestions.forEach((question, index) => {
@@ -1798,15 +2033,14 @@
         const totalQuestions = masterBank.length;
         const uniqueUsed = [...new Set(usedQuestionsHistory)];
         const remainingQuestions = Math.max(0, totalQuestions - uniqueUsed.length);
-        const wrongCount = wrongQuestionsHistory.length;
         
         let summaryText = '';
         if (currentQuestions[0]?.isWrongQuestion) {
-            summaryText = `⚡ SIMULADO DE REFORÇO FINALIZADO<br>Questões ainda erradas: ${wrongCount}`;
+            summaryText = `⚡ SIMULADO DE REFORÇO FINALIZADO<br>Questões que você ainda erra: ${currentSessionWrongQuestions.length}`;
         } else if (remainingQuestions === 0) {
-            summaryText = `🎯 COMPLETOU TODAS AS ${totalQuestions} QUESTÕES!<br>Questões erradas: ${wrongCount}`;
+            summaryText = `🎯 COMPLETOU TODAS AS ${totalQuestions} QUESTÕES!<br>Erros neste simulado: ${currentSessionWrongQuestions.length}`;
         } else {
-            summaryText = `📊 Restam: ${remainingQuestions} | Usadas: ${uniqueUsed.length}<br>❌ Erradas: ${wrongCount}`;
+            summaryText = `📊 Restam: ${remainingQuestions} | Usadas: ${uniqueUsed.length}<br>❌ Erros neste simulado: ${currentSessionWrongQuestions.length}`;
         }
         document.getElementById('simulado-summary').innerHTML = summaryText;
         
@@ -1822,7 +2056,9 @@
         updateVoltarInicioButton();
     }
     
+    // ============================================
     // AÇÕES DOS BOTÕES
+    // ============================================
     function resetQuiz() {
         if (confirm('🔄 Reiniciar este simulado?')) {
             userAnswers = new Array(currentQuestions.length).fill(null);
@@ -1835,6 +2071,7 @@
             document.querySelector('.nav-buttons').style.display = 'grid';
             removePendingShortcut();
             saveCurrentSessionState();
+            autoSaveProgress();
             startTimer();
             renderCurrentQuestion();
             updateCounters();
@@ -1854,6 +2091,7 @@
         hasReachedEnd = false;
         removePendingShortcut();
         saveCurrentSessionState();
+        autoSaveProgress();
         startTimer();
         renderCurrentQuestion();
         updateCounters();
@@ -1866,17 +2104,17 @@
         const uniqueUsed = [...new Set(usedQuestionsHistory)];
         const usedCount = uniqueUsed.length;
         const availableCount = Math.max(0, totalQuestions - usedCount);
-        const wrongCount = wrongQuestionsHistory.length;
-        alert(`📊 ESTATÍSTICAS:\n\n• Total: ${totalQuestions} questões\n• Usadas: ${usedCount}\n• Disponíveis: ${availableCount}\n• Erradas: ${wrongCount}`);
+        alert(`📊 ESTATÍSTICAS:\n\n• Total: ${totalQuestions} questões\n• Usadas: ${usedCount}\n• Disponíveis: ${availableCount}\n• Erros nesta sessão: ${currentSessionWrongQuestions.length}`);
     }
     
     function clearHistory() {
         if (confirm(`🗑️ Limpar histórico completo? Isso reiniciará todo o progresso.`)) {
             usedQuestionsHistory = [];
             localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-            wrongQuestionsHistory = [];
-            saveWrongQuestionsHistory();
             clearSessionData();
+            clearAutoSave();
+            resetCurrentSessionWrongQuestions();
+            
             document.getElementById('results').style.display = 'none';
             document.getElementById('finish-btn').style.display = 'block';
             document.getElementById('restart-btn').style.display = 'none';
@@ -1922,6 +2160,9 @@
     }
     
     function startNewSimuladoFromResults() {
+        resetCurrentSessionWrongQuestions();
+        clearAutoSave();
+        
         document.getElementById('results').style.display = 'none';
         document.getElementById('finish-btn').style.display = 'block';
         document.getElementById('restart-btn').style.display = 'none';
@@ -1950,9 +2191,9 @@
     }
     
     function startWrongQuestionsSimulado() {
-        currentQuestions = generateWrongQuestionsSimulado();
+        currentQuestions = generateWrongQuestionsSimuladoFromSession();
         if (currentQuestions.length === 0) {
-            alert('❌ Não há questões erradas para fazer o simulado de reforço.');
+            alert('❌ Não há questões erradas neste simulado para fazer o reforço.');
             updateReforcoButton();
             return;
         }
@@ -1978,16 +2219,17 @@
         updateCounters();
         updateNavButtons();
         updateFinishButton();
-        alert(`⚡ SIMULADO DE REFORÇO INICIADO! ${currentQuestions.length} questões.`);
+        alert(`⚡ SIMULADO DE REFORÇO INICIADO! ${currentQuestions.length} questões que você errou.`);
     }
     
     function voltarAoInicio() {
         if (confirm(`🏁 VOLTAR AO INÍCIO? Isso vai reiniciar completamente o sistema.`)) {
             usedQuestionsHistory = [];
             localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-            wrongQuestionsHistory = [];
-            saveWrongQuestionsHistory();
+            resetCurrentSessionWrongQuestions();
             clearSessionData();
+            clearAutoSave();
+            
             document.getElementById('results').style.display = 'none';
             document.getElementById('finish-btn').style.display = 'block';
             document.getElementById('restart-btn').style.display = 'none';
@@ -2020,7 +2262,9 @@
         voltarAoInicio();
     }
     
+    // ============================================
     // REPORT MODAL
+    // ============================================
     function openReportModal(questionIndex) {
         currentReportQuestionIndex = questionIndex;
         if (!currentQuestions || currentQuestions.length === 0) { alert("Não há questões carregadas."); return; }
@@ -2058,21 +2302,30 @@
         closeReportModal();
     }
     
+    // ============================================
     // INICIALIZAÇÃO
+    // ============================================
     function initQuiz() {
-        loadWrongQuestionsHistory();
+        syncPageTitle();
+        loadDarkModePreference();
+        
         if (masterBank.length === 0) {
-            document.getElementById('page-title').textContent = "⚠️ BANCO VAZIO";
+            document.getElementById('page-title').textContent = document.title || "⚠️ BANCO VAZIO";
             document.getElementById('quiz-content').innerHTML = `<div class="question-block-mini" style="text-align:center;"><div class="question-text-mini" style="color: var(--danger);">⚠️ ERRO: Banco de questões vazio!<br><br>Adicione questões no array <strong>masterBank</strong></div></div>`;
             return;
         }
+        
         calcularConfiguracaoSimulados();
         const savedHistory = localStorage.getItem(HISTORY_KEY);
         if (savedHistory) {
             try { usedQuestionsHistory = JSON.parse(savedHistory); } catch(e) { usedQuestionsHistory = []; }
         } else { usedQuestionsHistory = []; }
         
-        if (isNewSession()) {
+        resetCurrentSessionWrongQuestions();
+        
+        const loadedFromAutoSave = loadAutoSaveProgress();
+        
+        if (!loadedFromAutoSave && isNewSession()) {
             currentQuestions = selectRandomQuestions();
             if (currentQuestions.length === 0) { alert("Não foi possível selecionar questões."); return; }
             userAnswers = new Array(currentQuestions.length).fill(null);
@@ -2082,7 +2335,7 @@
             autoNavEnabled = true;
             hasReachedEnd = false;
             saveCurrentSessionState();
-        } else {
+        } else if (!loadedFromAutoSave) {
             const state = loadCurrentSessionState();
             if (!state.hasQuestions || !state.hasState) {
                 currentQuestions = selectRandomQuestions();
@@ -2102,6 +2355,7 @@
                 hasReachedEnd = false;
             }
         }
+        
         updatePageTitle();
         document.getElementById('timer').textContent = formatTime(timeLeft);
         document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
