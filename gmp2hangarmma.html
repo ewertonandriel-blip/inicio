@@ -6,7 +6,7 @@
     <title>GMP 2 HANGAR MMA</title>
     <style>
         /* ============================================
-           DESIGN SYSTEM - TEMA AZUL
+           DESIGN SYSTEM - TEMA AZUL - COMPACTADO PARA CELULAR
            Todas as funcionalidades originais preservadas
         ============================================ */
         :root {
@@ -27,18 +27,16 @@
             --text-muted: #475569;
             --text-light: #94a3b8;
             --border-light: #cbd5e1;
-            --border-radius-sm: 8px;
-            --border-radius-md: 12px;
-            --border-radius-lg: 16px;
-            --border-radius-xl: 24px;
+            --border-radius-sm: 6px;
+            --border-radius-md: 10px;
+            --border-radius-lg: 14px;
+            --border-radius-xl: 20px;
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 4px 6px -2px rgba(0, 0, 0, 0.1);
             --transition-default: all 0.2s ease;
         }
 
-        /* Dark Mode - Tema Azul */
         body.dark-mode {
             --bg-body: linear-gradient(135deg, #0f172a 0%, #082f49 100%);
             --bg-card: #1e293b;
@@ -46,9 +44,6 @@
             --text-muted: #94a3b8;
             --text-light: #64748b;
             --border-light: #334155;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
         }
 
         * { 
@@ -59,12 +54,12 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: var(--bg-body);
             color: var(--text-main);
             margin: 0;
-            padding: 8px;
-            line-height: 1.5;
+            padding: 4px;
+            line-height: 1.4;
             min-height: 100vh;
             transition: background 0.3s ease;
         }
@@ -77,17 +72,17 @@
 
         .credits-integrated {
             text-align: center;
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             font-weight: 700;
             color: var(--text-muted);
             letter-spacing: 0.5px;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             text-transform: uppercase;
             background: rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(4px);
             display: inline-block;
-            padding: 4px 14px;
-            border-radius: 40px;
+            padding: 2px 10px;
+            border-radius: 30px;
             width: auto;
             margin-left: auto;
             margin-right: auto;
@@ -99,17 +94,15 @@
 
         .header-mini {
             position: sticky;
-            top: 8px;
+            top: 4px;
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            padding: 10px 14px;
+            padding: 6px 10px;
             border-radius: var(--border-radius-xl);
-            box-shadow: var(--shadow-lg);
+            box-shadow: var(--shadow-md);
             z-index: 100;
-            margin-bottom: 12px;
+            margin-bottom: 6px;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            transition: var(--transition-default);
         }
 
         body.dark-mode .header-mini {
@@ -121,12 +114,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
 
         .page-title-mini {
             margin: 0;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 800;
             background: var(--primary-gradient);
             -webkit-background-clip: text;
@@ -137,13 +130,12 @@
         .timer-compact {
             background: var(--bg-card);
             color: var(--primary);
-            padding: 4px 10px;
-            border-radius: 40px;
-            font-size: 0.8rem;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 0.7rem;
             font-weight: 800;
             border: 1.5px solid var(--primary-light);
-            box-shadow: var(--shadow-sm);
-            font-family: 'Monaco', 'Menlo', monospace;
+            font-family: monospace;
         }
 
         .timer-warning {
@@ -154,18 +146,17 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.9; transform: scale(1.02); }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
         }
 
         .simulado-info {
             background: rgba(37, 99, 235, 0.08);
             border-radius: var(--border-radius-md);
-            padding: 8px 12px;
-            margin-bottom: 8px;
+            padding: 5px 10px;
+            margin-bottom: 4px;
             border: 1px solid rgba(37, 99, 235, 0.15);
-            font-size: 0.7rem;
-            transition: var(--transition-default);
+            font-size: 0.65rem;
         }
 
         body.dark-mode .simulado-info {
@@ -175,24 +166,24 @@
         .simulado-stats {
             display: flex;
             justify-content: space-between;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 600;
-            margin-top: 4px;
+            margin-top: 3px;
             color: var(--text-muted);
         }
 
         .history-controls {
             display: flex;
-            gap: 6px;
-            margin-top: 8px;
+            gap: 4px;
+            margin-top: 5px;
             flex-wrap: wrap;
         }
 
         .history-controls button {
-            padding: 5px 10px;
+            padding: 3px 8px;
             border: none;
-            border-radius: 30px;
-            font-size: 0.6rem;
+            border-radius: 25px;
+            font-size: 0.55rem;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition-default);
@@ -203,7 +194,6 @@
 
         .history-controls button:hover {
             transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
         }
 
         .clear-history-btn {
@@ -231,36 +221,34 @@
         .quiz-info-mini {
             background: var(--bg-card);
             border-radius: var(--border-radius-md);
-            padding: 10px 12px;
+            padding: 6px 10px;
             margin-bottom: 0;
-            box-shadow: var(--shadow-sm);
             border: 1px solid var(--border-light);
         }
 
         .info-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 8px;
+            gap: 6px;
+            margin-bottom: 6px;
         }
 
         .info-item {
             text-align: center;
             background: rgba(37, 99, 235, 0.06);
-            padding: 6px 4px;
+            padding: 4px 2px;
             border-radius: var(--border-radius-sm);
-            transition: var(--transition-default);
         }
 
         .info-label { 
-            font-size: 0.5rem; 
+            font-size: 0.45rem; 
             color: var(--text-muted); 
             font-weight: 700; 
             text-transform: uppercase; 
             letter-spacing: 0.5px;
         }
         .info-value { 
-            font-size: 0.85rem; 
+            font-size: 0.75rem; 
             font-weight: 800; 
             background: var(--primary-gradient);
             -webkit-background-clip: text;
@@ -272,91 +260,73 @@
             justify-content: space-between; 
             align-items: center; 
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
         }
 
         .auto-nav-toggle {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 0.65rem;
+            gap: 4px;
+            font-size: 0.6rem;
             font-weight: 600;
             color: var(--text-main);
             background: rgba(37, 99, 235, 0.08);
-            padding: 4px 10px;
-            border-radius: 30px;
+            padding: 3px 8px;
+            border-radius: 25px;
             cursor: pointer;
-            transition: var(--transition-default);
-        }
-
-        .auto-nav-toggle:hover {
-            background: rgba(37, 99, 235, 0.15);
         }
 
         .reset-btn-mini {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
-            border-radius: 30px;
-            padding: 4px 12px;
-            font-size: 0.65rem;
+            border-radius: 25px;
+            padding: 3px 10px;
+            font-size: 0.6rem;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition-default);
             color: var(--text-main);
-        }
-
-        .reset-btn-mini:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
         }
 
         .question-block-mini {
             background: var(--bg-card);
-            padding: 14px;
+            padding: 10px;
             border-radius: var(--border-radius-lg);
-            box-shadow: var(--shadow-lg);
-            margin-top: 8px;
-            margin-bottom: 12px;
+            box-shadow: var(--shadow-md);
+            margin-top: 6px;
+            margin-bottom: 8px;
             animation: slideIn 0.3s ease-out;
             border: 1px solid var(--border-light);
             position: relative;
-            transition: var(--transition-default);
-        }
-
-        .question-block-mini:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-xl);
         }
 
         @keyframes slideIn { 
-            from { opacity: 0; transform: translateY(10px); } 
+            from { opacity: 0; transform: translateY(5px); } 
             to { opacity: 1; transform: translateY(0); } 
         }
 
         .question-text-mini {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700;
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             color: var(--text-main);
-            line-height: 1.45;
-            padding-right: 0;
+            line-height: 1.4;
         }
 
         .options-mini { 
             display: flex; 
             flex-direction: column; 
-            gap: 8px; 
+            gap: 5px; 
         }
 
         .option-mini {
-            padding: 10px 12px;
+            padding: 7px 10px;
             background: rgba(0, 0, 0, 0.02);
-            border: 1.5px solid var(--border-light);
+            border: 1px solid var(--border-light);
             border-radius: var(--border-radius-md);
             cursor: pointer;
             display: flex;
             align-items: center;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 500;
             transition: var(--transition-default);
         }
@@ -368,17 +338,12 @@
         .option-mini:hover {
             border-color: var(--primary-light);
             background: rgba(37, 99, 235, 0.05);
-            transform: translateX(2px);
-        }
-
-        .option-mini:active { 
-            transform: scale(0.98); 
         }
 
         .option-mini input[type="radio"] {
-            margin-right: 10px;
-            width: 16px;
-            height: 16px;
+            margin-right: 8px;
+            width: 14px;
+            height: 14px;
             flex-shrink: 0;
             accent-color: var(--primary);
             cursor: pointer;
@@ -387,7 +352,6 @@
         .option-mini:has(input:checked) {
             border-color: var(--primary);
             background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(6, 182, 212, 0.08));
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         .correct-answer {
@@ -415,75 +379,58 @@
         .report-btn, .results-report-btn {
             background: var(--bg-card);
             border: 1px solid var(--border-light);
-            border-radius: 40px;
-            padding: 6px 14px;
-            font-size: 0.65rem;
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 0.6rem;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 14px;
+            margin-top: 10px;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            transition: var(--transition-default);
+            gap: 5px;
             color: var(--text-muted);
-            width: auto;
         }
 
         .report-btn:hover, .results-report-btn:hover {
             background: var(--danger);
             border-color: var(--danger);
             color: white;
-            transform: translateY(-1px);
         }
 
         .nav-buttons { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
-            gap: 8px; 
-            margin-bottom: 12px; 
+            gap: 6px; 
+            margin-bottom: 8px; 
         }
 
         .nav-btn {
-            padding: 10px;
+            padding: 8px;
             background: var(--primary-gradient);
             color: white;
             border: none;
-            border-radius: 60px;
+            border-radius: 50px;
             font-weight: 700;
-            font-size: 0.8rem;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition-default);
+            font-size: 0.75rem;
             cursor: pointer;
-            letter-spacing: 0.3px;
-        }
-
-        .nav-btn:hover:not(:disabled) {
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .nav-btn:active:not(:disabled) { 
-            transform: translateY(1px); 
         }
 
         .nav-btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
-            transform: none;
         }
 
         .btn-finish {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             background: linear-gradient(135deg, #94a3b8, #64748b);
             color: white;
             border: none;
-            border-radius: 60px;
+            border-radius: 50px;
             font-weight: 800;
-            font-size: 0.85rem;
-            margin-bottom: 16px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
             cursor: not-allowed;
-            transition: var(--transition-default);
             opacity: 0.6;
         }
 
@@ -491,55 +438,46 @@
             background: linear-gradient(135deg, var(--success), var(--success-dark));
             cursor: pointer;
             opacity: 1;
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-finish.enabled:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-lg);
         }
 
         #results {
             background: var(--bg-card);
             border-radius: var(--border-radius-lg);
-            padding: 16px 14px;
+            padding: 12px 10px;
             text-align: center;
-            box-shadow: var(--shadow-xl);
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             border: 1px solid var(--border-light);
             display: none;
-            animation: slideIn 0.3s ease;
         }
 
         .result-title { 
-            font-size: 1rem; 
+            font-size: 0.95rem; 
             font-weight: 800; 
-            margin-bottom: 6px; 
+            margin-bottom: 4px; 
         }
 
         .score-mini { 
-            font-size: 2.5rem; 
+            font-size: 2rem; 
             font-weight: 900; 
             background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin: 8px 0; 
-            line-height: 1;
+            margin: 5px 0; 
         }
 
         #final-percent { 
             font-weight: 700; 
             color: var(--primary-light); 
-            margin-bottom: 8px; 
-            font-size: 0.9rem;
+            margin-bottom: 6px; 
+            font-size: 0.85rem;
         }
 
         .motivation-message {
-            padding: 10px;
+            padding: 8px;
             border-radius: var(--border-radius-md);
-            margin-bottom: 14px;
+            margin-bottom: 10px;
             font-weight: 600;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             background: linear-gradient(135deg, #fffbeb, #fef3c7);
             border: 1px solid #fde68a;
             color: #92400e;
@@ -553,52 +491,37 @@
 
         .pending-shortcut {
             position: fixed;
-            bottom: 20px;
+            bottom: 16px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--primary-gradient);
             color: white;
-            padding: 10px 22px;
-            border-radius: 60px;
-            font-size: 0.85rem;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.75rem;
             font-weight: 800;
-            box-shadow: var(--shadow-xl);
             z-index: 1000;
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
             border: none;
-            animation: slideUp 0.4s ease-out;
             cursor: pointer;
-            transition: var(--transition-default);
-            backdrop-filter: blur(8px);
-        }
-
-        .pending-shortcut:hover {
-            transform: translateX(-50%) scale(1.02);
-            box-shadow: 0 25px 30px -12px rgba(37, 99, 235, 0.5);
         }
 
         .pending-shortcut .pending-count {
             background: white;
             color: var(--primary);
-            padding: 4px 14px;
-            border-radius: 40px;
-            font-size: 0.9rem;
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 0.8rem;
             font-weight: 900;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translate(-50%, 30px); }
-            to { opacity: 1; transform: translate(-50%, 0); }
-        }
-
         @media (max-width: 480px) {
-            body { padding: 6px; }
-            .question-block-mini { padding: 12px; }
-            .option-mini { padding: 8px 10px; font-size: 0.75rem; }
-            .pending-shortcut { padding: 8px 18px; font-size: 0.8rem; bottom: 16px; }
-            .history-controls button { padding: 4px 8px; font-size: 0.55rem; }
+            body { padding: 3px; }
+            .question-block-mini { padding: 8px; }
+            .option-mini { padding: 6px 8px; font-size: 0.7rem; }
+            .pending-shortcut { padding: 6px 14px; font-size: 0.7rem; bottom: 12px; }
         }
 
         .report-modal {
@@ -609,7 +532,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(5px);
             z-index: 1000;
             align-items: center;
             justify-content: center;
@@ -618,47 +541,42 @@
 
         .report-content {
             background: var(--bg-card);
-            padding: 20px;
+            padding: 16px;
             border-radius: var(--border-radius-xl);
             width: 100%;
-            max-width: 480px;
+            max-width: 450px;
             max-height: 85vh;
             overflow-y: auto;
-            box-shadow: var(--shadow-xl);
-            border: 1px solid var(--border-light);
-            animation: slideIn 0.3s ease;
         }
 
         .report-title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 800;
             background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             text-align: center;
-            border-bottom: 2px solid var(--border-light);
-            padding-bottom: 10px;
+            padding-bottom: 8px;
         }
 
         .report-question-info {
             background: rgba(37, 99, 235, 0.06);
             border-radius: var(--border-radius-md);
-            padding: 12px;
-            margin-bottom: 16px;
-            border-left: 4px solid var(--primary);
+            padding: 10px;
+            margin-bottom: 12px;
+            border-left: 3px solid var(--primary);
         }
 
         .report-option {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 12px;
-            border: 1.5px solid var(--border-light);
+            gap: 8px;
+            padding: 10px;
+            border: 1px solid var(--border-light);
             border-radius: var(--border-radius-md);
             cursor: pointer;
-            transition: var(--transition-default);
-            background: transparent;
+            margin-bottom: 6px;
         }
 
         .report-option:hover {
@@ -666,22 +584,55 @@
             background: rgba(37, 99, 235, 0.05);
         }
 
+        .user-info-form {
+            background: rgba(37, 99, 235, 0.05);
+            border-radius: var(--border-radius-md);
+            padding: 12px;
+            margin: 12px 0;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .form-input, .report-textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-md);
+            font-size: 0.8rem;
+            background: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .report-textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .report-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
         .report-submit {
             flex: 2;
             background: var(--primary-gradient);
             color: white;
             border: none;
-            border-radius: 60px;
-            padding: 12px;
-            font-size: 0.85rem;
+            border-radius: 50px;
+            padding: 10px;
+            font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
-            transition: var(--transition-default);
-        }
-
-        .report-submit:hover {
-            transform: translateY(-1px);
-            box-shadow: var(--shadow-md);
         }
 
         .report-cancel {
@@ -689,52 +640,52 @@
             background: #6b7280;
             color: white;
             border: none;
-            border-radius: 60px;
-            padding: 12px;
-            font-size: 0.85rem;
+            border-radius: 50px;
+            padding: 10px;
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
-            transition: var(--transition-default);
-        }
-
-        .report-cancel:hover {
-            background: #4b5563;
-            transform: translateY(-1px);
         }
 
         .report-success {
-            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            background: #dcfce7;
             color: #166534;
-            padding: 12px;
+            padding: 10px;
             border-radius: var(--border-radius-md);
             text-align: center;
-            margin-top: 16px;
+            margin-top: 12px;
+            font-size: 0.8rem;
             font-weight: 600;
             display: none;
         }
 
-        .form-input, .report-textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1.5px solid var(--border-light);
+        .report-error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 8px;
             border-radius: var(--border-radius-md);
-            font-size: 0.85rem;
-            transition: var(--transition-default);
-            background: var(--bg-card);
-            color: var(--text-main);
+            margin: 8px 0;
+            font-size: 0.75rem;
+            display: none;
         }
 
-        .form-input:focus, .report-textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        .required-star {
+            color: var(--danger);
         }
 
-        .user-info-form {
-            background: rgba(37, 99, 235, 0.05);
-            border-radius: var(--border-radius-md);
-            padding: 16px;
-            margin: 14px 0;
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid white;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.6s linear infinite;
+            margin-right: 6px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -756,9 +707,9 @@
                 <span id="recent-used">Usadas: 0</span>
             </div>
             <div class="history-controls">
-                <button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar Histórico</button>
+                <button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar</button>
                 <button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button>
-                <button class="dark-mode-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+                <button class="dark-mode-btn" onclick="toggleDarkMode()">🌙 Dark</button>
             </div>
         </div>
         
@@ -780,13 +731,13 @@
         <div class="score-mini" id="final-score"></div>
         <div id="final-percent"></div>
         <div id="motivation-message" class="motivation-message"></div>
-        <div id="simulado-summary" style="margin-bottom: 12px; font-size: 0.7rem; font-weight: 500;"></div>
+        <div id="simulado-summary" style="margin-bottom: 8px; font-size: 0.65rem;"></div>
         
-        <button id="restart-btn" class="nav-btn" style="display:none;" onclick="startNewQuiz()">🔄 Refazer Simulado</button>
-        <button id="voltar-inicio-btn" class="nav-btn" style="display:none; background:var(--primary-gradient);" onclick="voltarAoInicio()">🏁 Voltar ao Início</button>
-        <button id="continuar-banco-btn" class="nav-btn" style="display:none; background:linear-gradient(135deg, #0ea5e9, #0284c7);" onclick="continuarComBanco()">📚 Continuar com Banco</button>
-        <button id="wrong-questions-btn" class="nav-btn" style="display:none; background:linear-gradient(135deg, #f59e0b, #d97706);" onclick="startWrongQuestionsSimulado()">⚡ Simulado de Reforço</button>
-        <button id="reiniciar-banco-btn" class="nav-btn" style="display:none; background:linear-gradient(135deg, #6366f1, #4f46e5);" onclick="reiniciarBancoCompleto()">🔄 Reiniciar Banco Completo</button>
+        <button id="restart-btn" class="nav-btn" style="display:none;" onclick="startNewQuiz()">🔄 Refazer</button>
+        <button id="voltar-inicio-btn" class="nav-btn" style="display:none;" onclick="voltarAoInicio()">🏁 Voltar ao Início</button>
+        <button id="continuar-banco-btn" class="nav-btn" style="display:none;" onclick="continuarComBanco()">📚 Continuar com Banco</button>
+        <button id="wrong-questions-btn" class="nav-btn" style="display:none;" onclick="startWrongQuestionsSimulado()">⚡ Reforço</button>
+        <button id="reiniciar-banco-btn" class="nav-btn" style="display:none;" onclick="reiniciarBancoCompleto()">🔄 Reiniciar Banco</button>
     </div>
 
     <div id="quiz-content"></div>
@@ -804,10 +755,10 @@
         <div class="report-title">📝 Reportar Questão</div>
         <div class="report-question-info">
             <div><strong>Questão #<span id="reportQuestionNumber">1</span></strong></div>
-            <div id="reportQuestionText" style="font-size: 0.85rem; margin-top: 6px;">Carregando...</div>
+            <div id="reportQuestionText" style="font-size: 0.8rem; margin-top: 5px;">Carregando...</div>
         </div>
         <div class="report-section">
-            <div class="report-section-title" style="font-weight:700; margin-bottom:12px;">📌 Tipo de Problema</div>
+            <div class="report-section-title" style="font-weight:700; margin-bottom:8px;">📌 Tipo de Problema</div>
             <div class="report-options">
                 <div class="report-option"><input type="radio" id="reportError" name="reportType" value="error"><label for="reportError">❌ Questão com erro</label></div>
                 <div class="report-option"><input type="radio" id="reportWrongAnswer" name="reportType" value="wrong_answer"><label for="reportWrongAnswer">⚠️ Resposta incorreta</label></div>
@@ -817,21 +768,21 @@
             </div>
         </div>
         <div class="report-section">
-            <div class="report-section-title" style="font-weight:700; margin-bottom:12px;">👤 Sua Identificação <span style="color:var(--danger);">*</span></div>
+            <div class="report-section-title" style="font-weight:700; margin-bottom:8px;">👤 Sua Identificação <span class="required-star">*</span></div>
             <div class="user-info-form">
-                <div class="form-group" style="margin-bottom:12px;"><label class="form-label" style="display:block; margin-bottom:5px; font-weight:600;">Nome Completo <span style="color:var(--danger);">*</span></label><input type="text" id="userName" class="form-input" placeholder="Digite seu nome completo" maxlength="100"></div>
-                <div class="form-group" style="margin-bottom:12px;"><label class="form-label" style="display:block; margin-bottom:5px; font-weight:600;">E-mail <span style="color:var(--danger);">*</span></label><input type="email" id="userEmail" class="form-input" placeholder="seu.email@exemplo.com" maxlength="100"></div>
-                <div class="form-group"><label class="form-label" style="display:block; margin-bottom:5px; font-weight:600;">Instituição/Curso (opcional)</label><input type="text" id="userInfo" class="form-input" placeholder="Ex: SENAI, Engenharia Mecânica" maxlength="100"></div>
+                <div class="form-group"><label class="form-label">Nome Completo <span class="required-star">*</span></label><input type="text" id="userName" class="form-input" placeholder="Digite seu nome completo" maxlength="100"></div>
+                <div class="form-group"><label class="form-label">E-mail <span class="required-star">*</span></label><input type="email" id="userEmail" class="form-input" placeholder="seu.email@exemplo.com" maxlength="100"></div>
+                <div class="form-group"><label class="form-label">Instituição/Curso (opcional)</label><input type="text" id="userInfo" class="form-input" placeholder="Ex: SENAI, Engenharia" maxlength="100"></div>
             </div>
         </div>
         <div class="report-section">
-            <div class="report-section-title" style="font-weight:700; margin-bottom:12px;">📋 Detalhes do Problema</div>
-            <textarea id="reportDetails" class="report-textarea" placeholder="Descreva detalhadamente o problema encontrado na questão..." maxlength="1000"></textarea>
-            <div style="font-size: 0.65rem; text-align: right; margin-top: 4px;"><span id="charCount">0</span>/1000 caracteres</div>
+            <div class="report-section-title" style="font-weight:700; margin-bottom:8px;">📋 Detalhes do Problema</div>
+            <textarea id="reportDetails" class="report-textarea" placeholder="Descreva o problema..." maxlength="1000"></textarea>
+            <div style="font-size: 0.6rem; text-align: right; margin-top: 3px;"><span id="charCount">0</span>/1000</div>
         </div>
         <div id="reportErrorMsg" class="report-error"></div>
-        <div class="report-buttons"><button id="cancelReport" class="report-cancel" onclick="closeReportModal()">Cancelar</button><button id="submitReport" class="report-submit" onclick="submitReport()"><span id="submitText">Enviar Reporte</span><span id="submitLoading" class="loading-spinner" style="display: none;"></span></button></div>
-        <div id="reportSuccess" class="report-success">✅ Reporte enviado com sucesso! Obrigado pela contribuição.</div>
+        <div class="report-buttons"><button id="cancelReport" class="report-cancel" onclick="closeReportModal()">Cancelar</button><button id="submitReport" class="report-submit" onclick="submitReport()"><span id="submitText">Enviar</span><span id="submitLoading" class="loading-spinner" style="display: none;"></span></button></div>
+        <div id="reportSuccess" class="report-success">✅ Reporte enviado com sucesso!</div>
     </div>
 </div>
 
@@ -840,7 +791,7 @@
     // BANCO DE QUESTÕES - COLOQUE SUAS QUESTÕES AQUI
     // ============================================
     const masterBank = [
-     {q: "O óleo que é drenado para dentro da câmara de combustão quando o motor permanece cortado por longo período de tempo, caracteriza uma pane denominada:", a: ["pane seca", "baixa potência", "calço hidráulico", "deficiência térmica"], c: 2},
+         {q: "O óleo que é drenado para dentro da câmara de combustão quando o motor permanece cortado por longo período de tempo, caracteriza uma pane denominada:", a: ["pane seca", "baixa potência", "calço hidráulico", "deficiência térmica"], c: 2},
   {q: "Com o alívio da pressão do óleo, através do governador, os contrapesos e a mola levam as pás da hélice para o passo:", a: ["mínimo", "máximo", "reverso", "bandeira"], c: 3},
   {q: "Um óleo com alta temperatura, fluindo rapidamente, está com característica de:", a: ["alta viscosidade", "alta volatilidade", "baixa viscosidade", "baixa volatilidade"], c: 2},
   {q: "Uma pressão de óleo excessivamente alta poderá ocasionar ao motor:", a: ["vazamento", "baixa temperatura", "falta de lubrificação", "danos de caixa de redução"], c: 0},
@@ -1089,7 +1040,7 @@
         const isDark = document.body.classList.toggle('dark-mode');
         localStorage.setItem(DARK_MODE_KEY, isDark);
         const btn = document.querySelector('.dark-mode-btn');
-        if (btn) btn.innerHTML = isDark ? '☀️ Light Mode' : '🌙 Dark Mode';
+        if (btn) btn.innerHTML = isDark ? '☀️ Light' : '🌙 Dark';
     }
     
     function loadDarkModePreference() {
@@ -1097,7 +1048,7 @@
         if (saved === 'true') {
             document.body.classList.add('dark-mode');
             const btn = document.querySelector('.dark-mode-btn');
-            if (btn) btn.innerHTML = '☀️ Light Mode';
+            if (btn) btn.innerHTML = '☀️ Light';
         }
     }
     
@@ -1114,21 +1065,11 @@
     
     function openReportModal(questionIndex) {
         currentReportQuestionIndex = questionIndex;
-        
-        if (!currentQuestions || currentQuestions.length === 0) {
-            alert("Não há questões carregadas.");
-            return;
-        }
-        
+        if (!currentQuestions || currentQuestions.length === 0) { alert("Não há questões carregadas."); return; }
         const question = currentQuestions[questionIndex];
         document.getElementById('reportQuestionNumber').textContent = questionIndex + 1;
-        
-        let questionText = question.q;
-        if (questionText.length > 150) {
-            questionText = questionText.substring(0, 147) + '...';
-        }
+        let questionText = question.q.length > 150 ? question.q.substring(0, 147) + '...' : question.q;
         document.getElementById('reportQuestionText').textContent = questionText;
-        
         document.querySelectorAll('input[name="reportType"]').forEach(radio => radio.checked = false);
         document.getElementById('reportDetails').value = '';
         document.getElementById('userName').value = '';
@@ -1137,16 +1078,11 @@
         document.getElementById('charCount').textContent = '0';
         document.getElementById('reportSuccess').style.display = 'none';
         document.getElementById('reportErrorMsg').style.display = 'none';
-        
         document.getElementById('submitReport').disabled = false;
-        document.getElementById('submitText').textContent = 'Enviar Reporte';
+        document.getElementById('submitText').textContent = 'Enviar';
         document.getElementById('submitLoading').style.display = 'none';
-        
         document.getElementById('reportModal').style.display = 'flex';
-        
-        setTimeout(() => {
-            document.getElementById('userName').focus();
-        }, 100);
+        setTimeout(() => { document.getElementById('userName').focus(); }, 100);
     }
     
     function closeReportModal() {
@@ -1158,49 +1094,26 @@
         const errorElement = document.getElementById('reportErrorMsg');
         errorElement.textContent = message;
         errorElement.style.display = 'block';
-        setTimeout(() => {
-            errorElement.style.display = 'none';
-        }, 5000);
+        setTimeout(() => { errorElement.style.display = 'none'; }, 5000);
     }
     
     function validateReportForm() {
         const name = document.getElementById('userName').value.trim();
         const email = document.getElementById('userEmail').value.trim();
         const reportType = document.querySelector('input[name="reportType"]:checked');
-        
-        if (!name) {
-            showError('Por favor, preencha seu nome completo.');
-            return false;
-        }
-        
-        if (!email) {
-            showError('Por favor, preencha seu e-mail.');
-            return false;
-        }
-        
+        if (!name) { showError('Preencha seu nome completo.'); return false; }
+        if (!email) { showError('Preencha seu e-mail.'); return false; }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            showError('Por favor, insira um e-mail válido.');
-            return false;
-        }
-        
-        if (!reportType) {
-            showError('Por favor, selecione o tipo de problema.');
-            return false;
-        }
-        
+        if (!emailRegex.test(email)) { showError('E-mail inválido.'); return false; }
+        if (!reportType) { showError('Selecione o tipo de problema.'); return false; }
         return true;
     }
     
     async function submitReport() {
-        if (!validateReportForm()) {
-            return;
-        }
-        
+        if (!validateReportForm()) return;
         const questionIndex = currentReportQuestionIndex;
         const question = currentQuestions[questionIndex];
         const reportTypeValue = document.querySelector('input[name="reportType"]:checked').value;
-        
         const reportData = {
             materia: document.title || "GMP 1 HANGAR MMA",
             questionNumber: questionIndex + 1,
@@ -1216,35 +1129,21 @@
             timestamp: new Date().toLocaleString('pt-BR'),
             url: window.location.href
         };
-        
         document.getElementById('submitReport').disabled = true;
         document.getElementById('submitText').textContent = 'Enviando...';
         document.getElementById('submitLoading').style.display = 'inline-block';
-        
         try {
             const formData = new FormData();
-            Object.keys(reportData).forEach(key => {
-                formData.append(key, reportData[key]);
-            });
-            
-            await fetch(API_URL, {
-                method: 'POST',
-                body: formData,
-                mode: 'no-cors'
-            });
-            
+            Object.keys(reportData).forEach(key => formData.append(key, reportData[key]));
+            await fetch(API_URL, { method: 'POST', body: formData, mode: 'no-cors' });
             document.getElementById('reportSuccess').style.display = 'block';
             document.getElementById('submitText').textContent = 'Enviado!';
-            
-            setTimeout(() => {
-                closeReportModal();
-            }, 1500);
-            
+            setTimeout(() => { closeReportModal(); }, 1500);
         } catch (error) {
-            console.error('Erro ao enviar:', error);
-            showError('Erro ao enviar reporte. Tente novamente.');
+            console.error('Erro:', error);
+            showError('Erro ao enviar. Tente novamente.');
             document.getElementById('submitReport').disabled = false;
-            document.getElementById('submitText').textContent = 'Enviar Reporte';
+            document.getElementById('submitText').textContent = 'Enviar';
             document.getElementById('submitLoading').style.display = 'none';
         }
     }
@@ -1253,12 +1152,8 @@
     // AUTO-SAVE PROGRESS
     // ============================================
     function autoSaveProgress() {
-        if (!currentQuestions || currentQuestions.length === 0) return;
-        const progress = {
-            currentQuestions, userAnswers, currentQuestionIndex, timeLeft,
-            autoNavEnabled, currentSimuladoNumber, usedQuestionsHistory,
-            currentSessionWrongQuestions, timestamp: Date.now()
-        };
+        if (!currentQuestions?.length) return;
+        const progress = { currentQuestions, userAnswers, currentQuestionIndex, timeLeft, autoNavEnabled, currentSimuladoNumber, usedQuestionsHistory, currentSessionWrongQuestions, timestamp: Date.now() };
         localStorage.setItem(AUTO_SAVE_KEY, JSON.stringify(progress));
     }
     
@@ -1268,7 +1163,7 @@
         try {
             const progress = JSON.parse(saved);
             if ((Date.now() - progress.timestamp) < 3600000 && progress.currentQuestions?.length > 0) {
-                if (confirm(`📀 Você tem um simulado em andamento (${progress.currentQuestions.length} questões). Continuar?`)) {
+                if (confirm(`📀 Simulado em andamento (${progress.currentQuestions.length} questões). Continuar?`)) {
                     currentQuestions = progress.currentQuestions;
                     userAnswers = progress.userAnswers;
                     currentQuestionIndex = progress.currentQuestionIndex;
@@ -1316,7 +1211,6 @@
         const indices = shuffleArray([0, 1, 2, 3]);
         shuffled.a = indices.map(i => question.a[i]);
         shuffled.c = indices.indexOf(question.c);
-        shuffled.originalCorrectIndex = question.c;
         return shuffled;
     }
     
@@ -1343,34 +1237,28 @@
         const total = masterBank.length;
         if (total === 0) return [];
         calcularConfiguracaoSimulados();
-        
         let available = [];
         for (let i = 0; i < total; i++) available.push(i);
         if (usedQuestionsHistory.length && !force) available = available.filter(i => !usedQuestionsHistory.includes(i));
-        
         let toSelect = Math.min(QUESTIONS_PER_SIMULADO, available.length);
         if (toSelect === 0 && available.length === 0) {
-            if (confirm(`Todas as ${total} questões já foram usadas. Reiniciar histórico?`)) {
+            if (confirm(`Todas as ${total} questões foram usadas. Reiniciar?`)) {
                 usedQuestionsHistory = [];
                 localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
                 available = Array.from({ length: total }, (_, i) => i);
                 toSelect = Math.min(QUESTIONS_PER_SIMULADO, total);
             } else return [];
         }
-        
         const selected = shuffleArray(available).slice(0, toSelect);
         usedQuestionsHistory.push(...selected);
         usedQuestionsHistory = [...new Set(usedQuestionsHistory)];
         localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-        
         return selected.map(idx => shuffleAlternatives({ ...masterBank[idx], originalIndex: idx }));
     }
     
     function generateWrongQuestionsSimulado() {
         if (currentSessionWrongQuestions.length === 0) return [];
-        return shuffleArray([...currentSessionWrongQuestions]).map(idx => 
-            shuffleAlternatives({ ...masterBank[idx], originalIndex: idx, isWrongQuestion: true })
-        ).filter(q => q);
+        return shuffleArray([...currentSessionWrongQuestions]).map(idx => shuffleAlternatives({ ...masterBank[idx], originalIndex: idx, isWrongQuestion: true })).filter(q => q);
     }
     
     // ============================================
@@ -1412,7 +1300,7 @@
         const allAnswered = getAnsweredCount() === currentQuestions?.length;
         btn.disabled = !allAnswered;
         if (allAnswered) {
-            btn.innerHTML = '🏁 FINALIZAR SIMULADO';
+            btn.innerHTML = '🏁 FINALIZAR';
             btn.classList.add('enabled');
         } else {
             btn.innerHTML = `❌ Faltam ${(currentQuestions?.length || 0) - getAnsweredCount()}`;
@@ -1425,21 +1313,19 @@
         const count = currentQuestions?.length || 0;
         const used = [...new Set(usedQuestionsHistory)].length;
         const remaining = Math.max(0, total - used);
-        
         if (currentQuestions?.[0]?.isWrongQuestion) {
             document.getElementById('simulado-info').innerHTML = `
                 <div style="color:var(--warning);font-weight:bold;text-align:center;">⚡ SIMULADO DE REFORÇO</div>
-                <div style="text-align:center;font-size:0.7rem;">Questões que você errou</div>
+                <div style="text-align:center;font-size:0.6rem;">Questões que você errou</div>
                 <div class="simulado-stats"><span>Questões: ${count}</span><span>Revisão: ${currentSessionWrongQuestions.length}</span></div>
-                <div class="history-controls"><button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar</button><button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button><button class="dark-mode-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button></div>
+                <div class="history-controls"><button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar</button><button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button><button class="dark-mode-btn" onclick="toggleDarkMode()">🌙 Dark</button></div>
             `;
             return;
         }
-        
         document.getElementById('simulado-info').innerHTML = `
             <div style="font-weight:600;">Simulado: ${count} questões</div>
             <div class="simulado-stats"><span>📦 Disponíveis: ${remaining}</span><span>✅ Usadas: ${used} (${total ? Math.round(used/total*100) : 0}%)</span></div>
-            <div class="history-controls"><button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar</button><button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button><button class="dark-mode-btn" onclick="toggleDarkMode()">🌙 Dark Mode</button></div>
+            <div class="history-controls"><button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar</button><button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button><button class="dark-mode-btn" onclick="toggleDarkMode()">🌙 Dark</button></div>
         `;
     }
     
@@ -1458,7 +1344,7 @@
         const remaining = Math.max(0, masterBank.length - used);
         const show = document.getElementById('results').style.display === 'block' && remaining > 0;
         btn.style.display = show ? 'block' : 'none';
-        if (show) btn.innerHTML = `📚 Continuar com Banco (${remaining} restantes)`;
+        if (show) btn.innerHTML = `📚 Continuar (${remaining})`;
     }
     
     function removePendingShortcut() { document.getElementById('pending-shortcut')?.remove(); }
@@ -1474,7 +1360,7 @@
             div.id = 'pending-shortcut';
             div.className = 'pending-shortcut';
             div.onclick = goToNextPending;
-            div.innerHTML = `<span>⚠️ ${pending} pendente${pending > 1 ? 's' : ''}</span><span class="pending-count">IR AGORA</span><span>→</span>`;
+            div.innerHTML = `<span>⚠️ ${pending}</span><span class="pending-count">IR AGORA</span><span>→</span>`;
             document.body.appendChild(div);
         }
     }
@@ -1532,7 +1418,7 @@
         updateCounters();
         updateFinishButton();
         if (autoNavEnabled && currentQuestionIndex < currentQuestions.length - 1) {
-            setTimeout(() => nextQuestion(), 250);
+            setTimeout(() => nextQuestion(), 200);
         }
         checkAndShowPendingButton();
     }
@@ -1565,7 +1451,7 @@
     }
     
     // ============================================
-    // FINALIZAR - COM TODAS AS MENSAGENS ORIGINAIS
+    // FINALIZAR
     // ============================================
     function finalizeQuiz() {
         clearInterval(timerId);
@@ -1574,7 +1460,6 @@
             return;
         }
         removePendingShortcut();
-        
         let finalScore = 0;
         const sessionErrors = [];
         userAnswers.forEach((ans, i) => {
@@ -1583,14 +1468,11 @@
         });
         currentSessionWrongQuestions = [...new Set(sessionErrors)];
         const percent = Math.round((finalScore / currentQuestions.length) * 100);
-        
         const fb = document.getElementById('feedback-msg');
         if (percent >= 70) fb.innerHTML = "🎉 Excelente!";
         else if (percent >= 50) fb.innerHTML = "👍 Quase lá!";
         else fb.innerHTML = "💪 Continue praticando!";
-        
         clearAutoSave();
-        
         let quizHTML = '';
         currentQuestions.forEach((q, idx) => {
             const ua = userAnswers[idx];
@@ -1600,11 +1482,10 @@
                 let cls = 'option-mini';
                 if (i === q.c) cls += ' correct-answer';
                 else if (ua === i && !isCorrect) cls += ' wrong-answer';
-                opts += `<label class="${cls}"><input type="radio" disabled ${ua === i ? 'checked' : ''}> ${opt}${ua === i ? ' <span style="font-size:0.65rem;">(sua resposta)</span>' : ''}${i === q.c && ua !== i ? ' <span style="font-size:0.65rem; color:var(--success);">(correta)</span>' : ''}</label>`;
+                opts += `<label class="${cls}"><input type="radio" disabled ${ua === i ? 'checked' : ''}> ${opt}${ua === i ? ' <span style="font-size:0.6rem;">(sua)</span>' : ''}${i === q.c && ua !== i ? ' <span style="font-size:0.6rem; color:var(--success);">(correta)</span>' : ''}</label>`;
             });
             quizHTML += `<div class="question-block-mini"><div class="question-text-mini">${idx+1}. ${q.q}</div><div class="options-mini">${opts}</div><button class="results-report-btn" onclick="openReportModal(${idx})"><span>⚠️</span> Reportar</button></div>`;
         });
-        
         document.getElementById('quiz-content').innerHTML = quizHTML;
         document.getElementById('final-score').textContent = `${finalScore}/${currentQuestions.length}`;
         document.getElementById('final-percent').textContent = `${percent}% de acertos`;
@@ -1614,7 +1495,7 @@
             if (percent >= MIN_PERCENT_FOR_SUCCESS) {
                 motivationElement.innerHTML = '✅ <strong>PARABÉNS!</strong> Você superou suas dificuldades!';
             } else {
-                motivationElement.innerHTML = `⚡ <strong>PRECISA MELHORAR</strong><br>Você acertou ${finalScore} de ${currentQuestions.length}.<br>Faltam ${MIN_PERCENT_FOR_SUCCESS - percent}% para a meta de ${MIN_PERCENT_FOR_SUCCESS}%.`;
+                motivationElement.innerHTML = `⚡ <strong>PRECISA MELHORAR</strong><br>Acertou ${finalScore}/${currentQuestions.length}.<br>Faltam ${MIN_PERCENT_FOR_SUCCESS - percent}% para a meta.`;
             }
         } else {
             if (percent >= MIN_PERCENT_FOR_SUCCESS) {
@@ -1628,33 +1509,26 @@
         const used = [...new Set(usedQuestionsHistory)].length;
         const remaining = Math.max(0, total - used);
         const wrongCount = currentSessionWrongQuestions.length;
-        
         let summaryText = '';
         if (currentQuestions[0]?.isWrongQuestion) {
-            summaryText = `⚡ <strong>SIMULADO DE REFORÇO FINALIZADO</strong><br>`;
-            summaryText += `Você revisou ${currentQuestions.length} questões que errou anteriormente.<br>`;
-            summaryText += `Questões ainda erradas: <strong>${wrongCount}</strong>`;
+            summaryText = `⚡ <strong>SIMULADO DE REFORÇO</strong><br>Você revisou ${currentQuestions.length} questões.<br>Ainda erradas: <strong>${wrongCount}</strong>`;
         } else if (remaining === 0) {
-            summaryText = `🎯 <strong>COMPLETOU TODAS AS ${total} QUESTÕES!</strong><br>`;
-            summaryText += `Questões erradas: <strong>${wrongCount}</strong>`;
+            summaryText = `🎯 <strong>COMPLETOU TODAS AS ${total} QUESTÕES!</strong><br>Erradas: <strong>${wrongCount}</strong>`;
         } else {
-            summaryText = `📊 Restam: <strong>${remaining}</strong> | Usadas: <strong>${used}</strong><br>`;
-            summaryText += `❌ Erros neste simulado: <strong>${wrongCount}</strong>`;
+            summaryText = `📊 Restam: <strong>${remaining}</strong> | Usadas: <strong>${used}</strong><br>❌ Erros neste simulado: <strong>${wrongCount}</strong>`;
         }
         document.getElementById('simulado-summary').innerHTML = summaryText;
-        
         document.querySelector('.nav-buttons').style.display = 'none';
         document.getElementById('results').style.display = 'block';
         document.getElementById('finish-btn').style.display = 'none';
         document.getElementById('restart-btn').style.display = 'block';
-        
         updateSimuladoInfo();
         updateReforcoButton();
         updateContinuarBancoButton();
-        
         const showReiniciarBanco = (currentQuestions[0]?.isWrongQuestion && percent < MIN_PERCENT_FOR_SUCCESS);
         document.getElementById('reiniciar-banco-btn').style.display = showReiniciarBanco ? 'block' : 'none';
-        updateVoltarInicioButton();
+        const voltarBtn = document.getElementById('voltar-inicio-btn');
+        if (voltarBtn) voltarBtn.style.display = 'none';
     }
     
     // ============================================
@@ -1698,7 +1572,7 @@
     function showHistoryInfo() {
         const total = masterBank.length;
         const used = [...new Set(usedQuestionsHistory)].length;
-        alert(`📊 Total: ${total} | Usadas: ${used} | Disponíveis: ${Math.max(0,total-used)} | Erros nesta sessão: ${currentSessionWrongQuestions.length}`);
+        alert(`📊 Total: ${total} | Usadas: ${used} | Disponíveis: ${Math.max(0,total-used)} | Erros: ${currentSessionWrongQuestions.length}`);
     }
     
     function clearHistory() {
@@ -1773,7 +1647,7 @@
     
     function startWrongQuestionsSimulado() {
         currentQuestions = generateWrongQuestionsSimulado();
-        if (!currentQuestions.length) { alert('Nenhuma questão errada neste simulado.'); return; }
+        if (!currentQuestions.length) { alert('Nenhuma questão errada.'); return; }
         currentSimuladoNumber = totalSimulados + 1;
         userAnswers = new Array(currentQuestions.length).fill(null);
         currentQuestionIndex = 0;
@@ -1824,11 +1698,6 @@
     
     function reiniciarBancoCompleto() { voltarAoInicio(); }
     
-    function updateVoltarInicioButton() {
-        const voltarBtn = document.getElementById('voltar-inicio-btn');
-        if (voltarBtn) voltarBtn.style.display = 'none';
-    }
-    
     // ============================================
     // INICIALIZAÇÃO
     // ============================================
@@ -1843,7 +1712,6 @@
         const saved = localStorage.getItem(HISTORY_KEY);
         if (saved) try { usedQuestionsHistory = JSON.parse(saved); } catch(e) { usedQuestionsHistory = []; }
         resetCurrentSessionWrongQuestions();
-        
         if (!loadAutoSaveProgress()) {
             currentQuestions = selectRandomQuestions();
             if (!currentQuestions.length) return;
