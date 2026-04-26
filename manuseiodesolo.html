@@ -5,33 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BAS - MANUSEIO DE SOLO, SEGURANÇA E EQUIPAMENTO DE APOIO</title>
     <style>
+        /* ============================================
+           DESIGN SYSTEM - TEMA AZUL - COMPACTADO PARA CELULAR
+           Todas as funcionalidades originais preservadas
+        ============================================ */
         :root {
             --primary: #2563eb;
-            --primary-dark: #1e40af;
-            --bg-body: #f8fafc;
-            --bg-card: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --success: #22c55e;
-            --success-dark: #16a34a;
+            --primary-light: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --primary-gradient: linear-gradient(135deg, #2563eb, #06b6d4);
+            --secondary: #0284c7;
+            --success: #10b981;
+            --success-dark: #059669;
             --danger: #ef4444;
             --danger-dark: #dc2626;
             --warning: #f59e0b;
-            --warning-dark: #d97706;
-            --accent: #6366f1;
-            --purple: #8b5cf6;
-            --gray-100: #f1f5f9;
-            --gray-200: #e2e8f0;
-            --gray-300: #cbd5e1;
-            --gray-400: #9ca3af;
-            --gray-500: #6b7280;
-            --gray-600: #4b5563;
-            --radius-sm: 6px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-            --shadow-md: 0 2px 4px -1px rgb(0 0 0 / 0.1);
-            --shadow-lg: 0 4px 6px -2px rgb(0 0 0 / 0.1);
+            --info: #0ea5e9;
+            --bg-body: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
+            --bg-card: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --text-light: #94a3b8;
+            --border-light: #cbd5e1;
+            --border-radius-sm: 6px;
+            --border-radius-md: 10px;
+            --border-radius-lg: 14px;
+            --border-radius-xl: 20px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 4px 6px -2px rgba(0, 0, 0, 0.1);
+            --transition-default: all 0.2s ease;
+        }
+
+        body.dark-mode {
+            --bg-body: linear-gradient(135deg, #0f172a 0%, #082f49 100%);
+            --bg-card: #1e293b;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-light: #64748b;
+            --border-light: #334155;
         }
 
         * { 
@@ -43,12 +55,13 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--bg-body);
+            background: var(--bg-body);
             color: var(--text-main);
             margin: 0;
             padding: 4px;
-            line-height: 1.3;
+            line-height: 1.4;
             min-height: 100vh;
+            transition: background 0.3s ease;
         }
 
         .container { 
@@ -62,10 +75,11 @@
             font-size: 0.55rem;
             font-weight: 700;
             color: var(--text-muted);
-            letter-spacing: 0.3px;
-            margin-bottom: 2px;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
             text-transform: uppercase;
-            background: var(--gray-100);
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(4px);
             display: inline-block;
             padding: 2px 10px;
             border-radius: 30px;
@@ -74,19 +88,26 @@
             margin-right: auto;
         }
 
-        /* CABEÇALHO MAIS COMPACTO */
+        body.dark-mode .credits-integrated {
+            background: rgba(30, 41, 59, 0.5);
+        }
+
         .header-mini {
             position: sticky;
-            top: 2px;
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            top: 4px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
             padding: 6px 10px;
-            border-radius: var(--radius-md);
+            border-radius: var(--border-radius-xl);
             box-shadow: var(--shadow-md);
             z-index: 100;
-            margin-bottom: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            margin-bottom: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        body.dark-mode .header-mini {
+            background: rgba(30, 41, 59, 0.85);
+            border-color: rgba(255, 255, 255, 0.05);
         }
 
         .header-mini-top {
@@ -98,23 +119,23 @@
 
         .page-title-mini {
             margin: 0;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -0.3px;
         }
 
         .timer-compact {
-            background: white;
+            background: var(--bg-card);
             color: var(--primary);
-            padding: 3px 8px;
+            padding: 2px 8px;
             border-radius: 30px;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 800;
-            border: 1.5px solid var(--primary);
-            box-shadow: var(--shadow-sm);
+            border: 1.5px solid var(--primary-light);
+            font-family: monospace;
         }
 
         .timer-warning {
@@ -129,153 +150,153 @@
             50% { opacity: 0.8; }
         }
 
-        /* SIMULADO INFO MAIS COMPACTO */
         .simulado-info {
-            background: var(--gray-100);
-            border-radius: var(--radius-sm);
-            padding: 4px 8px;
+            background: rgba(37, 99, 235, 0.08);
+            border-radius: var(--border-radius-md);
+            padding: 5px 10px;
             margin-bottom: 4px;
-            border: 1px solid var(--gray-200);
-            font-size: 0.7rem;
+            border: 1px solid rgba(37, 99, 235, 0.15);
+            font-size: 0.65rem;
+        }
+
+        body.dark-mode .simulado-info {
+            background: rgba(37, 99, 235, 0.12);
         }
 
         .simulado-stats {
             display: flex;
             justify-content: space-between;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 600;
-            margin-top: 2px;
-            color: var(--text-main);
+            margin-top: 3px;
+            color: var(--text-muted);
         }
 
         .history-controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
+            display: flex;
             gap: 4px;
-            margin-top: 4px;
+            margin-top: 5px;
+            flex-wrap: wrap;
         }
 
         .history-controls button {
-            padding: 4px;
+            padding: 3px 8px;
             border: none;
-            border-radius: var(--radius-sm);
-            font-size: 0.6rem;
-            font-weight: 700;
+            border-radius: 25px;
+            font-size: 0.55rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: var(--transition-default);
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border-light);
+        }
+
+        .history-controls button:hover {
+            transform: translateY(-1px);
         }
 
         .clear-history-btn {
-            background: #fef3c7;
-            color: #92400e;
-            border: 1px solid #fcd34d;
+            background: #fef3c7 !important;
+            color: #92400e !important;
+            border-color: #fde68a !important;
+        }
+
+        body.dark-mode .clear-history-btn {
+            background: #7c2d12 !important;
+            color: #fed7aa !important;
+            border-color: #9a3412 !important;
         }
 
         .info-history-btn {
-            background: #e2e8f0;
-            color: var(--text-main);
-            border: 1px solid #cbd5e1;
+            background: #e2e8f0 !important;
         }
 
-        /* INFO GRID MAIS COMPACTO - SEM ESPAÇO INFERIOR */
+        .dark-mode-btn {
+            background: var(--primary-gradient) !important;
+            color: white !important;
+            border: none !important;
+        }
+
         .quiz-info-mini {
-            background: var(--gray-100);
-            border-radius: var(--radius-sm);
-            padding: 6px 8px;
+            background: var(--bg-card);
+            border-radius: var(--border-radius-md);
+            padding: 6px 10px;
             margin-bottom: 0;
+            border: 1px solid var(--border-light);
         }
 
         .info-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 4px;
-            margin-bottom: 4px;
+            gap: 6px;
+            margin-bottom: 6px;
         }
 
         .info-item {
             text-align: center;
-            background: white;
+            background: rgba(37, 99, 235, 0.06);
             padding: 4px 2px;
-            border-radius: var(--radius-sm);
-            box-shadow: var(--shadow-sm);
+            border-radius: var(--border-radius-sm);
         }
 
         .info-label { 
-            font-size: 0.5rem; 
+            font-size: 0.45rem; 
             color: var(--text-muted); 
             font-weight: 700; 
             text-transform: uppercase; 
-            letter-spacing: 0.2px;
+            letter-spacing: 0.5px;
         }
         .info-value { 
-            font-size: 0.8rem; 
+            font-size: 0.75rem; 
             font-weight: 800; 
-            color: var(--primary); 
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* CONTROLES COMPACTOS */
         .controls-compact { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
+            flex-wrap: wrap;
+            gap: 6px;
         }
 
         .auto-nav-toggle {
             display: flex;
             align-items: center;
             gap: 4px;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             font-weight: 600;
             color: var(--text-main);
-            background: white;
+            background: rgba(37, 99, 235, 0.08);
             padding: 3px 8px;
-            border-radius: 30px;
-            box-shadow: var(--shadow-sm);
+            border-radius: 25px;
             cursor: pointer;
-        }
-
-        .auto-nav-checkbox { 
-            width: 14px; 
-            height: 14px; 
-            accent-color: var(--primary); 
         }
 
         .reset-btn-mini {
-            background: white;
-            border: 1px solid var(--gray-300);
-            border-radius: 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 25px;
             padding: 3px 10px;
-            font-size: 0.65rem;
-            font-weight: 700;
+            font-size: 0.6rem;
+            font-weight: 600;
             cursor: pointer;
-            box-shadow: var(--shadow-sm);
-            transition: all 0.2s;
             color: var(--text-main);
         }
 
-        /* QUESTÕES MAIS COMPACTAS */
         .question-block-mini {
             background: var(--bg-card);
-            padding: 14px;
-            border-radius: var(--radius-md);
+            padding: 10px;
+            border-radius: var(--border-radius-lg);
             box-shadow: var(--shadow-md);
-            margin-top: 4px;
+            margin-top: 6px;
             margin-bottom: 8px;
             animation: slideIn 0.3s ease-out;
-            border: 2px solid transparent;
+            border: 1px solid var(--border-light);
             position: relative;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .question-block-mini.pending-highlight {
-            border: 2px solid var(--danger) !important;
-            box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2) !important;
-            animation: pulse-pending 1.5s infinite !important;
-        }
-
-        @keyframes pulse-pending {
-            0%, 100% { border-color: var(--danger); }
-            50% { border-color: #fca5a5; }
         }
 
         @keyframes slideIn { 
@@ -284,300 +305,225 @@
         }
 
         .question-text-mini {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 700;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: var(--text-main);
             line-height: 1.4;
-            padding-right: 25px;
         }
 
         .options-mini { 
             display: flex; 
             flex-direction: column; 
-            gap: 6px; 
+            gap: 5px; 
         }
 
         .option-mini {
-            padding: 10px 10px;
-            background: var(--gray-100);
-            border: 1.5px solid var(--gray-200);
-            border-radius: var(--radius-sm);
+            padding: 7px 10px;
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-md);
             cursor: pointer;
             display: flex;
             align-items: center;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 500;
-            transition: all 0.2s;
-            line-height: 1.3;
+            transition: var(--transition-default);
         }
 
-        .option-mini:active { 
-            transform: scale(0.98); 
-            background: var(--gray-200);
+        body.dark-mode .option-mini {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .option-mini:hover {
+            border-color: var(--primary-light);
+            background: rgba(37, 99, 235, 0.05);
         }
 
         .option-mini input[type="radio"] {
             margin-right: 8px;
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             flex-shrink: 0;
             accent-color: var(--primary);
+            cursor: pointer;
         }
 
         .option-mini:has(input:checked) {
             border-color: var(--primary);
-            background-color: #eff6ff;
-            box-shadow: 0 0 0 1px var(--primary);
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(6, 182, 212, 0.08));
         }
 
         .correct-answer {
-            background-color: #dcfce7 !important;
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0) !important;
             border-color: var(--success) !important;
             color: #166534 !important;
         }
 
+        body.dark-mode .correct-answer {
+            background: linear-gradient(135deg, #14532d, #166534) !important;
+            color: #86efac !important;
+        }
+
         .wrong-answer {
-            background-color: #fee2e2 !important;
+            background: linear-gradient(135deg, #fee2e2, #fecaca) !important;
             border-color: var(--danger) !important;
             color: #991b1b !important;
         }
 
-        /* BOTÃO DE REPORTAR COMPACTO */
-        .report-btn {
-            background: white;
-            border: 1px solid var(--gray-300);
+        body.dark-mode .wrong-answer {
+            background: linear-gradient(135deg, #7f1d1d, #991b1b) !important;
+            color: #fca5a5 !important;
+        }
+
+        .report-btn, .results-report-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
             border-radius: 30px;
-            padding: 5px 12px;
-            font-size: 0.65rem;
+            padding: 4px 12px;
+            font-size: 0.6rem;
             font-weight: 600;
             cursor: pointer;
             margin-top: 10px;
             display: inline-flex;
             align-items: center;
-            gap: 4px;
-            transition: all 0.2s;
+            gap: 5px;
             color: var(--text-muted);
         }
 
-        .report-gabarito-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: white;
-            border: 1px solid var(--gray-200);
-            border-radius: 30px;
-            padding: 3px 8px;
-            font-size: 0.55rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 3px;
-            transition: all 0.2s;
-            color: var(--text-muted);
-            box-shadow: var(--shadow-sm);
+        .report-btn:hover, .results-report-btn:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: white;
         }
 
-        /* NAVEGAÇÃO MAIS COMPACTA */
         .nav-buttons { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
             gap: 6px; 
-            margin-bottom: 6px; 
+            margin-bottom: 8px; 
         }
 
         .nav-btn {
-            padding: 10px;
-            background: var(--primary);
+            padding: 8px;
+            background: var(--primary-gradient);
             color: white;
             border: none;
-            border-radius: 30px;
-            font-weight: 800;
-            font-size: 0.8rem;
-            box-shadow: 0 3px 0 var(--primary-dark);
-            transition: all 0.1s ease;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.75rem;
             cursor: pointer;
-            letter-spacing: 0.3px;
         }
 
-        .nav-btn:active { 
-            box-shadow: 0 1px 0 var(--primary-dark); 
-            transform: translateY(2px); 
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
         .btn-finish {
             width: 100%;
-            padding: 12px;
-            background: var(--gray-400);
+            padding: 10px;
+            background: linear-gradient(135deg, #94a3b8, #64748b);
             color: white;
             border: none;
-            border-radius: 30px;
+            border-radius: 50px;
             font-weight: 800;
-            font-size: 0.85rem;
-            box-shadow: 0 3px 0 var(--gray-600);
-            margin-bottom: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
             cursor: not-allowed;
-            transition: all 0.1s ease;
-            opacity: 0.7;
+            opacity: 0.6;
         }
 
         .btn-finish.enabled {
-            background: var(--success);
-            box-shadow: 0 3px 0 var(--success-dark);
+            background: linear-gradient(135deg, var(--success), var(--success-dark));
             cursor: pointer;
             opacity: 1;
         }
 
-        .btn-finish.enabled:active {
-            box-shadow: 0 1px 0 var(--success-dark); 
-            transform: translateY(2px); 
-        }
-
-        /* RESULTADOS MAIS COMPACTOS - INICIALMENTE OCULTO */
         #results {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 16px 12px;
+            background: var(--bg-card);
+            border-radius: var(--border-radius-lg);
+            padding: 12px 10px;
             text-align: center;
-            box-shadow: var(--shadow-lg);
-            margin-bottom: 10px;
-            border: 1px solid var(--gray-200);
+            margin-bottom: 12px;
+            border: 1px solid var(--border-light);
             display: none;
         }
 
         .result-title { 
-            font-size: 1rem; 
+            font-size: 0.95rem; 
             font-weight: 800; 
             margin-bottom: 4px; 
         }
 
         .score-mini { 
-            font-size: 2.2rem; 
+            font-size: 2rem; 
             font-weight: 900; 
-            color: var(--primary); 
-            margin: 6px 0; 
-            line-height: 1;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 5px 0; 
         }
 
         #final-percent { 
-            font-weight: 800; 
-            color: var(--accent); 
-            margin-bottom: 8px; 
-            font-size: 0.9rem;
+            font-weight: 700; 
+            color: var(--primary-light); 
+            margin-bottom: 6px; 
+            font-size: 0.85rem;
         }
 
         .motivation-message {
-            padding: 10px;
-            border-radius: var(--radius-sm);
-            margin-bottom: 12px;
+            padding: 8px;
+            border-radius: var(--border-radius-md);
+            margin-bottom: 10px;
             font-weight: 600;
-            font-size: 0.8rem;
-            background: #fffbeb;
+            font-size: 0.7rem;
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
             border: 1px solid #fde68a;
             color: #92400e;
         }
 
-        /* BOTÃO FLUTUANTE PARA MOBILE - APENAS NO FINAL */
-        .pending-shortcut {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--warning), var(--warning-dark));
-            color: white;
-            padding: 14px 28px;
-            border-radius: 60px;
-            font-size: 1rem;
-            font-weight: 800;
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-            z-index: 1000;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-            border: 3px solid white;
-            animation: slideUp 0.4s ease-out, pulse-gentle 2s infinite;
-            cursor: pointer;
-            transition: all 0.2s;
-            backdrop-filter: blur(4px);
-            letter-spacing: 0.5px;
-            max-width: 90%;
-            width: auto;
+        body.dark-mode .motivation-message {
+            background: linear-gradient(135deg, #451a03, #78350f);
+            border-color: #9a3412;
+            color: #fde68a;
         }
 
-        .pending-shortcut:active {
-            transform: translateX(-50%) scale(0.97);
+        .pending-shortcut {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-gradient);
+            color: white;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            border: none;
+            cursor: pointer;
         }
 
         .pending-shortcut .pending-count {
             background: white;
-            color: var(--warning-dark);
-            padding: 5px 16px;
-            border-radius: 40px;
-            font-size: 1.1rem;
+            color: var(--primary);
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 0.8rem;
             font-weight: 900;
         }
 
-        .pending-shortcut .pending-text {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .pending-shortcut .arrow-icon {
-            font-size: 1.3rem;
-            animation: bounce 1s infinite;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translate(-50%, 30px);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, 0);
-            }
-        }
-
-        @keyframes pulse-gentle {
-            0%, 100% {
-                box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
-            }
-            50% {
-                box-shadow: 0 10px 30px rgba(245, 158, 11, 0.8);
-            }
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateX(0);
-            }
-            50% {
-                transform: translateX(5px);
-            }
-        }
-
-        /* MOBILE OPTIMIZATION EXTREME */
         @media (max-width: 480px) {
-            body { padding: 2px; }
-            .header-mini { top: 0; padding: 4px 8px; }
-            .question-block-mini { padding: 12px; margin-top: 2px; }
-            .option-mini { padding: 8px; font-size: 0.75rem; }
-            .timer-compact { padding: 2px 6px; font-size: 0.75rem; }
-            .pending-shortcut {
-                padding: 12px 22px;
-                font-size: 0.9rem;
-                bottom: 15px;
-                gap: 10px;
-            }
-            .pending-shortcut .pending-count {
-                padding: 4px 12px;
-                font-size: 1rem;
-            }
+            body { padding: 3px; }
+            .question-block-mini { padding: 8px; }
+            .option-mini { padding: 6px 8px; font-size: 0.7rem; }
+            .pending-shortcut { padding: 6px 14px; font-size: 0.7rem; bottom: 12px; }
         }
 
-        /* MODAL DE REPORTE */
         .report-modal {
             display: none;
             position: fixed;
@@ -585,7 +531,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.6);
+            background: rgba(0,0,0,0.7);
             backdrop-filter: blur(5px);
             z-index: 1000;
             align-items: center;
@@ -594,171 +540,99 @@
         }
 
         .report-content {
-            background: white;
-            padding: 24px;
-            border-radius: var(--radius-lg);
+            background: var(--bg-card);
+            padding: 16px;
+            border-radius: var(--border-radius-xl);
             width: 100%;
-            max-width: 480px;
+            max-width: 450px;
             max-height: 85vh;
             overflow-y: auto;
-            box-shadow: var(--shadow-lg);
         }
 
         .report-title {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 20px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
             text-align: center;
-            border-bottom: 3px solid var(--primary);
-            padding-bottom: 12px;
+            padding-bottom: 8px;
         }
 
         .report-question-info {
-            background: var(--gray-100);
-            border-radius: var(--radius-md);
-            padding: 16px;
-            margin-bottom: 20px;
-            border-left: 5px solid var(--primary);
-        }
-
-        .report-section {
-            margin-bottom: 24px;
-        }
-
-        .report-section-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--text-main);
+            background: rgba(37, 99, 235, 0.06);
+            border-radius: var(--border-radius-md);
+            padding: 10px;
             margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .report-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin: 12px 0;
+            border-left: 3px solid var(--primary);
         }
 
         .report-option {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 14px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-md);
+            gap: 8px;
+            padding: 10px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-md);
             cursor: pointer;
-            transition: all 0.2s;
-            background: var(--gray-50);
+            margin-bottom: 6px;
         }
 
-        .report-option:active {
+        .report-option:hover {
             border-color: var(--primary);
-            background: #eff6ff;
-        }
-
-        .report-option input[type="radio"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--primary);
+            background: rgba(37, 99, 235, 0.05);
         }
 
         .user-info-form {
-            background: #eff6ff;
-            border-radius: var(--radius-md);
-            padding: 20px;
-            margin: 16px 0;
-            border: 1px solid #bae6fd;
+            background: rgba(37, 99, 235, 0.05);
+            border-radius: var(--border-radius-md);
+            padding: 12px;
+            margin: 12px 0;
         }
 
         .form-group {
-            margin-bottom: 16px;
+            margin-bottom: 10px;
         }
 
         .form-label {
             display: block;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
-        .form-input {
+        .form-input, .report-textarea {
             width: 100%;
-            padding: 14px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-md);
-            font-size: 0.9rem;
-            transition: all 0.2s;
-            background: white;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
-        }
-
-        .form-input.error {
-            border-color: var(--danger);
-            background-color: #fef2f2;
-        }
-
-        .required-star {
-            color: var(--danger);
-            font-weight: bold;
+            padding: 8px;
+            border: 1px solid var(--border-light);
+            border-radius: var(--border-radius-md);
+            font-size: 0.8rem;
+            background: var(--bg-card);
+            color: var(--text-main);
         }
 
         .report-textarea {
-            width: 100%;
-            min-height: 100px;
-            padding: 14px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-md);
-            font-size: 0.9rem;
+            min-height: 80px;
             resize: vertical;
-            background: white;
-        }
-
-        .report-textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
         }
 
         .report-buttons {
             display: flex;
-            gap: 12px;
-            margin-top: 24px;
+            gap: 10px;
+            margin-top: 16px;
         }
 
         .report-submit {
             flex: 2;
-            background: var(--primary);
+            background: var(--primary-gradient);
             color: white;
             border: none;
-            border-radius: 40px;
-            padding: 16px;
-            font-size: 0.95rem;
-            font-weight: 800;
+            border-radius: 50px;
+            padding: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.1s;
-            box-shadow: 0 4px 0 var(--primary-dark);
-        }
-
-        .report-submit:active:not(:disabled) {
-            transform: translateY(3px);
-            box-shadow: 0 1px 0 var(--primary-dark);
-        }
-
-        .report-submit:disabled {
-            background: var(--gray-300);
-            box-shadow: 0 4px 0 var(--gray-400);
-            opacity: 0.7;
-            cursor: not-allowed;
         }
 
         .report-cancel {
@@ -766,52 +640,48 @@
             background: #6b7280;
             color: white;
             border: none;
-            border-radius: 40px;
-            padding: 16px;
-            font-size: 0.95rem;
-            font-weight: 700;
+            border-radius: 50px;
+            padding: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.1s;
-            box-shadow: 0 4px 0 #4b5563;
-        }
-
-        .report-cancel:active {
-            transform: translateY(3px);
-            box-shadow: 0 1px 0 #4b5563;
         }
 
         .report-success {
             background: #dcfce7;
             color: #166534;
-            padding: 16px;
-            border-radius: var(--radius-md);
-            font-size: 0.9rem;
+            padding: 10px;
+            border-radius: var(--border-radius-md);
             text-align: center;
-            margin-top: 20px;
-            border: 2px solid var(--success);
+            margin-top: 12px;
+            font-size: 0.8rem;
             font-weight: 600;
+            display: none;
         }
 
         .report-error {
             background: #fee2e2;
             color: #991b1b;
-            padding: 12px;
-            border-radius: var(--radius-md);
-            margin: 12px 0;
-            border: 2px solid var(--danger);
-            font-weight: 600;
+            padding: 8px;
+            border-radius: var(--border-radius-md);
+            margin: 8px 0;
+            font-size: 0.75rem;
             display: none;
+        }
+
+        .required-star {
+            color: var(--danger);
         }
 
         .loading-spinner {
             display: inline-block;
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(255,255,255,0.3);
+            width: 16px;
+            height: 16px;
+            border: 2px solid white;
             border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 8px;
+            border-top-color: transparent;
+            animation: spin 0.6s linear infinite;
+            margin-right: 6px;
         }
 
         @keyframes spin {
@@ -836,34 +706,21 @@
                 <span id="remaining-questions">Disponíveis: 0</span>
                 <span id="recent-used">Usadas: 0</span>
             </div>
-            
             <div class="history-controls">
-                <button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar Histórico</button>
+                <button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar</button>
                 <button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button>
+                <button class="dark-mode-btn" onclick="toggleDarkMode()">🌙 Dark</button>
             </div>
         </div>
         
         <div class="quiz-info-mini">
             <div class="info-grid">
-                <div class="info-item">
-                    <div class="info-label">Questão</div>
-                    <div class="info-value" id="question-counter">0/0</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Respondidas</div>
-                    <div class="info-value" id="answered-counter">0/0</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Progresso</div>
-                    <div class="info-value" id="progress-percent">0%</div>
-                </div>
+                <div class="info-item"><div class="info-label">Questão</div><div class="info-value" id="question-counter">0/0</div></div>
+                <div class="info-item"><div class="info-label">Respondidas</div><div class="info-value" id="answered-counter">0/0</div></div>
+                <div class="info-item"><div class="info-label">Progresso</div><div class="info-value" id="progress-percent">0%</div></div>
             </div>
-            
             <div class="controls-compact">
-                <div class="auto-nav-toggle" onclick="toggleAutoNav()">
-                    <input type="checkbox" id="auto-nav-checkbox" class="auto-nav-checkbox" checked>
-                    <label>Auto-avançar</label>
-                </div>
+                <div class="auto-nav-toggle" onclick="toggleAutoNav()"><input type="checkbox" id="auto-nav-checkbox" class="auto-nav-checkbox" checked><label>Auto-avançar</label></div>
                 <button class="reset-btn-mini" onclick="resetQuiz()">↻ Reiniciar</button>
             </div>
         </div>
@@ -874,15 +731,13 @@
         <div class="score-mini" id="final-score"></div>
         <div id="final-percent"></div>
         <div id="motivation-message" class="motivation-message"></div>
-        <div id="simulado-summary" style="margin-bottom: 8px; font-size: 0.7rem; font-weight: 500;"></div>
+        <div id="simulado-summary" style="margin-bottom: 8px; font-size: 0.65rem;"></div>
         
-        <button id="restart-btn" class="nav-btn" style="display:none;" onclick="startNewQuiz()">🔄 Refazer Simulado</button>
-        <button id="voltar-inicio-btn" class="nav-btn" style="display:none; background:var(--accent); box-shadow:0 3px 0 #4338ca;" onclick="voltarAoInicio()">🏁 Voltar ao Início</button>
-        <button id="continuar-banco-btn" class="nav-btn" style="display:none; background: #0891b2; box-shadow:0 3px 0 #065a7d; color:white;" onclick="continuarComBanco()">📚 Continuar com Banco</button>
-        <button id="wrong-questions-btn" class="nav-btn" style="display:none; background:var(--danger); box-shadow:0 3px 0 #b91c1c;" onclick="startWrongQuestionsSimulado()">⚡ Simulado de Reforço</button>
-        <button id="reiniciar-banco-btn" class="nav-btn" style="display:none; background:var(--purple); box-shadow:0 3px 0 #7c3aed;" onclick="reiniciarBancoCompleto()">🔄 Reiniciar Banco Completo</button>
-        <button id="new-simulado-btn" class="nav-btn" style="display:none; background:var(--accent); box-shadow:0 3px 0 #4338ca;" onclick="generateNewSimulado()">🎲 Novo Simulado</button>
-        <button id="novo-simulado-reforco-btn" class="nav-btn" style="display:none; background:var(--warning); box-shadow:0 3px 0 #b45309; color:white;" onclick="novoSimuladoAposReforco()">🎯 Novo Simulado</button>
+        <button id="restart-btn" class="nav-btn" style="display:none;" onclick="startNewQuiz()">🔄 Refazer</button>
+        <button id="voltar-inicio-btn" class="nav-btn" style="display:none;" onclick="voltarAoInicio()">🏁 Voltar ao Início</button>
+        <button id="continuar-banco-btn" class="nav-btn" style="display:none;" onclick="continuarComBanco()">📚 Continuar com Banco</button>
+        <button id="wrong-questions-btn" class="nav-btn" style="display:none;" onclick="startWrongQuestionsSimulado()">⚡ Reforço</button>
+        <button id="reiniciar-banco-btn" class="nav-btn" style="display:none;" onclick="reiniciarBancoCompleto()">🔄 Reiniciar Banco</button>
     </div>
 
     <div id="quiz-content"></div>
@@ -895,99 +750,48 @@
     <button id="finish-btn" class="btn-finish" onclick="finalizeQuiz()" disabled>FINALIZAR SIMULADO</button>
 </div>
 
-<!-- MODAL DE REPORTE -->
 <div id="reportModal" class="report-modal">
     <div class="report-content">
         <div class="report-title">📝 Reportar Questão</div>
-        
         <div class="report-question-info">
             <div><strong>Questão #<span id="reportQuestionNumber">1</span></strong></div>
-            <div id="reportQuestionText" style="font-size: 0.85rem; margin-top: 6px;">Carregando...</div>
+            <div id="reportQuestionText" style="font-size: 0.8rem; margin-top: 5px;">Carregando...</div>
         </div>
-        
         <div class="report-section">
-            <div class="report-section-title">📌 Tipo de Problema</div>
+            <div class="report-section-title" style="font-weight:700; margin-bottom:8px;">📌 Tipo de Problema</div>
             <div class="report-options">
-                <div class="report-option">
-                    <input type="radio" id="reportError" name="reportType" value="error">
-                    <label for="reportError">❌ Questão com erro</label>
-                </div>
-                <div class="report-option">
-                    <input type="radio" id="reportWrongAnswer" name="reportType" value="wrong_answer">
-                    <label for="reportWrongAnswer">⚠️ Resposta incorreta</label>
-                </div>
-                <div class="report-option">
-                    <input type="radio" id="reportConfusing" name="reportType" value="confusing">
-                    <label for="reportConfusing">🤔 Enunciado confuso</label>
-                </div>
-                <div class="report-option">
-                    <input type="radio" id="reportAlternative" name="reportType" value="alternative">
-                    <label for="reportAlternative">🔤 Alternativas erradas</label>
-                </div>
-                <div class="report-option">
-                    <input type="radio" id="reportOther" name="reportType" value="other">
-                    <label for="reportOther">📝 Outro problema</label>
-                </div>
+                <div class="report-option"><input type="radio" id="reportError" name="reportType" value="error"><label for="reportError">❌ Questão com erro</label></div>
+                <div class="report-option"><input type="radio" id="reportWrongAnswer" name="reportType" value="wrong_answer"><label for="reportWrongAnswer">⚠️ Resposta incorreta</label></div>
+                <div class="report-option"><input type="radio" id="reportConfusing" name="reportType" value="confusing"><label for="reportConfusing">🤔 Enunciado confuso</label></div>
+                <div class="report-option"><input type="radio" id="reportAlternative" name="reportType" value="alternative"><label for="reportAlternative">🔤 Alternativas erradas</label></div>
+                <div class="report-option"><input type="radio" id="reportOther" name="reportType" value="other"><label for="reportOther">📝 Outro problema</label></div>
             </div>
         </div>
-        
         <div class="report-section">
-            <div class="report-section-title">👤 Sua Identificação <span class="required-star">*</span></div>
+            <div class="report-section-title" style="font-weight:700; margin-bottom:8px;">👤 Sua Identificação <span class="required-star">*</span></div>
             <div class="user-info-form">
-                <div class="form-group">
-                    <label class="form-label" for="userName">Nome Completo <span class="required-star">*</span></label>
-                    <input type="text" id="userName" class="form-input" placeholder="Digite seu nome completo" maxlength="100">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label" for="userEmail">E-mail <span class="required-star">*</span></label>
-                    <input type="email" id="userEmail" class="form-input" placeholder="seu.email@exemplo.com" maxlength="100">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label" for="userInfo">Instituição/Curso (opcional)</label>
-                    <input type="text" id="userInfo" class="form-input" placeholder="Ex: SENAI, Engenharia Mecânica" maxlength="100">
-                </div>
+                <div class="form-group"><label class="form-label">Nome Completo <span class="required-star">*</span></label><input type="text" id="userName" class="form-input" placeholder="Digite seu nome completo" maxlength="100"></div>
+                <div class="form-group"><label class="form-label">E-mail <span class="required-star">*</span></label><input type="email" id="userEmail" class="form-input" placeholder="seu.email@exemplo.com" maxlength="100"></div>
+                <div class="form-group"><label class="form-label">Instituição/Curso (opcional)</label><input type="text" id="userInfo" class="form-input" placeholder="Ex: SENAI, Engenharia" maxlength="100"></div>
             </div>
         </div>
-        
         <div class="report-section">
-            <div class="report-section-title">📋 Detalhes do Problema</div>
-            <textarea 
-                id="reportDetails" 
-                class="report-textarea" 
-                placeholder="Descreva detalhadamente o problema encontrado na questão..."
-                maxlength="1000"
-            ></textarea>
-            <div style="font-size: 0.7rem; color: var(--text-muted); text-align: right; margin-top: 4px;">
-                <span id="charCount">0</span>/1000 caracteres
-            </div>
+            <div class="report-section-title" style="font-weight:700; margin-bottom:8px;">📋 Detalhes do Problema</div>
+            <textarea id="reportDetails" class="report-textarea" placeholder="Descreva o problema..." maxlength="1000"></textarea>
+            <div style="font-size: 0.6rem; text-align: right; margin-top: 3px;"><span id="charCount">0</span>/1000</div>
         </div>
-        
         <div id="reportErrorMsg" class="report-error"></div>
-        
-        <div class="report-buttons">
-            <button id="cancelReport" class="report-cancel" onclick="closeReportModal()">Cancelar</button>
-            <button id="submitReport" class="report-submit" onclick="submitReport()">
-                <span id="submitText">Enviar Reporte</span>
-                <span id="submitLoading" class="loading-spinner" style="display: none;"></span>
-            </button>
-        </div>
-        
-        <div id="reportSuccess" class="report-success" style="display: none;">
-            ✅ Reporte enviado com sucesso! Obrigado pela contribuição.
-        </div>
+        <div class="report-buttons"><button id="cancelReport" class="report-cancel" onclick="closeReportModal()">Cancelar</button><button id="submitReport" class="report-submit" onclick="submitReport()"><span id="submitText">Enviar</span><span id="submitLoading" class="loading-spinner" style="display: none;"></span></button></div>
+        <div id="reportSuccess" class="report-success">✅ Reporte enviado com sucesso!</div>
     </div>
 </div>
 
 <script>
     // ============================================
-    // BANCO DE QUESTÕES
+    // BANCO DE QUESTÕES - COLOQUE SUAS QUESTÕES AQUI
     // ============================================
-    
-  const masterBank = [
- 
- {q: "O sinal de luz branca piscando, emitido pela torre do aeródromo significa:", a: ["livre para o táxi", "retorne ao ponto de partida", "livre o táxi da pista em uso", "tenha extremo cuidado"], c: 1},
+    const masterBank = [
+    {q: "O sinal de luz branca piscando, emitido pela torre do aeródromo significa:", a: ["livre para o táxi", "retorne ao ponto de partida", "livre o táxi da pista em uso", "tenha extremo cuidado"], c: 1},
   {q: "Durante o reabastecimento da aeronave é correto afirmar que:", a: ["é permitido fumar na aeronave ou ao seu redor", "o caminhão tanque deverá ser estacionado, o mais próximo possível da aeronave", "entelhas de eletricidade estática", "a aeronave e o caminhão deverão estar corretamente aterrados, para se evitar"], c: 3},
   {q: "Para reduzir o tempo de abastecimento de grandes aeronaves, qual o tipo de sistema de reabastecimento é adotado?", a: ["por gravidade", "sub-alar", "por demanda", "elétrico"], c: 1},
   {q: "Durante os procedimentos de partida na aeronave, deve haver um bombeiro equipado com um extintor, próximo a(ao):", a: ["deriva", "fuselagem", "motor a ser ligado", "porta de acesso a aeronave"], c: 2},
@@ -1009,22 +813,16 @@
   {q: "O sinal de luz verde piscando, emitido pela torre do aeródromo significa:", a: ["tenha extremo cuidado", "retorne ao ponto de partida", "livre o táxi da pista em uso", "livre para o táxi"], c: 3},
   {q: "Antes do acionamento dos motores, porque deve-se colocar a aeronave contra o vento?", a: ["para prevenir o superaquecimento do motor", "para preservar o equipamento e a segurança dos operadores", "para compensar o torque do motor", "nenhuma das anteriores"], c: 0},
   {q: "Qual o agente extintor menos tóxico e menos corrosivo indicados abaixo devemos usar no interior da aeronave?", a: ["água", "Pó químico", "dióxido de carbono", "Tetracloreto de carbono"], c: 2}
-];
+    ];
+    // ============================================
 
-    // ============================================
-    // CONFIGURAÇÕES DO SISTEMA
-    // ============================================
+    // CONFIGURAÇÕES
     const QUESTIONS_PER_SIMULADO_PADRAO = 20;
     const MIN_WRONG_QUESTIONS_FOR_SIMULADO = 1;
     const MIN_PERCENT_FOR_SUCCESS = 70;
+    const API_URL = "https://script.google.com/macros/s/AKfycbwcX8bNdrDQZ6sRB1sbG0COJe7aGYyBlOCPkno2JxbM-59_-FsWt4LCccUQ8DBLTy1S5g/exec";
     
-    // ============================================
-    // VARIÁVEIS GLOBAIS
-    // ============================================
     let QUESTIONS_PER_SIMULADO = QUESTIONS_PER_SIMULADO_PADRAO;
-    let API_URL = "https://script.google.com/macros/s/AKfycbwcX8bNdrDQZ6sRB1sbG0COJe7aGYyBlOCPkno2JxbM-59_-FsWt4LCccUQ8DBLTy1S5g/exec";
-    let EMAIL_DESTINO = "ewerton.andriel@hotmail.com";
-    
     let TIME_LIMIT = 0;
     let currentQuestions = [];
     let userAnswers = [];
@@ -1033,1608 +831,54 @@
     let currentQuestionIndex = 0;
     let autoNavEnabled = true;
     let usedQuestionsHistory = [];
-    let currentSimuladoIndices = [];
     let totalSimulados = 1;
     let currentSimuladoNumber = 1;
     let hasReachedEnd = false;
-    
-    // VARIÁVEIS DO SISTEMA DE REPORTE
     let currentReportQuestionIndex = null;
-    let reportsHistory = [];
-
-    const REPORT_TYPES = {
-        error: "❌ Questão com erro",
-        wrong_answer: "⚠️ Resposta incorreta", 
-        confusing: "🤔 Enunciado confuso",
-        alternative: "🔤 Alternativas erradas",
-        other: "📝 Outro problema"
-    };
+    let currentSessionWrongQuestions = [];
     
-    let wrongQuestionsHistory = [];
-    const WRONG_QUESTIONS_KEY = 'wrong_questions_history';
-    const LAST_OFFER_KEY = 'last_reforco_offer';
-    
-    const SESSION_ID_KEY = 'current_session_id';
-    const CURRENT_QUESTIONS_KEY = 'current_session_questions';
-    const CURRENT_QUESTION_INDEX_KEY = 'current_question_index';
-    const USER_ANSWERS_KEY = 'user_answers';
-    const TIME_LEFT_KEY = 'time_left';
-    const AUTO_NAV_KEY = 'auto_nav';
-    const SIMULADO_STARTED_KEY = 'simulado_started';
-    const CURRENT_SIMULADO_NUMBER_KEY = 'current_simulado_number';
-    
-    function generateQuizId() {
-        const pageTitle = document.title || "Quiz";
-        const cleanTitle = pageTitle
-            .replace(/[^a-zA-Z0-9\s]/g, '')
-            .replace(/\s+/g, '_')
-            .toLowerCase()
-            .substring(0, 30);
-        const titleHash = pageTitle.length.toString(36);
-        return `quiz_${cleanTitle}_${titleHash}`;
-    }
-    
-    const QUIZ_ID = generateQuizId();
-    const HISTORY_KEY = `${QUIZ_ID}_history`;
-    const REPORTS_KEY = `${QUIZ_ID}_reports`;
+    const HISTORY_KEY = `quiz_historico`;
+    const DARK_MODE_KEY = 'dark_mode_enabled';
+    const AUTO_SAVE_KEY = 'auto_save_progress';
     
     // ============================================
-    // FUNÇÕES AUXILIARES
+    // DARK MODE
     // ============================================
-    
-    function shuffleArray(array) {
-        const shuffled = [...array];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-        return shuffled;
+    function toggleDarkMode() {
+        const isDark = document.body.classList.toggle('dark-mode');
+        localStorage.setItem(DARK_MODE_KEY, isDark);
+        const btn = document.querySelector('.dark-mode-btn');
+        if (btn) btn.innerHTML = isDark ? '☀️ Light' : '🌙 Dark';
     }
     
-    function formatTime(seconds) {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${mins}:${secs.toString().padStart(2, '0')}`;
-    }
-    
-    function calculateTimeLimit(questionsCount) {
-        return questionsCount * 60;
-    }
-    
-    function getAnsweredCount() {
-        return userAnswers.filter(answer => answer !== null).length;
-    }
-    
-    // ============================================
-    // FUNÇÕES DE EMBARALHAMENTO
-    // ============================================
-    
-    function shuffleAlternatives(question) {
-        const shuffledQuestion = { ...question };
-        const indices = Array.from({ length: question.a.length }, (_, i) => i);
-        const shuffledIndices = shuffleArray(indices);
-        const shuffledAlternatives = shuffledIndices.map(index => question.a[index]);
-        const newCorrectIndex = shuffledIndices.indexOf(question.c);
-        shuffledQuestion.a = shuffledAlternatives;
-        shuffledQuestion.c = newCorrectIndex;
-        shuffledQuestion.shuffledIndices = shuffledIndices;
-        shuffledQuestion.originalCorrectIndex = question.c;
-        return shuffledQuestion;
-    }
-    
-    // ============================================
-    // FUNÇÕES DE SELEÇÃO DE QUESTÕES
-    // ============================================
-    
-    function calcularConfiguracaoSimulados() {
-        const totalQuestions = masterBank.length;
-        
-        if (totalQuestions <= 27) {
-            totalSimulados = 1;
-            QUESTIONS_PER_SIMULADO = totalQuestions;
-            return {
-                totalSimulados: 1,
-                questionsPerSimulado: totalQuestions,
-                mensagem: `Banco com ${totalQuestions} questões → 1 único simulado`
-            };
-        } else if (totalQuestions >= 28 && totalQuestions <= 39) {
-            totalSimulados = 2;
-            const questionsPerSimulado = Math.ceil(totalQuestions / 2);
-            QUESTIONS_PER_SIMULADO = questionsPerSimulado;
-            return {
-                totalSimulados: 2,
-                questionsPerSimulado: questionsPerSimulado,
-                mensagem: `Banco com ${totalQuestions} questões → 2 simulados de ~${questionsPerSimulado} questões cada`
-            };
-        } else {
-            totalSimulados = Math.ceil(totalQuestions / QUESTIONS_PER_SIMULADO_PADRAO);
-            QUESTIONS_PER_SIMULADO = QUESTIONS_PER_SIMULADO_PADRAO;
-            return {
-                totalSimulados: totalSimulados,
-                questionsPerSimulado: QUESTIONS_PER_SIMULADO_PADRAO,
-                mensagem: `Banco com ${totalQuestions} questões → ${totalSimulados} simulados de 20 questões`
-            };
-        }
-    }
-    
-    function selectRandomQuestions(forceFirstSimulado = false) {
-        const totalQuestions = masterBank.length;
-        
-        if (totalQuestions === 0) {
-            alert("⚠️ O banco de questões está vazio! Adicione questões no código.");
-            return [];
-        }
-        
-        const config = calcularConfiguracaoSimulados();
-        console.log(config.mensagem);
-        
-        let availableQuestions = [];
-        for (let i = 0; i < totalQuestions; i++) {
-            availableQuestions.push(i);
-        }
-        
-        if (usedQuestionsHistory.length > 0 && !forceFirstSimulado) {
-            availableQuestions = availableQuestions.filter(index => 
-                !usedQuestionsHistory.includes(index)
-            );
-        }
-        
-        const availableCount = availableQuestions.length;
-        let questionsToSelect;
-        
-        if (availableCount === 0) {
-            if (confirm(`Todas as ${totalQuestions} questões já foram usadas!\n\nDeseja reiniciar o histórico?`)) {
-                usedQuestionsHistory = [];
-                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
-                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
-                alert('Histórico reiniciado!');
-                forceFirstSimulado = true;
-            } else {
-                availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
-                questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
-            }
-        } else if (availableCount >= QUESTIONS_PER_SIMULADO) {
-            questionsToSelect = QUESTIONS_PER_SIMULADO;
-        } else if (availableCount >= 5) {
-            questionsToSelect = availableCount;
-        } else {
-            if (confirm(`Só restam ${availableCount} questões!\n\nDeseja fazer simulado com essas questões?`)) {
-                questionsToSelect = availableCount;
-            } else {
-                if (confirm(`Deseja reiniciar o histórico?`)) {
-                    usedQuestionsHistory = [];
-                    localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-                    availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
-                    questionsToSelect = Math.min(QUESTIONS_PER_SIMULADO, totalQuestions);
-                    forceFirstSimulado = true;
-                } else {
-                    questionsToSelect = availableCount;
-                }
-            }
-        }
-        
-        if (totalQuestions <= 27) {
-            questionsToSelect = totalQuestions;
-            availableQuestions = Array.from({length: totalQuestions}, (_, i) => i);
-        }
-        
-        const shuffledQuestions = shuffleArray(availableQuestions);
-        const selectedIndices = shuffledQuestions.slice(0, questionsToSelect);
-        
-        currentSimuladoIndices = selectedIndices;
-        
-        if (forceFirstSimulado || usedQuestionsHistory.length === 0) {
-            currentSimuladoNumber = 1;
-        } else if (selectedIndices.length > 0) {
-            const usedCount = usedQuestionsHistory.length;
-            const simuladoIndex = Math.floor(usedCount / QUESTIONS_PER_SIMULADO);
-            currentSimuladoNumber = Math.min(simuladoIndex + 1, totalSimulados);
-        } else {
-            currentSimuladoNumber = 1;
-        }
-        
-        if (currentSimuladoNumber > totalSimulados) {
-            currentSimuladoNumber = totalSimulados;
-        }
-        
-        console.log(`Simulado configurado: ${currentSimuladoNumber}/${totalSimulados}`);
-        
-        const selectedQuestions = selectedIndices.map(index => {
-            const originalQuestion = masterBank[index];
-            return shuffleAlternatives({
-                ...originalQuestion, 
-                originalIndex: index
-            });
-        });
-        
-        return selectedQuestions;
-    }
-    
-    function generateWrongQuestionsSimulado() {
-        console.log(`Gerando simulado de reforço com ${wrongQuestionsHistory.length} questões erradas...`);
-        
-        if (wrongQuestionsHistory.length === 0) {
-            console.error('Nenhuma questão errada no histórico');
-            return [];
-        }
-        
-        let availableWrongQuestions = [...wrongQuestionsHistory];
-        availableWrongQuestions = shuffleArray(availableWrongQuestions);
-        
-        const selectedIndices = availableWrongQuestions;
-        
-        console.log(`Selecionadas ${selectedIndices.length} questões para o simulado de reforço`);
-        
-        const questions = selectedIndices.map(index => {
-            if (index >= 0 && index < masterBank.length) {
-                const originalQuestion = masterBank[index];
-                return shuffleAlternatives({
-                    ...originalQuestion,
-                    originalIndex: index,
-                    isWrongQuestion: true
-                });
-            }
-            return null;
-        }).filter(q => q !== null);
-        
-        return questions;
-    }
-    
-    // ============================================
-    // FUNÇÕES DE HISTÓRICO DE ERROS
-    // ============================================
-    
-    function loadWrongQuestionsHistory() {
-        const saved = localStorage.getItem(WRONG_QUESTIONS_KEY);
-        if (saved) {
-            try {
-                wrongQuestionsHistory = JSON.parse(saved);
-                console.log(`Histórico de questões erradas carregado: ${wrongQuestionsHistory.length} questões`);
-            } catch (e) {
-                console.error('Erro ao carregar histórico de questões erradas:', e);
-                wrongQuestionsHistory = [];
-            }
-        } else {
-            wrongQuestionsHistory = [];
-            console.log('Nenhum histórico de questões erradas encontrado');
-        }
-    }
-    
-    function saveWrongQuestionsHistory() {
-        localStorage.setItem(WRONG_QUESTIONS_KEY, JSON.stringify(wrongQuestionsHistory));
-    }
-    
-    function addWrongQuestionsToHistory() {
-        if (!currentQuestions || currentQuestions.length === 0) return;
-        
-        currentQuestions.forEach((question, index) => {
-            const userAnswer = userAnswers[index];
-            const isCorrect = userAnswer !== null && userAnswer === question.c;
-            
-            if (!isCorrect && question.originalIndex !== undefined) {
-                if (!wrongQuestionsHistory.includes(question.originalIndex)) {
-                    wrongQuestionsHistory.push(question.originalIndex);
-                }
-            }
-        });
-        
-        wrongQuestionsHistory = [...new Set(wrongQuestionsHistory)];
-        saveWrongQuestionsHistory();
-        
-        console.log(`Questões erradas adicionadas ao histórico. Total: ${wrongQuestionsHistory.length}`);
-    }
-    
-    function removeCorrectQuestionsFromHistory() {
-        const initialCount = wrongQuestionsHistory.length;
-        
-        if (!currentQuestions || currentQuestions.length === 0) return;
-        
-        currentQuestions.forEach((question, index) => {
-            const userAnswer = userAnswers[index];
-            const isCorrect = userAnswer !== null && userAnswer === question.c;
-            
-            if (isCorrect && question.originalIndex !== undefined) {
-                const indexInHistory = wrongQuestionsHistory.indexOf(question.originalIndex);
-                if (indexInHistory !== -1) {
-                    wrongQuestionsHistory.splice(indexInHistory, 1);
-                }
-            }
-        });
-        
-        saveWrongQuestionsHistory();
-        
-        console.log(`Questões removidas do histórico de erradas: ${initialCount - wrongQuestionsHistory.length}`);
-    }
-    
-    function hasEnoughWrongQuestionsForSimulado() {
-        return wrongQuestionsHistory.length >= MIN_WRONG_QUESTIONS_FOR_SIMULADO;
-    }
-    
-    function canOfferReforcoSimulado() {
-        const condition1 = hasEnoughWrongQuestionsForSimulado();
-        const condition2 = !currentQuestions[0]?.isWrongQuestion;
-        const condition3 = !hasRecentOffer();
-        
-        return condition1 && condition2 && condition3;
-    }
-    
-    function hasRecentOffer() {
-        const lastOffer = localStorage.getItem(LAST_OFFER_KEY);
-        if (!lastOffer) return false;
-        
-        const now = Date.now();
-        const lastOfferTime = parseInt(lastOffer);
-        const TWO_HOURS_MS = 2 * 60 * 60 * 1000;
-        
-        return (now - lastOfferTime) < TWO_HOURS_MS;
-    }
-    
-    // ============================================
-    // FUNÇÕES DE SESSÃO
-    // ============================================
-    
-    function isNewSession() {
-        const sessionId = sessionStorage.getItem(SESSION_ID_KEY);
-        const simuladoStarted = sessionStorage.getItem(SIMULADO_STARTED_KEY);
-        
-        if (!sessionId || !simuladoStarted) {
-            const newSessionId = 'session_' + Date.now();
-            sessionStorage.setItem(SESSION_ID_KEY, newSessionId);
-            sessionStorage.setItem(SIMULADO_STARTED_KEY, 'true');
-            return true;
-        }
-        return false;
-    }
-    
-    function clearSessionData() {
-        sessionStorage.removeItem(CURRENT_QUESTIONS_KEY);
-        sessionStorage.removeItem(CURRENT_QUESTION_INDEX_KEY);
-        sessionStorage.removeItem(USER_ANSWERS_KEY);
-        sessionStorage.removeItem(TIME_LEFT_KEY);
-        sessionStorage.removeItem(AUTO_NAV_KEY);
-        sessionStorage.removeItem(SIMULADO_STARTED_KEY);
-        sessionStorage.removeItem(CURRENT_SIMULADO_NUMBER_KEY);
-    }
-    
-    function saveCurrentSessionState() {
-        try {
-            sessionStorage.setItem(CURRENT_QUESTIONS_KEY, JSON.stringify(currentQuestions));
-            sessionStorage.setItem(CURRENT_QUESTION_INDEX_KEY, currentQuestionIndex.toString());
-            sessionStorage.setItem(USER_ANSWERS_KEY, JSON.stringify(userAnswers));
-            sessionStorage.setItem(TIME_LEFT_KEY, timeLeft.toString());
-            sessionStorage.setItem(AUTO_NAV_KEY, autoNavEnabled.toString());
-            sessionStorage.setItem(SIMULADO_STARTED_KEY, 'true');
-            sessionStorage.setItem(CURRENT_SIMULADO_NUMBER_KEY, currentSimuladoNumber.toString());
-        } catch (e) {
-            console.error('Erro ao salvar estado da sessão:', e);
-        }
-    }
-    
-    function loadCurrentSessionState() {
-        try {
-            const savedQuestions = sessionStorage.getItem(CURRENT_QUESTIONS_KEY);
-            const savedIndex = sessionStorage.getItem(CURRENT_QUESTION_INDEX_KEY);
-            const savedAnswers = sessionStorage.getItem(USER_ANSWERS_KEY);
-            const savedTime = sessionStorage.getItem(TIME_LEFT_KEY);
-            const savedAutoNav = sessionStorage.getItem(AUTO_NAV_KEY);
-            const savedSimuladoNumber = sessionStorage.getItem(CURRENT_SIMULADO_NUMBER_KEY);
-            
-            if (savedQuestions) currentQuestions = JSON.parse(savedQuestions);
-            if (savedIndex) currentQuestionIndex = parseInt(savedIndex);
-            if (savedAnswers) userAnswers = JSON.parse(savedAnswers);
-            if (savedTime) timeLeft = parseInt(savedTime);
-            if (savedAutoNav) autoNavEnabled = savedAutoNav === 'true';
-            if (savedSimuladoNumber) currentSimuladoNumber = parseInt(savedSimuladoNumber);
-            
-            return {
-                hasQuestions: !!savedQuestions,
-                hasState: !!(savedQuestions && savedIndex !== null)
-            };
-        } catch (e) {
-            console.error('Erro ao carregar estado da sessão:', e);
-            return { hasQuestions: false, hasState: false };
-        }
-    }
-    
-    // ============================================
-    // FUNÇÕES DE DESTAQUE DE QUESTÕES PENDENTES
-    // ============================================
-    
-    function checkAndHighlightPendingQuestions() {
-        if (!currentQuestions || currentQuestions.length === 0) return;
-        
-        // Verifica se o usuário chegou ao final
-        if (currentQuestionIndex === currentQuestions.length - 1) {
-            hasReachedEnd = true;
-        }
-        
-        // Se chegou ao final, verifica questões pendentes e aplica destaque
-        if (hasReachedEnd) {
-            const currentBlock = document.querySelector('.question-block-mini');
-            if (currentBlock) {
-                if (userAnswers[currentQuestionIndex] === null) {
-                    currentBlock.classList.add('pending-highlight');
-                } else {
-                    currentBlock.classList.remove('pending-highlight');
-                }
-            }
-        }
-    }
-    
-    function removeHighlightFromQuestion() {
-        const currentBlock = document.querySelector('.question-block-mini');
-        if (currentBlock) {
-            currentBlock.classList.remove('pending-highlight');
-        }
-    }
-    
-    // ============================================
-    // FUNÇÕES DE ATUALIZAÇÃO DA UI
-    // ============================================
-    
-    function updatePageTitle() {
-        const totalQuestions = masterBank.length;
-        let simuladoText = '';
-        
-        if (currentQuestions && currentQuestions[0]?.isWrongQuestion) {
-            simuladoText = ' (⚡ Reforço)';
-        } else if (totalSimulados > 1) {
-            simuladoText = ` (Simulado ${currentSimuladoNumber}/${totalSimulados})`;
-        }
-        
-        const pageTitle = document.title || "Quiz Simulado";
-        let cleanTitle = pageTitle
-            .replace(/^GMP\s*[-–—]\s*/i, '')
-            .replace(/^Simulado\s*[-–—]\s*/i, '')
-            .replace(/^Quiz\s*[-–—]\s*/i, '')
-            .replace(/\s*[-–—]\s*Simulado$/i, '')
-            .replace(/\s*[-–—]\s*Quiz$/i, '')
-            .replace(/\s*[-–—]\s*Teste$/i, '')
-            .trim();
-        
-        if (!cleanTitle) cleanTitle = pageTitle;
-        if (cleanTitle.length > 40) cleanTitle = cleanTitle.substring(0, 37) + '...';
-        
-        const questionCount = currentQuestions ? currentQuestions.length : 0;
-        document.getElementById('page-title').textContent = 
-            `${cleanTitle}${simuladoText} (${questionCount}/${totalQuestions})`;
-    }
-    
-    function updateCounters() {
-        const answeredCount = getAnsweredCount();
-        const totalQuestions = currentQuestions ? currentQuestions.length : 0;
-        
-        document.getElementById('question-counter').textContent = `${currentQuestionIndex + 1}/${totalQuestions}`;
-        document.getElementById('answered-counter').textContent = `${answeredCount}/${totalQuestions}`;
-        document.getElementById('progress-percent').textContent = `${totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0}%`;
-        
-        updateTimerDisplay();
-    }
-    
-    function updateTimerDisplay() {
-        const timerElement = document.getElementById('timer');
-        timerElement.textContent = formatTime(timeLeft);
-        
-        if (timeLeft <= Math.min(300, Math.floor(TIME_LIMIT * 0.25))) {
-            timerElement.classList.add('timer-warning');
-        } else {
-            timerElement.classList.remove('timer-warning');
-        }
-    }
-    
-    function updateNavButtons() {
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        
-        prevBtn.disabled = currentQuestionIndex === 0;
-        nextBtn.disabled = currentQuestions ? currentQuestionIndex === currentQuestions.length - 1 : true;
-        nextBtn.innerHTML = currentQuestions && currentQuestionIndex === currentQuestions.length - 1 ? 'Última' : 'Próximo →';
-    }
-    
-    function updateFinishButton() {
-        const finishBtn = document.getElementById('finish-btn');
-        const answeredCount = getAnsweredCount();
-        const allAnswered = currentQuestions && answeredCount === currentQuestions.length;
-        
-        finishBtn.disabled = !allAnswered;
-        
-        if (allAnswered) {
-            finishBtn.innerHTML = '🏁 FINALIZAR SIMULADO';
-            finishBtn.classList.add('enabled');
-        } else {
-            const remaining = currentQuestions ? currentQuestions.length - answeredCount : 0;
-            finishBtn.innerHTML = `❌ Faltam ${remaining}`;
-            finishBtn.classList.remove('enabled');
-        }
-    }
-    
-    function updateSimuladoInfo() {
-        const totalQuestions = masterBank.length;
-        
-        const currentQuestionsCount = currentQuestions ? currentQuestions.length : 0;
-        
-        let remaining = 0;
-        if (currentQuestions && currentQuestions[0]?.isWrongQuestion) {
-            const wrongCount = wrongQuestionsHistory.length;
-            const successRate = Math.round(((totalQuestions - wrongCount) / totalQuestions) * 100);
-            
-            document.getElementById('simulado-info').innerHTML = `
-                <div style="color: var(--danger); font-weight: bold; text-align: center;">⚡ SIMULADO DE REFORÇO</div>
-                <div style="text-align: center; font-size: 0.8rem; margin-top:4px;">Questões que você errou anteriormente</div>
-                <div class="simulado-stats">
-                    <span>Questões: ${currentQuestionsCount}</span>
-                    <span>Acertos gerais: ${successRate}%</span>
-                </div>
-            `;
-            document.getElementById('simulado-info').style.display = 'block';
-            return;
-        }
-        
-        const uniqueUsed = [...new Set(usedQuestionsHistory)];
-        const recentUsed = uniqueUsed.length;
-        remaining = Math.max(0, totalQuestions - recentUsed);
-        const percentUsed = totalQuestions > 0 ? Math.round((recentUsed / totalQuestions) * 100) : 0;
-        
-        let simuladoNumberText = '';
-        if (totalSimulados > 1) {
-            const simuladoAtual = Math.min(currentSimuladoNumber, totalSimulados);
-            simuladoNumberText = ` (${simuladoAtual}/${totalSimulados})`;
-        }
-        
-        document.getElementById('simulado-info').innerHTML = `
-            <div style="font-weight:600;">Simulado${simuladoNumberText}: <span id="questions-per-simulado">${currentQuestionsCount}</span> questões</div>
-            <div class="simulado-stats">
-                <span id="remaining-questions">📦 Disponíveis: ${remaining}</span>
-                <span id="recent-used">✅ Usadas: ${recentUsed} (${percentUsed}%)</span>
-            </div>
-            
-            <div class="history-controls">
-                <button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar Histórico</button>
-                <button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button>
-            </div>
-        `;
-        document.getElementById('simulado-info').style.display = 'block';
-    }
-    
-    function updateReforcoButton() {
-        const wrongBtn = document.getElementById('wrong-questions-btn');
-        if (!wrongBtn) return;
-        
-        const hasEnough = hasEnoughWrongQuestionsForSimulado();
-        const isReforcoActive = currentQuestions[0]?.isWrongQuestion;
-        const isResultsVisible = document.getElementById('results').style.display === 'block';
-        
-        if (hasEnough && !isReforcoActive && isResultsVisible) {
-            wrongBtn.style.display = 'block';
-            wrongBtn.innerHTML = `⚡ Simulado de Reforço (${wrongQuestionsHistory.length})`;
-        } else {
-            wrongBtn.style.display = 'none';
-        }
-    }
-    
-    function updateReiniciarBancoButton() {
-        const reiniciarBtn = document.getElementById('reiniciar-banco-btn');
-        if (!reiniciarBtn) return;
-        
-        const isReforco = currentQuestions[0]?.isWrongQuestion;
-        const isResultsVisible = document.getElementById('results').style.display === 'block';
-        const percent = parseInt(document.getElementById('final-percent')?.textContent?.replace('%', '') || 0);
-        
-        if (isReforco && isResultsVisible && percent < MIN_PERCENT_FOR_SUCCESS) {
-            reiniciarBtn.style.display = 'block';
-            reiniciarBtn.innerHTML = `🔄 Reiniciar Banco (${masterBank.length} questões)`;
-        } else {
-            reiniciarBtn.style.display = 'none';
-        }
-    }
-    
-    function updateContinuarBancoButton() {
-        const continuarBtn = document.getElementById('continuar-banco-btn');
-        if (!continuarBtn) return;
-        
-        const totalQuestions = masterBank.length;
-        const uniqueUsed = [...new Set(usedQuestionsHistory)];
-        const remainingQuestions = Math.max(0, totalQuestions - uniqueUsed.length);
-        
-        const isResultsVisible = document.getElementById('results').style.display === 'block';
-        const isReforco = currentQuestions[0]?.isWrongQuestion;
-        const percent = parseInt(document.getElementById('final-percent')?.textContent?.replace('%', '') || 0);
-        
-        if (isResultsVisible && !isReforco && remainingQuestions > 0) {
-            continuarBtn.style.display = 'block';
-            continuarBtn.innerHTML = `📚 Continuar com Banco (${remainingQuestions} restantes)`;
-        } else if (isResultsVisible && isReforco && percent >= MIN_PERCENT_FOR_SUCCESS) {
-            continuarBtn.style.display = 'block';
-            continuarBtn.innerHTML = `📚 Voltar ao Banco (${remainingQuestions} restantes)`;
-        } else {
-            continuarBtn.style.display = 'none';
-        }
-    }
-    
-    function updateVoltarInicioButton() {
-        const voltarBtn = document.getElementById('voltar-inicio-btn');
-        if (!voltarBtn) return;
-        
-        const isReforco = currentQuestions[0]?.isWrongQuestion;
-        const isResultsVisible = document.getElementById('results').style.display === 'block';
-        const percent = parseInt(document.getElementById('final-percent')?.textContent?.replace('%', '') || 0);
-        
-        if (isReforco && isResultsVisible && percent >= MIN_PERCENT_FOR_SUCCESS) {
-            voltarBtn.style.display = 'block';
-            voltarBtn.innerHTML = `🏁 Voltar ao Início (Limpar Tudo)`;
-        } else {
-            voltarBtn.style.display = 'none';
-        }
-    }
-    
-    function updateNovoSimuladoReforcoButton() {
-        const novoSimuladoBtn = document.getElementById('novo-simulado-reforco-btn');
-        if (!novoSimuladoBtn) return;
-        
-        const isReforco = currentQuestions[0]?.isWrongQuestion;
-        const isResultsVisible = document.getElementById('results').style.display === 'block';
-        const totalQuestions = masterBank.length;
-        const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
-        
-        if (isReforco && isResultsVisible) {
-            novoSimuladoBtn.style.display = 'block';
-            
-            if (remainingQuestions === 0) {
-                novoSimuladoBtn.innerHTML = `🎯 Novo Simulado (Reiniciar Banco)`;
-            } else {
-                novoSimuladoBtn.innerHTML = `🎯 Novo Simulado (${remainingQuestions} restantes)`;
-            }
-        } else {
-            novoSimuladoBtn.style.display = 'none';
-        }
-    }
-    
-    // ============================================
-    // FUNÇÃO PARA IR PARA PRÓXIMA QUESTÃO PENDENTE
-    // ============================================
-    
-    function goToNextPendingQuestion() {
-        if (!currentQuestions || currentQuestions.length === 0) return;
-        
-        // Encontra todas as questões não respondidas
-        const pendingIndices = [];
-        for (let i = 0; i < currentQuestions.length; i++) {
-            if (userAnswers[i] === null) {
-                pendingIndices.push(i);
-            }
-        }
-        
-        console.log('Pendentes:', pendingIndices);
-        console.log('Atual:', currentQuestionIndex);
-        
-        if (pendingIndices.length === 0) {
-            alert('🎉 Todas as questões foram respondidas!');
-            removePendingShortcut();
-            return;
-        }
-        
-        // CASO 1: Está na última questão
-        if (currentQuestionIndex === currentQuestions.length - 1) {
-            // Vai para a primeira pendente
-            currentQuestionIndex = pendingIndices[0];
-        } 
-        // CASO 2: Não está na última
-        else {
-            // Procura a próxima pendente depois da atual
-            let nextFound = -1;
-            for (let i = 0; i < pendingIndices.length; i++) {
-                if (pendingIndices[i] > currentQuestionIndex) {
-                    nextFound = pendingIndices[i];
-                    break;
-                }
-            }
-            
-            if (nextFound !== -1) {
-                currentQuestionIndex = nextFound;
-            } else {
-                // Se não achou depois, volta para a primeira
-                currentQuestionIndex = pendingIndices[0];
-            }
-        }
-        
-        console.log('Indo para:', currentQuestionIndex);
-        
-        // Atualiza a interface
-        saveCurrentSessionState();
-        renderCurrentQuestion();
-        updateCounters();
-        updateNavButtons();
-        
-        // Reavalia se deve mostrar o botão
-        setTimeout(() => {
-            checkAndShowPendingButton();
-        }, 100);
-    }
-    
-    function removePendingShortcut() {
-        const existing = document.getElementById('pending-shortcut');
-        if (existing) {
-            existing.remove();
-        }
-    }
-    
-    // ============================================
-    // FUNÇÃO CORRIGIDA - BOTÃO SÓ APARECE DEPOIS DE RESPONDER A ÚLTIMA
-    // ============================================
-    
-    function checkAndShowPendingButton() {
-        if (!currentQuestions || currentQuestions.length === 0) return;
-        
-        const pendingCount = userAnswers.filter(a => a === null).length;
-        const isLastQuestion = currentQuestionIndex === currentQuestions.length - 1;
-        const hasAnsweredLast = userAnswers[currentQuestions.length - 1] !== null; // VERIFICA SE A ÚLTIMA FOI RESPONDIDA
-        const resultsVisible = document.getElementById('results').style.display === 'block';
-        
-        console.log('Verificando botão:', { 
-            isLastQuestion, 
-            hasAnsweredLast,
-            pendingCount, 
-            resultsVisible,
-            currentIndex: currentQuestionIndex,
-            totalQuestions: currentQuestions.length,
-            lastQuestionAnswer: userAnswers[currentQuestions.length - 1]
-        });
-        
-        // Remove qualquer botão existente primeiro
-        removePendingShortcut();
-        
-        // REGRA CORRETA: 
-        // 1. Está na última questão
-        // 2. A última questão JÁ FOI RESPONDIDA
-        // 3. Ainda existem outras questões pendentes
-        // 4. Não está na tela de resultados
-        if (isLastQuestion && hasAnsweredLast && pendingCount > 0 && !resultsVisible) {
-            console.log('✅ MOSTRANDO BOTÃO!');
-            
-            const shortcut = document.createElement('div');
-            shortcut.id = 'pending-shortcut';
-            shortcut.className = 'pending-shortcut';
-            shortcut.onclick = goToNextPendingQuestion;
-            
-            shortcut.innerHTML = `
-                <span class="pending-text">
-                    <span>⚠️</span>
-                    <span>${pendingCount} pendente${pendingCount > 1 ? 's' : ''}</span>
-                </span>
-                <span class="pending-count">IR AGORA</span>
-                <span class="arrow-icon">→</span>
-            `;
-            
-            document.body.appendChild(shortcut);
-        } else {
-            console.log('❌ NÃO MOSTRANDO BOTÃO');
-        }
-    }
-    
-    // ============================================
-    // FUNÇÕES DE NAVEGAÇÃO
-    // ============================================
-    
-    function startTimer() {
-        clearInterval(timerId);
-        
-        timerId = setInterval(() => {
-            timeLeft--;
-            
-            if (timeLeft % 5 === 0) {
-                saveCurrentSessionState();
-            }
-            
-            updateTimerDisplay();
-            
-            if (timeLeft <= 0) {
-                clearInterval(timerId);
-                if (getAnsweredCount() === currentQuestions.length) {
-                    finalizeQuiz();
-                } else {
-                    if (confirm('⏰ Tempo esgotado! Deseja finalizar?')) {
-                        finalizeQuiz();
-                    }
-                }
-            }
-        }, 1000);
-    }
-    
-    function nextQuestion() {
-        if (currentQuestions && currentQuestionIndex < currentQuestions.length - 1) {
-            currentQuestionIndex++;
-            saveCurrentSessionState();
-            renderCurrentQuestion();
-            updateCounters();
-            updateNavButtons();
-        }
-    }
-    
-    function prevQuestion() {
-        if (currentQuestionIndex > 0) {
-            currentQuestionIndex--;
-            saveCurrentSessionState();
-            renderCurrentQuestion();
-            updateCounters();
-            updateNavButtons();
-        }
-    }
-    
-    function selectAnswer(answerIndex) {
-        userAnswers[currentQuestionIndex] = answerIndex;
-        saveCurrentSessionState();
-        
-        // Remove destaque desta questão
-        removeHighlightFromQuestion();
-        
-        updateCounters();
-        updateFinishButton();
-        
-        if (autoNavEnabled && currentQuestionIndex < currentQuestions.length - 1) {
-            setTimeout(() => {
-                nextQuestion();
-            }, 250);
-        }
-        
-        // Verifica destaques e botão após responder
-        checkAndHighlightPendingQuestions();
-        checkAndShowPendingButton();
-    }
-    
-    function toggleAutoNav() {
-        autoNavEnabled = !autoNavEnabled;
-        document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
-        saveCurrentSessionState();
-    }
-    
-    // ============================================
-    // FUNÇÃO PRINCIPAL DE RENDERIZAÇÃO
-    // ============================================
-    
-    function renderCurrentQuestion() {
-        const container = document.getElementById('quiz-content');
-        
-        if (!currentQuestions || currentQuestions.length === 0) {
-            container.innerHTML = '<div class="question-block-mini" style="text-align:center;">⚠️ Nenhuma questão carregada.</div>';
-            return;
-        }
-        
-        const question = currentQuestions[currentQuestionIndex];
-        
-        // Verifica se esta questão deve estar destacada
-        const shouldHighlight = hasReachedEnd && userAnswers[currentQuestionIndex] === null;
-        
-        container.innerHTML = `
-            <div class="question-block-mini ${shouldHighlight ? 'pending-highlight' : ''}">
-                <div class="question-text-mini">
-                    ${currentQuestionIndex + 1}. ${question.q}
-                </div>
-                <div class="options-mini">
-                    ${question.a.map((opt, i) => `
-                        <label class="option-mini">
-                            <input type="radio" name="currentQuestion" value="${i}" 
-                                   ${userAnswers[currentQuestionIndex] === i ? 'checked' : ''}
-                                   onchange="selectAnswer(${i})">
-                            ${opt}
-                        </label>
-                    `).join('')}
-                </div>
-                <button class="report-btn" onclick="openReportModal(${currentQuestionIndex})">
-                    <span>⚠️</span> Reportar Problema
-                </button>
-            </div>
-        `;
-        
-        // Atualiza a variável hasReachedEnd se estiver na última questão
-        if (currentQuestionIndex === currentQuestions.length - 1) {
-            hasReachedEnd = true;
-        }
-        
-        // Verifica se deve mostrar o botão de pendentes
-        checkAndShowPendingButton();
-    }
-    
-    // ============================================
-    // FUNÇÃO DE FINALIZAÇÃO
-    // ============================================
-    
-    function finalizeQuiz() {
-        clearInterval(timerId);
-        
-        const answeredCount = getAnsweredCount();
-        if (answeredCount !== currentQuestions.length && !confirm(`Respondidas: ${answeredCount}/${currentQuestions.length}. Finalizar mesmo assim?`)) {
-            startTimer();
-            return;
-        }
-        
-        // Remove botão pendente
-        removePendingShortcut();
-        
-        let finalScore = 0;
-        userAnswers.forEach((answer, index) => {
-            if (answer !== null && answer === currentQuestions[index].c) {
-                finalScore++;
-            }
-        });
-        
-        const percent = currentQuestions.length > 0 ? Math.round((finalScore / currentQuestions.length) * 100) : 0;
-        const feedback = document.getElementById('feedback-msg');
-        
-        if (percent >= 70) {
-            feedback.textContent = "🎉 Excelente!";
-            feedback.style.color = "var(--success)";
-        } else if (percent >= 50) {
-            feedback.textContent = "👍 Quase lá!";
-            feedback.style.color = "var(--accent)";
-        } else {
-            feedback.textContent = "💪 Continue praticando!";
-            feedback.style.color = "var(--danger)";
-        }
-        
-        if (currentQuestions[0]?.isWrongQuestion) {
-            removeCorrectQuestionsFromHistory();
-        } else {
-            addWrongQuestionsToHistory();
-        }
-        
-        if (currentSimuladoIndices.length > 0 && !currentQuestions[0]?.isWrongQuestion) {
-            usedQuestionsHistory.push(...currentSimuladoIndices);
-            usedQuestionsHistory = [...new Set(usedQuestionsHistory)];
-            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-        }
-        
-        clearSessionData();
-        
-        let quizHTML = '';
-        currentQuestions.forEach((question, index) => {
-            const userAnswer = userAnswers[index];
-            const isCorrect = userAnswer === question.c;
-            
-            quizHTML += `
-                <div class="question-block-mini" style="position:relative;">
-                    <button class="report-gabarito-btn" onclick="openReportModal(${index})" title="Reportar problema">
-                        ⚠️ Reportar
-                    </button>
-                    
-                    <div class="question-text-mini">
-                        ${index + 1}. ${question.q}
-                    </div>
-                    <div class="options-mini">
-                        ${question.a.map((opt, i) => {
-                            let classes = 'option-mini';
-                            if (i === question.c) classes += ' correct-answer';
-                            else if (userAnswer === i && !isCorrect) classes += ' wrong-answer';
-                            
-                            return `<label class="${classes}">
-                                <input type="radio" disabled ${userAnswer === i ? 'checked' : ''}>
-                                ${opt}
-                                ${userAnswer === i ? '<span style="margin-left: auto; font-size:0.7rem; color:var(--text-muted);">(sua resposta)</span>' : ''}
-                                ${i === question.c && userAnswer !== i ? '<span style="margin-left: auto; font-size:0.7rem; color:var(--success);">(correta)</span>' : ''}
-                            </label>`;
-                        }).join('')}
-                    </div>
-                </div>
-            `;
-        });
-        
-        document.getElementById('quiz-content').innerHTML = quizHTML;
-        document.getElementById('final-score').textContent = `${finalScore}/${currentQuestions.length}`;
-        document.getElementById('final-percent').textContent = `${percent}% de acertos`;
-        
-        const motivationElement = document.getElementById('motivation-message');
-        let motivationHTML = '';
-        
-        if (currentQuestions[0]?.isWrongQuestion) {
-            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
-                motivationHTML = `✅ <strong>PARABÉNS!</strong> Você superou suas dificuldades!`;
-                motivationElement.className = 'motivation-message motivation-success';
-            } else {
-                motivationHTML = `⚡ <strong>PRECISA MELHORAR</strong><br>`;
-                motivationHTML += `Você acertou ${finalScore} de ${currentQuestions.length}.<br>`;
-                motivationHTML += `Faltam ${MIN_PERCENT_FOR_SUCCESS - percent}% para a meta de ${MIN_PERCENT_FOR_SUCCESS}%.`;
-                motivationElement.className = 'motivation-message motivation-warning';
-            }
-        } else {
-            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
-                motivationHTML = `🎯 <strong>ÓTIMO DESEMPENHO!</strong> Continue assim!`;
-                motivationElement.className = 'motivation-message motivation-success';
-            } else {
-                motivationHTML = `📚 <strong>CONTINUE ESTUDANDO!</strong> Você vai conseguir!`;
-                motivationElement.className = 'motivation-message motivation-warning';
-            }
-        }
-        
-        motivationElement.innerHTML = motivationHTML;
-        
-        const totalQuestions = masterBank.length;
-        const uniqueUsed = [...new Set(usedQuestionsHistory)];
-        const remainingQuestions = Math.max(0, totalQuestions - uniqueUsed.length);
-        const wrongCount = wrongQuestionsHistory.length;
-        
-        let summaryText = '';
-        let showNewSimuladoBtn = true;
-        let showReiniciarBancoBtn = false;
-        let showNovoSimuladoReforcoBtn = false;
-        
-        if (currentQuestions[0]?.isWrongQuestion) {
-            summaryText = `⚡ <strong>SIMULADO DE REFORÇO FINALIZADO</strong><br>`;
-            summaryText += `Você revisou ${currentQuestions.length} questões que errou anteriormente.<br>`;
-            summaryText += `Questões ainda erradas: <strong>${wrongCount}</strong>`;
-            showNewSimuladoBtn = false;
-            showNovoSimuladoReforcoBtn = true;
-            
-            if (percent < MIN_PERCENT_FOR_SUCCESS) {
-                showReiniciarBancoBtn = true;
-            }
-        } else if (remainingQuestions === 0) {
-            summaryText = `🎯 <strong>COMPLETOU TODAS AS ${totalQuestions} QUESTÕES!</strong><br>`;
-            summaryText += `Questões erradas: <strong>${wrongCount}</strong>`;
-            
-            if (wrongCount < MIN_WRONG_QUESTIONS_FOR_SIMULADO) {
-                showNewSimuladoBtn = false;
-            }
-        } else {
-            summaryText = `📊 Restam: <strong>${remainingQuestions}</strong> | Usadas: <strong>${uniqueUsed.length}</strong><br>`;
-            summaryText += `❌ Erradas: <strong>${wrongCount}</strong>`;
-        }
-        
-        document.getElementById('simulado-summary').innerHTML = summaryText;
-        
-        document.querySelector('.nav-buttons').style.display = 'none';
-        document.getElementById('results').style.display = 'block';
-        document.getElementById('finish-btn').style.display = 'none';
-        document.getElementById('restart-btn').style.display = 'block';
-        
-        document.getElementById('wrong-questions-btn').style.display = 'none';
-        document.getElementById('reiniciar-banco-btn').style.display = showReiniciarBancoBtn ? 'block' : 'none';
-        document.getElementById('new-simulado-btn').style.display = showNewSimuladoBtn ? 'block' : 'none';
-        document.getElementById('novo-simulado-reforco-btn').style.display = showNovoSimuladoReforcoBtn ? 'block' : 'none';
-        
-        updateSimuladoInfo();
-        updateReforcoButton();
-        updateReiniciarBancoButton();
-        updateContinuarBancoButton();
-        updateVoltarInicioButton();
-        updateNovoSimuladoReforcoButton();
-        
-        setTimeout(() => {
-            if (canOfferReforcoSimulado()) {
-                console.log('Oferecendo simulado de reforço...');
-            }
-        }, 500);
-    }
-    
-    // ============================================
-    // FUNÇÕES DE AÇÃO DO USUÁRIO
-    // ============================================
-    
-    function resetQuiz() {
-        if (confirm('🔄 Reiniciar este simulado?')) {
-            userAnswers = new Array(currentQuestions.length).fill(null);
-            timeLeft = TIME_LIMIT;
-            currentQuestionIndex = 0;
-            hasReachedEnd = false;
-            
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('finish-btn').style.display = 'block';
-            document.getElementById('restart-btn').style.display = 'none';
-            document.querySelector('.nav-buttons').style.display = 'grid';
-            
-            document.getElementById('quiz-content').innerHTML = '';
-            
-            // Remove botão pendente
-            removePendingShortcut();
-            
-            saveCurrentSessionState();
-            
-            startTimer();
-            renderCurrentQuestion();
-            updateCounters();
-            updateNavButtons();
-            updateFinishButton();
-            updateContinuarBancoButton();
-            updateVoltarInicioButton();
-            updateNovoSimuladoReforcoButton();
-        }
-    }
-    
-    function startNewQuiz() {
-        document.getElementById('results').style.display = 'none';
-        document.getElementById('finish-btn').style.display = 'block';
-        document.getElementById('restart-btn').style.display = 'none';
-        document.querySelector('.nav-buttons').style.display = 'grid';
-        
-        document.getElementById('quiz-content').innerHTML = '';
-        
-        userAnswers = new Array(currentQuestions.length).fill(null);
-        timeLeft = TIME_LIMIT;
-        currentQuestionIndex = 0;
-        hasReachedEnd = false;
-        
-        // Remove botão pendente
-        removePendingShortcut();
-        
-        saveCurrentSessionState();
-        
-        startTimer();
-        renderCurrentQuestion();
-        updateCounters();
-        updateNavButtons();
-        updateFinishButton();
-        updateContinuarBancoButton();
-        updateVoltarInicioButton();
-        updateNovoSimuladoReforcoButton();
-    }
-    
-    function showHistoryInfo() {
-        const totalQuestions = masterBank.length;
-        const uniqueUsed = [...new Set(usedQuestionsHistory)];
-        const usedCount = uniqueUsed.length;
-        const availableCount = Math.max(0, totalQuestions - usedCount);
-        const percentUsed = totalQuestions > 0 ? Math.round((usedCount / totalQuestions) * 100) : 0;
-        const wrongCount = wrongQuestionsHistory.length;
-        
-        let message = `📊 ESTATÍSTICAS:\n\n`;
-        message += `• Total: ${totalQuestions} questões\n`;
-        message += `• Usadas: ${usedCount} (${percentUsed}%)\n`;
-        message += `• Disponíveis: ${availableCount}\n`;
-        message += `• Erradas: ${wrongCount}\n`;
-        
-        if (currentQuestions && currentQuestions[0]?.isWrongQuestion) {
-            message += `\n⚡ SIMULADO DE REFORÇO ATIVO\n`;
-        }
-        
-        if (wrongCount >= MIN_WRONG_QUESTIONS_FOR_SIMULADO) {
-            message += `\n⚡ SIMULADO DE REFORÇO DISPONÍVEL\n`;
-            message += `• ${wrongCount} questões para revisar\n`;
-        }
-        
-        alert(message);
-    }
-    
-    function clearHistory() {
-        if (confirm(`🗑️ Limpar histórico completo?\n\nIsso reiniciará todo o progresso.`)) {
-            usedQuestionsHistory = [];
-            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-            
-            wrongQuestionsHistory = [];
-            saveWrongQuestionsHistory();
-            
-            clearSessionData();
-            
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('finish-btn').style.display = 'block';
-            document.getElementById('restart-btn').style.display = 'none';
-            document.querySelector('.nav-buttons').style.display = 'grid';
-            
-            currentQuestions = selectRandomQuestions(true);
-            
-            if (currentQuestions.length === 0) {
-                alert("Não foi possível gerar o simulado.");
-                return;
-            }
-            
-            userAnswers = new Array(currentQuestions.length).fill(null);
-            currentQuestionIndex = 0;
-            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
-            timeLeft = TIME_LIMIT;
-            autoNavEnabled = true;
-            currentSimuladoNumber = 1;
-            hasReachedEnd = false;
-            
-            // Remove botão pendente
-            removePendingShortcut();
-            
-            saveCurrentSessionState();
-            
-            updatePageTitle();
-            document.getElementById('timer').textContent = formatTime(timeLeft);
-            document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
-            updateSimuladoInfo();
-            renderCurrentQuestion();
-            updateCounters();
-            updateNavButtons();
-            updateFinishButton();
-            
-            startTimer();
-            
-            alert('✅ Histórico limpo! Novo simulado gerado.');
-        }
-    }
-    
-    function generateNewSimulado() {
-        const totalQuestions = masterBank.length;
-        const totalAvailable = Math.max(0, totalQuestions - usedQuestionsHistory.length);
-        
-        let message;
-        if (totalAvailable === 0) {
-            message = `📦 Todas as questões já foram usadas!\n\nDeseja reiniciar o histórico?`;
-        } else if (totalAvailable < QUESTIONS_PER_SIMULADO) {
-            message = `📦 Só restam ${totalAvailable} questões.\n\nDeseja fazer simulado com elas?`;
-        } else {
-            message = `🎲 Gerar novo simulado com ${Math.min(QUESTIONS_PER_SIMULADO, totalAvailable)} questões?`;
-        }
-        
-        if (confirm(message)) {
-            if (totalAvailable === 0) {
-                usedQuestionsHistory = [];
-                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-                alert('Histórico reiniciado!');
-            }
-            
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('finish-btn').style.display = 'block';
-            document.getElementById('restart-btn').style.display = 'none';
-            document.querySelector('.nav-buttons').style.display = 'grid';
-            
-            currentQuestions = selectRandomQuestions(false);
-            
-            if (currentQuestions.length === 0) {
-                alert("Erro ao gerar simulado.");
-                return;
-            }
-            
-            const newSessionId = 'session_' + Date.now();
-            sessionStorage.setItem(SESSION_ID_KEY, newSessionId);
-            
-            userAnswers = new Array(currentQuestions.length).fill(null);
-            currentQuestionIndex = 0;
-            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
-            timeLeft = TIME_LIMIT;
-            autoNavEnabled = true;
-            hasReachedEnd = false;
-            
-            // Remove botão pendente
-            removePendingShortcut();
-            
-            saveCurrentSessionState();
-            
-            updatePageTitle();
-            document.getElementById('timer').textContent = formatTime(timeLeft);
-            document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
-            
-            startTimer();
-            renderCurrentQuestion();
-            updateCounters();
-            updateNavButtons();
-            updateFinishButton();
-            updateSimuladoInfo();
-        }
-    }
-    
-    function startWrongQuestionsSimulado() {
-        console.log('Iniciando simulado de reforço...');
-        
-        currentQuestions = generateWrongQuestionsSimulado();
-        
-        if (currentQuestions.length === 0) {
-            alert('❌ Não há questões erradas para fazer o simulado de reforço.');
-            updateReforcoButton();
-            return;
-        }
-        
-        currentSimuladoNumber = totalSimulados + 1;
-        
-        userAnswers = new Array(currentQuestions.length).fill(null);
-        currentQuestionIndex = 0;
-        TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
-        timeLeft = TIME_LIMIT;
-        autoNavEnabled = true;
-        hasReachedEnd = false;
-        
-        // Remove botão pendente
-        removePendingShortcut();
-        
-        saveCurrentSessionState();
-        
-        updatePageTitle();
-        document.getElementById('timer').textContent = formatTime(timeLeft);
-        document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
-        
-        document.getElementById('results').style.display = 'none';
-        document.getElementById('finish-btn').style.display = 'block';
-        document.getElementById('restart-btn').style.display = 'none';
-        document.querySelector('.nav-buttons').style.display = 'grid';
-        
-        const wrongCount = wrongQuestionsHistory.length;
-        const totalQuestions = masterBank.length;
-        const successRate = Math.round(((totalQuestions - wrongCount) / totalQuestions) * 100);
-        
-        document.getElementById('simulado-info').innerHTML = `
-            <div style="color: var(--danger); font-weight: bold; text-align: center;">⚡ SIMULADO DE REFORÇO</div>
-            <div style="text-align: center; font-size: 0.8rem; margin-top:4px;">Questões que você errou anteriormente</div>
-            <div class="simulado-stats">
-                <span>Questões: ${currentQuestions.length}</span>
-                <span>Acertos anteriores: ${successRate}%</span>
-            </div>
-        `;
-        document.getElementById('simulado-info').style.display = 'block';
-        
-        startTimer();
-        renderCurrentQuestion();
-        updateCounters();
-        updateNavButtons();
-        updateFinishButton();
-        
-        updateReforcoButton();
-        updateReiniciarBancoButton();
-        updateContinuarBancoButton();
-        updateVoltarInicioButton();
-        updateNovoSimuladoReforcoButton();
-        
-        alert(`⚡ SIMULADO DE REFORÇO INICIADO!\n\n${currentQuestions.length} questões que você errou anteriormente.\nBoa sorte!`);
-    }
-    
-    function continuarComBanco() {
-        const totalQuestions = masterBank.length;
-        const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
-        
-        let message = `📚 CONTINUAR COM BANCO\n\n`;
-        
-        if (remainingQuestions === 0) {
-            message += `Você já completou todas as ${totalQuestions} questões!\n`;
-            message += `Deseja reiniciar o histórico e começar um novo simulado?`;
-            
-            if (confirm(message)) {
-                usedQuestionsHistory = [];
-                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-                startNewSimuladoFromResults();
-            }
-        } else {
-            message += `Restam ${remainingQuestions} questões no banco.\n`;
-            message += `Deseja continuar com as próximas questões?`;
-            
-            if (confirm(message)) {
-                startNewSimuladoFromResults();
-            }
-        }
-    }
-    
-    function startNewSimuladoFromResults() {
-        document.getElementById('results').style.display = 'none';
-        document.getElementById('finish-btn').style.display = 'block';
-        document.getElementById('restart-btn').style.display = 'none';
-        document.querySelector('.nav-buttons').style.display = 'grid';
-        
-        currentQuestions = selectRandomQuestions(false);
-        
-        if (currentQuestions.length === 0) {
-            alert("Não foi possível gerar novo simulado.");
-            return;
-        }
-        
-        const newSessionId = 'session_' + Date.now();
-        sessionStorage.setItem(SESSION_ID_KEY, newSessionId);
-        
-        userAnswers = new Array(currentQuestions.length).fill(null);
-        currentQuestionIndex = 0;
-        TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
-        timeLeft = TIME_LIMIT;
-        autoNavEnabled = true;
-        hasReachedEnd = false;
-        
-        // Remove botão pendente
-        removePendingShortcut();
-        
-        saveCurrentSessionState();
-        
-        updatePageTitle();
-        document.getElementById('timer').textContent = formatTime(timeLeft);
-        document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
-        
-        startTimer();
-        renderCurrentQuestion();
-        updateCounters();
-        updateNavButtons();
-        updateFinishButton();
-        updateSimuladoInfo();
-        
-        const totalQuestions = masterBank.length;
-        const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
-        alert(`✅ NOVO SIMULADO INICIADO!\n\n${currentQuestions.length} questões selecionadas.`);
-    }
-    
-    function novoSimuladoAposReforco() {
-        const totalQuestions = masterBank.length;
-        const remainingQuestions = Math.max(0, totalQuestions - usedQuestionsHistory.length);
-        
-        if (remainingQuestions === 0) {
-            if (confirm(`📦 Você já completou todas as ${totalQuestions} questões!\n\nDeseja reiniciar o histórico e começar um novo simulado?`)) {
-                usedQuestionsHistory = [];
-                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-                startNewSimuladoFromResults();
-            }
-        } else {
-            if (confirm(`📦 Deseja continuar com as próximas questões do banco?\n\nRestam: ${remainingQuestions} questões`)) {
-                startNewSimuladoFromResults();
-            }
-        }
-    }
-    
-    function reiniciarBancoCompleto() {
-        const totalQuestions = masterBank.length;
-        const wrongCount = wrongQuestionsHistory.length;
-        
-        let message = `🔄 REINICIAR BANCO COMPLETO\n\n`;
-        message += `Esta ação vai limpar TODO o progresso.\n\n`;
-        message += `Deseja reiniciar completamente?`;
-        
-        if (confirm(message)) {
-            usedQuestionsHistory = [];
-            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-            
-            wrongQuestionsHistory = [];
-            saveWrongQuestionsHistory();
-            
-            localStorage.removeItem(LAST_OFFER_KEY);
-            
-            clearSessionData();
-            
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('finish-btn').style.display = 'block';
-            document.getElementById('restart-btn').style.display = 'none';
-            document.querySelector('.nav-buttons').style.display = 'grid';
-            
-            currentQuestions = selectRandomQuestions(true);
-            
-            if (currentQuestions.length === 0) {
-                alert("Erro ao gerar novo simulado.");
-                return;
-            }
-            
-            userAnswers = new Array(currentQuestions.length).fill(null);
-            currentQuestionIndex = 0;
-            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
-            timeLeft = TIME_LIMIT;
-            autoNavEnabled = true;
-            currentSimuladoNumber = 1;
-            hasReachedEnd = false;
-            
-            // Remove botão pendente
-            removePendingShortcut();
-            
-            saveCurrentSessionState();
-            
-            updatePageTitle();
-            document.getElementById('timer').textContent = formatTime(timeLeft);
-            document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
-            
-            startTimer();
-            renderCurrentQuestion();
-            updateCounters();
-            updateNavButtons();
-            updateFinishButton();
-            updateSimuladoInfo();
-            
-            alert(`✅ BANCO REINICIADO!\n\n${totalQuestions} questões disponíveis.`);
-        }
-    }
-    
-    function voltarAoInicio() {
-        const totalQuestions = masterBank.length;
-        
-        let message = `🏁 VOLTAR AO INÍCIO\n\n`;
-        message += `Esta ação vai reiniciar completamente o sistema.\n\n`;
-        message += `Tem certeza?`;
-        
-        if (confirm(message)) {
-            usedQuestionsHistory = [];
-            localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
-            
-            wrongQuestionsHistory = [];
-            saveWrongQuestionsHistory();
-            
-            localStorage.removeItem(LAST_OFFER_KEY);
-            
-            clearSessionData();
-            
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('finish-btn').style.display = 'block';
-            document.getElementById('restart-btn').style.display = 'none';
-            document.querySelector('.nav-buttons').style.display = 'grid';
-            
-            currentQuestions = selectRandomQuestions(true);
-            
-            if (currentQuestions.length === 0) {
-                alert("Erro ao gerar novo simulado.");
-                return;
-            }
-            
-            userAnswers = new Array(currentQuestions.length).fill(null);
-            currentQuestionIndex = 0;
-            TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
-            timeLeft = TIME_LIMIT;
-            autoNavEnabled = true;
-            currentSimuladoNumber = 1;
-            hasReachedEnd = false;
-            
-            // Remove botão pendente
-            removePendingShortcut();
-            
-            saveCurrentSessionState();
-            
-            updatePageTitle();
-            document.getElementById('timer').textContent = formatTime(timeLeft);
-            document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
-            
-            startTimer();
-            renderCurrentQuestion();
-            updateCounters();
-            updateNavButtons();
-            updateFinishButton();
-            updateSimuladoInfo();
-            
-            alert(`✅ SISTEMA REINICIADO!\n\n${totalQuestions} questões disponíveis.`);
+    function loadDarkModePreference() {
+        const saved = localStorage.getItem(DARK_MODE_KEY);
+        if (saved === 'true') {
+            document.body.classList.add('dark-mode');
+            const btn = document.querySelector('.dark-mode-btn');
+            if (btn) btn.innerHTML = '☀️ Light';
         }
     }
     
     // ============================================
     // SISTEMA DE REPORTE
     // ============================================
-    
-    function initReportSystem() {
-        const savedReports = localStorage.getItem(REPORTS_KEY);
-        if (savedReports) {
-            reportsHistory = JSON.parse(savedReports);
-        } else {
-            reportsHistory = [];
-        }
-        
-        document.getElementById('cancelReport').addEventListener('click', closeReportModal);
-        document.getElementById('submitReport').addEventListener('click', submitReport);
-        
-        document.getElementById('reportModal').addEventListener('click', function(e) {
-            if (e.target.id === 'reportModal') {
-                closeReportModal();
-            }
-        });
-        
-        const reportDetails = document.getElementById('reportDetails');
-        const charCount = document.getElementById('charCount');
-        
-        if (reportDetails && charCount) {
-            reportDetails.addEventListener('input', function() {
-                charCount.textContent = this.value.length;
-                if (this.value.length > 1000) {
-                    this.value = this.value.substring(0, 1000);
-                    charCount.textContent = 1000;
-                }
-            });
-        }
-        
-        const inputs = document.querySelectorAll('.form-input');
-        inputs.forEach(input => {
-            input.addEventListener('input', function() {
-                if (this.classList.contains('error')) {
-                    this.classList.remove('error');
-                    hideError();
-                }
-            });
-        });
-    }
+    const REPORT_TYPES = {
+        error: "❌ Questão com erro",
+        wrong_answer: "⚠️ Resposta incorreta",
+        confusing: "🤔 Enunciado confuso",
+        alternative: "🔤 Alternativas erradas",
+        other: "📝 Outro problema"
+    };
     
     function openReportModal(questionIndex) {
         currentReportQuestionIndex = questionIndex;
-        
-        if (!currentQuestions || currentQuestions.length === 0) {
-            alert("Não há questões carregadas.");
-            return;
-        }
-        
+        if (!currentQuestions || currentQuestions.length === 0) { alert("Não há questões carregadas."); return; }
         const question = currentQuestions[questionIndex];
-        
         document.getElementById('reportQuestionNumber').textContent = questionIndex + 1;
-        
-        let questionText = question.q;
-        if (questionText.length > 150) {
-            questionText = questionText.substring(0, 147) + '...';
-        }
+        let questionText = question.q.length > 150 ? question.q.substring(0, 147) + '...' : question.q;
         document.getElementById('reportQuestionText').textContent = questionText;
-        
-        document.querySelectorAll('input[name="reportType"]').forEach(radio => {
-            radio.checked = false;
-        });
+        document.querySelectorAll('input[name="reportType"]').forEach(radio => radio.checked = false);
         document.getElementById('reportDetails').value = '';
         document.getElementById('userName').value = '';
         document.getElementById('userEmail').value = '';
@@ -2642,16 +886,11 @@
         document.getElementById('charCount').textContent = '0';
         document.getElementById('reportSuccess').style.display = 'none';
         document.getElementById('reportErrorMsg').style.display = 'none';
-        
         document.getElementById('submitReport').disabled = false;
-        document.getElementById('submitText').textContent = 'Enviar Reporte';
+        document.getElementById('submitText').textContent = 'Enviar';
         document.getElementById('submitLoading').style.display = 'none';
-        
         document.getElementById('reportModal').style.display = 'flex';
-        
-        setTimeout(() => {
-            document.getElementById('userName').focus();
-        }, 100);
+        setTimeout(() => { document.getElementById('userName').focus(); }, 100);
     }
     
     function closeReportModal() {
@@ -2663,316 +902,636 @@
         const errorElement = document.getElementById('reportErrorMsg');
         errorElement.textContent = message;
         errorElement.style.display = 'block';
-        errorElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => { errorElement.style.display = 'none'; }, 5000);
     }
     
-    function hideError() {
-        document.getElementById('reportErrorMsg').style.display = 'none';
-    }
-    
-    function validateForm() {
+    function validateReportForm() {
         const name = document.getElementById('userName').value.trim();
         const email = document.getElementById('userEmail').value.trim();
         const reportType = document.querySelector('input[name="reportType"]:checked');
-        
-        if (!name) {
-            document.getElementById('userName').classList.add('error');
-            showError('Por favor, preencha seu nome completo.');
-            return false;
-        }
-        
-        if (!email) {
-            document.getElementById('userEmail').classList.add('error');
-            showError('Por favor, preencha seu e-mail.');
-            return false;
-        }
-        
+        if (!name) { showError('Preencha seu nome completo.'); return false; }
+        if (!email) { showError('Preencha seu e-mail.'); return false; }
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            document.getElementById('userEmail').classList.add('error');
-            showError('Por favor, insira um e-mail válido.');
-            return false;
-        }
-        
-        if (!reportType) {
-            showError('Por favor, selecione o tipo de problema.');
-            return false;
-        }
-        
+        if (!emailRegex.test(email)) { showError('E-mail inválido.'); return false; }
+        if (!reportType) { showError('Selecione o tipo de problema.'); return false; }
         return true;
     }
     
     async function submitReport() {
-        if (!validateForm()) {
-            return;
-        }
-        
+        if (!validateReportForm()) return;
         const questionIndex = currentReportQuestionIndex;
         const question = currentQuestions[questionIndex];
-        
+        const reportTypeValue = document.querySelector('input[name="reportType"]:checked').value;
         const reportData = {
-            quizId: QUIZ_ID,
-            materia: document.title || "Quiz",
-            questionIndex: questionIndex + 1,
-            originalIndex: question.originalIndex,
+            materia: document.title || "GMP 1 HANGAR MMA",
+            questionNumber: questionIndex + 1,
             questionText: question.q,
-            reportType: document.querySelector('input[name="reportType"]:checked').value,
-            reportLabel: REPORT_TYPES[document.querySelector('input[name="reportType"]:checked').value],
+            reportType: reportTypeValue,
+            reportLabel: REPORT_TYPES[reportTypeValue],
             details: document.getElementById('reportDetails').value.trim(),
             userName: document.getElementById('userName').value.trim(),
             userEmail: document.getElementById('userEmail').value.trim(),
             userInfo: document.getElementById('userInfo').value.trim(),
-            userAnswer: userAnswers[questionIndex] !== null ? 
-                question.a[userAnswers[questionIndex]] : 'Não respondida',
+            userAnswer: userAnswers[questionIndex] !== null ? question.a[userAnswers[questionIndex]] : 'Não respondida',
             correctAnswer: question.a[question.c],
-            userAnswerIndex: userAnswers[questionIndex],
-            correctAnswerIndex: question.c,
             timestamp: new Date().toLocaleString('pt-BR'),
-            url: window.location.href,
-            userAgent: navigator.userAgent
+            url: window.location.href
         };
-        
         document.getElementById('submitReport').disabled = true;
         document.getElementById('submitText').textContent = 'Enviando...';
         document.getElementById('submitLoading').style.display = 'inline-block';
-        
         try {
-            const response = await sendToGoogleSheets(reportData);
-            
-            if (response.success) {
-                const report = {
-                    ...reportData,
-                    id: Date.now(),
-                    timestamp: new Date().toISOString(),
-                    sentToGoogleSheets: true
-                };
-                
-                reportsHistory.push(report);
-                localStorage.setItem(REPORTS_KEY, JSON.stringify(reportsHistory));
-                
-                document.getElementById('reportSuccess').style.display = 'block';
-                document.getElementById('submitText').textContent = 'Enviado!';
-                
-                setTimeout(() => {
-                    closeReportModal();
-                }, 2000);
-            } else {
-                throw new Error(response.message || 'Erro ao enviar');
-            }
+            const formData = new FormData();
+            Object.keys(reportData).forEach(key => formData.append(key, reportData[key]));
+            await fetch(API_URL, { method: 'POST', body: formData, mode: 'no-cors' });
+            document.getElementById('reportSuccess').style.display = 'block';
+            document.getElementById('submitText').textContent = 'Enviado!';
+            setTimeout(() => { closeReportModal(); }, 1500);
         } catch (error) {
-            console.error('Erro ao enviar reporte:', error);
-            
-            const emailSent = sendReportByEmailFallback(reportData);
-            
-            if (emailSent) {
-                const report = {
-                    ...reportData,
-                    id: Date.now(),
-                    timestamp: new Date().toISOString(),
-                    sentByEmail: true
-                };
-                
-                reportsHistory.push(report);
-                localStorage.setItem(REPORTS_KEY, JSON.stringify(reportsHistory));
-                
-                document.getElementById('reportSuccess').innerHTML = 
-                    '✅ Reporte enviado por email! Obrigado pela contribuição.';
-                document.getElementById('reportSuccess').style.display = 'block';
-                document.getElementById('submitText').textContent = 'Enviado!';
-                
-                setTimeout(() => {
-                    closeReportModal();
-                }, 2000);
-            } else {
-                const report = {
-                    ...reportData,
-                    id: Date.now(),
-                    timestamp: new Date().toISOString(),
-                    savedLocally: true
-                };
-                
-                reportsHistory.push(report);
-                localStorage.setItem(REPORTS_KEY, JSON.stringify(reportsHistory));
-                
-                showError('Erro de conexão. Reporte salvo localmente.');
-                document.getElementById('submitReport').disabled = false;
-                document.getElementById('submitText').textContent = 'Enviar Reporte';
-                document.getElementById('submitLoading').style.display = 'none';
-            }
+            console.error('Erro:', error);
+            showError('Erro ao enviar. Tente novamente.');
+            document.getElementById('submitReport').disabled = false;
+            document.getElementById('submitText').textContent = 'Enviar';
+            document.getElementById('submitLoading').style.display = 'none';
         }
     }
     
-    async function sendToGoogleSheets(reportData) {
-        const formData = new FormData();
-        
-        Object.keys(reportData).forEach(key => {
-            formData.append(key, reportData[key]);
-        });
-        
-        const response = await fetch(API_URL, {
-            method: 'POST',
-            body: formData,
-            mode: 'no-cors'
-        });
-        
-        return { success: true, message: 'Enviado com sucesso' };
+    // ============================================
+    // AUTO-SAVE PROGRESS
+    // ============================================
+    function autoSaveProgress() {
+        if (!currentQuestions?.length) return;
+        const progress = { currentQuestions, userAnswers, currentQuestionIndex, timeLeft, autoNavEnabled, currentSimuladoNumber, usedQuestionsHistory, currentSessionWrongQuestions, timestamp: Date.now() };
+        localStorage.setItem(AUTO_SAVE_KEY, JSON.stringify(progress));
     }
     
-    function sendReportByEmailFallback(reportData) {
+    function loadAutoSaveProgress() {
+        const saved = localStorage.getItem(AUTO_SAVE_KEY);
+        if (!saved) return false;
         try {
-            const subject = `[REPORTE] ${reportData.materia} - Questão #${reportData.questionIndex}`;
-            
-            let body = `NOVO REPORTE DE QUESTÃO\n`;
-            body += `=======================\n\n`;
-            body += `MATÉRIA: ${reportData.materia}\n`;
-            body += `QUESTÃO #${reportData.questionIndex}\n`;
-            body += `ENUNCIADO:\n${reportData.questionText}\n\n`;
-            body += `TIPO: ${reportData.reportLabel}\n\n`;
-            body += `RESPOSTA DO USUÁRIO: ${reportData.userAnswer}\n`;
-            body += `RESPOSTA CORRETA: ${reportData.correctAnswer}\n\n`;
-            body += `NOME: ${reportData.userName}\n`;
-            body += `E-MAIL: ${reportData.userEmail}\n`;
-            body += `INSTITUIÇÃO: ${reportData.userInfo || 'Não informado'}\n\n`;
-            
-            if (reportData.details) {
-                body += `DETALHES:\n${reportData.details}\n\n`;
+            const progress = JSON.parse(saved);
+            if ((Date.now() - progress.timestamp) < 3600000 && progress.currentQuestions?.length > 0) {
+                if (confirm(`📀 Simulado em andamento (${progress.currentQuestions.length} questões). Continuar?`)) {
+                    currentQuestions = progress.currentQuestions;
+                    userAnswers = progress.userAnswers;
+                    currentQuestionIndex = progress.currentQuestionIndex;
+                    timeLeft = progress.timeLeft;
+                    autoNavEnabled = progress.autoNavEnabled;
+                    currentSimuladoNumber = progress.currentSimuladoNumber || 1;
+                    usedQuestionsHistory = progress.usedQuestionsHistory || [];
+                    currentSessionWrongQuestions = progress.currentSessionWrongQuestions || [];
+                    TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+                    if (timeLeft <= 0 || timeLeft > TIME_LIMIT) timeLeft = TIME_LIMIT;
+                    document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+                    updateSimuladoInfo();
+                    renderCurrentQuestion();
+                    updateCounters();
+                    updateNavButtons();
+                    updateFinishButton();
+                    startTimer();
+                    return true;
+                }
             }
-            
-            const encodedSubject = encodeURIComponent(subject);
-            const encodedBody = encodeURIComponent(body);
-            
-            const mailtoLink = `mailto:${EMAIL_DESTINO}?subject=${encodedSubject}&body=${encodedBody}`;
-            
-            window.open(mailtoLink, '_blank');
-            return true;
-        } catch (error) {
-            console.error('Erro ao enviar email:', error);
-            return false;
+            localStorage.removeItem(AUTO_SAVE_KEY);
+        } catch(e) { localStorage.removeItem(AUTO_SAVE_KEY); }
+        return false;
+    }
+    
+    function clearAutoSave() { localStorage.removeItem(AUTO_SAVE_KEY); }
+    
+    // ============================================
+    // FUNÇÕES AUXILIARES
+    // ============================================
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+    
+    function formatTime(s) { return `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`; }
+    function calculateTimeLimit(q) { return q * 60; }
+    function getAnsweredCount() { return userAnswers.filter(a => a !== null).length; }
+    
+    function shuffleAlternatives(question) {
+        const shuffled = { ...question };
+        const indices = shuffleArray([0, 1, 2, 3]);
+        shuffled.a = indices.map(i => question.a[i]);
+        shuffled.c = indices.indexOf(question.c);
+        return shuffled;
+    }
+    
+    function syncPageTitle() {
+        const pageTitle = document.title;
+        const titleElement = document.getElementById('page-title');
+        if (titleElement && pageTitle) titleElement.textContent = pageTitle;
+    }
+    
+    function resetCurrentSessionWrongQuestions() { currentSessionWrongQuestions = []; }
+    
+    // ============================================
+    // SELEÇÃO DE QUESTÕES
+    // ============================================
+    function calcularConfiguracaoSimulados() {
+        const total = masterBank.length;
+        if (total === 0) { totalSimulados = 1; QUESTIONS_PER_SIMULADO = 20; return; }
+        if (total <= 27) { totalSimulados = 1; QUESTIONS_PER_SIMULADO = total; }
+        else if (total >= 28 && total <= 39) { totalSimulados = 2; QUESTIONS_PER_SIMULADO = Math.ceil(total / 2); }
+        else { totalSimulados = Math.ceil(total / 20); QUESTIONS_PER_SIMULADO = 20; }
+    }
+    
+    function selectRandomQuestions(force = false) {
+        const total = masterBank.length;
+        if (total === 0) return [];
+        calcularConfiguracaoSimulados();
+        let available = [];
+        for (let i = 0; i < total; i++) available.push(i);
+        if (usedQuestionsHistory.length && !force) available = available.filter(i => !usedQuestionsHistory.includes(i));
+        let toSelect = Math.min(QUESTIONS_PER_SIMULADO, available.length);
+        if (toSelect === 0 && available.length === 0) {
+            if (confirm(`Todas as ${total} questões foram usadas. Reiniciar?`)) {
+                usedQuestionsHistory = [];
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                available = Array.from({ length: total }, (_, i) => i);
+                toSelect = Math.min(QUESTIONS_PER_SIMULADO, total);
+            } else return [];
+        }
+        const selected = shuffleArray(available).slice(0, toSelect);
+        usedQuestionsHistory.push(...selected);
+        usedQuestionsHistory = [...new Set(usedQuestionsHistory)];
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+        return selected.map(idx => shuffleAlternatives({ ...masterBank[idx], originalIndex: idx }));
+    }
+    
+    function generateWrongQuestionsSimulado() {
+        if (currentSessionWrongQuestions.length === 0) return [];
+        return shuffleArray([...currentSessionWrongQuestions]).map(idx => shuffleAlternatives({ ...masterBank[idx], originalIndex: idx, isWrongQuestion: true })).filter(q => q);
+    }
+    
+    // ============================================
+    // UI UPDATES
+    // ============================================
+    function updatePageTitle() {
+        const total = masterBank.length;
+        let text = '';
+        if (currentQuestions?.[0]?.isWrongQuestion) text = ' (⚡ Reforço)';
+        else if (totalSimulados > 1) text = ` (${currentSimuladoNumber}/${totalSimulados})`;
+        document.getElementById('page-title').textContent = `${document.title}${text} (${currentQuestions?.length || 0}/${total})`;
+    }
+    
+    function updateCounters() {
+        const answered = getAnsweredCount();
+        const total = currentQuestions?.length || 0;
+        document.getElementById('question-counter').textContent = `${currentQuestionIndex + 1}/${total}`;
+        document.getElementById('answered-counter').textContent = `${answered}/${total}`;
+        document.getElementById('progress-percent').textContent = total ? Math.round((answered / total) * 100) + '%' : '0%';
+        updateTimerDisplay();
+    }
+    
+    function updateTimerDisplay() {
+        const timer = document.getElementById('timer');
+        timer.textContent = formatTime(timeLeft);
+        if (timeLeft <= 300) timer.classList.add('timer-warning');
+        else timer.classList.remove('timer-warning');
+    }
+    
+    function updateNavButtons() {
+        document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+        const isLast = currentQuestionIndex === (currentQuestions?.length - 1);
+        document.getElementById('next-btn').disabled = isLast;
+        document.getElementById('next-btn').innerHTML = isLast ? 'Última' : 'Próximo →';
+    }
+    
+    function updateFinishButton() {
+        const btn = document.getElementById('finish-btn');
+        const allAnswered = getAnsweredCount() === currentQuestions?.length;
+        btn.disabled = !allAnswered;
+        if (allAnswered) {
+            btn.innerHTML = '🏁 FINALIZAR';
+            btn.classList.add('enabled');
+        } else {
+            btn.innerHTML = `❌ Faltam ${(currentQuestions?.length || 0) - getAnsweredCount()}`;
+            btn.classList.remove('enabled');
         }
     }
+    
+    function updateSimuladoInfo() {
+        const total = masterBank.length;
+        const count = currentQuestions?.length || 0;
+        const used = [...new Set(usedQuestionsHistory)].length;
+        const remaining = Math.max(0, total - used);
+        if (currentQuestions?.[0]?.isWrongQuestion) {
+            document.getElementById('simulado-info').innerHTML = `
+                <div style="color:var(--warning);font-weight:bold;text-align:center;">⚡ SIMULADO DE REFORÇO</div>
+                <div style="text-align:center;font-size:0.6rem;">Questões que você errou</div>
+                <div class="simulado-stats"><span>Questões: ${count}</span><span>Revisão: ${currentSessionWrongQuestions.length}</span></div>
+                <div class="history-controls"><button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar</button><button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button><button class="dark-mode-btn" onclick="toggleDarkMode()">🌙 Dark</button></div>
+            `;
+            return;
+        }
+        document.getElementById('simulado-info').innerHTML = `
+            <div style="font-weight:600;">Simulado: ${count} questões</div>
+            <div class="simulado-stats"><span>📦 Disponíveis: ${remaining}</span><span>✅ Usadas: ${used} (${total ? Math.round(used/total*100) : 0}%)</span></div>
+            <div class="history-controls"><button class="clear-history-btn" onclick="clearHistory()">🗑️ Limpar</button><button class="info-history-btn" onclick="showHistoryInfo()">ℹ️ Info</button><button class="dark-mode-btn" onclick="toggleDarkMode()">🌙 Dark</button></div>
+        `;
+    }
+    
+    function updateReforcoButton() {
+        const btn = document.getElementById('wrong-questions-btn');
+        const hasEnough = currentSessionWrongQuestions.length >= MIN_WRONG_QUESTIONS_FOR_SIMULADO;
+        const isReforco = currentQuestions?.[0]?.isWrongQuestion;
+        const show = hasEnough && !isReforco && document.getElementById('results').style.display === 'block';
+        btn.style.display = show ? 'block' : 'none';
+        if (show) btn.innerHTML = `⚡ Reforço (${currentSessionWrongQuestions.length})`;
+    }
+    
+    function updateContinuarBancoButton() {
+        const btn = document.getElementById('continuar-banco-btn');
+        const used = [...new Set(usedQuestionsHistory)].length;
+        const remaining = Math.max(0, masterBank.length - used);
+        const show = document.getElementById('results').style.display === 'block' && remaining > 0;
+        btn.style.display = show ? 'block' : 'none';
+        if (show) btn.innerHTML = `📚 Continuar (${remaining})`;
+    }
+    
+    function removePendingShortcut() { document.getElementById('pending-shortcut')?.remove(); }
+    
+    function checkAndShowPendingButton() {
+        if (!currentQuestions?.length) return;
+        const pending = userAnswers.filter(a => a === null).length;
+        const isLast = currentQuestionIndex === currentQuestions.length - 1;
+        const hasAnsweredLast = userAnswers[currentQuestions.length - 1] !== null;
+        removePendingShortcut();
+        if (isLast && hasAnsweredLast && pending > 0 && document.getElementById('results').style.display !== 'block') {
+            const div = document.createElement('div');
+            div.id = 'pending-shortcut';
+            div.className = 'pending-shortcut';
+            div.onclick = goToNextPending;
+            div.innerHTML = `<span>⚠️ ${pending}</span><span class="pending-count">IR AGORA</span><span>→</span>`;
+            document.body.appendChild(div);
+        }
+    }
+    
+    function goToNextPending() {
+        const pending = [];
+        for (let i = 0; i < currentQuestions.length; i++) if (userAnswers[i] === null) pending.push(i);
+        if (!pending.length) { removePendingShortcut(); return; }
+        currentQuestionIndex = pending.find(i => i > currentQuestionIndex) ?? pending[0];
+        saveAndRender();
+    }
+    
+    function saveAndRender() {
+        autoSaveProgress();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        setTimeout(checkAndShowPendingButton, 100);
+    }
+    
+    // ============================================
+    // NAVEGAÇÃO
+    // ============================================
+    function startTimer() {
+        clearInterval(timerId);
+        timerId = setInterval(() => {
+            timeLeft--;
+            if (timeLeft % 10 === 0) autoSaveProgress();
+            updateTimerDisplay();
+            if (timeLeft <= 0) {
+                clearInterval(timerId);
+                if (getAnsweredCount() === currentQuestions.length) finalizeQuiz();
+                else if (confirm('⏰ Tempo esgotado! Finalizar?')) finalizeQuiz();
+            }
+        }, 1000);
+    }
+    
+    function nextQuestion() {
+        if (currentQuestionIndex < currentQuestions.length - 1) {
+            currentQuestionIndex++;
+            saveAndRender();
+        }
+    }
+    
+    function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            saveAndRender();
+        }
+    }
+    
+    function selectAnswer(idx) {
+        userAnswers[currentQuestionIndex] = idx;
+        autoSaveProgress();
+        updateCounters();
+        updateFinishButton();
+        if (autoNavEnabled && currentQuestionIndex < currentQuestions.length - 1) {
+            setTimeout(() => nextQuestion(), 200);
+        }
+        checkAndShowPendingButton();
+    }
+    
+    function toggleAutoNav() {
+        autoNavEnabled = !autoNavEnabled;
+        document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
+        autoSaveProgress();
+    }
+    
+    function renderCurrentQuestion() {
+        const container = document.getElementById('quiz-content');
+        if (!currentQuestions?.length) { container.innerHTML = '<div class="question-block-mini">⚠️ Nenhuma questão</div>'; return; }
+        const q = currentQuestions[currentQuestionIndex];
+        container.innerHTML = `
+            <div class="question-block-mini">
+                <div class="question-text-mini">${currentQuestionIndex + 1}. ${q.q}</div>
+                <div class="options-mini">
+                    ${q.a.map((opt, i) => `
+                        <label class="option-mini">
+                            <input type="radio" name="q" value="${i}" ${userAnswers[currentQuestionIndex] === i ? 'checked' : ''} onchange="selectAnswer(${i})">
+                            ${opt}
+                        </label>
+                    `).join('')}
+                </div>
+                <button class="report-btn" onclick="openReportModal(${currentQuestionIndex})"><span>⚠️</span> Reportar</button>
+            </div>
+        `;
+        checkAndShowPendingButton();
+    }
+    
+    // ============================================
+    // FINALIZAR
+    // ============================================
+    function finalizeQuiz() {
+        clearInterval(timerId);
+        if (getAnsweredCount() !== currentQuestions.length && !confirm(`Faltam ${currentQuestions.length - getAnsweredCount()}. Finalizar?`)) {
+            startTimer();
+            return;
+        }
+        removePendingShortcut();
+        let finalScore = 0;
+        const sessionErrors = [];
+        userAnswers.forEach((ans, i) => {
+            if (ans !== null && ans === currentQuestions[i].c) finalScore++;
+            else if (ans !== null && currentQuestions[i].originalIndex !== undefined) sessionErrors.push(currentQuestions[i].originalIndex);
+        });
+        currentSessionWrongQuestions = [...new Set(sessionErrors)];
+        const percent = Math.round((finalScore / currentQuestions.length) * 100);
+        const fb = document.getElementById('feedback-msg');
+        if (percent >= 70) fb.innerHTML = "🎉 Excelente!";
+        else if (percent >= 50) fb.innerHTML = "👍 Quase lá!";
+        else fb.innerHTML = "💪 Continue praticando!";
+        clearAutoSave();
+        let quizHTML = '';
+        currentQuestions.forEach((q, idx) => {
+            const ua = userAnswers[idx];
+            const isCorrect = ua === q.c;
+            let opts = '';
+            q.a.forEach((opt, i) => {
+                let cls = 'option-mini';
+                if (i === q.c) cls += ' correct-answer';
+                else if (ua === i && !isCorrect) cls += ' wrong-answer';
+                opts += `<label class="${cls}"><input type="radio" disabled ${ua === i ? 'checked' : ''}> ${opt}${ua === i ? ' <span style="font-size:0.6rem;">(sua)</span>' : ''}${i === q.c && ua !== i ? ' <span style="font-size:0.6rem; color:var(--success);">(correta)</span>' : ''}</label>`;
+            });
+            quizHTML += `<div class="question-block-mini"><div class="question-text-mini">${idx+1}. ${q.q}</div><div class="options-mini">${opts}</div><button class="results-report-btn" onclick="openReportModal(${idx})"><span>⚠️</span> Reportar</button></div>`;
+        });
+        document.getElementById('quiz-content').innerHTML = quizHTML;
+        document.getElementById('final-score').textContent = `${finalScore}/${currentQuestions.length}`;
+        document.getElementById('final-percent').textContent = `${percent}% de acertos`;
+        
+        const motivationElement = document.getElementById('motivation-message');
+        if (currentQuestions[0]?.isWrongQuestion) {
+            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
+                motivationElement.innerHTML = '✅ <strong>PARABÉNS!</strong> Você superou suas dificuldades!';
+            } else {
+                motivationElement.innerHTML = `⚡ <strong>PRECISA MELHORAR</strong><br>Acertou ${finalScore}/${currentQuestions.length}.<br>Faltam ${MIN_PERCENT_FOR_SUCCESS - percent}% para a meta.`;
+            }
+        } else {
+            if (percent >= MIN_PERCENT_FOR_SUCCESS) {
+                motivationElement.innerHTML = '🎯 <strong>ÓTIMO DESEMPENHO!</strong> Continue assim!';
+            } else {
+                motivationElement.innerHTML = '📚 <strong>CONTINUE ESTUDANDO!</strong> Você vai conseguir!';
+            }
+        }
+        
+        const total = masterBank.length;
+        const used = [...new Set(usedQuestionsHistory)].length;
+        const remaining = Math.max(0, total - used);
+        const wrongCount = currentSessionWrongQuestions.length;
+        let summaryText = '';
+        if (currentQuestions[0]?.isWrongQuestion) {
+            summaryText = `⚡ <strong>SIMULADO DE REFORÇO</strong><br>Você revisou ${currentQuestions.length} questões.<br>Ainda erradas: <strong>${wrongCount}</strong>`;
+        } else if (remaining === 0) {
+            summaryText = `🎯 <strong>COMPLETOU TODAS AS ${total} QUESTÕES!</strong><br>Erradas: <strong>${wrongCount}</strong>`;
+        } else {
+            summaryText = `📊 Restam: <strong>${remaining}</strong> | Usadas: <strong>${used}</strong><br>❌ Erros neste simulado: <strong>${wrongCount}</strong>`;
+        }
+        document.getElementById('simulado-summary').innerHTML = summaryText;
+        document.querySelector('.nav-buttons').style.display = 'none';
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('finish-btn').style.display = 'none';
+        document.getElementById('restart-btn').style.display = 'block';
+        updateSimuladoInfo();
+        updateReforcoButton();
+        updateContinuarBancoButton();
+        const showReiniciarBanco = (currentQuestions[0]?.isWrongQuestion && percent < MIN_PERCENT_FOR_SUCCESS);
+        document.getElementById('reiniciar-banco-btn').style.display = showReiniciarBanco ? 'block' : 'none';
+        const voltarBtn = document.getElementById('voltar-inicio-btn');
+        if (voltarBtn) voltarBtn.style.display = 'none';
+    }
+    
+    // ============================================
+    // AÇÕES DOS BOTÕES
+    // ============================================
+    function resetQuiz() {
+        if (!confirm('Reiniciar este simulado?')) return;
+        userAnswers.fill(null);
+        timeLeft = TIME_LIMIT;
+        currentQuestionIndex = 0;
+        hasReachedEnd = false;
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        document.getElementById('restart-btn').style.display = 'none';
+        document.querySelector('.nav-buttons').style.display = 'grid';
+        removePendingShortcut();
+        autoSaveProgress();
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+    }
+    
+    function startNewQuiz() {
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        document.getElementById('restart-btn').style.display = 'none';
+        document.querySelector('.nav-buttons').style.display = 'grid';
+        userAnswers.fill(null);
+        timeLeft = TIME_LIMIT;
+        currentQuestionIndex = 0;
+        removePendingShortcut();
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+    }
+    
+    function showHistoryInfo() {
+        const total = masterBank.length;
+        const used = [...new Set(usedQuestionsHistory)].length;
+        alert(`📊 Total: ${total} | Usadas: ${used} | Disponíveis: ${Math.max(0,total-used)} | Erros: ${currentSessionWrongQuestions.length}`);
+    }
+    
+    function clearHistory() {
+        if (!confirm('Limpar TODO o histórico? Isso reiniciará tudo.')) return;
+        usedQuestionsHistory = [];
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+        clearAutoSave();
+        resetCurrentSessionWrongQuestions();
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        document.getElementById('restart-btn').style.display = 'none';
+        document.querySelector('.nav-buttons').style.display = 'grid';
+        currentQuestions = selectRandomQuestions(true);
+        if (!currentQuestions.length) { alert("Erro!"); return; }
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        currentQuestionIndex = 0;
+        TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+        timeLeft = TIME_LIMIT;
+        autoNavEnabled = true;
+        currentSimuladoNumber = 1;
+        removePendingShortcut();
+        syncPageTitle();
+        updatePageTitle();
+        updateSimuladoInfo();
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+        alert('✅ Histórico limpo!');
+    }
+    
+    function continuarComBanco() {
+        const total = masterBank.length;
+        const used = [...new Set(usedQuestionsHistory)].length;
+        const remaining = Math.max(0, total - used);
+        if (remaining === 0) {
+            if (confirm(`Todas as ${total} questões foram usadas. Reiniciar?`)) {
+                usedQuestionsHistory = [];
+                localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+                startNewSimulado();
+            }
+        } else {
+            if (confirm(`Continuar com ${remaining} questões restantes?`)) startNewSimulado();
+        }
+    }
+    
+    function startNewSimulado() {
+        resetCurrentSessionWrongQuestions();
+        clearAutoSave();
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        document.getElementById('restart-btn').style.display = 'none';
+        document.querySelector('.nav-buttons').style.display = 'grid';
+        currentQuestions = selectRandomQuestions(false);
+        if (!currentQuestions.length) { alert("Erro!"); return; }
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        currentQuestionIndex = 0;
+        TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+        timeLeft = TIME_LIMIT;
+        autoNavEnabled = true;
+        removePendingShortcut();
+        updatePageTitle();
+        updateSimuladoInfo();
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+        alert(`✅ Novo simulado com ${currentQuestions.length} questões!`);
+    }
+    
+    function startWrongQuestionsSimulado() {
+        currentQuestions = generateWrongQuestionsSimulado();
+        if (!currentQuestions.length) { alert('Nenhuma questão errada.'); return; }
+        currentSimuladoNumber = totalSimulados + 1;
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        currentQuestionIndex = 0;
+        TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+        timeLeft = TIME_LIMIT;
+        autoNavEnabled = true;
+        removePendingShortcut();
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        document.getElementById('restart-btn').style.display = 'none';
+        document.querySelector('.nav-buttons').style.display = 'grid';
+        updateSimuladoInfo();
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+        alert(`⚡ Reforço com ${currentQuestions.length} questões!`);
+    }
+    
+    function voltarAoInicio() {
+        if (!confirm('Voltar ao início? Todo progresso será perdido.')) return;
+        usedQuestionsHistory = [];
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(usedQuestionsHistory));
+        resetCurrentSessionWrongQuestions();
+        clearAutoSave();
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('finish-btn').style.display = 'block';
+        document.getElementById('restart-btn').style.display = 'none';
+        document.querySelector('.nav-buttons').style.display = 'grid';
+        currentQuestions = selectRandomQuestions(true);
+        if (!currentQuestions.length) { alert("Erro!"); return; }
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        currentQuestionIndex = 0;
+        TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
+        timeLeft = TIME_LIMIT;
+        autoNavEnabled = true;
+        currentSimuladoNumber = 1;
+        removePendingShortcut();
+        startTimer();
+        renderCurrentQuestion();
+        updateCounters();
+        updateNavButtons();
+        updateFinishButton();
+        updateSimuladoInfo();
+        alert('✅ Sistema reiniciado!');
+    }
+    
+    function reiniciarBancoCompleto() { voltarAoInicio(); }
     
     // ============================================
     // INICIALIZAÇÃO
     // ============================================
-    
-    function hasUnsavedProgress() {
-        const answeredCount = getAnsweredCount();
-        return answeredCount > 0 && answeredCount < currentQuestions.length;
-    }
-    
-    function showCloseWarning(event) {
-        if (hasUnsavedProgress()) {
-            const message = '⚠️ Você tem um simulado em andamento. Se sair agora, perderá o progresso!';
-            
-            if (event) {
-                event.preventDefault();
-                event.returnValue = message;
-            }
-            
-            return message;
-        }
-    }
-    
-    window.addEventListener('beforeunload', function(event) {
-        if (hasUnsavedProgress()) {
-            try {
-                saveCurrentSessionState();
-            } catch (e) {
-                console.error('Erro ao salvar estado antes de sair:', e);
-            }
-            
-            return showCloseWarning(event);
-        }
-    });
-    
-    window.onload = function() {
-        initQuiz();
-        initReportSystem();
-    };
-    
     function initQuiz() {
-        loadWrongQuestionsHistory();
-        
-        if (masterBank.length === 0) {
-            document.getElementById('page-title').textContent = "⚠️ BANCO VAZIO";
-            document.getElementById('quiz-content').innerHTML = `
-                <div class="question-block-mini" style="text-align:center;">
-                    <div class="question-text-mini" style="color: var(--danger);">
-                        ⚠️ ERRO: Banco de questões vazio!
-                    </div>
-                </div>
-            `;
+        syncPageTitle();
+        loadDarkModePreference();
+        if (!masterBank.length) {
+            document.getElementById('quiz-content').innerHTML = '<div class="question-block-mini" style="text-align:center;color:var(--danger);">⚠️ Banco vazio! Adicione questões no array masterBank</div>';
             return;
         }
-        
-        const config = calcularConfiguracaoSimulados();
-        console.log('Configuração:', config.mensagem);
-        totalSimulados = config.totalSimulados;
-        QUESTIONS_PER_SIMULADO = config.questionsPerSimulado;
-        
-        const savedHistory = localStorage.getItem(HISTORY_KEY);
-        if (savedHistory) {
-            try {
-                usedQuestionsHistory = JSON.parse(savedHistory);
-            } catch (e) {
-                console.error('Erro ao carregar histórico:', e);
-                usedQuestionsHistory = [];
-            }
-        } else {
-            usedQuestionsHistory = [];
-        }
-        
-        if (isNewSession()) {
-            console.log('Nova sessão - gerando questões');
+        calcularConfiguracaoSimulados();
+        const saved = localStorage.getItem(HISTORY_KEY);
+        if (saved) try { usedQuestionsHistory = JSON.parse(saved); } catch(e) { usedQuestionsHistory = []; }
+        resetCurrentSessionWrongQuestions();
+        if (!loadAutoSaveProgress()) {
             currentQuestions = selectRandomQuestions();
-            
-            if (currentQuestions.length === 0) {
-                alert("Não foi possível selecionar questões.");
-                return;
-            }
-            
+            if (!currentQuestions.length) return;
             userAnswers = new Array(currentQuestions.length).fill(null);
             currentQuestionIndex = 0;
             TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
             timeLeft = TIME_LIMIT;
             autoNavEnabled = true;
-            hasReachedEnd = false;
-            
-            saveCurrentSessionState();
-        } else {
-            console.log('Sessão existente - restaurando');
-            const state = loadCurrentSessionState();
-            
-            if (state.hasQuestions && state.hasState) {
-                console.log('Estado restaurado');
-                if (timeLeft <= 0) {
-                    TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
-                    timeLeft = TIME_LIMIT;
-                }
-                hasReachedEnd = false;
-            } else {
-                console.log('Não há estado - gerando novo');
-                currentQuestions = selectRandomQuestions();
-                if (currentQuestions.length === 0) {
-                    alert("Não foi possível gerar o simulado.");
-                    return;
-                }
-                
-                userAnswers = new Array(currentQuestions.length).fill(null);
-                currentQuestionIndex = 0;
-                TIME_LIMIT = calculateTimeLimit(currentQuestions.length);
-                timeLeft = TIME_LIMIT;
-                autoNavEnabled = true;
-                hasReachedEnd = false;
-                
-                saveCurrentSessionState();
-            }
         }
-        
         updatePageTitle();
         document.getElementById('timer').textContent = formatTime(timeLeft);
         document.getElementById('auto-nav-checkbox').checked = autoNavEnabled;
-        
         updateSimuladoInfo();
         startTimer();
         renderCurrentQuestion();
@@ -2980,12 +1539,11 @@
         updateNavButtons();
         updateFinishButton();
         updateReforcoButton();
-        updateReiniciarBancoButton();
         updateContinuarBancoButton();
-        updateVoltarInicioButton();
-        updateNovoSimuladoReforcoButton();
     }
+    
+    window.initQuiz = initQuiz;
+    window.onload = initQuiz;
 </script>
-
 </body>
 </html>
