@@ -2,426 +2,661 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Estudos - Plataforma Educacional</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>⚡ Trocador de Figurinhas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a2f1f 0%, #0e3d24 100%);
+            min-height: 100vh;
+            padding: 12px;
+            font-family: -apple-system, 'Segoe UI', 'Roboto', system-ui, sans-serif;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #fffbf0;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e5631, #0a2f1f);
+            padding: 20px 16px;
+            text-align: center;
+            border-bottom: 4px solid #ffcc33;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #FFE484, #FFB347);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .sub {
+            color: #ffde9c;
+            margin-top: 6px;
+            font-size: 0.75rem;
+        }
+
+        .main-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            padding: 16px;
+        }
+
+        .col {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .col-header {
+            background: #f7c56e;
+            padding: 16px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            color: #2c4722;
+        }
+
+        .col-header small {
+            font-size: 0.7rem;
+            display: block;
+            color: #6b4c1a;
+        }
+
+        .aviso {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 12px;
+            margin: 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            color: #856404;
+        }
+
+        textarea {
+            width: 100%;
+            height: 280px;
+            padding: 16px;
+            border: none;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            resize: vertical;
+            background: #fffef7;
+            border-bottom: 1px solid #ffe0a3;
+            line-height: 1.5;
+        }
+
+        textarea:focus {
+            outline: none;
+            background: #ffffff;
+        }
+
+        .button-bar {
+            display: flex;
+            gap: 12px;
+            padding: 14px;
+            background: #f0ede0;
+            border-top: 1px solid #ffe0a3;
+        }
+
+        .small-btn {
+            flex: 1;
+            background: #e0d5b8;
+            border: none;
+            padding: 14px 8px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #2c4722;
+        }
+
+        .small-btn.colar {
+            background: #4caf50;
+            color: white;
+        }
+
+        .small-btn.copiar {
+            background: #2196F3;
+            color: white;
+        }
+
+        .small-btn.limpar {
+            background: #f44336;
+            color: white;
+        }
+
+        .small-btn:active {
+            opacity: 0.7;
+            transform: scale(0.97);
+        }
+
+        .result-area {
+            background: #e9e0c7;
+            margin: 0 16px 20px 16px;
+            border-radius: 24px;
+            padding: 20px;
+            border: 2px solid #f3b33d;
+        }
+
+        .result-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 16px;
+            color: #1e5631;
+        }
+
+        .result-box {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 16px;
+            text-align: center;
+            min-height: 150px;
+        }
+
+        .result-stickers {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .sticker-card {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            font-family: monospace;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .no-match {
+            color: #999;
+            font-size: 1rem;
+            padding: 16px;
+        }
+
+        .big-btn {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 16px 20px;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 12px;
+            transition: 0.2s;
+        }
+
+        .big-btn:active {
+            transform: scale(0.98);
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+        }
+
+        .whatsapp-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .clear-all-btn {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+        }
+
+        .footer {
+            background: #1a3a27;
+            color: #ffe0a3;
+            text-align: center;
+            padding: 14px;
+            font-size: 0.7rem;
+        }
+
+        .stats {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 8px;
+            }
+            .col-header {
+                font-size: 1rem;
+                padding: 12px;
+            }
+            textarea {
+                font-size: 11px;
+                height: 220px;
+            }
+            .small-btn {
+                font-size: 0.85rem;
+                padding: 12px 6px;
+            }
+            .sticker-card {
+                padding: 8px 14px;
+                font-size: 0.85rem;
+            }
+            .big-btn {
+                font-size: 1rem;
+                padding: 14px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            .main-panel {
+                flex-direction: row;
+                gap: 20px;
+            }
+            textarea {
+                height: 400px;
+                font-size: 12px;
+            }
+            h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
+<div class="container">
+    <div class="header">
+        <h1>⚡ TROCADOR DE FIGURINHAS</h1>
 
-    <header>
-        <div class="header-content">
-            <div class="logo-title">
-                <i class="fas fa-graduation-cap header-icon"></i>
-                <div>
-                    <h1>Portal de Estudos</h1>
-                    <p class="subtitle">Selecione o módulo e a matéria desejada</p>
-                </div>
-            </div>
-            <div class="search-container">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Pesquisar matérias...">
-                <button id="clearSearch" style="display:none;">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-        </div>
-        <div class="progress-bar">
-            <div class="progress-fill" style="width: 65%;"></div>
-        </div>
-        <div class="search-results" id="searchResults" style="display:none;">
-            <p id="resultsCount">0 resultados encontrados</p>
-        </div>
-    </header>
+    <div class="aviso">
+        ✅ O sistema identifica automaticamente formatos geradas pelo seu app de figurinhas como:<br>
+        "MEX 🇲🇽: 7, 10, 11" | "MEX7, MEX10" | "MEX 7 (x1)" | "FWC2, FWC14"
+    </div>
 
-    <main class="container">
+    <div class="main-panel">
+        <div class="col">
+            <div class="col-header">
+                🟢 REPETIDAS DO OUTRO
+                <small>cole o que ELE tem para trocar</small>
+            </div>
+            <textarea id="outroTexto" placeholder="Cole aqui as REPETIDAS do outro usuário..."></textarea>
+            <div class="button-bar">
+                <button class="small-btn colar" id="colarOutro">📋 COLAR</button>
+                <button class="small-btn copiar" id="copiarOutro">📄 COPIAR</button>
+                <button class="small-btn limpar" id="limparOutro">🗑️ LIMPAR</button>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="col-header">
+                🔴 MINHAS FALTANTES
+                <small>cole o que você PRECISA</small>
+            </div>
+            <textarea id="meuTexto" placeholder="Cole aqui as figurinhas que FALTAM no seu álbum..."></textarea>
+            <div class="button-bar">
+                <button class="small-btn colar" id="colarMeu">📋 COLAR</button>
+                <button class="small-btn copiar" id="copiarMeu">📄 COPIAR</button>
+                <button class="small-btn limpar" id="limparMeu">🗑️ LIMPAR</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="result-area">
+        <div class="result-title">🎯 ELE TEM ISSO PRA VOCÊ</div>
+        <div class="result-box" id="resultBox">
+            <div style="color:#999; padding:20px;">Toque em "VERIFICAR"</div>
+        </div>
         
-        <section class="modulo basico" data-module="basico">
-            <div class="modulo-header">
-                <h2 class="titulo-modulo">
-                    <i class="fas fa-layer-group"></i> BÁSICO
-                </h2>
-                <span class="modulo-status">17 matérias</span>
-            </div>
-            <nav class="links-materias">
-                <a href="basoraleescrita.html" class="materia-link construction" data-title="Comunicação Oral e Escrita" data-search="comunicação oral escrita técnica redação">
-                    <i class="fas fa-comments materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Comunicação Oral e Escrita</span>
-                        <span class="materia-desc">Técnicas de comunicação técnica</span>
-                    </div>
-                </a>
-                
-                <a href="basfisica.html" class="materia-link construction" data-title="Física" data-search="física fundamentos leis newton termodinamica">
-                    <i class="fas fa-atom materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Física</span>
-                        <span class="materia-desc">Fundamentos físicos aplicados à aviação</span>
-                    </div>
-                </a>
-                
-                <a href="basdesenho.html" class="materia-link construction" data-title="Desenho de Aeronaves" data-search="desenho aeronaves projeto técnico desenho técnico">
-                    <i class="fas fa-drafting-compass materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Desenho de Aeronaves</span>
-                        <span class="materia-desc">Projeto e desenho técnico aeronáutico</span>
-                    </div>
-                </a>
-                
-                <a href="ingles_tecnico.html" class="materia-link construction" data-title="Inglês Técnico" data-search="inglês técnico aeronáutico linguagem documentação">
-                    <i class="fas fa-language materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Inglês Técnico</span>
-                        <span class="materia-desc">Linguagem técnica aeronáutica</span>
-                    </div>
-                    <span class="materia-status">EM CONSTRUÇÃO</span>
-                </a>
-                
-                <a href="basaerodinamica.html" class="materia-link construction" data-title="Aerodinâmica" data-search="aerodinâmica fluxo ar sustentação arrasto">
-                    <i class="fas fa-wind materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Aerodinâmica</span>
-                        <span class="materia-desc">Princípios de fluxo de ar e sustentação</span>
-                    </div>
-                </a>
-                
-                <a href="basmateriaiseprocessos.html" class="materia-link construction" data-title="Materiais de Aviação e Processos" data-search="materiais aviação processos metais compósitos">
-                    <i class="fas fa-shapes materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Materiais de Aviação e Processos</span>
-                        <span class="materia-desc">Materiais e processos de fabricação aeronáutica</span>
-                    </div>
-                </a>
-                
-                <a href="bascontroledecorresaoaeronauticos.html" class="materia-link construction" data-title="Controle de Corrosão" data-search="controle corrosão proteção tratamentos superficiais">
-                    <i class="fas fa-shield-alt materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Controle de Corrosão</span>
-                        <span class="materia-desc">Proteção e tratamentos anticorrosivos</span>
-                    </div>
-                </a>
-                
-                <a href="bastubulacoeseconexoes.html" class="materia-link construction" data-title="Tubulações e Conexões" data-search="tubulações conexões hidráulicos pneumáticos sistemas">
-                    <i class="fas fa-wrench materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Tubulações e Conexões</span>
-                        <span class="materia-desc">Sistemas hidráulicos e pneumáticos</span>
-                    </div>
-                </a>
-                
-                <a href="bascombustivelesistemadecombustiveis.html" class="materia-link construction" data-title="Combustível e Sistemas" data-search="combustível sistemas alimentação tanques distribuição">
-                    <i class="fas fa-gas-pump materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Combustível e Sistemas</span>
-                        <span class="materia-desc">Sistemas de alimentação e distribuição</span>
-                    </div>
-                </a>
-                
-                <a href="baseletricidadeeeletronica.html" class="materia-link construction" data-title="Eletricidade Básica" data-search="eletricidade básica circuitos componentes elétricos">
-                    <i class="fas fa-bolt materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Eletricidade Básica</span>
-                        <span class="materia-desc">Circuitos e componentes elétricos</span>
-                    </div>
-                </a>
-                
-                <a href="basgeradoresemotoreseletricos.html" class="materia-link construction" data-title="Geradores e Motores Elétricos" data-search="geradores motores elétricos potência energia">
-                    <i class="fas fa-cogs materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Geradores e Motores Elétricos</span>
-                        <span class="materia-desc">Sistemas de geração e consumo de energia</span>
-                    </div>
-                </a>
-                
-                <a href="baspesoebalanceamento.html" class="materia-link construction" data-title="Peso e Balanceamento" data-search="peso balanceamento centro gravidade distribuição">
-                    <i class="fas fa-balance-scale materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Peso e Balanceamento</span>
-                        <span class="materia-desc">Cálculos de centro de gravidade e distribuição</span>
-                    </div>
-                </a>
-                
-                <a href="metrologiaeferramentas.html" class="materia-link construction" data-title="Metrologia e Ferramentas" data-search="metrologia ferramentas medição instrumentos precisão">
-                    <i class="fas fa-ruler-combined materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Metrologia e Ferramentas</span>
-                        <span class="materia-desc">Medição, instrumentos e ferramentas de precisão</span>
-                    </div>
-                </a>
-                
-                <a href="principiosdainspecao.html" class="materia-link construction" data-title="Princípios de Inspeção" data-search="inspeção princípios verificação qualidade controle">
-                    <i class="fas fa-search materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Princípios de Inspeção</span>
-                        <span class="materia-desc">Técnicas de verificação e controle de qualidade</span>
-                    </div>
-                </a>
-                
-                <a href="manuseiodesolo.html" class="materia-link construction" data-title="Manuseio no Solo e Segurança" data-search="manuseio solo segurança operações terra movimentação">
-                    <i class="fas fa-people-carry materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Manuseio no Solo e Segurança</span>
-                        <span class="materia-desc">Operações terrestres e segurança no manuseio</span>
-                    </div>
-                </a>
-                
-                <a href="regulamentacaodaaviacao.html" class="materia-link construction" data-title="Regulamentação" data-search="regulamentação leis normas anac brasileiras internacionais">
-                    <i class="fas fa-gavel materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Regulamentação</span>
-                        <span class="materia-desc">Leis e normas aeronáuticas nacionais e internacionais</span>
-                    </div>
-                </a>
-                
-                <a href="segurancaoperacional.html" class="materia-link construction" data-title="Segurança Operacional" data-search="segurança operacional SMS gerenciamento riscos">
-                    <i class="fas fa-user-shield materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Segurança Operacional</span>
-                        <span class="materia-desc">SMS e gerenciamento de riscos operacionais</span>
-                    </div>
-                </a>
-                
-                <a href="fatoreshumanos.html" class="materia-link construction" data-title="Fatores Humanos" data-search="fatores humanos ergonomia fadiga performance humana">
-                    <i class="fas fa-user-friends materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Fatores Humanos</span>
-                        <span class="materia-desc">Ergonomia, fadiga e performance humana na aviação</span>
-                    </div>
-                </a>
-                <a href="basicoaerosimulados.html" class="materia-link construction" data-title="Basico do Aerosimulados" data-search="Basico do Aerosimulados">
-                    <i class="fas fa-user-shield materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Básico Aerosimulados</span>
-                        <span class="materia-desc">Basico do Aerosimulados</span>
-                    </div>
-                </a>
-                 <a href="basicohangar.html" class="materia-link construction" data-title="Basico do Hangar MMA" data-search="Basico do Aerosimulados">
-                    <i class="fas fa-user-shield materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Basico Hangar MMA</span>
-                        <span class="materia-desc">Basico Hangar MMA</span>
-                        <span class="materia-status">EM CONSTRUÇÃO</span>
-                    </div>
-                </a>
-            </nav>
-        </section>
+        <button class="big-btn" id="verificarBtn">🔍 VERIFICAR</button>
+        <button class="big-btn whatsapp-btn" id="whatsappBtn" disabled>📱 ENVIAR PARA WHATSAPP</button>
+        <button class="big-btn clear-all-btn" id="clearAllBtn">🗑️ LIMPAR TUDO</button>
+    </div>
 
-        <section class="modulo gmp" data-module="gmp">
-            <div class="modulo-header">
-                <h2 class="titulo-modulo">
-                    <i class="fas fa-cogs"></i> GMP
-                </h2>
-                <span class="modulo-status">10 matérias</span>
-            </div>
-            <nav class="links-materias">
-                <a href="gmphelice.html" class="materia-link available" data-title="Hélice" data-search="helice propulsão gmp motor">
-                    <i class="fas fa-fan materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Hélice</span>
-                        <span class="materia-desc">Sistemas de propulsão</span>
-                    </div>
-                </a>
-                <a href="gmpooperacaoemanutencao.html" class="materia-link available" data-title="Operação de manutenção do motor" data-search="operação manutenção motor procedimentos">
-                    <i class="fas fa-tools materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Operação de manutenção do motor</span>
-                        <span class="materia-desc">Procedimentos de manutenção</span>
-                    </div>
-                </a>
-                <a href="gmpprocedimentopista.html" class="materia-link available" data-title="Procedimento de pista" data-search="procedimento pista decolagem aterrissagem">
-                    <i class="fas fa-road materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Procedimento de pista</span>
-                        <span class="materia-desc">Decolagem e aterrissagem</span>
-                    </div>
-                </a>
-                <a href="gmpinstdomotodeadmissaoscapamento.html" class="materia-link available" data-title="Remoção e Instalação do Motor & Sistema de Admissão e Escapamento" data-search="remoção instalação motor admissão escapamento">
-                    <i class="fas fa-exchange-alt materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Remoção e Instalação do Motor & Sistema de Admissão e Escapamento</span>
-                        <span class="materia-desc">Procedimentos de substituição</span>
-                    </div>
-                </a>
-                <a href="gmpcombustiveldomotoremedicaodecombustivel.html" class="materia-link available" data-title="Sistema de Combustível do Motor e Medição de Combustível" data-search="combustível medição sistema gmp">
-                    <i class="fas fa-gas-pump materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Sistema de Combustível do Motor e Medição de Combustível</span>
-                        <span class="materia-desc">Sistemas de alimentação</span>
-                    </div>
-                </a>
-                <a href="gmpsistemadeignicaoeeletricodomotor" class="materia-link available" data-title="Sistema de Ignição e Elétrico do Motor" data-search="ignição elétrico sistema motor">
-                    <i class="fas fa-bolt materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Sistema de Ignição e Elétrico do Motor</span>
-                        <span class="materia-desc">Partida e sistemas elétricos</span>
-                    </div>
-                </a>
-                <a href="gmplubrierefrigeracao" class="materia-link available" data-title="Sistema de Lubrificação e Refrigeração" data-search="lubrificação refrigeração sistema motor">
-                    <i class="fas fa-oil-can materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Sistema de Lubrificação e Refrigeração</span>
-                        <span class="materia-desc">Controle térmico e lubrificação</span>
-                    </div>
-                </a>
-                <a href="contrafogoepartida.html" class="materia-link available" data-title="Sistema de proteção contra fogo no motor e Sistema de partida de motores" data-search="proteção fogo partida motor sistema segurança ignição">
-                    <i class="fas fa-fire-extinguisher materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Sistema de proteção contra fogo no motor e Sistema de partida de motores</span>
-                        <span class="materia-desc">Segurança e sistemas de ignição</span>
-                    </div>
-                </a>
-                <a href="construcaodemotores.html" class="materia-link available" data-title="Teoria e construção de motores" data-search="teoria construção motores gmp fundamentos projeto">
-                    <i class="fas fa-industry materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Teoria e construção de motores</span>
-                        <span class="materia-desc">Fundamentos e projeto de motores</span>
-                    </div>
-                </a>
-                <a href="gmp1e2aerosimulados.html" class="materia-link available" data-title="GMP 1 e 2 do Aerosimulados" data-search="aerosimulados gmp simulador">
-                    <i class="fas fa-desktop materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">GMP 1 e 2 do Aerosimulados</span>
-                        <span class="materia-desc">Simulações práticas</span>
-                    </div>
-                </a>
-                <a href="gmp1hangarmma.html" class="materia-link available" data-title="GMP 1 - Hangar MMA" data-search="aerosimulados gmp simulador">
-                    <i class="fas fa-desktop materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">GMP 1 - Hangar MMA</span>
-                        <span class="materia-desc">Simulações práticas</span>
-                        <span class="materia-status">EM CONSTRUÇÃO</span>
-                    </div>
-                </a>
-                <a href="gmp2hangarmma.html" class="materia-link available" data-title="GMP 2 - Hangar MMA" data-search="aerosimulados gmp simulador">
-                    <i class="fas fa-desktop materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">GMP 2 - Hangar MMA</span>
-                        <span class="materia-desc">Simulações práticas</span>
-                        <span class="materia-status">EM CONSTRUÇÃO</span>
-                    </div>
-                </a>
-                <a href="gmp1e2aerosimulados.html" class="materia-link available" data-title="GMP 1 - Aprovados MMA" data-search="aerosimulados gmp simulador">
-                    <i class="fas fa-desktop materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">GMP 1 - Aprovados MMA</span>
-                        <span class="materia-desc">Simulações práticas</span>
-                        <span class="materia-status">EM CONSTRUÇÃO</span>
-                    </div>
-                </a>
-                <a href="gmp1e2aerosimulados.html" class="materia-link available" data-title="GMP 2 - Aprovados MMA" data-search="aerosimulados gmp simulador">
-                    <i class="fas fa-desktop materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">GMP 2 - Aprovados MMA</span>
-                        <span class="materia-desc">Simulações práticas</span>
-                        <span class="materia-status">EM CONSTRUÇÃO</span>
-                    </div>
-                </a>
-            </nav>
-        </section>
+    <div class="footer">
+        🔥 O sistema lê QUALQUER formato: "MEX 🇲🇽: 7,10" | "MEX7" | "FWC2" | "BRA5 (x1)"
+    </div>
+</div>
 
-        <section class="modulo celula" data-module="celula">
-            <div class="modulo-header">
-                <h2 class="titulo-modulo">
-                    <i class="fas fa-plane"></i> CÉLULA
-                </h2>
-                <span class="modulo-status">3 matérias</span>
-            </div>
-            <nav class="links-materias">
-                <a href="celula_materia1.html" class="materia-link construction" data-title="Estruturas da Aeronave" data-search="estruturas aeronave célula fuselagem">
-                    <i class="fas fa-layer-group materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Estruturas da Aeronave</span>
-                        <span class="materia-desc">Fuselagem e componentes</span>
-                    </div>
-                    <span class="materia-status">EM CONSTRUÇÃO</span>
-                </a>
-                <a href="celula_materia2.html" class="materia-link construction" data-title="Sistemas de Controle" data-search="controle sistema célula superfícies">
-                    <i class="fas fa-gamepad materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Sistemas de Controle</span>
-                        <span class="materia-desc">Superfícies de controle</span>
-                    </div>
-                    <span class="materia-status">EM CONSTRUÇÃO</span>
-                </a>
-                <a href="celula_materia3.html" class="materia-link construction" data-title="Manutenção de Célula" data-search="manutenção célula reparos">
-                    <i class="fas fa-hard-hat materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Manutenção de Célula</span>
-                        <span class="materia-desc">Procedimentos de reparo</span>
-                    </div>
-                    <span class="materia-status">EM CONSTRUÇÃO</span>
-                </a>
-            </nav>
-        </section>
-
-        <section class="modulo avionico" data-module="avionico">
-            <div class="modulo-header">
-                <h2 class="titulo-modulo">
-                    <i class="fas fa-satellite-dish"></i> AVIÔNICO
-                </h2>
-                <span class="modulo-status">3 matérias</span>
-            </div>
-            <nav class="links-materias">
-                <a href="avionico_materia1.html" class="materia-link construction" data-title="Sistemas de Navegação" data-search="navegação sistema aviônico gps">
-                    <i class="fas fa-compass materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Sistemas de Navegação</span>
-                        <span class="materia-desc">GPS e sistemas de direção</span>
-                    </div>
-                    <span class="materia-status">EM CONSTRUÇÃO</span>
-                </a>
-                <a href="avionico_materia2.html" class="materia-link construction" data-title="Comunicações Aeronáuticas" data-search="comunicação rádio aviônico">
-                    <i class="fas fa-broadcast-tower materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Comunicações Aeronáuticas</span>
-                        <span class="materia-desc">Sistemas de rádio e comunicação</span>
-                    </div>
-                    <span class="materia-status">EM CONSTRUÇÃO</span>
-                </a>
-                <a href="avionico_materia3.html" class="materia-link construction" data-title="Instrumentos de Voo" data-search="instrumentos voo painel aviônico">
-                    <i class="fas fa-tachometer-alt materia-icon"></i>
-                    <div class="materia-info">
-                        <span class="materia-name">Instrumentos de Voo</span>
-                        <span class="materia-desc">Painel de instrumentos</span>
-                    </div>
-                    <span class="materia-status">EM CONSTRUÇÃO</span>
-                </a>
-            </nav>
-        </section>
-
-    </main>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-info">
-                <p class="footer-title">Portal de Estudos</p>
-                <p class="footer-subtitle">Plataforma educacional sem fins lucrativos</p>
-            </div>
-            <div class="footer-stats">
-                <div class="stat">
-                    <span class="stat-number">33</span>
-                    <span class="stat-label">Matérias</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">10</span>
-                    <span class="stat-label">Disponíveis</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">4</span>
-                    <span class="stat-label">Módulos</span>
-                </div>
-            </div>
-            <div class="footer-copyright">
-                <p><i class="far fa-copyright"></i> 2026 - Todos os direitos reservados</p>
-                <p class="footer-note">Desenvolvido para a comunidade aeronáutica</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="search.js"></script>
+<script>
+    let ultimoMatch = [];
+    
+    const ordemPaises = [
+        { codigo: "FWC", nome: "FWC 🏆🌎📜" },
+        { codigo: "MEX", nome: "MEX 🇲🇽" },
+        { codigo: "RSA", nome: "RSA 🇿🇦" },
+        { codigo: "KOR", nome: "KOR 🇰🇷" },
+        { codigo: "CZE", nome: "CZE 🇨🇿" },
+        { codigo: "CAN", nome: "CAN 🇨🇦" },
+        { codigo: "BIH", nome: "BIH 🇧🇦" },
+        { codigo: "QAT", nome: "QAT 🇶🇦" },
+        { codigo: "SUI", nome: "SUI 🇨🇭" },
+        { codigo: "BRA", nome: "BRA 🇧🇷" },
+        { codigo: "MAR", nome: "MAR 🇲🇦" },
+        { codigo: "HAI", nome: "HAI 🇭🇹" },
+        { codigo: "SCO", nome: "SCO 🏴󠁧󠁢󠁳󠁣󠁴󠁿" },
+        { codigo: "USA", nome: "USA 🇺🇸" },
+        { codigo: "PAR", nome: "PAR 🇵🇾" },
+        { codigo: "AUS", nome: "AUS 🇦🇺" },
+        { codigo: "TUR", nome: "TUR 🇹🇷" },
+        { codigo: "GER", nome: "GER 🇩🇪" },
+        { codigo: "CUW", nome: "CUW 🇨🇼" },
+        { codigo: "CIV", nome: "CIV 🇨🇮" },
+        { codigo: "ECU", nome: "ECU 🇪🇨" },
+        { codigo: "NED", nome: "NED 🇳🇱" },
+        { codigo: "JPN", nome: "JPN 🇯🇵" },
+        { codigo: "SWE", nome: "SWE 🇸🇪" },
+        { codigo: "TUN", nome: "TUN 🇹🇳" },
+        { codigo: "BEL", nome: "BEL 🇧🇪" },
+        { codigo: "EGY", nome: "EGY 🇪🇬" },
+        { codigo: "IRN", nome: "IRN 🇮🇷" },
+        { codigo: "NZL", nome: "NZL 🇳🇿" },
+        { codigo: "ESP", nome: "ESP 🇪🇸" },
+        { codigo: "CPV", nome: "CPV 🇨🇻" },
+        { codigo: "KSA", nome: "KSA 🇸🇦" },
+        { codigo: "URU", nome: "URU 🇺🇾" },
+        { codigo: "FRA", nome: "FRA 🇫🇷" },
+        { codigo: "SEN", nome: "SEN 🇸🇳" },
+        { codigo: "IRQ", nome: "IRQ 🇮🇶" },
+        { codigo: "NOR", nome: "NOR 🇳🇴" },
+        { codigo: "ARG", nome: "ARG 🇦🇷" },
+        { codigo: "ALG", nome: "ALG 🇩🇿" },
+        { codigo: "AUT", nome: "AUT 🇦🇹" },
+        { codigo: "JOR", nome: "JOR 🇯🇴" },
+        { codigo: "POR", nome: "POR 🇵🇹" },
+        { codigo: "COD", nome: "COD 🇨🇩" },
+        { codigo: "UZB", nome: "UZB 🇺🇿" },
+        { codigo: "COL", nome: "COL 🇨🇴" },
+        { codigo: "ENG", nome: "ENG 🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
+        { codigo: "CRO", nome: "CRO 🇭🇷" },
+        { codigo: "GHA", nome: "GHA 🇬🇭" },
+        { codigo: "PAN", nome: "PAN 🇵🇦" }
+    ];
+    
+    // ============================================
+    // FUNÇÃO PRINCIPAL - Le QUALQUER formato
+    // ============================================
+    function extrairFigurinhas(texto) {
+        const figurinhas = new Map();
+        
+        // Remove quantidades
+        let textoLimpo = texto.replace(/\([×x]\d+\)/gi, '');
+        textoLimpo = textoLimpo.replace(/×\d+/gi, '');
+        
+        const linhas = textoLimpo.split('\n');
+        
+        for (let linha of linhas) {
+            linha = linha.trim();
+            if (!linha) continue;
+            
+            // Pular linhas de lixo
+            if (linha.toLowerCase().includes('baixe o app')) continue;
+            if (linha.includes('http://') || linha.includes('https://')) continue;
+            if (linha.match(/Eua\s*Méx\s*Can\s*26/i)) continue;
+            if (linha.includes('Bora trocar')) continue;
+            
+            // MÉTODO 1: "MEX 🇲🇽: 7, 10, 11" ou "MEX: 7,10,11"
+            const matchDoisPontos = linha.match(/^([A-Z]{2,4})(?:\s*[^:]*)?\s*:\s*(.+)$/i);
+            
+            if (matchDoisPontos) {
+                let codigo = matchDoisPontos[1].toUpperCase();
+                if (codigo === "FWC" || codigo.startsWith("FWC")) codigo = "FWC";
+                const conteudo = matchDoisPontos[2];
+                
+                const numeros = conteudo.match(/\b\d{1,3}\b/g);
+                if (numeros) {
+                    for (let numStr of numeros) {
+                        let numero = parseInt(numStr);
+                        if (!isNaN(numero) && numero >= 0 && numero <= 999) {
+                            const chave = `${codigo}${numero}`;
+                            if (!figurinhas.has(chave)) {
+                                figurinhas.set(chave, { codigo, numero });
+                            }
+                        }
+                    }
+                }
+                continue;
+            }
+            
+            // MÉTODO 2: "MEX7, MEX10, MEX11" ou "MEX 7, MEX 10"
+            const itens = linha.match(/\b([A-Z]{2,4})\s*(\d{1,3})\b/gi);
+            if (itens) {
+                for (let item of itens) {
+                    const match = item.match(/\b([A-Z]{2,4})\s*(\d{1,3})\b/i);
+                    if (match) {
+                        let codigo = match[1].toUpperCase();
+                        if (codigo === "FWC" || codigo.startsWith("FWC")) codigo = "FWC";
+                        let numero = parseInt(match[2]);
+                        if (!isNaN(numero) && numero >= 0 && numero <= 999) {
+                            const chave = `${codigo}${numero}`;
+                            if (!figurinhas.has(chave)) {
+                                figurinhas.set(chave, { codigo, numero });
+                            }
+                        }
+                    }
+                }
+                continue;
+            }
+        }
+        
+        return Array.from(figurinhas.values());
+    }
+    
+    function verificar() {
+        const textoOutro = document.getElementById('outroTexto').value;
+        const textoMeu = document.getElementById('meuTexto').value;
+        
+        if (!textoOutro.trim() || !textoMeu.trim()) {
+            alert("⚠️ Preencha os DOIS campos!");
+            return;
+        }
+        
+        const figOutro = extrairFigurinhas(textoOutro);
+        const figMeu = extrairFigurinhas(textoMeu);
+        
+        if (figOutro.length === 0) {
+            alert(`❌ Não encontrei figurinhas no texto do OUTRO.\n\nVerifique se você colou as REPETIDAS do outro usuário.`);
+            return;
+        }
+        
+        if (figMeu.length === 0) {
+            alert(`❌ Não encontrei figurinhas no texto das suas FALTANTES.\n\nVerifique se você colou as figurinhas que PRECISA.`);
+            return;
+        }
+        
+        const setFaltantes = new Set();
+        for (let fig of figMeu) {
+            setFaltantes.add(`${fig.codigo}${fig.numero}`);
+        }
+        
+        const matches = [];
+        for (let fig of figOutro) {
+            const chave = `${fig.codigo}${fig.numero}`;
+            if (setFaltantes.has(chave)) {
+                matches.push(fig);
+            }
+        }
+        
+        const unique = [];
+        const seen = new Set();
+        for (let fig of matches) {
+            const chave = `${fig.codigo}${fig.numero}`;
+            if (!seen.has(chave)) {
+                seen.add(chave);
+                unique.push(fig);
+            }
+        }
+        
+        unique.sort((a, b) => {
+            if (a.codigo === b.codigo) return a.numero - b.numero;
+            return a.codigo.localeCompare(b.codigo);
+        });
+        
+        ultimoMatch = unique;
+        
+        const resultBox = document.getElementById('resultBox');
+        const whatsappBtn = document.getElementById('whatsappBtn');
+        
+        if (unique.length === 0) {
+            resultBox.innerHTML = `
+                <div class="no-match">
+                    😕 NENHUMA FIGURINHA ENCONTRADA!<br><br>
+                    📊 OUTRO tem: ${figOutro.length} figurinha(s)<br>
+                    📊 Você precisa: ${figMeu.length} figurinha(s)
+                </div>`;
+            whatsappBtn.disabled = true;
+            return;
+        }
+        
+        const agrupado = {};
+        for (let fig of unique) {
+            if (!agrupado[fig.codigo]) agrupado[fig.codigo] = [];
+            agrupado[fig.codigo].push(fig.numero);
+        }
+        
+        let html = '<div class="result-stickers">';
+        for (const pais of ordemPaises) {
+            const numeros = agrupado[pais.codigo];
+            if (numeros && numeros.length > 0) {
+                numeros.sort((a,b) => a-b);
+                html += `<div class="sticker-card">${pais.codigo} ${numeros.join(', ')}</div>`;
+            }
+        }
+        html += '</div>';
+        
+        resultBox.innerHTML = `
+            <div style="font-size:1.1rem; margin-bottom:12px;">✅ <strong>${unique.length}</strong> figurinha(s) que combinam:</div>
+            ${html}
+            <div class="stats">📊 Ele pode te dar estas ${unique.length} figurinhas!</div>
+        `;
+        
+        whatsappBtn.disabled = false;
+    }
+    
+    function enviarWhatsApp() {
+        if (ultimoMatch.length === 0) {
+            alert("🔍 Toque em VERIFICAR primeiro!");
+            return;
+        }
+        
+        const agrupado = {};
+        for (let fig of ultimoMatch) {
+            if (!agrupado[fig.codigo]) agrupado[fig.codigo] = [];
+            agrupado[fig.codigo].push(fig.numero);
+        }
+        
+        for (let codigo in agrupado) {
+            agrupado[codigo].sort((a, b) => a - b);
+        }
+        
+        let mensagem = "🎯 FIGURINHAS QUE EU PRECISO 🎯\n\n";
+        
+        for (let pais of ordemPaises) {
+            const codigo = pais.codigo;
+            const numeros = agrupado[codigo];
+            if (numeros && numeros.length > 0) {
+                mensagem += `${pais.nome}: ${numeros.join(", ")}\n\n`;
+            }
+        }
+        
+        mensagem += "➡️ Me vende ou troca essas?";
+        
+        const url = "https://wa.me/?text=" + encodeURIComponent(mensagem);
+        window.open(url, '_blank');
+    }
+    
+    async function colarOutro() {
+        try {
+            const text = await navigator.clipboard.readText();
+            document.getElementById('outroTexto').value = text;
+            alert("✅ Texto colado!");
+        } catch(e) {
+            alert("❌ Segure o dedo no campo e escolha COLAR");
+        }
+    }
+    
+    async function colarMeu() {
+        try {
+            const text = await navigator.clipboard.readText();
+            document.getElementById('meuTexto').value = text;
+            alert("✅ Texto colado!");
+        } catch(e) {
+            alert("❌ Segure o dedo no campo e escolha COLAR");
+        }
+    }
+    
+    function copiarOutro() {
+        const textarea = document.getElementById('outroTexto');
+        textarea.select();
+        navigator.clipboard.writeText(textarea.value);
+        alert("📄 Copiado!");
+    }
+    
+    function copiarMeu() {
+        const textarea = document.getElementById('meuTexto');
+        textarea.select();
+        navigator.clipboard.writeText(textarea.value);
+        alert("📄 Copiado!");
+    }
+    
+    function limparOutro() {
+        document.getElementById('outroTexto').value = '';
+        alert("🧹 Campo limpo!");
+    }
+    
+    function limparMeu() {
+        document.getElementById('meuTexto').value = '';
+        alert("🧹 Campo limpo!");
+    }
+    
+    function limparTudo() {
+        if (confirm("Limpar TODOS os campos?")) {
+            document.getElementById('outroTexto').value = '';
+            document.getElementById('meuTexto').value = '';
+            document.getElementById('resultBox').innerHTML = '<div style="color:#999; padding:20px;">Toque em "VERIFICAR"</div>';
+            document.getElementById('whatsappBtn').disabled = true;
+            ultimoMatch = [];
+        }
+    }
+    
+    document.getElementById('colarOutro').onclick = colarOutro;
+    document.getElementById('copiarOutro').onclick = copiarOutro;
+    document.getElementById('limparOutro').onclick = limparOutro;
+    
+    document.getElementById('colarMeu').onclick = colarMeu;
+    document.getElementById('copiarMeu').onclick = copiarMeu;
+    document.getElementById('limparMeu').onclick = limparMeu;
+    
+    document.getElementById('verificarBtn').onclick = verificar;
+    document.getElementById('whatsappBtn').onclick = enviarWhatsApp;
+    document.getElementById('clearAllBtn').onclick = limparTudo;
+    
+    console.log("✅ Trocador de Figurinhas carregado!");
+</script>
 </body>
 </html>
-
 
 
 
