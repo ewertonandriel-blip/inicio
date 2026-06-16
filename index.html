@@ -43,12 +43,6 @@
             color: transparent;
         }
 
-        .sub {
-            color: #ffde9c;
-            margin-top: 6px;
-            font-size: 0.75rem;
-        }
-
         .main-panel {
             display: flex;
             flex-direction: column;
@@ -170,6 +164,8 @@
             margin-bottom: 16px;
             text-align: center;
             min-height: 150px;
+            max-height: 500px;
+            overflow-y: auto;
         }
 
         .result-stickers {
@@ -290,10 +286,12 @@
 <div class="container">
     <div class="header">
         <h1>⚡ TROCADOR DE FIGURINHAS</h1>
+    </div>
 
     <div class="aviso">
         ✅ O sistema identifica automaticamente formatos geradas pelo seu app de figurinhas como:<br>
-        "MEX 🇲🇽: 7, 10, 11" | "MEX7, MEX10" | "MEX 7 (x1)" | "FWC2, FWC14"
+        • "MEX 🇲🇽: 7, 10, 11" | "MEX7, MEX10" | "MEX 7 (x1)" | "FWC2, FWC14"<br>
+       
     </div>
 
     <div class="main-panel">
@@ -336,7 +334,7 @@
     </div>
 
     <div class="footer">
-        🔥 O sistema lê QUALQUER formato: "MEX 🇲🇽: 7,10" | "MEX7" | "FWC2" | "BRA5 (x1)"
+        🔥 Suporta "🇲🇽 MEX: 6, 16" | "🇦🇺 AUS: 1, 3, 7, 9, 10, 16 (2x), 20" | Todos os formatos!
     </div>
 </div>
 
@@ -392,18 +390,20 @@
         { codigo: "ENG", nome: "ENG 🏴󠁧󠁢󠁥󠁮󠁧󠁿" },
         { codigo: "CRO", nome: "CRO 🇭🇷" },
         { codigo: "GHA", nome: "GHA 🇬🇭" },
-        { codigo: "PAN", nome: "PAN 🇵🇦" }
+        { codigo: "PAN", nome: "PAN 🇵🇦" },
+        { codigo: "CC", nome: "CC 🥤" }
     ];
     
-    // ============================================
-    // FUNÇÃO PRINCIPAL - Le QUALQUER formato
-    // ============================================
     function extrairFigurinhas(texto) {
         const figurinhas = new Map();
         
-        // Remove quantidades
-        let textoLimpo = texto.replace(/\([×x]\d+\)/gi, '');
-        textoLimpo = textoLimpo.replace(/×\d+/gi, '');
+        // Remove multiplicadores como (x1), (x2), (x3), (2x), (3x) etc.
+        let textoLimpo = texto.replace(/\([×xX]\d+\)/gi, '');
+        textoLimpo = textoLimpo.replace(/\([×xX]\s*\d+\)/gi, '');
+        textoLimpo = textoLimpo.replace(/\[[×xX]\d+\]/gi, '');
+        textoLimpo = textoLimpo.replace(/[×xX]\d+/gi, '');
+        textoLimpo = textoLimpo.replace(/\d+[×xX]/gi, '');
+        textoLimpo = textoLimpo.replace(/\(\s*[×xX]\s*\d+\s*\)/gi, '');
         
         const linhas = textoLimpo.split('\n');
         
@@ -416,14 +416,27 @@
             if (linha.includes('http://') || linha.includes('https://')) continue;
             if (linha.match(/Eua\s*Méx\s*Can\s*26/i)) continue;
             if (linha.includes('Bora trocar')) continue;
+            if (linha.includes('Use nosso trocador')) continue;
             
-            // MÉTODO 1: "MEX 🇲🇽: 7, 10, 11" ou "MEX: 7,10,11"
-            const matchDoisPontos = linha.match(/^([A-Z]{2,4})(?:\s*[^:]*)?\s*:\s*(.+)$/i);
-            
-            if (matchDoisPontos) {
-                let codigo = matchDoisPontos[1].toUpperCase();
-                if (codigo === "FWC" || codigo.startsWith("FWC")) codigo = "FWC";
-                const conteudo = matchDoisPontos[2];
+            // MÉTODO 1: "🇲🇽 MEX: 6, 16" - com emoji e dois pontos
+            // Também captura "MEX: 6, 16" sem emoji
+            const matchEmojiDoisPontos = linha.match(/(?:[\u{1F000}-\u{1FFFF}]|\s)*([A-Z]{2,4})\s*[:：]\s*(.+)/ui);
+            if (matchEmojiDoisPontos) {
+                let codigo = matchEmojiDoisPontos[1].toUpperCase();
+                let conteudo = matchEmojiDoisPontos[2];
+                
+                // Remove multiplicadores remanescentes
+                conteudo = conteudo.replace(/\([×xX]\d+\)/gi, '');
+                conteudo = conteudo.replace(/\[[×xX]\d+\]/gi, '');
+                conteudo = conteudo.replace(/[×xX]\d+/gi, '');
+                conteudo = conteudo.replace(/\d+[×xX]/gi, '');
+                conteudo = conteudo.replace(/\(\s*[×xX]\s*\d+\s*\)/gi, '');
+                
+                // Remove palavras "e" e "e" com vírgula
+                conteudo = conteudo.replace(/[eE]\s*/g, ' ');
+                conteudo = conteudo.replace(/[,;]\s*/g, ' ');
+                conteudo = conteudo.replace(/\s+/g, ' ');
+                conteudo = conteudo.trim();
                 
                 const numeros = conteudo.match(/\b\d{1,3}\b/g);
                 if (numeros) {
@@ -440,14 +453,58 @@
                 continue;
             }
             
-            // MÉTODO 2: "MEX7, MEX10, MEX11" ou "MEX 7, MEX 10"
-            const itens = linha.match(/\b([A-Z]{2,4})\s*(\d{1,3})\b/gi);
-            if (itens) {
-                for (let item of itens) {
-                    const match = item.match(/\b([A-Z]{2,4})\s*(\d{1,3})\b/i);
+            // MÉTODO 2: Procura por qualquer padrão CODIGO + NUMEROS
+            const matchCodigo = linha.match(/^([A-Z]{2,4})\s+/i);
+            if (matchCodigo) {
+                let codigo = matchCodigo[1].toUpperCase();
+                let resto = linha.substring(matchCodigo[0].length);
+                
+                resto = resto.replace(/[eE]\s*/g, ' ');
+                resto = resto.replace(/[,;]\s*/g, ' ');
+                resto = resto.replace(/\s+/g, ' ');
+                resto = resto.trim();
+                
+                const numeros = resto.match(/\b\d{1,3}\b/g);
+                if (numeros) {
+                    for (let numStr of numeros) {
+                        let numero = parseInt(numStr);
+                        if (!isNaN(numero) && numero >= 0 && numero <= 999) {
+                            const chave = `${codigo}${numero}`;
+                            if (!figurinhas.has(chave)) {
+                                figurinhas.set(chave, { codigo, numero });
+                            }
+                        }
+                    }
+                }
+                continue;
+            }
+            
+            // MÉTODO 3: Procura por padrões como "FWC 9", "MEX 10", "RSA 5" (fallback)
+            const matches = linha.match(/\b([A-Z]{2,4})\s+(\d{1,3})\b/gi);
+            if (matches) {
+                for (let item of matches) {
+                    const match = item.match(/\b([A-Z]{2,4})\s+(\d{1,3})\b/i);
                     if (match) {
                         let codigo = match[1].toUpperCase();
-                        if (codigo === "FWC" || codigo.startsWith("FWC")) codigo = "FWC";
+                        let numero = parseInt(match[2]);
+                        if (!isNaN(numero) && numero >= 0 && numero <= 999) {
+                            const chave = `${codigo}${numero}`;
+                            if (!figurinhas.has(chave)) {
+                                figurinhas.set(chave, { codigo, numero });
+                            }
+                        }
+                    }
+                }
+                continue;
+            }
+            
+            // MÉTODO 4: Procura por padrões como "MEX10", "FWC9"
+            const matchJunto = linha.match(/\b([A-Z]{2,4})(\d{1,3})\b/gi);
+            if (matchJunto) {
+                for (let item of matchJunto) {
+                    const match = item.match(/\b([A-Z]{2,4})(\d{1,3})\b/i);
+                    if (match) {
+                        let codigo = match[1].toUpperCase();
                         let numero = parseInt(match[2]);
                         if (!isNaN(numero) && numero >= 0 && numero <= 999) {
                             const chave = `${codigo}${numero}`;
@@ -475,6 +532,9 @@
         
         const figOutro = extrairFigurinhas(textoOutro);
         const figMeu = extrairFigurinhas(textoMeu);
+        
+        console.log(`📊 OUTRO: ${figOutro.length} figurinhas encontradas`);
+        console.log(`📊 MEU: ${figMeu.length} figurinhas encontradas`);
         
         if (figOutro.length === 0) {
             alert(`❌ Não encontrei figurinhas no texto do OUTRO.\n\nVerifique se você colou as REPETIDAS do outro usuário.`);
@@ -581,7 +641,6 @@
             }
         }
         
-        // Texto final personalizado conforme solicitado
         mensagem += "Troca essas?\n\n";
         mensagem += "Use nosso trocador de figurinhas\n";
         mensagem += "Acesse: https://ewertonandriel-blip.github.io/inicio";
