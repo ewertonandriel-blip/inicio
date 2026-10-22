@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>THRUST PARFUMS</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<!-- Favicon em SVG codificado -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230d0d0d%22/><text x=%2250%22 y=%2275%22 font-size=%2270%22 font-family=%22serif%22 font-weight=%22bold%22 fill=%22%23f5d97a%22 text-anchor=%22middle%22>T</text></svg>">
 <style>
   :root {
     --fundo-site: #0d0d0d;
@@ -290,11 +292,47 @@
     border-radius: 30px; font-size: 0.65rem; font-weight: 600;
     text-transform: uppercase; letter-spacing: 1px;
     cursor: pointer; transition: 0.3s; width: 100%;
+    display: flex; align-items: center; justify-content: center; gap: 5px;
   }
   .btn-ver-produto:hover, .btn-ver-produto:active {
     background: linear-gradient(180deg, var(--dourado-claro), var(--dourado));
     color: #0d0d0d; border-color: var(--dourado-claro);
     box-shadow: 0 0 15px rgba(212,175,55,0.5);
+  }
+  
+  /* BOTÃO RÁPIDO REPOSICIONADO */
+  .btn-add-fast {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(180deg, var(--dourado-claro), var(--dourado));
+    border: none;
+    color: #0d0d0d;
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+    z-index: 5;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-add-fast:active {
+    transform: scale(0.85);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  @media (min-width: 768px) {
+    .btn-add-fast {
+      top: 10px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      font-size: 1.3rem;
+    }
   }
 
   /* MODAL DETALHES */
@@ -379,6 +417,21 @@
   .modal-precos .preco-antigo { font-size: 0.85rem; }
   .modal-precos .preco-atual { font-size: 1.9rem; }
   .aviso-pix { font-size: 0.7rem; color: #888; margin-top: 3px; }
+  
+  /* NOVO AVISO DE FRETE NO MODAL */
+  .aviso-frete-modal {
+    background: rgba(212,175,55,0.08);
+    border: 1px dashed rgba(212,175,55,0.4);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 0.78rem;
+    color: #ccc;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .aviso-frete-modal span { color: var(--dourado-claro); font-weight: bold; }
 
   .botoes-acao { display: flex; flex-direction: column; gap: 10px; margin-bottom: 25px; }
   .btn-add-carrinho, .btn-comprar-agora {
@@ -625,6 +678,47 @@
     fill: var(--dourado-claro);
   }
 
+  /* BOTÃO VOLTAR AO TOPO */
+  .btn-topo {
+    position: fixed;
+    bottom: 160px;
+    right: 16px;
+    z-index: 20;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(26,26,26,0.8);
+    border: 1px solid var(--dourado);
+    color: var(--dourado-claro);
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  }
+  .btn-topo.visivel {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .btn-topo:active {
+    background: var(--dourado);
+    color: #0d0d0d;
+    transform: scale(0.9);
+  }
+  @media (min-width: 768px) {
+    .btn-topo {
+      bottom: 180px;
+      right: 25px;
+      width: 50px;
+      height: 50px;
+    }
+  }
+
   /* DESKTOP */
   @media (min-width: 768px) {
     .barra-carrinho {
@@ -778,11 +872,11 @@
     <h2 class="titulo-secao">Categorias</h2>
     <div class="grid-categorias">
       <div class="categoria-card" onclick="irParaCategoria('feminino')">
-        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1000&auto=format&fit=crop" alt="Feminino">
+        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1000&auto=format&fit=crop" alt="Feminino" loading="lazy">
         <div class="overlay"><h3>Feminino</h3><span>Ver Coleção</span></div>
       </div>
       <div class="categoria-card" onclick="irParaCategoria('masculino')">
-        <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1000&auto=format&fit=crop" alt="Masculino">
+        <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1000&auto=format&fit=crop" alt="Masculino" loading="lazy">
         <div class="overlay"><h3>Masculino</h3><span>Ver Coleção</span></div>
       </div>
     </div>
@@ -834,6 +928,10 @@
         <div class="aviso-pix">à vista no Pix</div>
       </div>
 
+      <div class="aviso-frete-modal">
+        🚚 <span>Enviamos para todo o Brasil</span> via Correios. Combine o frete no WhatsApp.
+      </div>
+
       <div class="botoes-acao">
         <button class="btn-add-carrinho" onclick="adicionarAoCarrinho()">🛒 Adicionar ao carrinho</button>
         <button class="btn-comprar-agora" onclick="comprarAgora()">Comprar agora</button>
@@ -878,6 +976,11 @@
     </button>
   </div>
 </div>
+
+<!-- BOTÃO VOLTAR AO TOPO -->
+<button class="btn-topo" id="btnTopo" onclick="voltarAoTopo()" title="Voltar ao topo">
+  ↑
+</button>
 
 <!-- WHATSAPP FAB -->
 <a class="whats-fab" id="whatsFab" href="#" target="_blank" onclick="return abrirWhats();">
@@ -955,7 +1058,7 @@
   ];
 
   var labels = { feminino: "Feminino", masculino: "Masculino", compartilhado: "Compartilhado" };
-  var catAtual = 'todos'; // Inicia em Todos
+  var catAtual = 'todos'; 
   var termoBusca = '';
   var carrinho = {};
   var produtoSelecionado = null;
@@ -967,6 +1070,7 @@
   var navMenu = document.getElementById('navMenu');
   var barraCarrinho = document.getElementById('barraCarrinho');
   var whatsFab = document.getElementById('whatsFab');
+  var btnTopo = document.getElementById('btnTopo');
 
   function fmt(v) { return 'R$ ' + v.toFixed(2).replace('.', ','); }
   function esc(s) { return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
@@ -1067,7 +1171,6 @@
 
   window.buscar = function() {
     termoBusca = document.getElementById('campoBusca').value.trim();
-    // Se estiver buscando, muda automaticamente para a aba "Todos" para a busca abranger o catálogo inteiro
     if (termoBusca && catAtual !== 'todos') {
       catAtual = 'todos';
       document.querySelectorAll('.filtro-btn').forEach(function(btn){ btn.classList.remove('active'); });
@@ -1089,12 +1192,10 @@
   function renderizarProdutos() {
     var lista = perfumes.slice();
     
-    // Filtro por categoria
     if (catAtual !== 'todos') {
       lista = lista.filter(function(p){ return p.cat === catAtual; });
     }
     
-    // Filtro por busca
     if (termoBusca) {
       var t = termoBusca.toLowerCase();
       lista = lista.filter(function(p){
@@ -1102,7 +1203,6 @@
       });
     }
 
-    // Ordenar alfabeticamente se for a aba "Todos" ou busca
     if (catAtual === 'todos') {
       lista.sort(function(a, b) { return a.nome.localeCompare(b.nome); });
     }
@@ -1115,13 +1215,17 @@
     listaProdutos.innerHTML = lista.map(function(p) {
       var imgHtml;
       if (p.img && p.img !== 'COLE_O_LINK_AQUI') {
-        imgHtml = '<img src="' + p.img + '" alt="' + esc(p.nome) + '" onerror="this.parentNode.innerHTML=\'<div class=&quot;card-frasco-placeholder&quot;>THRUST</div>\'">';
+        imgHtml = '<img src="' + p.img + '" alt="' + esc(p.nome) + '" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=&quot;card-frasco-placeholder&quot;>THRUST</div>\'">';
       } else {
         imgHtml = '<div class="card-frasco-placeholder">THRUST</div>';
       }
       var selo = p.vendido ? '<div class="selo-vendas">Top</div>' : '';
+      
+      var btnFast = '<button class="btn-add-fast" onclick="event.stopPropagation(); adicionarDireto(' + p.id + ')" title="Adicionar rápido">+</button>';
+
       return '<div class="card-produto" onclick="abrirModal(' + p.id + ')">' +
         '<div class="card-imagem">' + selo + imgHtml + '</div>' +
+        btnFast +
         '<h3>' + esc(p.nome) + '</h3>' +
         '<div class="card-inspiracao">Inspirado em "' + esc(p.insp) + '"</div>' +
         '<div class="card-ml">50 ml</div>' +
@@ -1133,6 +1237,28 @@
       '</div>';
     }).join('');
   }
+
+  // --- FUNÇÃO PARA O BOTÃO RÁPIDO ---
+  window.adicionarDireto = function(id) {
+    var p = null;
+    for (var i = 0; i < perfumes.length; i++) if (perfumes[i].id === id) p = perfumes[i];
+    if (!p) return;
+    
+    carrinho[p.id] = (carrinho[p.id] || 0) + 1;
+    atualizarBadge();
+    
+    var btn = event.target;
+    if(btn) {
+      btn.innerHTML = '✓';
+      btn.style.background = '#25D366';
+      btn.style.color = '#fff';
+      setTimeout(function(){
+        btn.innerHTML = '+';
+        btn.style.background = '';
+        btn.style.color = '';
+      }, 1000);
+    }
+  };
 
   // --- MODAL PRODUTO ---
   window.abrirModal = function(id) {
@@ -1321,6 +1447,19 @@
     return false;
   };
 
+  // --- VOLTAR AO TOPO ---
+  window.voltarAoTopo = function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 300) {
+      btnTopo.classList.add('visivel');
+    } else {
+      btnTopo.classList.remove('visivel');
+    }
+  });
+
   modalProduto.addEventListener('click', function(e) {
     if (e.target === modalProduto) fecharModal();
   });
@@ -1329,9 +1468,7 @@
   });
 
   // --- INICIALIZAÇÃO ---
-  // Força o carregamento inicial na aba "Todos" com ordem alfabética
   window.irParaInicio();
-  
   atualizarBadge();
 })();
 </script>
