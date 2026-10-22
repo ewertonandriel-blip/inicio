@@ -3,9 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THRUST PARFUMS</title>
+<title>THRUST PARFUMS — Catálogo 50ml</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-<!-- Favicon em SVG codificado -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230d0d0d%22/><text x=%2250%22 y=%2275%22 font-size=%2270%22 font-family=%22serif%22 font-weight=%22bold%22 fill=%22%23f5d97a%22 text-anchor=%22middle%22>T</text></svg>">
 <style>
   :root {
@@ -300,7 +299,6 @@
     box-shadow: 0 0 15px rgba(212,175,55,0.5);
   }
   
-  /* BOTÃO RÁPIDO REPOSICIONADO */
   .btn-add-fast {
     position: absolute;
     top: 8px;
@@ -418,7 +416,6 @@
   .modal-precos .preco-atual { font-size: 1.9rem; }
   .aviso-pix { font-size: 0.7rem; color: #888; margin-top: 3px; }
   
-  /* NOVO AVISO DE FRETE NO MODAL */
   .aviso-frete-modal {
     background: rgba(212,175,55,0.08);
     border: 1px dashed rgba(212,175,55,0.4);
@@ -532,11 +529,20 @@
     text-align: center; color: #777; font-size: 0.9rem;
     padding: 30px 10px; font-style: italic;
   }
+  
+  /* AVISO DE DESCONTO CLICÁVEL */
   .aviso-desconto {
     background: rgba(212,175,55,0.08); border: 1px dashed var(--dourado);
     border-radius: 8px; padding: 8px 12px; margin: 14px 0;
     color: var(--dourado); font-size: .75rem; text-align: center;
+    display: block; width: 100%; cursor: pointer; transition: 0.2s;
+    font-family: inherit;
   }
+  .aviso-desconto:hover, .aviso-desconto:active {
+    background: rgba(212,175,55,0.15);
+    border-style: solid;
+  }
+
   .linha-total {
     display: flex; justify-content: space-between;
     font-size: .9rem; color: #bbb; margin-bottom: 6px;
@@ -993,7 +999,7 @@
 
   var whats = "5511946927675";
   var PRECO = 99.90;
-  var PRECO_ANTIGO = 129.90;
+  var PRECO_ANTIGO = 139.90;
   var DESCONTO_MIN = 3;
   var DESCONTO_PCT = 0.05;
 
@@ -1362,6 +1368,15 @@
     document.body.style.overflow = 'auto';
   };
 
+  // FUNÇÃO ESPECÍFICA PARA O LINK DO DESCONTO
+  window.fecharCarrinhoEComprar = function() {
+    fecharCarrinho();
+    // Rola suavemente de volta para o topo/vitrine
+    setTimeout(function() {
+      document.querySelector('.vitrine-section').scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  };
+
   function renderizarCarrinho() {
     var lista = document.getElementById('itens-carrinho');
     var rodape = document.getElementById('rodape-carrinho');
@@ -1398,10 +1413,11 @@
     var htmlRodape = '';
     if (!r.temDesconto) {
       var faltam = DESCONTO_MIN - r.qtdTotal;
-      htmlRodape += '<div class="aviso-desconto">Adicione mais ' + faltam + ' ' +
-        (faltam === 1 ? 'unidade' : 'unidades') + ' e ganhe <strong>5% de desconto</strong>!</div>';
+      // AQUI ESTÁ O AJUSTE: O aviso agora é um botão que chama a função de fechar e comprar
+      htmlRodape += '<button class="aviso-desconto" onclick="fecharCarrinhoEComprar()">Adicione mais ' + faltam + ' ' +
+        (faltam === 1 ? 'unidade' : 'unidades') + ' e ganhe <strong>5% de desconto</strong>!</button>';
     } else {
-      htmlRodape += '<div class="aviso-desconto">🎉 <strong>5% de desconto</strong> aplicado automaticamente!</div>';
+      htmlRodape += '<div class="aviso-desconto" style="cursor:default; pointer-events:none; border-style:dashed;">🎉 <strong>5% de desconto</strong> aplicado automaticamente!</div>';
     }
     htmlRodape += '<div class="linha-total"><span>Subtotal (' + r.qtdTotal + ' ' +
       (r.qtdTotal === 1 ? 'item' : 'itens') + '):</span><span>' + fmt(r.subtotal) + '</span></div>';
