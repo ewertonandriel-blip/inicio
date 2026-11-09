@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THRUST PARFUMS — Catálogo 50ml</title>
+<title>THRUST PARFUMS</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230d0d0d%22/><text x=%2250%22 y=%2275%22 font-size=%2270%22 font-family=%22serif%22 font-weight=%22bold%22 fill=%22%23f5d97a%22 text-anchor=%22middle%22>T</text></svg>">
 <style>
@@ -83,12 +83,16 @@
   
   .card-produto { background-color: var(--fundo-card); text-align: center; cursor: pointer; position: relative; transition: 0.3s; display: flex; flex-direction: column; border-radius: 10px; padding: 10px; border: 1px solid var(--borda); }
   .card-produto:hover { border-color: var(--dourado); box-shadow: 0 8px 25px rgba(212,175,55,0.2); transform: translateY(-3px); }
+  .card-produto.esgotado { opacity: 0.6; filter: grayscale(0.8); }
   .card-imagem { background-color: #fafafa; height: 160px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; position: relative; overflow: hidden; }
   .card-imagem img { max-width: 80%; max-height: 85%; object-fit: contain; transition: transform .5s; }
   .card-produto:hover .card-imagem img { transform: scale(1.06); }
   .card-frasco-placeholder { width: 80px; height: 110px; background: linear-gradient(135deg, #f0e6d3 0%, #d4b87a 100%); border-radius: 6px 6px 3px 3px; position: relative; display: flex; align-items: center; justify-content: center; color: #6d5420; font-weight: 800; font-size: 0.55rem; box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
   .card-frasco-placeholder::before { content: ''; position: absolute; top: -10px; width: 25px; height: 12px; background: #d4b87a; border-radius: 3px 3px 0 0; }
+  
   .selo-vendas { position: absolute; top: 8px; left: 8px; background: linear-gradient(135deg, var(--dourado), var(--dourado-claro)); color: #0d0d0d; font-size: 0.55rem; font-weight: 800; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; letter-spacing: 0.5px; z-index: 2; box-shadow: 0 3px 10px rgba(212,175,55,0.5); }
+  .selo-indisponivel { position: absolute; top: 8px; right: 8px; background: #c94a4a; color: #fff; font-size: 0.55rem; font-weight: 800; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; letter-spacing: 0.5px; z-index: 2; box-shadow: 0 3px 10px rgba(201,74,74,0.5); }
+  
   .card-produto h3 { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; color: var(--dourado-claro); }
   .card-inspiracao { font-size: 0.6rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
   .card-precos { margin-bottom: 10px; margin-top: auto; }
@@ -131,6 +135,10 @@
   .btn-add-carrinho:hover { background-color: rgba(212,175,55,0.1); }
   .btn-comprar-agora { background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); color: #0d0d0d; font-weight: 700; }
   .btn-comprar-agora:hover { box-shadow: 0 0 20px rgba(212,175,55,0.5); }
+  
+  /* BOTÕES DESABILITADOS NO MODAL */
+  .btn-add-carrinho:disabled, .btn-comprar-agora:disabled { background: #333; color: #666; border-color: #444; cursor: not-allowed; box-shadow: none; }
+  
   .info-adicional { border-top: 1px solid var(--borda); padding-top: 20px; }
   .info-adicional p { font-size: 0.8rem; margin-bottom: 12px; color: #bbb; line-height: 1.5; }
   .info-adicional strong { color: var(--dourado); font-weight: 600; }
@@ -355,7 +363,7 @@
       <div class="modal-insp" id="modal-inspiracao"></div>
 
       <div class="tamanhos-container" id="modal-tamanhos"></div>
-      <div class="aviso-tamanho">✨ Novos tamanhos em breve — por enquanto apenas 50ml</div>
+      <div class="aviso-tamanho">✨ Selecione um tamanho disponível</div>
 
       <div class="modal-precos">
         <span class="preco-antigo" id="modal-preco-antigo"></span>
@@ -368,8 +376,8 @@
       </div>
 
       <div class="botoes-acao">
-        <button class="btn-add-carrinho" onclick="adicionarAoCarrinho()">🛒 Adicionar ao carrinho</button>
-        <button class="btn-comprar-agora" onclick="comprarAgora()">Comprar agora</button>
+        <button class="btn-add-carrinho" id="btn-add-carrinho" onclick="adicionarAoCarrinho()">🛒 Adicionar ao carrinho</button>
+        <button class="btn-comprar-agora" id="btn-comprar-agora" onclick="comprarAgora()">Comprar agora</button>
       </div>
 
       <div class="info-adicional">
@@ -439,7 +447,6 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
   
-  // Variável global que será preenchida pelo Firebase
   let perfumes = [];
   let carrinho = {};
   let produtoSelecionado = null;
@@ -457,8 +464,11 @@
   const barraCarrinho = document.getElementById('barraCarrinho');
   const whatsFab = document.getElementById('whatsFab');
   const btnTopo = document.getElementById('btnTopo');
+  
+  // Elementos do Modal
+  const btnAddCarrinho = document.getElementById('btn-add-carrinho');
+  const btnComprarAgora = document.getElementById('btn-comprar-agora');
 
-  // --- INICIALIZAÇÃO DO CATÁLOGO ---
   async function carregarPerfumes() {
     try {
       const q = query(collection(db, "perfumes"), orderBy("nome"));
@@ -469,10 +479,10 @@
         perfumes.push({ id: doc.id, ...doc.data() });
       });
 
-      window.irParaInicio(); // Renderiza a tela inicial
+      window.irParaInicio();
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
-      listaProdutos.innerHTML = '<div style="color:red; text-align:center; grid-column:1/-1;">Erro ao carregar o catálogo. Tente novamente.</div>';
+      listaProdutos.innerHTML = '<div style="color:red; text-align:center; grid-column:1/-1;">Erro ao carregar o catálogo.</div>';
     }
   }
 
@@ -497,7 +507,7 @@
 
   window.irParaInicio = function() {
     mostrarCatalogo();
-    let catAtual = 'todos'; // Força a aba "Todos" na inicialização
+    let catAtual = 'todos';
 
     document.querySelectorAll('.filtro-btn').forEach(function(b) { b.classList.remove('active'); });
     let btnTodos = document.querySelector('.filtro-btn[data-cat="todos"]');
@@ -588,7 +598,6 @@
     renderizarProdutos(cat, termoBusca);
   };
 
-  // --- RENDER PRODUTOS ---
   function renderizarProdutos(categoriaFiltro, termoBusca) {
     let lista = perfumes.slice();
     
@@ -618,9 +627,11 @@
       } else {
         imgHtml = '<div class="card-frasco-placeholder">THRUST</div>';
       }
-      let selo = p.vendido ? '<div class="selo-vendas">Top</div>' : '';
       
-      // Pega o menor preço ou o 50ml como padrão para mostrar na vitrine
+      let selo = p.vendido ? '<div class="selo-vendas">Top</div>' : '';
+      let seloInd = p.indisponivel ? '<div class="selo-indisponivel">Indisponível</div>' : '';
+      
+      // Pega o menor preço ou o 50ml
       let precoVitrine = 0;
       if (p.tamanhos) {
         if (p.tamanhos["50ml"]) precoVitrine = p.tamanhos["50ml"];
@@ -630,26 +641,24 @@
         }
       }
 
-      return '<div class="card-produto" onclick="abrirModal(\'' + p.id + '\')">' +
-        '<div class="card-imagem">' + selo + imgHtml + '</div>' +
-        '<button class="btn-add-fast" onclick="event.stopPropagation(); adicionarDireto(\'' + p.id + '\')" title="Adicionar rápido">+</button>' +
+      return '<div class="card-produto ' + (p.indisponivel ? 'esgotado' : '') + '" onclick="abrirModal(\'' + p.id + '\')">' +
+        '<div class="card-imagem">' + selo + seloInd + imgHtml + '</div>' +
+        (p.indisponivel ? '' : '<button class="btn-add-fast" onclick="event.stopPropagation(); adicionarDireto(\'' + p.id + '\')" title="Adicionar rápido">+</button>') +
         '<h3>' + esc(p.nome) + '</h3>' +
         '<div class="card-inspiracao">Inspirado em "' + esc(p.insp) + '"</div>' +
         '<div class="card-ml">50 ml</div>' +
         '<div class="card-precos">' +
           '<span class="preco-atual">' + fmt(precoVitrine) + '</span>' +
         '</div>' +
-        '<button class="btn-ver-produto">Ver Produto</button>' +
+        '<button class="btn-ver-produto">' + (p.indisponivel ? 'Ver Detalhes' : 'Ver Produto') + '</button>' +
       '</div>';
     }).join('');
   }
 
-  // --- FUNÇÃO PARA O BOTÃO RÁPIDO ---
   window.adicionarDireto = function(id) {
     let p = perfumes.find(function(item) { return item.id === id; });
-    if (!p) return;
+    if (!p || p.indisponivel) return;
 
-    // Pega o preço do 50ml por padrão
     let preco = 0;
     if (p.tamanhos && p.tamanhos["50ml"]) preco = p.tamanhos["50ml"];
     else if (p.tamanhos) {
@@ -659,9 +668,20 @@
 
     let nomeTam = p.tamanhos && p.tamanhos["50ml"] ? "50ml" : (p.tamanhos ? Object.keys(p.tamanhos)[0] : "50ml");
     
-    carrinho[p.id] = carrinho[p.id] || { nome: p.nome, insp: p.insp, qtd: 0, tamanho: nomeTam, precoUnit: preco };
-    carrinho[p.id].qtd += 1;
+    let key = p.id + '-' + nomeTam;
     
+    if(!carrinho[key]) {
+      carrinho[key] = {
+        id: p.id,
+        nome: p.nome,
+        insp: p.insp,
+        tamanho: nomeTam,
+        precoUnit: preco,
+        qtd: 0
+      };
+    }
+    
+    carrinho[key].qtd += 1;
     atualizarBadge();
     
     let btn = event.target;
@@ -677,7 +697,6 @@
     }
   };
 
-  // --- MODAL PRODUTO ---
   window.abrirModal = function(id) {
     let p = perfumes.find(function(item) { return item.id === id; });
     if (!p) return;
@@ -701,23 +720,34 @@
       (p.notas && p.notas.coracao ? '<span><strong>Coração:</strong> ' + esc(p.notas.coracao) + '</span>' : '') +
       (p.notas && p.notas.fundo ? '<span><strong>Fundo:</strong> ' + esc(p.notas.fundo) + '</span>' : '');
 
-    // Gera os botões de tamanho baseados no que foi cadastrado no Firebase
+    // Gera os botões de tamanho
     let tamHtml = '';
     let tamanhosDisponiveis = p.tamanhos || {};
     
     let opcoesFixas = ['30ml', '50ml', '100ml'];
     opcoesFixas.forEach(function(tam) {
       if (tamanhosDisponiveis[tam]) {
-        // Habilitado
-        tamHtml += '<div class="btn-tamanho" data-tam="'+tam+'" data-preco="'+tamanhosDisponiveis[tam]+'" onclick="selecionarTamanho(this)">' + tam + '<small>' + fmt(tamanhosDisponiveis[tam]) + '</small></div>';
+        let disabled = p.indisponivel ? 'style="pointer-events:none; opacity:0.5;"' : '';
+        tamHtml += '<div class="btn-tamanho" data-tam="'+tam+'" data-preco="'+tamanhosDisponiveis[tam]+'" onclick="selecionarTamanho(this)" '+disabled+'>' + tam + '<small>' + fmt(tamanhosDisponiveis[tam]) + '</small></div>';
       } else {
-        // Desabilitado (Em Breve)
         tamHtml += '<div class="btn-tamanho desabilitado">' + tam + '<small>Em breve</small></div>';
       }
     });
     document.getElementById('modal-tamanhos').innerHTML = tamHtml;
 
-    // Seleciona o primeiro que estiver disponível, ou o 50ml
+    // Configura botões de ação (Comprar/Add)
+    if(p.indisponivel) {
+       btnAddCarrinho.disabled = true;
+       btnComprarAgora.disabled = true;
+       btnAddCarrinho.innerText = "Produto Indisponível";
+       btnComprarAgora.innerText = "Indisponível";
+    } else {
+       btnAddCarrinho.disabled = false;
+       btnComprarAgora.disabled = false;
+       btnAddCarrinho.innerText = "🛒 Adicionar ao carrinho";
+       btnComprarAgora.innerText = "Comprar agora";
+    }
+
     let tamInicial = document.querySelector('#modal-tamanhos .btn-tamanho:not(.desabilitado)');
     if(tamInicial) {
       selecionarTamanho(tamInicial);
@@ -777,9 +807,9 @@
   }
 
   window.adicionarAoCarrinho = function() {
-    if (!produtoSelecionado || !tamanhoSelecionado) return;
+    if (!produtoSelecionado || !tamanhoSelecionado || produtoSelecionado.indisponivel) return;
     
-    let key = produtoSelecionado.id + '-' + tamanhoSelecionado.label; // Chave única por ID e tamanho
+    let key = produtoSelecionado.id + '-' + tamanhoSelecionado.label;
     
     if(!carrinho[key]) {
       carrinho[key] = {
@@ -795,7 +825,7 @@
     carrinho[key].qtd += 1;
     atualizarBadge();
     
-    let btn = document.querySelector('.btn-add-carrinho');
+    let btn = document.getElementById('btn-add-carrinho');
     let txt = btn.innerText;
     btn.innerText = '✓ Adicionado!';
     btn.style.backgroundColor = '#25D366';
@@ -810,7 +840,7 @@
   };
 
   window.comprarAgora = function() {
-    if (!produtoSelecionado || !tamanhoSelecionado) return;
+    if (!produtoSelecionado || !tamanhoSelecionado || produtoSelecionado.indisponivel) return;
     let msg = 'Olá! Tenho interesse no perfume *' + produtoSelecionado.nome +
               '* (inspirado em ' + produtoSelecionado.insp + ') — ' + tamanhoSelecionado.label + ' — ' + fmt(tamanhoSelecionado.preco) + '.\n\nPode me dar mais informações?';
     window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent(msg), '_blank');
@@ -934,7 +964,6 @@
     if (e.target === modalCarrinho) fecharCarrinho();
   });
 
-  // Executa a busca no Firebase ao carregar a página
   carregarPerfumes();
 </script>
 </body>
