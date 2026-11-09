@@ -8,776 +8,185 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230d0d0d%22/><text x=%2250%22 y=%2275%22 font-size=%2270%22 font-family=%22serif%22 font-weight=%22bold%22 fill=%22%23f5d97a%22 text-anchor=%22middle%22>T</text></svg>">
 <style>
   :root {
-    --fundo-site: #0d0d0d;
-    --fundo-card: #1a1a1a;
-    --fundo-topo: #000;
-    --preto: #f5f5f5;
-    --dourado: #c9a227;
-    --dourado-claro: #f5d97a;
-    --cinza-texto: #999;
-    --borda: rgba(212,175,55,0.25);
-    --verde-whats: #25D366;
+    --fundo-site: #0d0d0d; --fundo-card: #1a1a1a; --fundo-topo: #000; --preto: #f5f5f5;
+    --dourado: #c9a227; --dourado-claro: #f5d97a; --cinza-texto: #999;
+    --borda: rgba(212,175,55,0.25); --verde-whats: #25D366;
   }
-
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-  body {
-    background-color: var(--fundo-site);
-    color: var(--preto);
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    line-height: 1.6;
-    overflow-x: hidden;
-    padding-bottom: 90px;
-  }
-
+  body { background-color: var(--fundo-site); color: var(--preto); font-family: 'Montserrat', sans-serif; font-weight: 400; line-height: 1.6; overflow-x: hidden; padding-bottom: 90px; }
   h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; }
   a { text-decoration: none; color: inherit; }
-
+  
   /* HEADER */
-  .top-header {
-    background: linear-gradient(180deg, #000 0%, #1a1a1a 100%);
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 2px solid var(--dourado);
-    position: sticky; top: 0; z-index: 100;
-  }
-  .menu-toggle {
-    display: block; background: none; border: none; font-size: 1.5rem;
-    cursor: pointer; color: var(--dourado-claro); padding: 5px;
-  }
-  .logo-area {
-    display: flex; align-items: center; justify-content: center;
-    flex: 1; cursor: pointer; user-select: none;
-    transition: opacity .2s;
-  }
+  .top-header { background: linear-gradient(180deg, #000 0%, #1a1a1a 100%); padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--dourado); position: sticky; top: 0; z-index: 100; }
+  .menu-toggle { display: block; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--dourado-claro); padding: 5px; }
+  .logo-area { display: flex; align-items: center; justify-content: center; flex: 1; cursor: pointer; user-select: none; transition: opacity .2s; }
   .logo-area:hover { opacity: .85; }
-  .logo-area h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.5rem; letter-spacing: 5px; font-weight: 700;
-    background: linear-gradient(180deg, var(--dourado-claro) 0%, var(--dourado) 50%, #8a6d1a 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .logo-area h1 small {
-    display: block; font-size: .5rem; letter-spacing: 6px;
-    font-family: 'Montserrat', sans-serif; font-weight: 500;
-    color: var(--dourado); margin-top: -2px; text-align: center;
-    -webkit-text-fill-color: var(--dourado);
-    background: none;
-  }
+  .logo-area h1 { font-family: 'Playfair Display', serif; font-size: 1.5rem; letter-spacing: 5px; font-weight: 700; background: linear-gradient(180deg, var(--dourado-claro) 0%, var(--dourado) 50%, #8a6d1a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .logo-area h1 small { display: block; font-size: .5rem; letter-spacing: 6px; font-family: 'Montserrat', sans-serif; font-weight: 500; color: var(--dourado); margin-top: -2px; text-align: center; -webkit-text-fill-color: var(--dourado); background: none; }
   .icons-header { display: flex; align-items: center; gap: 8px; }
-  .icon-btn {
-    background: none; border: none; cursor: pointer; font-size: 1.3rem;
-    color: var(--dourado-claro); position: relative; padding: 6px;
-    display: flex; align-items: center;
-  }
-  .cart-badge {
-    background-color: var(--dourado); color: #0d0d0d; font-size: 0.65rem;
-    font-weight: 800; border-radius: 50%; width: 18px; height: 18px;
-    display: flex; align-items: center; justify-content: center;
-    position: absolute; top: -2px; right: -2px;
-    border: 2px solid #000;
-  }
+  .icon-btn { background: none; border: none; cursor: pointer; font-size: 1.3rem; color: var(--dourado-claro); position: relative; padding: 6px; display: flex; align-items: center; }
+  .cart-badge { background-color: var(--dourado); color: #0d0d0d; font-size: 0.65rem; font-weight: 800; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; position: absolute; top: -2px; right: -2px; border: 2px solid #000; }
 
   /* MENU MOBILE */
-  .mobile-menu-overlay {
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.7); z-index: 2000;
-  }
-  .mobile-menu {
-    position: fixed; top: 0; left: -290px; width: 280px; height: 100%;
-    background-color: #111; z-index: 2001; transition: left 0.3s ease;
-    padding: 30px 20px; box-shadow: 2px 0 20px rgba(212,175,55,0.2);
-    overflow-y: auto; border-right: 1px solid var(--dourado);
-  }
+  .mobile-menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 2000; }
+  .mobile-menu { position: fixed; top: 0; left: -290px; width: 280px; height: 100%; background-color: #111; z-index: 2001; transition: left 0.3s ease; padding: 30px 20px; box-shadow: 2px 0 20px rgba(212,175,55,0.2); overflow-y: auto; border-right: 1px solid var(--dourado); }
   .mobile-menu.open { left: 0; }
-  .mobile-menu .close-menu {
-    background: none; border: none; font-size: 1.5rem; cursor: pointer;
-    color: var(--dourado-claro); margin-bottom: 20px; display: block;
-  }
-  .mobile-menu a {
-    display: block; padding: 15px 0; border-bottom: 1px solid var(--borda);
-    font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px;
-    color: #ccc; font-weight: 500;
-  }
+  .mobile-menu .close-menu { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--dourado-claro); margin-bottom: 20px; display: block; }
+  .mobile-menu a { display: block; padding: 15px 0; border-bottom: 1px solid var(--borda); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: #ccc; font-weight: 500; }
   .mobile-menu a:hover { color: var(--dourado); }
 
   /* BUSCA */
-  .search-bar {
-    width: 100%; padding: 14px 20px; background-color: #111;
-    border-bottom: 1px solid var(--borda);
-  }
-  .search-bar input {
-    width: 100%; padding: 12px 20px 12px 44px; border-radius: 30px;
-    border: 2px solid var(--dourado); background-color: #1a1a1a;
-    font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
-    outline: none; color: #fff;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9a227' width='16' height='16'><path d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/></svg>");
-    background-repeat: no-repeat;
-    background-position: 16px center;
-    transition: .3s;
-  }
+  .search-bar { width: 100%; padding: 14px 20px; background-color: #111; border-bottom: 1px solid var(--borda); }
+  .search-bar input { width: 100%; padding: 12px 20px 12px 44px; border-radius: 30px; border: 2px solid var(--dourado); background-color: #1a1a1a; font-family: 'Montserrat', sans-serif; font-size: 0.85rem; outline: none; color: #fff; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9a227' width='16' height='16'><path d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/></svg>"); background-repeat: no-repeat; background-position: 16px center; transition: .3s; }
   .search-bar input::placeholder { color: #777; }
   .search-bar input:focus { border-color: var(--dourado-claro); box-shadow: 0 0 15px rgba(212,175,55,.3); }
   .search-bar.oculto { display: none; }
 
-  .nav-menu {
-    display: none; background-color: #111; padding: 15px 40px;
-    justify-content: center; gap: 30px; border-bottom: 1px solid var(--borda);
-    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500;
-  }
+  .nav-menu { display: none; background-color: #111; padding: 15px 40px; justify-content: center; gap: 30px; border-bottom: 1px solid var(--borda); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; }
   .nav-menu a { cursor: pointer; transition: .3s; color: #aaa; }
   .nav-menu a:hover, .nav-menu a.active { color: var(--dourado); }
   .nav-menu.oculto { display: none !important; }
 
   /* BENEFÍCIOS */
-  .beneficios {
-    display: grid; grid-template-columns: 1fr 1fr;
-    background-color: #111; border-bottom: 1px solid var(--borda);
-  }
-  .beneficio-item {
-    text-align: center; padding: 15px 5px;
-    border-right: 1px solid var(--borda); border-bottom: 1px solid var(--borda);
-  }
+  .beneficios { display: grid; grid-template-columns: 1fr 1fr; background-color: #111; border-bottom: 1px solid var(--borda); }
+  .beneficio-item { text-align: center; padding: 15px 5px; border-right: 1px solid var(--borda); border-bottom: 1px solid var(--borda); }
   .beneficio-item:nth-child(2n) { border-right: none; }
   .beneficio-item:nth-child(3), .beneficio-item:nth-child(4) { border-bottom: none; }
-  .beneficio-item h4 {
-    font-size: 0.9rem; font-weight: 700; margin-bottom: 3px;
-    color: var(--dourado-claro);
-  }
-  .beneficio-item p {
-    font-size: 0.55rem; text-transform: uppercase; color: #888; letter-spacing: 0.5px;
-  }
+  .beneficio-item h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; color: var(--dourado-claro); }
+  .beneficio-item p { font-size: 0.55rem; text-transform: uppercase; color: #888; letter-spacing: 0.5px; }
 
   /* CATEGORIAS */
   .categorias-section { text-align: center; padding: 40px 15px 30px; }
-  .subtitulo-secao {
-    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px;
-    color: var(--dourado); margin-bottom: 5px; display: block;
-  }
-  .titulo-secao {
-    font-size: 2.2rem; font-weight: 400; margin-bottom: 25px;
-    color: var(--dourado-claro);
-  }
-  .grid-categorias {
-    display: grid; grid-template-columns: 1fr;
-    max-width: 1400px; margin: 0 auto; gap: 10px;
-  }
-  .categoria-card {
-    position: relative; height: 250px; overflow: hidden;
-    cursor: pointer; border-radius: 4px;
-    border: 1px solid var(--borda);
-  }
-  .categoria-card img {
-    width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease;
-    filter: brightness(0.55);
-  }
+  .subtitulo-secao { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px; color: var(--dourado); margin-bottom: 5px; display: block; }
+  .titulo-secao { font-size: 2.2rem; font-weight: 400; margin-bottom: 25px; color: var(--dourado-claro); }
+  .grid-categorias { display: grid; grid-template-columns: 1fr; max-width: 1400px; margin: 0 auto; gap: 10px; }
+  .categoria-card { position: relative; height: 250px; overflow: hidden; cursor: pointer; border-radius: 4px; border: 1px solid var(--borda); }
+  .categoria-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; filter: brightness(0.55); }
   .categoria-card:hover img { transform: scale(1.05); filter: brightness(0.7); }
-  .categoria-card .overlay {
-    position: absolute; bottom: 25px; left: 25px; color: #fff;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.8); z-index: 2; text-align: left;
-  }
-  .categoria-card .overlay h3 {
-    font-size: 1.8rem; font-weight: 700; margin-bottom: 3px;
-    color: var(--dourado-claro);
-  }
-  .categoria-card .overlay span {
-    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px;
-    border-bottom: 1px solid var(--dourado); padding-bottom: 2px;
-    color: var(--dourado);
-  }
-  .categoria-card::after {
-    content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60%;
-    background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); z-index: 1;
-  }
+  .categoria-card .overlay { position: absolute; bottom: 25px; left: 25px; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.8); z-index: 2; text-align: left; }
+  .categoria-card .overlay h3 { font-size: 1.8rem; font-weight: 700; margin-bottom: 3px; color: var(--dourado-claro); }
+  .categoria-card .overlay span { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid var(--dourado); padding-bottom: 2px; color: var(--dourado); }
+  .categoria-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); z-index: 1; }
 
   /* VITRINE */
   .vitrine-section { max-width: 1300px; margin: 0 auto; padding: 20px 15px 60px; }
-  .vitrine-header {
-    display: flex; flex-direction: column; align-items: flex-start;
-    border-bottom: 1px solid var(--borda); padding-bottom: 15px;
-    margin-bottom: 25px; gap: 10px;
-  }
+  .vitrine-header { display: flex; flex-direction: column; align-items: flex-start; border-bottom: 1px solid var(--borda); padding-bottom: 15px; margin-bottom: 25px; gap: 10px; }
   .vitrine-titulo { font-size: 1.5rem; color: var(--dourado-claro); }
-  .filtros-vitrine {
-    display: flex; gap: 15px; overflow-x: auto; width: 100%;
-    padding-bottom: 5px; scrollbar-width: none;
-  }
+  .filtros-vitrine { display: flex; gap: 15px; overflow-x: auto; width: 100%; padding-bottom: 5px; scrollbar-width: none; }
   .filtros-vitrine::-webkit-scrollbar { display: none; }
-  .filtro-btn {
-    background: none; border: none; font-family: 'Montserrat', sans-serif;
-    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;
-    color: #777; cursor: pointer; padding-bottom: 5px;
-    border-bottom: 1px solid transparent; transition: 0.3s; white-space: nowrap;
-  }
+  .filtro-btn { background: none; border: none; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #777; cursor: pointer; padding-bottom: 5px; border-bottom: 1px solid transparent; transition: 0.3s; white-space: nowrap; }
   .filtro-btn.active, .filtro-btn:hover { color: var(--dourado); border-bottom: 1px solid var(--dourado); }
 
-  .grid-produtos {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
-  }
-  .card-produto {
-    background-color: var(--fundo-card); text-align: center; cursor: pointer;
-    position: relative; transition: 0.3s; display: flex; flex-direction: column;
-    border-radius: 10px; padding: 10px; border: 1px solid var(--borda);
-  }
-  .card-produto:hover {
-    border-color: var(--dourado);
-    box-shadow: 0 8px 25px rgba(212,175,55,0.2);
-    transform: translateY(-3px);
-  }
-  .card-imagem {
-    background-color: #fafafa; height: 160px; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 10px; position: relative; overflow: hidden;
-  }
-  .card-imagem img {
-    max-width: 80%; max-height: 85%; object-fit: contain;
-    transition: transform .5s;
-  }
-  .card-produto:hover .card-imagem img { transform: scale(1.06); }
-  .card-frasco-placeholder {
-    width: 80px; height: 110px;
-    background: linear-gradient(135deg, #f0e6d3 0%, #d4b87a 100%);
-    border-radius: 6px 6px 3px 3px; position: relative;
-    display: flex; align-items: center; justify-content: center;
-    color: #6d5420; font-weight: 800; font-size: 0.55rem;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-  }
-  .card-frasco-placeholder::before {
-    content: ''; position: absolute; top: -10px; width: 25px; height: 12px;
-    background: #d4b87a; border-radius: 3px 3px 0 0;
-  }
-  .selo-vendas {
-    position: absolute; top: 8px; left: 8px;
-    background: linear-gradient(135deg, var(--dourado), var(--dourado-claro));
-    color: #0d0d0d; font-size: 0.55rem; font-weight: 800;
-    text-transform: uppercase; padding: 3px 9px; border-radius: 20px;
-    letter-spacing: 0.5px; z-index: 2;
-    box-shadow: 0 3px 10px rgba(212,175,55,0.5);
-  }
-  .card-produto h3 {
-    font-family: 'Playfair Display', serif; font-size: 0.95rem;
-    font-weight: 600; margin-bottom: 2px; color: var(--dourado-claro);
-  }
-  .card-inspiracao {
-    font-size: 0.6rem; color: #888; text-transform: uppercase;
-    letter-spacing: 0.5px; margin-bottom: 6px;
-  }
-  .card-precos { margin-bottom: 10px; margin-top: auto; }
-  .preco-antigo {
-    text-decoration: line-through; color: #666;
-    font-size: 0.7rem; margin-right: 4px;
-  }
-  .preco-atual {
-    font-family: 'Playfair Display', serif; font-size: 1.05rem;
-    font-weight: 700;
-    background: linear-gradient(180deg, var(--dourado-claro), var(--dourado));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .card-ml {
-    display: inline-block; font-size: 0.6rem; font-weight: 700;
-    color: var(--dourado); background: rgba(212,175,55,0.08);
-    border: 1px solid rgba(212,175,55,0.4);
-    padding: 2px 8px; border-radius: 20px; letter-spacing: 1px;
-    margin-bottom: 8px; text-transform: uppercase;
-  }
-  .btn-ver-produto {
-    background: none; border: 1px solid var(--dourado);
-    color: var(--dourado); padding: 8px 15px;
-    border-radius: 30px; font-size: 0.65rem; font-weight: 600;
-    text-transform: uppercase; letter-spacing: 1px;
-    cursor: pointer; transition: 0.3s; width: 100%;
-    display: flex; align-items: center; justify-content: center; gap: 5px;
-  }
-  .btn-ver-produto:hover, .btn-ver-produto:active {
-    background: linear-gradient(180deg, var(--dourado-claro), var(--dourado));
-    color: #0d0d0d; border-color: var(--dourado-claro);
-    box-shadow: 0 0 15px rgba(212,175,55,0.5);
-  }
+  .grid-produtos { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+  .loading-text { text-align: center; color: var(--dourado); padding: 40px; grid-column: 1/-1; font-style: italic; }
   
-  .btn-add-fast {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: linear-gradient(180deg, var(--dourado-claro), var(--dourado));
-    border: none;
-    color: #0d0d0d;
-    font-size: 1.1rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.4);
-    z-index: 5;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .btn-add-fast:active {
-    transform: scale(0.85);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.5);
-  }
-  @media (min-width: 768px) {
-    .btn-add-fast {
-      top: 10px;
-      right: 10px;
-      width: 34px;
-      height: 34px;
-      font-size: 1.3rem;
-    }
-  }
+  .card-produto { background-color: var(--fundo-card); text-align: center; cursor: pointer; position: relative; transition: 0.3s; display: flex; flex-direction: column; border-radius: 10px; padding: 10px; border: 1px solid var(--borda); }
+  .card-produto:hover { border-color: var(--dourado); box-shadow: 0 8px 25px rgba(212,175,55,0.2); transform: translateY(-3px); }
+  .card-imagem { background-color: #fafafa; height: 160px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; position: relative; overflow: hidden; }
+  .card-imagem img { max-width: 80%; max-height: 85%; object-fit: contain; transition: transform .5s; }
+  .card-produto:hover .card-imagem img { transform: scale(1.06); }
+  .card-frasco-placeholder { width: 80px; height: 110px; background: linear-gradient(135deg, #f0e6d3 0%, #d4b87a 100%); border-radius: 6px 6px 3px 3px; position: relative; display: flex; align-items: center; justify-content: center; color: #6d5420; font-weight: 800; font-size: 0.55rem; box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
+  .card-frasco-placeholder::before { content: ''; position: absolute; top: -10px; width: 25px; height: 12px; background: #d4b87a; border-radius: 3px 3px 0 0; }
+  .selo-vendas { position: absolute; top: 8px; left: 8px; background: linear-gradient(135deg, var(--dourado), var(--dourado-claro)); color: #0d0d0d; font-size: 0.55rem; font-weight: 800; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; letter-spacing: 0.5px; z-index: 2; box-shadow: 0 3px 10px rgba(212,175,55,0.5); }
+  .card-produto h3 { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; color: var(--dourado-claro); }
+  .card-inspiracao { font-size: 0.6rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .card-precos { margin-bottom: 10px; margin-top: auto; }
+  .preco-antigo { text-decoration: line-through; color: #666; font-size: 0.7rem; margin-right: 4px; }
+  .preco-atual { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .card-ml { display: inline-block; font-size: 0.6rem; font-weight: 700; color: var(--dourado); background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.4); padding: 2px 8px; border-radius: 20px; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
+  .btn-ver-produto { background: none; border: 1px solid var(--dourado); color: var(--dourado); padding: 8px 15px; border-radius: 30px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 5px; }
+  .btn-ver-produto:hover, .btn-ver-produto:active { background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); color: #0d0d0d; border-color: var(--dourado-claro); box-shadow: 0 0 15px rgba(212,175,55,0.5); }
+  .btn-add-fast { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); border: none; color: #0d0d0d; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.4); z-index: 5; transition: transform 0.2s, box-shadow 0.2s; }
+  .btn-add-fast:active { transform: scale(0.85); box-shadow: 0 1px 3px rgba(0,0,0,0.5); }
 
   /* MODAL DETALHES */
-  .modal-overlay {
-    display: none; position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-color: var(--fundo-site); z-index: 3000;
-    justify-content: center; align-items: flex-start;
-    overflow-y: auto; -webkit-overflow-scrolling: touch;
-  }
+  .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--fundo-site); z-index: 3000; justify-content: center; align-items: flex-start; overflow-y: auto; -webkit-overflow-scrolling: touch; }
   .modal-overlay.ativo { display: flex; }
-  .modal-content {
-    background-color: var(--fundo-site); width: 100%; min-height: 100%;
-    display: flex; flex-direction: column; position: relative;
-  }
-  .modal-imagem {
-    width: 100%; height: 300px; background-color: #fafafa;
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-  }
+  .modal-content { background-color: var(--fundo-site); width: 100%; min-height: 100%; display: flex; flex-direction: column; position: relative; }
+  .modal-imagem { width: 100%; height: 300px; background-color: #fafafa; display: flex; align-items: center; justify-content: center; position: relative; }
   .modal-imagem img { max-width: 60%; max-height: 85%; object-fit: contain; }
   .modal-imagem .card-frasco-placeholder { width: 140px; height: 180px; }
   .modal-info { width: 100%; padding: 25px 20px; position: relative; }
-  .btn-fechar {
-    position: absolute; top: 15px; right: 15px;
-    background: rgba(0,0,0,0.7); border: 1px solid var(--dourado);
-    width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
-    font-weight: bold; color: var(--dourado-claro); font-size: 1.2rem;
-    display: flex; align-items: center; justify-content: center;
-    z-index: 10;
-  }
-  .modal-categoria {
-    font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px;
-    color: var(--dourado); margin-bottom: 8px;
-  }
-  .modal-titulo {
-    font-size: 1.8rem; font-weight: 700; margin-bottom: 8px;
-    color: var(--dourado-claro); line-height: 1.2;
-  }
-  .modal-insp {
-    font-size: 0.8rem; color: #888; font-style: italic;
-    margin-bottom: 20px;
-  }
-
-  /* TAMANHOS */
-  .tamanhos-container {
-    display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap;
-  }
-  .btn-tamanho {
-    flex: 1 1 30%; padding: 12px 5px;
-    border: 1px solid var(--borda); background: var(--fundo-card);
-    border-radius: 6px; cursor: pointer; text-align: center;
-    transition: 0.2s; font-size: 0.75rem; color: var(--cinza-texto);
-    font-weight: 600; font-family: 'Montserrat', sans-serif;
-    min-width: 80px; position: relative;
-  }
-  .btn-tamanho small {
-    display: block; font-size: 0.6rem; font-weight: 400;
-    color: #666; margin-top: 2px;
-  }
-  .btn-tamanho.active {
-    border: 2px solid var(--dourado); background-color: rgba(212,175,55,0.1);
-    color: var(--dourado-claro);
-  }
-  .btn-tamanho.desabilitado {
-    opacity: 0.35; cursor: not-allowed; background: #151515;
-    pointer-events: none; text-decoration: line-through;
-  }
-  .btn-tamanho.desabilitado::after {
-    content: "EM BREVE"; position: absolute;
-    top: -8px; right: -4px; background: var(--dourado);
-    color: #0d0d0d; font-size: 0.45rem; padding: 2px 5px;
-    border-radius: 8px; font-weight: 800; letter-spacing: 0.5px;
-    text-decoration: none;
-  }
-  .aviso-tamanho {
-    font-size: 0.68rem; color: var(--dourado); font-style: italic;
-    margin-bottom: 16px;
-  }
-
+  .btn-fechar { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.7); border: 1px solid var(--dourado); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-weight: bold; color: var(--dourado-claro); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; z-index: 10; }
+  .modal-categoria { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--dourado); margin-bottom: 8px; }
+  .modal-titulo { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; color: var(--dourado-claro); line-height: 1.2; }
+  .modal-insp { font-size: 0.8rem; color: #888; font-style: italic; margin-bottom: 20px; }
+  .tamanhos-container { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+  .btn-tamanho { flex: 1 1 30%; padding: 12px 5px; border: 1px solid var(--borda); background: var(--fundo-card); border-radius: 6px; cursor: pointer; text-align: center; transition: 0.2s; font-size: 0.75rem; color: var(--cinza-texto); font-weight: 600; font-family: 'Montserrat', sans-serif; min-width: 80px; position: relative; }
+  .btn-tamanho small { display: block; font-size: 0.6rem; font-weight: 400; color: #666; margin-top: 2px; }
+  .btn-tamanho.active { border: 2px solid var(--dourado); background-color: rgba(212,175,55,0.1); color: var(--dourado-claro); }
+  .btn-tamanho.desabilitado { opacity: 0.35; cursor: not-allowed; background: #151515; pointer-events: none; text-decoration: line-through; }
+  .btn-tamanho.desabilitado::after { content: "EM BREVE"; position: absolute; top: -8px; right: -4px; background: var(--dourado); color: #0d0d0d; font-size: 0.45rem; padding: 2px 5px; border-radius: 8px; font-weight: 800; letter-spacing: 0.5px; text-decoration: none; }
+  .aviso-tamanho { font-size: 0.68rem; color: var(--dourado); font-style: italic; margin-bottom: 16px; }
   .modal-precos { margin-bottom: 20px; }
   .modal-precos .preco-antigo { font-size: 0.85rem; }
   .modal-precos .preco-atual { font-size: 1.9rem; }
   .aviso-pix { font-size: 0.7rem; color: #888; margin-top: 3px; }
-  
-  .aviso-frete-modal {
-    background: rgba(212,175,55,0.08);
-    border: 1px dashed rgba(212,175,55,0.4);
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 0.78rem;
-    color: #ccc;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+  .aviso-frete-modal { background: rgba(212,175,55,0.08); border: 1px dashed rgba(212,175,55,0.4); border-radius: 8px; padding: 10px 12px; font-size: 0.78rem; color: #ccc; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
   .aviso-frete-modal span { color: var(--dourado-claro); font-weight: bold; }
-
   .botoes-acao { display: flex; flex-direction: column; gap: 10px; margin-bottom: 25px; }
-  .btn-add-carrinho, .btn-comprar-agora {
-    width: 100%; padding: 15px; border: none; border-radius: 30px;
-    font-weight: 600; cursor: pointer; text-transform: uppercase;
-    font-size: 0.75rem; letter-spacing: 1px; transition: 0.3s;
-    font-family: 'Montserrat', sans-serif;
-  }
-  .btn-add-carrinho {
-    background-color: transparent; border: 1px solid var(--dourado);
-    color: var(--dourado);
-  }
+  .btn-add-carrinho, .btn-comprar-agora { width: 100%; padding: 15px; border: none; border-radius: 30px; font-weight: 600; cursor: pointer; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; transition: 0.3s; font-family: 'Montserrat', sans-serif; }
+  .btn-add-carrinho { background-color: transparent; border: 1px solid var(--dourado); color: var(--dourado); }
   .btn-add-carrinho:hover { background-color: rgba(212,175,55,0.1); }
-  .btn-comprar-agora {
-    background: linear-gradient(180deg, var(--dourado-claro), var(--dourado));
-    color: #0d0d0d; font-weight: 700;
-  }
+  .btn-comprar-agora { background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); color: #0d0d0d; font-weight: 700; }
   .btn-comprar-agora:hover { box-shadow: 0 0 20px rgba(212,175,55,0.5); }
-
   .info-adicional { border-top: 1px solid var(--borda); padding-top: 20px; }
   .info-adicional p { font-size: 0.8rem; margin-bottom: 12px; color: #bbb; line-height: 1.5; }
   .info-adicional strong { color: var(--dourado); font-weight: 600; }
   .notas-olfativas { margin-top: 15px; font-size: 0.75rem; color: #aaa; line-height: 1.6; }
   .notas-olfativas span { display: block; margin-bottom: 6px; }
-  .notas-olfativas strong {
-    color: var(--dourado); text-transform: uppercase; font-size: 0.65rem;
-    letter-spacing: 1px; margin-right: 5px;
-  }
+  .notas-olfativas strong { color: var(--dourado); text-transform: uppercase; font-size: 0.65rem; letter-spacing: 1px; margin-right: 5px; }
 
   /* CARRINHO */
-  .modal-carrinho-overlay {
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.85); z-index: 4000;
-    justify-content: center; align-items: center; padding: 15px;
-  }
+  .modal-carrinho-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); z-index: 4000; justify-content: center; align-items: center; padding: 15px; }
   .modal-carrinho-overlay.ativo { display: flex; }
-
-  .modal-carrinho-content {
-    background-color: var(--fundo-card); padding: 25px 20px;
-    border-radius: 10px; border: 1px solid var(--dourado);
-    width: 100%; max-width: 500px; max-height: 88vh; overflow-y: auto;
-    position: relative;
-    box-shadow: 0 20px 60px rgba(212,175,55,0.3);
-  }
-  
-  .modal-carrinho-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--borda);
-  }
-
-  .modal-carrinho-header h2 {
-    color: var(--dourado-claro);
-    font-size: 1.5rem;
-    margin: 0;
-  }
-
-  .btn-fechar-carrinho {
-    background: none;
-    border: none;
-    color: var(--dourado);
-    font-size: 1.5rem;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0 5px;
-    transition: 0.2s;
-  }
+  .modal-carrinho-content { background-color: var(--fundo-card); padding: 25px 20px; border-radius: 10px; border: 1px solid var(--dourado); width: 100%; max-width: 500px; max-height: 88vh; overflow-y: auto; position: relative; box-shadow: 0 20px 60px rgba(212,175,55,0.3); }
+  .modal-carrinho-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--borda); }
+  .modal-carrinho-header h2 { color: var(--dourado-claro); font-size: 1.5rem; margin: 0; }
+  .btn-fechar-carrinho { background: none; border: none; color: var(--dourado); font-size: 1.5rem; cursor: pointer; line-height: 1; padding: 0 5px; transition: 0.2s; }
   .btn-fechar-carrinho:hover { color: var(--dourado-claro); transform: scale(1.1); }
-
-  .item-carrinho {
-    display: flex; justify-content: space-between; align-items: center;
-    border-bottom: 1px solid var(--borda); padding: 12px 0;
-    font-size: 0.8rem; gap: 8px;
-  }
+  .item-carrinho { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--borda); padding: 12px 0; font-size: 0.8rem; gap: 8px; }
   .item-carrinho .info-item { flex: 1; min-width: 0; }
-  .item-carrinho .info-item strong {
-    display: block; color: var(--dourado-claro); font-size: .85rem;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  }
+  .item-carrinho .info-item strong { display: block; color: var(--dourado-claro); font-size: .85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .item-carrinho .info-item small { color: #888; font-size: .68rem; font-style: italic; }
   .item-carrinho .ctrl { display: flex; align-items: center; gap: 6px; }
-  .item-carrinho .ctrl button {
-    width: 26px; height: 26px; border-radius: 6px;
-    border: 1px solid var(--dourado); background: transparent;
-    color: var(--dourado); cursor: pointer; font-weight: 700;
-    display: flex; align-items: center; justify-content: center;
-  }
+  .item-carrinho .ctrl button { width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--dourado); background: transparent; color: var(--dourado); cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; }
   .item-carrinho .ctrl button:active { background: var(--dourado); color: #0d0d0d; }
   .item-carrinho .ctrl span { min-width: 18px; text-align: center; font-weight: 600; color: #fff; }
-  .item-carrinho .preco-item {
-    font-weight: 700; min-width: 70px; text-align: right;
-    color: var(--dourado); font-size: .85rem;
-  }
-  .carrinho-vazio {
-    text-align: center; color: #777; font-size: 0.9rem;
-    padding: 30px 10px; font-style: italic;
-  }
-  
-  /* AVISO DE DESCONTO CLICÁVEL */
-  .aviso-desconto {
-    background: rgba(212,175,55,0.08); border: 1px dashed var(--dourado);
-    border-radius: 8px; padding: 8px 12px; margin: 14px 0;
-    color: var(--dourado); font-size: .75rem; text-align: center;
-    display: block; width: 100%; cursor: pointer; transition: 0.2s;
-    font-family: inherit;
-  }
-  .aviso-desconto:hover, .aviso-desconto:active {
-    background: rgba(212,175,55,0.15);
-    border-style: solid;
-  }
-
-  .linha-total {
-    display: flex; justify-content: space-between;
-    font-size: .9rem; color: #bbb; margin-bottom: 6px;
-  }
+  .item-carrinho .preco-item { font-weight: 700; min-width: 70px; text-align: right; color: var(--dourado); font-size: .85rem; }
+  .carrinho-vazio { text-align: center; color: #777; font-size: 0.9rem; padding: 30px 10px; font-style: italic; }
+  .aviso-desconto { background: rgba(212,175,55,0.08); border: 1px dashed var(--dourado); border-radius: 8px; padding: 8px 12px; margin: 14px 0; color: var(--dourado); font-size: .75rem; text-align: center; display: block; width: 100%; cursor: pointer; transition: 0.2s; font-family: inherit; }
+  .aviso-desconto:hover, .aviso-desconto:active { background: rgba(212,175,55,0.15); border-style: solid; }
+  .linha-total { display: flex; justify-content: space-between; font-size: .9rem; color: #bbb; margin-bottom: 6px; }
   .linha-total.desconto { color: #25D366; font-weight: 600; }
-  .linha-total.total-geral {
-    font-size: 1.15rem; font-weight: 800;
-    color: var(--dourado-claro);
-    padding-top: 8px; margin-top: 8px;
-    border-top: 1px solid var(--borda);
-    font-family: 'Playfair Display', serif;
-  }
-
-  .btn-finalizar-whats {
-    background-color: var(--verde-whats); color: #fff;
-    width: 100%; padding: 16px; border: none; border-radius: 30px;
-    font-size: 0.85rem; font-weight: 700; cursor: pointer;
-    margin-top: 16px; display: flex; align-items: center;
-    justify-content: center; gap: 10px;
-    text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;
-  }
+  .linha-total.total-geral { font-size: 1.15rem; font-weight: 800; color: var(--dourado-claro); padding-top: 8px; margin-top: 8px; border-top: 1px solid var(--borda); font-family: 'Playfair Display', serif; }
+  .btn-finalizar-whats { background-color: var(--verde-whats); color: #fff; width: 100%; padding: 16px; border: none; border-radius: 30px; font-size: 0.85rem; font-weight: 700; cursor: pointer; margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
   .btn-finalizar-whats:active { background: #1a9e4a; }
   .btn-finalizar-whats:disabled { background: #333; color: #666; cursor: not-allowed; }
-  
-  .btn-continuar {
-    background: none; border: none; color: #888; margin-top: 15px;
-    cursor: pointer; width: 100%; text-decoration: underline;
-    font-size: 0.8rem; font-family: inherit;
-  }
+  .btn-continuar { background: none; border: none; color: #888; margin-top: 15px; cursor: pointer; width: 100%; text-decoration: underline; font-size: 0.8rem; font-family: inherit; }
 
   /* BARRA CARRINHO FLUTUANTE */
-  .barra-carrinho {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 25;
-    padding: 0 12px 12px;
-    pointer-events: none;
-    transform: translateY(120%);
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  }
+  .barra-carrinho { position: fixed; bottom: 0; left: 0; right: 0; z-index: 25; padding: 0 12px 12px; pointer-events: none; transform: translateY(120%); transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
   .barra-carrinho.ativo { transform: translateY(0); }
-  .barra-carrinho-conteudo {
-    pointer-events: auto;
-    background: linear-gradient(135deg, var(--dourado) 0%, var(--dourado-claro) 50%, var(--dourado) 100%);
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 14px;
-    box-shadow: 0 -4px 30px rgba(212,175,55,0.55), 0 6px 20px rgba(0,0,0,0.4);
-    cursor: pointer;
-    gap: 10px;
-    border: 1px solid rgba(255,255,255,0.3);
-  }
-  .barra-carrinho-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex: 1;
-    min-width: 0;
-  }
-  .barra-carrinho-icone {
-    width: 40px;
-    height: 40px;
-    background: rgba(13,13,13,0.9);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    position: relative;
-  }
-  .barra-carrinho-icone svg {
-    width: 22px;
-    height: 22px;
-    fill: var(--dourado-claro);
-  }
-  .barra-carrinho-icone .mini-badge {
-    position: absolute;
-    top: -4px;
-    right: -4px;
-    background: #c2185b;
-    color: #fff;
-    font-size: 0.6rem;
-    font-weight: 800;
-    border-radius: 50%;
-    width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid var(--dourado);
-  }
-  .barra-carrinho-texto {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-  .barra-carrinho-qtd {
-    font-size: 0.65rem;
-    color: #3a2c0a;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-  }
-  .barra-carrinho-total {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.05rem;
-    font-weight: 800;
-    color: #0d0d0d;
-    line-height: 1.1;
-    white-space: nowrap;
-  }
-  .barra-carrinho-btn {
-    background: #0d0d0d;
-    color: var(--dourado-claro);
-    border: none;
-    padding: 12px 18px;
-    border-radius: 10px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-shrink: 0;
-    transition: transform 0.2s;
-  }
+  .barra-carrinho-conteudo { pointer-events: auto; background: linear-gradient(135deg, var(--dourado) 0%, var(--dourado-claro) 50%, var(--dourado) 100%); border-radius: 14px; display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; box-shadow: 0 -4px 30px rgba(212,175,55,0.55), 0 6px 20px rgba(0,0,0,0.4); cursor: pointer; gap: 10px; border: 1px solid rgba(255,255,255,0.3); }
+  .barra-carrinho-info { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+  .barra-carrinho-icone { width: 40px; height: 40px; background: rgba(13,13,13,0.9); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; position: relative; }
+  .barra-carrinho-icone svg { width: 22px; height: 22px; fill: var(--dourado-claro); }
+  .barra-carrinho-icone .mini-badge { position: absolute; top: -4px; right: -4px; background: #c2185b; color: #fff; font-size: 0.6rem; font-weight: 800; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; border: 2px solid var(--dourado); }
+  .barra-carrinho-texto { display: flex; flex-direction: column; min-width: 0; }
+  .barra-carrinho-qtd { font-size: 0.65rem; color: #3a2c0a; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+  .barra-carrinho-total { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 800; color: #0d0d0d; line-height: 1.1; white-space: nowrap; }
+  .barra-carrinho-btn { background: #0d0d0d; color: var(--dourado-claro); border: none; padding: 12px 18px; border-radius: 10px; font-family: 'Montserrat', sans-serif; font-size: 0.72rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; gap: 6px; flex-shrink: 0; transition: transform 0.2s; }
   .barra-carrinho-btn:active { transform: scale(0.96); }
-  .barra-carrinho-btn svg {
-    width: 14px;
-    height: 14px;
-    fill: var(--dourado-claro);
-  }
+  .barra-carrinho-btn svg { width: 14px; height: 14px; fill: var(--dourado-claro); }
 
   /* BOTÃO VOLTAR AO TOPO */
-  .btn-topo {
-    position: fixed;
-    bottom: 160px;
-    right: 16px;
-    z-index: 20;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(26,26,26,0.8);
-    border: 1px solid var(--dourado);
-    color: var(--dourado-claro);
-    font-size: 1.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-  }
-  .btn-topo.visivel {
-    opacity: 1;
-    pointer-events: auto;
-  }
-  .btn-topo:active {
-    background: var(--dourado);
-    color: #0d0d0d;
-    transform: scale(0.9);
-  }
-  @media (min-width: 768px) {
-    .btn-topo {
-      bottom: 180px;
-      right: 25px;
-      width: 50px;
-      height: 50px;
-    }
-  }
+  .btn-topo { position: fixed; bottom: 160px; right: 16px; z-index: 20; width: 44px; height: 44px; border-radius: 50%; background: rgba(26,26,26,0.8); border: 1px solid var(--dourado); color: var(--dourado-claro); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; pointer-events: none; transition: all 0.3s ease; backdrop-filter: blur(4px); box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+  .btn-topo.visivel { opacity: 1; pointer-events: auto; }
+  .btn-topo:active { background: var(--dourado); color: #0d0d0d; transform: scale(0.9); }
 
   /* DESKTOP */
-  @media (min-width: 768px) {
-    .barra-carrinho {
-      left: auto;
-      right: 20px;
-      bottom: 90px;
-      padding: 0;
-      max-width: 380px;
-    }
-    .barra-carrinho-conteudo {
-      padding: 14px 16px;
-      border-radius: 16px;
-    }
-    .barra-carrinho-total { font-size: 1.15rem; }
-    .barra-carrinho-btn { padding: 14px 22px; }
-  }
-
-  /* FABS */
-  .whats-fab {
-    position: fixed; bottom: 20px; right: 16px; z-index: 20;
-    width: 56px; height: 56px; border-radius: 50%;
-    background: var(--verde-whats);
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 6px 20px rgba(37,211,102,.5);
-    text-decoration: none; transition: bottom .35s cubic-bezier(0.4, 0, 0.2, 1), transform .3s;
-  }
-  .whats-fab svg { width: 32px; height: 32px; fill: #fff; }
-  .whats-fab.recuado { bottom: 92px; }
-  @media (min-width: 768px) {
-    .whats-fab.recuado { bottom: 20px; }
-    .whats-fab { bottom: 20px; }
-  }
-
-  /* QUEM SOMOS */
-  .aba-conteudo { display: none; }
-  .aba-conteudo.ativo { display: block; }
-  .quem-somos { padding: 30px 22px 50px; max-width: 700px; margin: 0 auto; }
-  .quem-somos h2 {
-    font-size: 1.8rem; color: var(--dourado-claro);
-    margin-bottom: 6px; text-align: center;
-  }
-  .quem-somos .sub {
-    text-align: center; color: var(--dourado); font-style: italic;
-    font-size: .88rem; margin-bottom: 28px; padding-bottom: 20px;
-    border-bottom: 1px solid var(--borda);
-  }
-  .quem-somos p {
-    color: #bbb; font-size: .92rem; line-height: 1.7;
-    margin-bottom: 16px; text-align: justify;
-  }
-  .quem-somos p strong { color: var(--dourado-claro); font-weight: 700; }
-
-  /* DESKTOP GERAL */
   @media (min-width: 768px) {
     .menu-toggle { display: none; }
     .top-header { padding: 15px 40px; }
@@ -802,12 +211,7 @@
     .card-produto h3 { font-size: 1.05rem; }
     .preco-atual { font-size: 1.2rem; }
     .modal-overlay { background-color: rgba(0,0,0,0.85); align-items: center; padding: 20px; }
-    .modal-content {
-      flex-direction: row; max-width: 950px; min-height: auto;
-      height: 90vh; max-height: 650px; border-radius: 10px;
-      overflow: hidden; box-shadow: 0 20px 60px rgba(212,175,55,0.3);
-      border: 1px solid var(--dourado);
-    }
+    .modal-content { flex-direction: row; max-width: 950px; min-height: auto; height: 90vh; max-height: 650px; border-radius: 10px; overflow: hidden; box-shadow: 0 20px 60px rgba(212,175,55,0.3); border: 1px solid var(--dourado); }
     .modal-imagem { width: 45%; height: auto; }
     .modal-imagem .card-frasco-placeholder { width: 180px; height: 240px; }
     .modal-info { width: 55%; padding: 40px; overflow-y: auto; }
@@ -816,10 +220,33 @@
     .tamanhos-container { flex-wrap: nowrap; }
     .botoes-acao { flex-direction: row; }
     .btn-add-carrinho, .btn-comprar-agora { flex: 1; width: auto; }
+    .barra-carrinho { left: auto; right: 20px; bottom: 90px; padding: 0; max-width: 380px; }
+    .barra-carrinho-conteudo { padding: 14px 16px; border-radius: 16px; }
+    .barra-carrinho-total { font-size: 1.15rem; }
+    .barra-carrinho-btn { padding: 14px 22px; }
+    .btn-topo { bottom: 180px; right: 25px; width: 50px; height: 50px; }
   }
   @media (min-width: 768px) {
     .mobile-menu-overlay, .mobile-menu { display: none !important; }
   }
+
+  /* FABS */
+  .whats-fab { position: fixed; bottom: 20px; right: 16px; z-index: 20; width: 56px; height: 56px; border-radius: 50%; background: var(--verde-whats); display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(37,211,102,.5); text-decoration: none; transition: bottom .35s cubic-bezier(0.4, 0, 0.2, 1), transform .3s; }
+  .whats-fab svg { width: 32px; height: 32px; fill: #fff; }
+  .whats-fab.recuado { bottom: 92px; }
+  @media (min-width: 768px) {
+    .whats-fab.recuado { bottom: 20px; }
+    .whats-fab { bottom: 20px; }
+  }
+
+  /* QUEM SOMOS */
+  .aba-conteudo { display: none; }
+  .aba-conteudo.ativo { display: block; }
+  .quem-somos { padding: 30px 22px 50px; max-width: 700px; margin: 0 auto; }
+  .quem-somos h2 { font-size: 1.8rem; color: var(--dourado-claro); margin-bottom: 6px; text-align: center; }
+  .quem-somos .sub { text-align: center; color: var(--dourado); font-style: italic; font-size: .88rem; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--borda); }
+  .quem-somos p { color: #bbb; font-size: .92rem; line-height: 1.7; margin-bottom: 16px; text-align: justify; }
+  .quem-somos p strong { color: var(--dourado-claro); font-weight: 700; }
 </style>
 </head>
 <body>
@@ -898,7 +325,9 @@
         <button class="filtro-btn" data-cat="compartilhado" onclick="filtrarVitrine('compartilhado', event)">Compartilhado</button>
       </div>
     </div>
-    <div class="grid-produtos" id="lista-produtos"></div>
+    <div class="grid-produtos" id="lista-produtos">
+      <div class="loading-text">Carregando catálogo...</div>
+    </div>
   </section>
 </div>
 
@@ -993,90 +422,59 @@
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<script>
-(function() {
-  'use strict';
+<!-- LÓGICA DO CATÁLOGO (FIREBASE) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+  import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-  var whats = "5511946927675";
-  var PRECO = 99.90;
-  var PRECO_ANTIGO = 139.90;
-  var DESCONTO_MIN = 3;
-  var DESCONTO_PCT = 0.05;
+  const firebaseConfig = {
+    apiKey: "AIzaSyCtdszBtbQiaZnWcLLKBPnwo_3yHRtp2mA",
+    authDomain: "thrustperfumes.firebaseapp.com",
+    projectId: "thrustperfumes",
+    storageBucket: "thrustperfumes.firebasestorage.app",
+    messagingSenderId: "772745912522",
+    appId: "1:772745912522:web:efaa2b56877dc4b880d433"
+  };
 
-  var perfumes = [
-    { id: 1,  nome: "Femme Fatale",            insp: "Good Girl",         cat: "feminino", img: "https://i.ibb.co/hFtTjxL1/1792586240085.jpg", vendido: true,
-      desc: "Uma fragrância âmbar floral sensual que celebra a dualidade da feminilidade moderna.",
-      notas: { topo: "Amêndoa Amarga, Café", coracao: "Jasmim Sambac, Tuberosa", fundo: "Fava Tonka, Cacau" } },
-    { id: 2,  nome: "Mademoiselle Chic",       insp: "Coco Mademoiselle", cat: "feminino", img: "https://i.ibb.co/cXZ9qdkV/1792586437406.jpg",
-      desc: "A essência de uma mulher livre e audaz. Âmbar floral com frescor surpreendente.",
-      notas: { topo: "Laranja, Bergamota", coracao: "Jasmim, Rosa", fundo: "Patchouli, Vetiver, Baunilha" } },
-    { id: 3,  nome: "Doce Provocação",         insp: "Scandal Fem",       cat: "feminino", img: "https://i.ibb.co/cKBF93RJ/1792585426931.jpg",
-      desc: "Exuberante como o mel, suculento como a pera, vibrante como o jasmim.",
-      notas: { topo: "Pera", coracao: "Jasmim", fundo: "Mel, Patchouli" } },
-    { id: 4,  nome: "Rose Celebration",        insp: "212 VIP Rosé",      cat: "feminino", img: "https://i.ibb.co/svrGTMCJ/1792593891548.jpg",
-      desc: "Fresca, cintilante e feminina. Champagne Rosé e flores em equilíbrio perfeito.",
-      notas: { topo: "Champagne Rosé, Pimenta Rosa", coracao: "Flor de Pêssego, Rosa", fundo: "Musk, Queenwood" } },
-    { id: 5,  nome: "Bella Vita",              insp: "La Vie Est Belle",  cat: "feminino", img: "https://i.ibb.co/qFY7Wj4P/1792550780009.jpg", vendido: true,
-      desc: "Um dos perfumes femininos mais famosos do mundo. Floral gourmand icônico.",
-      notas: { topo: "Cassis, Groselha, Pera", coracao: "Íris, Jasmim, Flor de Laranjeira", fundo: "Patchouli, Baunilha, Pralinê" } },
-    { id: 6,  nome: "Liberte Femme",           insp: "Libre",             cat: "feminino", img: "https://i.ibb.co/5hXhbd0q/1792594338508.jpg",
-      desc: "A primeira lavanda floral. Tensão entre masculino e feminino.",
-      notas: { topo: "Tangerina, Lavanda, Cassis", coracao: "Jasmim, Flor de Laranjeira", fundo: "Baunilha, Cedro, Âmbar" } },
-    { id: 7,  nome: "Explosão Floral",         insp: "La Bomba",          cat: "feminino", img: "https://i.ibb.co/FkBWL142/Design-sem-nome-20261021-151434-0000.jpg",
-      desc: "Floral-frutada alegre para mulheres que vivem intensamente.",
-      notas: { topo: "Pitaya", coracao: "Peônia, Frangipani", fundo: "Baunilha Solar" } },
-    { id: 8,  nome: "Velvet Rose Arabesque",   insp: "Fakhar Rose",       cat: "feminino", img: "https://i.ibb.co/TD05wBfr/1792549667592.jpg",
-      desc: "Fragrância árabe floral com rosas, jasmim e gardênia. Sofisticação marcante.",
-      notas: { topo: "Frutas, Romã", coracao: "Tuberosa, Jasmim, Rosa", fundo: "Baunilha, Sândalo, Musk" } },
-    { id: 9,  nome: "Duality Bloom",           insp: "Prada Paradoxe",    cat: "feminino", img: "https://i.ibb.co/G4J13r6D/1792585657039.jpg",
-      desc: "Floral ambarino que mistura ingredientes icônicos para revelar novas sensações.",
-      notas: { topo: "Bergamota, Mandarina, Pera", coracao: "Neroli, Jasmim", fundo: "Âmbar, Baunilha, Musk" } },
-    { id: 10, nome: "Néctar Silvestre",        insp: "Erba Pura",         cat: "compartilhado", img: "https://i.ibb.co/8ghC6YFt/1792549519647.jpg", vendido: true,
-      desc: "Perfume contemporâneo com doçura frutada tentadora e caráter brilhante.",
-      notas: { topo: "Laranja, Bergamota", coracao: "Frutas Mediterrâneas", fundo: "Baunilha, Musk, Âmbar" } },
-    { id: 11, nome: "Golden Vanilla",          insp: "Althair",           cat: "compartilhado", img: "COLE_O_LINK_AQUI",
-      desc: "Âmbar distinto com cítricos e especiarias, coração de baunilha doce.",
-      notas: { topo: "Flor de Laranjeira, Canela, Cardamomo", coracao: "Baunilha, Elemi", fundo: "Ambrofix, Pralinê" } },
-    { id: 12, nome: "Noble Vanilla",           insp: "Layton",            cat: "compartilhado", img: "COLE_O_LINK_AQUI", vendido: true,
-      desc: "Ícone da Parfums de Marly. Frescor de maçã e lavanda com baunilha cremosa.",
-      notas: { topo: "Maçã, Lavanda, Bergamota", coracao: "Gerânio, Violeta, Jasmim", fundo: "Baunilha, Sândalo, Patchouli" } },
-    { id: 13, nome: "Sonho Cítrico",           insp: "Imagination",       cat: "compartilhado", img: "COLE_O_LINK_AQUI",
-      desc: "Cítrico luminoso que evoca imaginação e criatividade.",
-      notas: { topo: "Bergamota, Laranja, Cidra", coracao: "Chá Preto, Gengibre", fundo: "Madeira, Almíscar" } },
-    { id: 14, nome: "Silver Night",            insp: "Silver Scent",      cat: "masculino", img: "COLE_O_LINK_AQUI",
-      desc: "Fragrância masculina marcante e refrescante com rastro duradouro.",
-      notas: { topo: "Bergamota, Limão", coracao: "Lavanda, Gerânio, Especiarias", fundo: "Âmbar, Musk, Madeiras" } },
-    { id: 15, nome: "Instinto Selvagem",       insp: "Sauvage",           cat: "masculino", img: "COLE_O_LINK_AQUI", vendido: true,
-      desc: "Fragrância masculina icônica e selvagem. Frescor radical com rastro magnético.",
-      notas: { topo: "Bergamota, Pimenta", coracao: "Lavanda, Pimenta Szechuan", fundo: "Ambroxan, Cedro, Labdano" } },
-    { id: 16, nome: "Horizonte Urbano",        insp: "Explorer",          cat: "masculino", img: "COLE_O_LINK_AQUI",
-      desc: "Para o homem que explora novos horizontes. Frescor cítrico e amadeirado.",
-      notas: { topo: "Bergamota, Pimenta Rosa, Sálvia", coracao: "Vetiver, Cássia", fundo: "Patchouli, Ébano, Ambroxan" } },
-    { id: 17, nome: "Gold Absolute",           insp: "1 Million",         cat: "masculino", img: "COLE_O_LINK_AQUI",
-      desc: "Ousada e icônica. Especiarias quentes com fundo amadeirado luxuoso.",
-      notas: { topo: "Tangerina, Hortelã", coracao: "Canela, Rosa", fundo: "Âmbar, Couro, Madeiras" } },
-    { id: 18, nome: "Rey Victorious",          insp: "Aventus",           cat: "masculino", img: "COLE_O_LINK_AQUI", vendido: true,
-      desc: "Fragrância lendária. Abacaxi, frutas cítricas e fundo amadeirado majestoso.",
-      notas: { topo: "Abacaxi, Bergamota, Maçã", coracao: "Bétula, Patchouli, Jasmim", fundo: "Musk, Carvalho, Baunilha" } },
-    { id: 19, nome: "Golden Bullet",           insp: "Azzaro Wanted",     cat: "masculino", img: "COLE_O_LINK_AQUI",
-      desc: "Vibrante e ousada. Cítricos brilhantes com coração especiado e fundo quente.",
-      notas: { topo: "Limão, Gengibre, Cardamomo", coracao: "Lavanda, Gerânio", fundo: "Vetiver, Tonka, Âmbar" } }
-  ];
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  
+  // Variável global que será preenchida pelo Firebase
+  let perfumes = [];
+  let carrinho = {};
+  let produtoSelecionado = null;
+  let tamanhoSelecionado = { label: "50ml", preco: 0 };
 
-  var labels = { feminino: "Feminino", masculino: "Masculino", compartilhado: "Compartilhado" };
-  var catAtual = 'todos'; 
-  var termoBusca = '';
-  var carrinho = {};
-  var produtoSelecionado = null;
+  const whats = "5511946927675";
+  const DESCONTO_MIN = 3;
+  const DESCONTO_PCT = 0.05;
 
-  var listaProdutos = document.getElementById('lista-produtos');
-  var modalProduto = document.getElementById('modalProduto');
-  var modalCarrinho = document.getElementById('modalCarrinho');
-  var searchBar = document.getElementById('searchBar');
-  var navMenu = document.getElementById('navMenu');
-  var barraCarrinho = document.getElementById('barraCarrinho');
-  var whatsFab = document.getElementById('whatsFab');
-  var btnTopo = document.getElementById('btnTopo');
+  const listaProdutos = document.getElementById('lista-produtos');
+  const modalProduto = document.getElementById('modalProduto');
+  const modalCarrinho = document.getElementById('modalCarrinho');
+  const searchBar = document.getElementById('searchBar');
+  const navMenu = document.getElementById('navMenu');
+  const barraCarrinho = document.getElementById('barraCarrinho');
+  const whatsFab = document.getElementById('whatsFab');
+  const btnTopo = document.getElementById('btnTopo');
+
+  // --- INICIALIZAÇÃO DO CATÁLOGO ---
+  async function carregarPerfumes() {
+    try {
+      const q = query(collection(db, "perfumes"), orderBy("nome"));
+      const querySnapshot = await getDocs(q);
+      
+      perfumes = [];
+      querySnapshot.forEach((doc) => {
+        perfumes.push({ id: doc.id, ...doc.data() });
+      });
+
+      window.irParaInicio(); // Renderiza a tela inicial
+    } catch (error) {
+      console.error("Erro ao buscar dados:", error);
+      listaProdutos.innerHTML = '<div style="color:red; text-align:center; grid-column:1/-1;">Erro ao carregar o catálogo. Tente novamente.</div>';
+    }
+  }
 
   function fmt(v) { return 'R$ ' + v.toFixed(2).replace('.', ','); }
   function esc(s) { return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
@@ -1099,21 +497,19 @@
 
   window.irParaInicio = function() {
     mostrarCatalogo();
-    catAtual = 'todos';
-    termoBusca = '';
-    document.getElementById('campoBusca').value = '';
-    
+    let catAtual = 'todos'; // Força a aba "Todos" na inicialização
+
     document.querySelectorAll('.filtro-btn').forEach(function(b) { b.classList.remove('active'); });
-    var btnTodos = document.querySelector('.filtro-btn[data-cat="todos"]');
+    let btnTodos = document.querySelector('.filtro-btn[data-cat="todos"]');
     if (btnTodos) btnTodos.classList.add('active');
     
     document.getElementById('titulo-vitrine').innerText = 'Todos os Perfumes';
     
     document.querySelectorAll('.nav-menu a').forEach(function(a){ a.classList.remove('active'); });
-    var navTodos = document.querySelector('.nav-menu a[data-nav="todos"]');
+    let navTodos = document.querySelector('.nav-menu a[data-nav="todos"]');
     if (navTodos) navTodos.classList.add('active');
     
-    renderizarProdutos();
+    renderizarProdutos('todos', '');
     window.scrollTo(0, 0);
   };
 
@@ -1130,8 +526,6 @@
 
   window.irParaCategoria = function(categoria) {
     mostrarCatalogo();
-    catAtual = categoria;
-    termoBusca = '';
     document.getElementById('campoBusca').value = '';
 
     document.querySelectorAll('.filtro-btn').forEach(function(btn) {
@@ -1140,13 +534,13 @@
     });
 
     document.querySelectorAll('.nav-menu a').forEach(function(a){ a.classList.remove('active'); });
-    var nav = document.querySelector('.nav-menu a[data-nav="' + categoria + '"]');
+    let nav = document.querySelector('.nav-menu a[data-nav="' + categoria + '"]');
     if (nav) nav.classList.add('active');
 
-    var titulos = { todos: 'Todos os Perfumes', feminino: 'Perfumaria Feminina', masculino: 'Perfumaria Masculina', compartilhado: 'Compartilhados' };
+    let titulos = { todos: 'Todos os Perfumes', feminino: 'Perfumaria Feminina', masculino: 'Perfumaria Masculina', compartilhado: 'Compartilhados' };
     document.getElementById('titulo-vitrine').innerText = titulos[categoria] || 'Vitrine';
 
-    renderizarProdutos();
+    renderizarProdutos(categoria, '');
     fecharMenuMobile();
     setTimeout(function() {
       document.querySelector('.vitrine-section').scrollIntoView({ behavior: 'smooth' });
@@ -1156,60 +550,59 @@
   window.abrirQuemSomos = function() {
     mostrarQuemSomos();
     document.querySelectorAll('.nav-menu a').forEach(function(a){ a.classList.remove('active'); });
-    var nav = document.querySelector('.nav-menu a[data-nav="quem-somos"]');
+    let nav = document.querySelector('.nav-menu a[data-nav="quem-somos"]');
     if (nav) nav.classList.add('active');
     fecharMenuMobile();
   };
 
   window.filtrarVitrine = function(categoria, event) {
-    catAtual = categoria;
     document.querySelectorAll('.filtro-btn').forEach(function(btn){ btn.classList.remove('active'); });
     if (event && event.target) event.target.classList.add('active');
 
     document.querySelectorAll('.nav-menu a').forEach(function(a){ a.classList.remove('active'); });
-    var nav = document.querySelector('.nav-menu a[data-nav="' + categoria + '"]');
+    let nav = document.querySelector('.nav-menu a[data-nav="' + categoria + '"]');
     if (nav) nav.classList.add('active');
 
-    var titulos = { todos: 'Todos os Perfumes', feminino: 'Perfumaria Feminina', masculino: 'Perfumaria Masculina', compartilhado: 'Compartilhados' };
+    let titulos = { todos: 'Todos os Perfumes', feminino: 'Perfumaria Feminina', masculino: 'Perfumaria Masculina', compartilhado: 'Compartilhados' };
     document.getElementById('titulo-vitrine').innerText = titulos[categoria] || 'Vitrine';
-    renderizarProdutos();
+    renderizarProdutos(categoria, document.getElementById('campoBusca').value.trim().toLowerCase());
   };
 
   window.buscar = function() {
-    termoBusca = document.getElementById('campoBusca').value.trim();
-    if (termoBusca && catAtual !== 'todos') {
-      catAtual = 'todos';
+    let termoBusca = document.getElementById('campoBusca').value.trim().toLowerCase();
+    let catAtivaBtn = document.querySelector('.filtro-btn.active');
+    let cat = catAtivaBtn ? catAtivaBtn.dataset.cat : 'todos';
+    
+    if (termoBusca && cat !== 'todos') {
+      cat = 'todos';
       document.querySelectorAll('.filtro-btn').forEach(function(btn){ btn.classList.remove('active'); });
-      var btnTodos = document.querySelector('.filtro-btn[data-cat="todos"]');
+      let btnTodos = document.querySelector('.filtro-btn[data-cat="todos"]');
       if (btnTodos) btnTodos.classList.add('active');
       
       document.querySelectorAll('.nav-menu a').forEach(function(a){ a.classList.remove('active'); });
-      var navTodos = document.querySelector('.nav-menu a[data-nav="todos"]');
+      let navTodos = document.querySelector('.nav-menu a[data-nav="todos"]');
       if (navTodos) navTodos.classList.add('active');
-      
-      document.getElementById('titulo-vitrine').innerText = 'Resultados da busca';
-    } else if (!termoBusca && catAtual === 'todos') {
-      document.getElementById('titulo-vitrine').innerText = 'Todos os Perfumes';
     }
-    renderizarProdutos();
+    
+    document.getElementById('titulo-vitrine').innerText = termoBusca ? 'Resultados da busca' : 'Todos os Perfumes';
+    renderizarProdutos(cat, termoBusca);
   };
 
   // --- RENDER PRODUTOS ---
-  function renderizarProdutos() {
-    var lista = perfumes.slice();
+  function renderizarProdutos(categoriaFiltro, termoBusca) {
+    let lista = perfumes.slice();
     
-    if (catAtual !== 'todos') {
-      lista = lista.filter(function(p){ return p.cat === catAtual; });
+    if (categoriaFiltro && categoriaFiltro !== 'todos') {
+      lista = lista.filter(function(p){ return p.cat === categoriaFiltro; });
     }
     
     if (termoBusca) {
-      var t = termoBusca.toLowerCase();
       lista = lista.filter(function(p){
-        return p.nome.toLowerCase().indexOf(t) !== -1 || p.insp.toLowerCase().indexOf(t) !== -1;
+        return p.nome.toLowerCase().includes(termoBusca) || p.insp.toLowerCase().includes(termoBusca);
       });
     }
 
-    if (catAtual === 'todos') {
+    if (categoriaFiltro === 'todos' && !termoBusca) {
       lista.sort(function(a, b) { return a.nome.localeCompare(b.nome); });
     }
 
@@ -1219,25 +612,32 @@
     }
 
     listaProdutos.innerHTML = lista.map(function(p) {
-      var imgHtml;
+      let imgHtml;
       if (p.img && p.img !== 'COLE_O_LINK_AQUI') {
         imgHtml = '<img src="' + p.img + '" alt="' + esc(p.nome) + '" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=&quot;card-frasco-placeholder&quot;>THRUST</div>\'">';
       } else {
         imgHtml = '<div class="card-frasco-placeholder">THRUST</div>';
       }
-      var selo = p.vendido ? '<div class="selo-vendas">Top</div>' : '';
+      let selo = p.vendido ? '<div class="selo-vendas">Top</div>' : '';
       
-      var btnFast = '<button class="btn-add-fast" onclick="event.stopPropagation(); adicionarDireto(' + p.id + ')" title="Adicionar rápido">+</button>';
+      // Pega o menor preço ou o 50ml como padrão para mostrar na vitrine
+      let precoVitrine = 0;
+      if (p.tamanhos) {
+        if (p.tamanhos["50ml"]) precoVitrine = p.tamanhos["50ml"];
+        else {
+          let keys = Object.keys(p.tamanhos);
+          if(keys.length > 0) precoVitrine = p.tamanhos[keys[0]];
+        }
+      }
 
-      return '<div class="card-produto" onclick="abrirModal(' + p.id + ')">' +
+      return '<div class="card-produto" onclick="abrirModal(\'' + p.id + '\')">' +
         '<div class="card-imagem">' + selo + imgHtml + '</div>' +
-        btnFast +
+        '<button class="btn-add-fast" onclick="event.stopPropagation(); adicionarDireto(\'' + p.id + '\')" title="Adicionar rápido">+</button>' +
         '<h3>' + esc(p.nome) + '</h3>' +
         '<div class="card-inspiracao">Inspirado em "' + esc(p.insp) + '"</div>' +
         '<div class="card-ml">50 ml</div>' +
         '<div class="card-precos">' +
-          '<span class="preco-antigo">' + fmt(PRECO_ANTIGO) + '</span> ' +
-          '<span class="preco-atual">' + fmt(PRECO) + '</span>' +
+          '<span class="preco-atual">' + fmt(precoVitrine) + '</span>' +
         '</div>' +
         '<button class="btn-ver-produto">Ver Produto</button>' +
       '</div>';
@@ -1246,14 +646,25 @@
 
   // --- FUNÇÃO PARA O BOTÃO RÁPIDO ---
   window.adicionarDireto = function(id) {
-    var p = null;
-    for (var i = 0; i < perfumes.length; i++) if (perfumes[i].id === id) p = perfumes[i];
+    let p = perfumes.find(function(item) { return item.id === id; });
     if (!p) return;
+
+    // Pega o preço do 50ml por padrão
+    let preco = 0;
+    if (p.tamanhos && p.tamanhos["50ml"]) preco = p.tamanhos["50ml"];
+    else if (p.tamanhos) {
+      let keys = Object.keys(p.tamanhos);
+      if(keys.length > 0) preco = p.tamanhos[keys[0]];
+    }
+
+    let nomeTam = p.tamanhos && p.tamanhos["50ml"] ? "50ml" : (p.tamanhos ? Object.keys(p.tamanhos)[0] : "50ml");
     
-    carrinho[p.id] = (carrinho[p.id] || 0) + 1;
+    carrinho[p.id] = carrinho[p.id] || { nome: p.nome, insp: p.insp, qtd: 0, tamanho: nomeTam, precoUnit: preco };
+    carrinho[p.id].qtd += 1;
+    
     atualizarBadge();
     
-    var btn = event.target;
+    let btn = event.target;
     if(btn) {
       btn.innerHTML = '✓';
       btn.style.background = '#25D366';
@@ -1268,36 +679,66 @@
 
   // --- MODAL PRODUTO ---
   window.abrirModal = function(id) {
-    var p = null;
-    for (var i = 0; i < perfumes.length; i++) if (perfumes[i].id === id) p = perfumes[i];
+    let p = perfumes.find(function(item) { return item.id === id; });
     if (!p) return;
     produtoSelecionado = p;
 
-    var imgHtml;
+    let imgHtml;
     if (p.img && p.img !== 'COLE_O_LINK_AQUI') {
       imgHtml = '<img src="' + p.img + '" alt="' + esc(p.nome) + '" onerror="this.parentNode.innerHTML=\'<div class=&quot;card-frasco-placeholder&quot;>THRUST</div>\'">';
     } else {
       imgHtml = '<div class="card-frasco-placeholder">THRUST</div>';
     }
     document.getElementById('modal-imagem').innerHTML = imgHtml;
-    document.getElementById('modal-categoria').innerText = labels[p.cat];
+    document.getElementById('modal-categoria').innerText = p.cat.toUpperCase();
     document.getElementById('modal-titulo').innerText = p.nome;
     document.getElementById('modal-inspiracao').innerText = 'Inspirado em "' + p.insp + '"';
-    document.getElementById('modal-preco-antigo').innerText = fmt(PRECO_ANTIGO);
-    document.getElementById('modal-preco-atual').innerText = fmt(PRECO);
-    document.getElementById('modal-descricao').innerHTML = '<strong>Sobre a fragrância:</strong> ' + esc(p.desc);
+    document.getElementById('modal-preco-antigo').innerText = '';
+    document.getElementById('modal-descricao').innerHTML = '<strong>Sobre a fragrância:</strong> ' + (p.desc || 'Não informada.');
+    
     document.getElementById('modal-notas').innerHTML =
-      '<span><strong>Topo:</strong> ' + esc(p.notas.topo) + '</span>' +
-      '<span><strong>Coração:</strong> ' + esc(p.notas.coracao) + '</span>' +
-      '<span><strong>Fundo:</strong> ' + esc(p.notas.fundo) + '</span>';
+      (p.notas && p.notas.topo ? '<span><strong>Topo:</strong> ' + esc(p.notas.topo) + '</span>' : '') +
+      (p.notas && p.notas.coracao ? '<span><strong>Coração:</strong> ' + esc(p.notas.coracao) + '</span>' : '') +
+      (p.notas && p.notas.fundo ? '<span><strong>Fundo:</strong> ' + esc(p.notas.fundo) + '</span>' : '');
 
-    document.getElementById('modal-tamanhos').innerHTML =
-      '<div class="btn-tamanho desabilitado">30ml<small>(Breve)</small></div>' +
-      '<div class="btn-tamanho active">50ml<small>(Padrão)</small></div>' +
-      '<div class="btn-tamanho desabilitado">100ml<small>(Breve)</small></div>';
+    // Gera os botões de tamanho baseados no que foi cadastrado no Firebase
+    let tamHtml = '';
+    let tamanhosDisponiveis = p.tamanhos || {};
+    
+    let opcoesFixas = ['30ml', '50ml', '100ml'];
+    opcoesFixas.forEach(function(tam) {
+      if (tamanhosDisponiveis[tam]) {
+        // Habilitado
+        tamHtml += '<div class="btn-tamanho" data-tam="'+tam+'" data-preco="'+tamanhosDisponiveis[tam]+'" onclick="selecionarTamanho(this)">' + tam + '<small>' + fmt(tamanhosDisponiveis[tam]) + '</small></div>';
+      } else {
+        // Desabilitado (Em Breve)
+        tamHtml += '<div class="btn-tamanho desabilitado">' + tam + '<small>Em breve</small></div>';
+      }
+    });
+    document.getElementById('modal-tamanhos').innerHTML = tamHtml;
+
+    // Seleciona o primeiro que estiver disponível, ou o 50ml
+    let tamInicial = document.querySelector('#modal-tamanhos .btn-tamanho:not(.desabilitado)');
+    if(tamInicial) {
+      selecionarTamanho(tamInicial);
+    } else {
+      tamanhoSelecionado = null;
+      document.getElementById('modal-preco-atual').innerText = 'Indisponível';
+    }
 
     modalProduto.classList.add('ativo');
     document.body.style.overflow = 'hidden';
+  };
+
+  window.selecionarTamanho = function(el) {
+    document.querySelectorAll('#modal-tamanhos .btn-tamanho').forEach(function(b){ b.classList.remove('active'); });
+    el.classList.add('active');
+    
+    tamanhoSelecionado = {
+      label: el.getAttribute('data-tam'),
+      preco: parseFloat(el.getAttribute('data-preco'))
+    };
+    document.getElementById('modal-preco-atual').innerText = fmt(tamanhoSelecionado.preco);
   };
 
   window.fecharModal = function() {
@@ -1307,17 +748,20 @@
 
   // --- CARRINHO ---
   function calcularTotal() {
-    var qtdTotal = 0;
-    for (var k in carrinho) qtdTotal += carrinho[k];
-    var subtotal = qtdTotal * PRECO;
-    var temDesconto = qtdTotal >= DESCONTO_MIN;
-    var desconto = temDesconto ? subtotal * DESCONTO_PCT : 0;
-    var total = subtotal - desconto;
+    let qtdTotal = 0;
+    let subtotal = 0;
+    for (let k in carrinho) {
+      qtdTotal += carrinho[k].qtd;
+      subtotal += (carrinho[k].qtd * carrinho[k].precoUnit);
+    }
+    let temDesconto = qtdTotal >= DESCONTO_MIN;
+    let desconto = temDesconto ? subtotal * DESCONTO_PCT : 0;
+    let total = subtotal - desconto;
     return { qtdTotal: qtdTotal, subtotal: subtotal, desconto: desconto, total: total, temDesconto: temDesconto };
   }
 
   function atualizarBadge() {
-    var r = calcularTotal();
+    let r = calcularTotal();
     document.getElementById('contador').innerText = r.qtdTotal;
     document.getElementById('miniBadge').innerText = r.qtdTotal;
     document.getElementById('barraQtd').innerText = r.qtdTotal + ' ' + (r.qtdTotal === 1 ? 'item' : 'itens');
@@ -1333,11 +777,26 @@
   }
 
   window.adicionarAoCarrinho = function() {
-    if (!produtoSelecionado) return;
-    carrinho[produtoSelecionado.id] = (carrinho[produtoSelecionado.id] || 0) + 1;
+    if (!produtoSelecionado || !tamanhoSelecionado) return;
+    
+    let key = produtoSelecionado.id + '-' + tamanhoSelecionado.label; // Chave única por ID e tamanho
+    
+    if(!carrinho[key]) {
+      carrinho[key] = {
+        id: produtoSelecionado.id,
+        nome: produtoSelecionado.nome,
+        insp: produtoSelecionado.insp,
+        tamanho: tamanhoSelecionado.label,
+        precoUnit: tamanhoSelecionado.preco,
+        qtd: 0
+      };
+    }
+    
+    carrinho[key].qtd += 1;
     atualizarBadge();
-    var btn = document.querySelector('.btn-add-carrinho');
-    var txt = btn.innerText;
+    
+    let btn = document.querySelector('.btn-add-carrinho');
+    let txt = btn.innerText;
     btn.innerText = '✓ Adicionado!';
     btn.style.backgroundColor = '#25D366';
     btn.style.color = '#fff';
@@ -1351,9 +810,9 @@
   };
 
   window.comprarAgora = function() {
-    if (!produtoSelecionado) return;
-    var msg = 'Olá! Tenho interesse no perfume *' + produtoSelecionado.nome +
-              '* (inspirado em ' + produtoSelecionado.insp + ') — 50ml — ' + fmt(PRECO) + '.\n\nPode me dar mais informações?';
+    if (!produtoSelecionado || !tamanhoSelecionado) return;
+    let msg = 'Olá! Tenho interesse no perfume *' + produtoSelecionado.nome +
+              '* (inspirado em ' + produtoSelecionado.insp + ') — ' + tamanhoSelecionado.label + ' — ' + fmt(tamanhoSelecionado.preco) + '.\n\nPode me dar mais informações?';
     window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent(msg), '_blank');
   };
 
@@ -1368,19 +827,17 @@
     document.body.style.overflow = 'auto';
   };
 
-  // FUNÇÃO ESPECÍFICA PARA O LINK DO DESCONTO
   window.fecharCarrinhoEComprar = function() {
     fecharCarrinho();
-    // Rola suavemente de volta para o topo/vitrine
     setTimeout(function() {
       document.querySelector('.vitrine-section').scrollIntoView({ behavior: 'smooth' });
     }, 100);
   };
 
   function renderizarCarrinho() {
-    var lista = document.getElementById('itens-carrinho');
-    var rodape = document.getElementById('rodape-carrinho');
-    var ids = Object.keys(carrinho);
+    let lista = document.getElementById('itens-carrinho');
+    let rodape = document.getElementById('rodape-carrinho');
+    let ids = Object.keys(carrinho);
 
     if (ids.length === 0) {
       lista.innerHTML = '<p class="carrinho-vazio">Seu carrinho está vazio 🛒</p>';
@@ -1389,31 +846,27 @@
       return;
     }
 
-    var r = calcularTotal();
+    let r = calcularTotal();
     
-    lista.innerHTML = ids.map(function(id) {
-      var p = null;
-      for (var i = 0; i < perfumes.length; i++) if (perfumes[i].id == id) p = perfumes[i];
-      if (!p) return '';
-      var qtd = carrinho[id];
+    lista.innerHTML = ids.map(function(key) {
+      let item = carrinho[key];
       return '<div class="item-carrinho">' +
         '<div class="info-item">' +
-          '<strong>' + esc(p.nome) + '</strong>' +
-          '<small>Insp. ' + esc(p.insp) + ' · 50ml</small>' +
+          '<strong>' + esc(item.nome) + '</strong>' +
+          '<small>Insp. ' + esc(item.insp) + ' · ' + item.tamanho + '</small>' +
         '</div>' +
         '<div class="ctrl">' +
-          '<button onclick="alterarQtdCarrinho(' + p.id + ', -1)">−</button>' +
-          '<span>' + qtd + '</span>' +
-          '<button onclick="alterarQtdCarrinho(' + p.id + ', 1)">+</button>' +
+          '<button onclick="alterarQtdCarrinho(\'' + key + '\', -1)">−</button>' +
+          '<span>' + item.qtd + '</span>' +
+          '<button onclick="alterarQtdCarrinho(\'' + key + '\', 1)">+</button>' +
         '</div>' +
-        '<div class="preco-item">' + fmt(qtd * PRECO) + '</div>' +
+        '<div class="preco-item">' + fmt(item.qtd * item.precoUnit) + '</div>' +
       '</div>';
     }).join('');
 
-    var htmlRodape = '';
+    let htmlRodape = '';
     if (!r.temDesconto) {
-      var faltam = DESCONTO_MIN - r.qtdTotal;
-      // AQUI ESTÁ O AJUSTE: O aviso agora é um botão que chama a função de fechar e comprar
+      let faltam = DESCONTO_MIN - r.qtdTotal;
       htmlRodape += '<button class="aviso-desconto" onclick="fecharCarrinhoEComprar()">Adicione mais ' + faltam + ' ' +
         (faltam === 1 ? 'unidade' : 'unidades') + ' e ganhe <strong>5% de desconto</strong>!</button>';
     } else {
@@ -1432,24 +885,23 @@
     rodape.innerHTML = htmlRodape;
   }
 
-  window.alterarQtdCarrinho = function(id, delta) {
-    var novo = (carrinho[id] || 0) + delta;
-    if (novo <= 0) delete carrinho[id];
-    else carrinho[id] = novo;
+  window.alterarQtdCarrinho = function(key, delta) {
+    if(!carrinho[key]) return;
+    let novo = carrinho[key].qtd + delta;
+    if (novo <= 0) delete carrinho[key];
+    else carrinho[key].qtd = novo;
     atualizarBadge();
     renderizarCarrinho();
   };
 
   window.finalizarWhats = function() {
-    var ids = Object.keys(carrinho);
+    let ids = Object.keys(carrinho);
     if (ids.length === 0) return;
-    var r = calcularTotal();
-    var msg = 'Olá! Gostaria de fazer o seguinte pedido na THRUST PARFUMS:\n\n';
-    ids.forEach(function(id) {
-      var p = null;
-      for (var i = 0; i < perfumes.length; i++) if (perfumes[i].id == id) p = perfumes[i];
-      if (!p) return;
-      msg += '• ' + carrinho[id] + 'x ' + p.nome + ' (insp. ' + p.insp + ') 50ml — ' + fmt(carrinho[id] * PRECO) + '\n';
+    let r = calcularTotal();
+    let msg = 'Olá! Gostaria de fazer o seguinte pedido na THRUST PARFUMS:\n\n';
+    ids.forEach(function(key) {
+      let item = carrinho[key];
+      msg += '• ' + item.qtd + 'x ' + item.nome + ' (insp. ' + item.insp + ') ' + item.tamanho + ' — ' + fmt(item.qtd * item.precoUnit) + '\n';
     });
     msg += '\nSubtotal: ' + fmt(r.subtotal);
     if (r.temDesconto) msg += '\nDesconto (5%): − ' + fmt(r.desconto);
@@ -1463,7 +915,6 @@
     return false;
   };
 
-  // --- VOLTAR AO TOPO ---
   window.voltarAoTopo = function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -1483,10 +934,8 @@
     if (e.target === modalCarrinho) fecharCarrinho();
   });
 
-  // --- INICIALIZAÇÃO ---
-  window.irParaInicio();
-  atualizarBadge();
-})();
+  // Executa a busca no Firebase ao carregar a página
+  carregarPerfumes();
 </script>
 </body>
 </html>
