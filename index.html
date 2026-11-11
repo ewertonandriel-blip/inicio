@@ -98,6 +98,10 @@
   .card-precos { margin-bottom: 10px; margin-top: auto; }
   .preco-antigo { text-decoration: line-through; color: #666; font-size: 0.7rem; margin-right: 4px; }
   .preco-atual { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  
+  /* NOVO: ESTILO DO PREÇO INDISPONÍVEL NA VITRINE */
+  .preco-indisponivel { font-size: 0.85rem; color: #c94a4a; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
   .card-ml { display: inline-block; font-size: 0.6rem; font-weight: 700; color: var(--dourado); background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.4); padding: 2px 8px; border-radius: 20px; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
   .btn-ver-produto { background: none; border: 1px solid var(--dourado); color: var(--dourado); padding: 8px 15px; border-radius: 30px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 5px; }
   .btn-ver-produto:hover, .btn-ver-produto:active { background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); color: #0d0d0d; border-color: var(--dourado-claro); box-shadow: 0 0 15px rgba(212,175,55,0.5); }
@@ -127,6 +131,12 @@
   .modal-precos .preco-antigo { font-size: 0.85rem; }
   .modal-precos .preco-atual { font-size: 1.9rem; }
   .aviso-pix { font-size: 0.7rem; color: #888; margin-top: 3px; }
+  
+  /* NOVO: ESTILO DO BLOCO DE PREÇO INDISPONÍVEL NO MODAL */
+  .modal-precos-indisponivel { background: rgba(201, 74, 74, 0.1); border: 1px dashed #c94a4a; border-radius: 8px; padding: 15px; margin-bottom: 20px; text-align: center; }
+  .modal-precos-indisponivel strong { color: #ff6b6b; font-size: 1.1rem; display: block; margin-bottom: 5px; }
+  .modal-precos-indisponivel span { color: #bbb; font-size: 0.8rem; }
+
   .aviso-frete-modal { background: rgba(212,175,55,0.08); border: 1px dashed rgba(212,175,55,0.4); border-radius: 8px; padding: 10px 12px; font-size: 0.78rem; color: #ccc; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
   .aviso-frete-modal span { color: var(--dourado-claro); font-weight: bold; }
   .botoes-acao { display: flex; flex-direction: column; gap: 10px; margin-bottom: 25px; }
@@ -371,15 +381,22 @@
       <div class="modal-insp" id="modal-inspiracao"></div>
 
       <div class="tamanhos-container" id="modal-tamanhos"></div>
-      <div class="aviso-tamanho">✨ Selecione um tamanho disponível</div>
+      <div class="aviso-tamanho" id="aviso-tamanho">✨ Selecione um tamanho disponível</div>
 
-      <div class="modal-precos">
+      <!-- BLOCO DE PREÇO (VAI SUMIR SE INDISPONÍVEL) -->
+      <div class="modal-precos" id="bloco-precos">
         <span class="preco-antigo" id="modal-preco-antigo"></span>
         <span class="preco-atual" id="modal-preco-atual"></span>
         <div class="aviso-pix">à vista no Pix</div>
       </div>
 
-      <div class="aviso-frete-modal">
+      <!-- BLOCO DE AVISO DE INDISPONÍVEL (VAI APARECER SE INDISPONÍVEL) -->
+      <div class="modal-precos-indisponivel" id="bloco-indisponivel" style="display: none;">
+        <strong>⏳ Produto Esgotado</strong>
+        <span>Consulte o valor e a disponibilidade na reposição.</span>
+      </div>
+
+      <div class="aviso-frete-modal" id="aviso-frete">
         🚚 <span>Enviamos para todo o Brasil</span> via Correios. Combine o frete no WhatsApp.
       </div>
 
@@ -396,7 +413,7 @@
   </div>
 </div>
 
-<!-- MODAL: AVISO DE PRODUTO INEXISTENTE (NOVO) -->
+<!-- MODAL: AVISO DE PRODUTO INEXISTENTE -->
 <div class="modal-aviso-overlay" id="modalAviso">
   <div class="modal-aviso-content">
     <div class="icone-aviso">🤔</div>
@@ -486,6 +503,11 @@
   
   const btnAddCarrinho = document.getElementById('btn-add-carrinho');
   const btnComprarAgora = document.getElementById('btn-comprar-agora');
+  
+  // Elementos do bloco de preço para indisponível
+  const blocoPrecos = document.getElementById('bloco-precos');
+  const blocoIndisponivel = document.getElementById('bloco-indisponivel');
+  const avisoFrete = document.getElementById('aviso-frete');
 
   async function carregarPerfumes() {
     try {
@@ -505,22 +527,19 @@
     }
   }
 
-  // --- FUNÇÃO CORRIGIDA: TRATA O LINK DIRETO E ERROS ---
   function verificarHashtag() {
     setTimeout(function() {
       const hash = window.location.hash.replace('#', '');
       
       if (hash) {
-        // Verifica se o produto existe
         const produtoExiste = perfumes.find(p => p.id === hash);
         
         if (produtoExiste) {
           window.abrirModal(hash);
         } else {
-          // Produto não existe (excluído ou link inválido)
           modalAviso.classList.add('ativo');
           document.body.style.overflow = 'hidden';
-          history.replaceState(null, null, ' '); // Limpa o hash da URL
+          history.replaceState(null, null, ' '); 
         }
       }
     }, 600); 
@@ -686,6 +705,14 @@
         }
       }
 
+      // AQUI ESTÁ O AJUSTE DO PREÇO NA VITRINE
+      let precoHtml = '';
+      if (p.indisponivel) {
+        precoHtml = '<span class="preco-indisponivel">Indisponível</span>';
+      } else {
+        precoHtml = '<span class="preco-atual">' + fmt(precoVitrine) + '</span>';
+      }
+
       return '<div class="card-produto ' + (p.indisponivel ? 'esgotado' : '') + '" onclick="abrirModal(\'' + p.id + '\')">' +
         '<div class="card-imagem">' + selo + seloInd + imgHtml + '</div>' +
         (p.indisponivel ? '' : '<button class="btn-add-fast" onclick="event.stopPropagation(); adicionarDireto(\'' + p.id + '\')" title="Adicionar rápido">+</button>') +
@@ -693,7 +720,7 @@
         '<div class="card-inspiracao">Inspirado em "' + esc(p.insp) + '"</div>' +
         '<div class="card-ml">50 ml</div>' +
         '<div class="card-precos">' +
-          '<span class="preco-atual">' + fmt(precoVitrine) + '</span>' +
+          precoHtml +
         '</div>' +
         '<button class="btn-ver-produto">' + (p.indisponivel ? 'Ver Detalhes' : 'Ver Produto') + '</button>' +
       '</div>';
@@ -786,24 +813,34 @@
     });
     document.getElementById('modal-tamanhos').innerHTML = tamHtml;
 
+    // LÓGICA PARA INDISPONÍVEL NO MODAL
     if(p.indisponivel) {
        btnAddCarrinho.disabled = true;
        btnComprarAgora.disabled = true;
        btnAddCarrinho.innerText = "Produto Indisponível";
        btnComprarAgora.innerText = "Indisponível";
+       
+       blocoPrecos.style.display = 'none';
+       blocoIndisponivel.style.display = 'block';
+       avisoFrete.style.display = 'none';
+       document.getElementById('aviso-tamanho').style.display = 'none';
     } else {
        btnAddCarrinho.disabled = false;
        btnComprarAgora.disabled = false;
        btnAddCarrinho.innerText = "🛒 Adicionar ao carrinho";
        btnComprarAgora.innerText = "Comprar agora";
+       
+       blocoPrecos.style.display = 'block';
+       blocoIndisponivel.style.display = 'none';
+       avisoFrete.style.display = 'flex';
+       document.getElementById('aviso-tamanho').style.display = 'block';
     }
 
     let tamInicial = document.querySelector('#modal-tamanhos .btn-tamanho:not(.desabilitado)');
-    if(tamInicial) {
+    if(tamInicial && !p.indisponivel) {
       selecionarTamanho(tamInicial);
     } else {
       tamanhoSelecionado = null;
-      document.getElementById('modal-preco-atual').innerText = 'Indisponível';
     }
 
     modalProduto.classList.add('ativo');
