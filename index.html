@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CATÁLOGO THRUST PARFUMS</title>
+<title>THRUST PARFUMS — Catálogo 50ml</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230d0d0d%22/><text x=%2250%22 y=%2275%22 font-size=%2270%22 font-family=%22serif%22 font-weight=%22bold%22 fill=%22%23f5d97a%22 text-anchor=%22middle%22>T</text></svg>">
 <style>
@@ -135,7 +135,6 @@
   .btn-add-carrinho:hover { background-color: rgba(212,175,55,0.1); }
   .btn-comprar-agora { background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); color: #0d0d0d; font-weight: 700; }
   .btn-comprar-agora:hover { box-shadow: 0 0 20px rgba(212,175,55,0.5); }
-  
   .btn-add-carrinho:disabled, .btn-comprar-agora:disabled { background: #333; color: #666; border-color: #444; cursor: not-allowed; box-shadow: none; }
   
   .info-adicional { border-top: 1px solid var(--borda); padding-top: 20px; }
@@ -144,6 +143,16 @@
   .notas-olfativas { margin-top: 15px; font-size: 0.75rem; color: #aaa; line-height: 1.6; }
   .notas-olfativas span { display: block; margin-bottom: 6px; }
   .notas-olfativas strong { color: var(--dourado); text-transform: uppercase; font-size: 0.65rem; letter-spacing: 1px; margin-right: 5px; }
+
+  /* MODAL AVISO DE ITEM INEXISTENTE */
+  .modal-aviso-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); z-index: 5000; justify-content: center; align-items: center; padding: 20px; }
+  .modal-aviso-overlay.ativo { display: flex; }
+  .modal-aviso-content { background: var(--fundo-card); padding: 30px 25px; border-radius: 12px; border: 1px solid #c94a4a; text-align: center; max-width: 400px; width: 100%; box-shadow: 0 20px 60px rgba(201,74,74,0.3); }
+  .modal-aviso-content .icone-aviso { font-size: 3rem; margin-bottom: 15px; }
+  .modal-aviso-content h3 { color: #ff6b6b; font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 10px; }
+  .modal-aviso-content p { color: #bbb; font-size: 0.9rem; margin-bottom: 25px; line-height: 1.5; }
+  .modal-aviso-content button { background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); color: #0d0d0d; border: none; padding: 14px 25px; border-radius: 30px; font-weight: bold; font-size: 0.85rem; cursor: pointer; width: 100%; }
+  .modal-aviso-content button:hover { box-shadow: 0 0 20px rgba(212,175,55,0.4); }
 
   /* CARRINHO */
   .modal-carrinho-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); z-index: 4000; justify-content: center; align-items: center; padding: 15px; }
@@ -387,6 +396,16 @@
   </div>
 </div>
 
+<!-- MODAL: AVISO DE PRODUTO INEXISTENTE (NOVO) -->
+<div class="modal-aviso-overlay" id="modalAviso">
+  <div class="modal-aviso-content">
+    <div class="icone-aviso">🤔</div>
+    <h3>Ops... Perfume não encontrado</h3>
+    <p>O link que você acessou pode estar quebrado ou o produto não está mais disponível em nosso catálogo.</p>
+    <button onclick="fecharAviso()">Ver Catálogo Completo</button>
+  </div>
+</div>
+
 <!-- MODAL CARRINHO -->
 <div class="modal-carrinho-overlay" id="modalCarrinho">
   <div class="modal-carrinho-content">
@@ -458,6 +477,7 @@
   const listaProdutos = document.getElementById('lista-produtos');
   const modalProduto = document.getElementById('modalProduto');
   const modalCarrinho = document.getElementById('modalCarrinho');
+  const modalAviso = document.getElementById('modalAviso');
   const searchBar = document.getElementById('searchBar');
   const navMenu = document.getElementById('navMenu');
   const barraCarrinho = document.getElementById('barraCarrinho');
@@ -478,22 +498,39 @@
       });
 
       window.irParaInicio();
-      verificarHashtag(); // Verifica se o link veio com um ID
+      verificarHashtag(); 
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
       listaProdutos.innerHTML = '<div style="color:red; text-align:center; grid-column:1/-1;">Erro ao carregar o catálogo.</div>';
     }
   }
 
-  // --- NOVA FUNÇÃO: ABRE O PERFUME SE VIER PELO LINK DIRETO ---
+  // --- FUNÇÃO CORRIGIDA: TRATA O LINK DIRETO E ERROS ---
   function verificarHashtag() {
     setTimeout(function() {
       const hash = window.location.hash.replace('#', '');
-      if (hash && window.abrirModal) {
-        window.abrirModal(hash);
+      
+      if (hash) {
+        // Verifica se o produto existe
+        const produtoExiste = perfumes.find(p => p.id === hash);
+        
+        if (produtoExiste) {
+          window.abrirModal(hash);
+        } else {
+          // Produto não existe (excluído ou link inválido)
+          modalAviso.classList.add('ativo');
+          document.body.style.overflow = 'hidden';
+          history.replaceState(null, null, ' '); // Limpa o hash da URL
+        }
       }
-    }, 500); // Pequeno delay para garantir que tudo carregou
+    }, 600); 
   }
+
+  window.fecharAviso = function() {
+    modalAviso.classList.remove('ativo');
+    document.body.style.overflow = 'auto';
+    window.scrollTo(0, 0);
+  };
 
   function fmt(v) { return 'R$ ' + v.toFixed(2).replace('.', ','); }
   function esc(s) { return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
@@ -529,7 +566,6 @@
     if (navTodos) navTodos.classList.add('active');
     
     renderizarProdutos('todos', '');
-    // Não rola para o topo se estiver abrindo via hashtag
     if(!window.location.hash) window.scrollTo(0, 0);
   };
 
@@ -641,7 +677,6 @@
       let selo = p.vendido ? '<div class="selo-vendas">Top</div>' : '';
       let seloInd = p.indisponivel ? '<div class="selo-indisponivel">Indisponível</div>' : '';
       
-      // Pega o menor preço ou o 50ml para mostrar na vitrine
       let precoVitrine = 0;
       if (p.tamanhos) {
         if (p.tamanhos["50ml"]) precoVitrine = p.tamanhos["50ml"];
@@ -669,7 +704,6 @@
     let p = perfumes.find(function(item) { return item.id === id; });
     if (!p || p.indisponivel) return;
 
-    // Pega o preço do 50ml por padrão, ou o primeiro que achar
     let preco = 0;
     let nomeTam = "50ml";
     
@@ -790,7 +824,6 @@
   window.fecharModal = function() {
     modalProduto.classList.remove('ativo');
     document.body.style.overflow = 'auto';
-    // Limpa a hashtag da URL para não abrir de novo se a página for recarregada
     if(window.location.hash) history.replaceState(null, null, ' ');
   };
 
