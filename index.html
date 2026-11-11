@@ -56,19 +56,6 @@
   .beneficio-item h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; color: var(--dourado-claro); }
   .beneficio-item p { font-size: 0.55rem; text-transform: uppercase; color: #888; letter-spacing: 0.5px; }
 
-  /* CATEGORIAS */
-  .categorias-section { text-align: center; padding: 40px 15px 30px; }
-  .subtitulo-secao { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px; color: var(--dourado); margin-bottom: 5px; display: block; }
-  .titulo-secao { font-size: 2.2rem; font-weight: 400; margin-bottom: 25px; color: var(--dourado-claro); }
-  .grid-categorias { display: grid; grid-template-columns: 1fr; max-width: 1400px; margin: 0 auto; gap: 10px; }
-  .categoria-card { position: relative; height: 250px; overflow: hidden; cursor: pointer; border-radius: 4px; border: 1px solid var(--borda); }
-  .categoria-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; filter: brightness(0.55); }
-  .categoria-card:hover img { transform: scale(1.05); filter: brightness(0.7); }
-  .categoria-card .overlay { position: absolute; bottom: 25px; left: 25px; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.8); z-index: 2; text-align: left; }
-  .categoria-card .overlay h3 { font-size: 1.8rem; font-weight: 700; margin-bottom: 3px; color: var(--dourado-claro); }
-  .categoria-card .overlay span { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid var(--dourado); padding-bottom: 2px; color: var(--dourado); }
-  .categoria-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); z-index: 1; }
-
   /* VITRINE */
   .vitrine-section { max-width: 1300px; margin: 0 auto; padding: 20px 15px 60px; }
   .vitrine-header { display: flex; flex-direction: column; align-items: flex-start; border-bottom: 1px solid var(--borda); padding-bottom: 15px; margin-bottom: 25px; gap: 10px; }
@@ -98,10 +85,8 @@
   .card-precos { margin-bottom: 10px; margin-top: auto; }
   .preco-antigo { text-decoration: line-through; color: #666; font-size: 0.7rem; margin-right: 4px; }
   .preco-atual { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-  
-  /* NOVO: ESTILO DO PREÇO INDISPONÍVEL NA VITRINE */
   .preco-indisponivel { font-size: 0.85rem; color: #c94a4a; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-
+  
   .card-ml { display: inline-block; font-size: 0.6rem; font-weight: 700; color: var(--dourado); background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.4); padding: 2px 8px; border-radius: 20px; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
   .btn-ver-produto { background: none; border: 1px solid var(--dourado); color: var(--dourado); padding: 8px 15px; border-radius: 30px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 5px; }
   .btn-ver-produto:hover, .btn-ver-produto:active { background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); color: #0d0d0d; border-color: var(--dourado-claro); box-shadow: 0 0 15px rgba(212,175,55,0.5); }
@@ -131,12 +116,9 @@
   .modal-precos .preco-antigo { font-size: 0.85rem; }
   .modal-precos .preco-atual { font-size: 1.9rem; }
   .aviso-pix { font-size: 0.7rem; color: #888; margin-top: 3px; }
-  
-  /* NOVO: ESTILO DO BLOCO DE PREÇO INDISPONÍVEL NO MODAL */
   .modal-precos-indisponivel { background: rgba(201, 74, 74, 0.1); border: 1px dashed #c94a4a; border-radius: 8px; padding: 15px; margin-bottom: 20px; text-align: center; }
   .modal-precos-indisponivel strong { color: #ff6b6b; font-size: 1.1rem; display: block; margin-bottom: 5px; }
   .modal-precos-indisponivel span { color: #bbb; font-size: 0.8rem; }
-
   .aviso-frete-modal { background: rgba(212,175,55,0.08); border: 1px dashed rgba(212,175,55,0.4); border-radius: 8px; padding: 10px 12px; font-size: 0.78rem; color: #ccc; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
   .aviso-frete-modal span { color: var(--dourado-claro); font-weight: bold; }
   .botoes-acao { display: flex; flex-direction: column; gap: 10px; margin-bottom: 25px; }
@@ -146,7 +128,6 @@
   .btn-comprar-agora { background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); color: #0d0d0d; font-weight: 700; }
   .btn-comprar-agora:hover { box-shadow: 0 0 20px rgba(212,175,55,0.5); }
   .btn-add-carrinho:disabled, .btn-comprar-agora:disabled { background: #333; color: #666; border-color: #444; cursor: not-allowed; box-shadow: none; }
-  
   .info-adicional { border-top: 1px solid var(--borda); padding-top: 20px; }
   .info-adicional p { font-size: 0.8rem; margin-bottom: 12px; color: #bbb; line-height: 1.5; }
   .info-adicional strong { color: var(--dourado); font-weight: 600; }
@@ -222,11 +203,6 @@
     .beneficio-item { border-bottom: none; }
     .beneficio-item:nth-child(2) { border-right: 1px solid var(--borda); }
     .beneficio-item:nth-child(3) { border-right: 1px solid var(--borda); }
-    .categorias-section { padding: 60px 20px 40px; }
-    .titulo-secao { font-size: 3rem; }
-    .grid-categorias { grid-template-columns: 1fr 1fr; gap: 15px; }
-    .categoria-card { height: 500px; }
-    .categoria-card .overlay h3 { font-size: 2.5rem; }
     .vitrine-section { padding: 40px 20px 80px; }
     .vitrine-header { flex-direction: row; align-items: center; justify-content: space-between; }
     .vitrine-titulo { font-size: 1.8rem; }
@@ -326,20 +302,7 @@
     <div class="beneficio-item"><h4>Artesanal</h4><p>Feito Um a Um</p></div>
   </div>
 
-  <section class="categorias-section">
-    <span class="subtitulo-secao">Explore</span>
-    <h2 class="titulo-secao">Categorias</h2>
-    <div class="grid-categorias">
-      <div class="categoria-card" onclick="irParaCategoria('feminino')">
-        <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?q=80&w=1000&auto=format&fit=crop" alt="Feminino" loading="lazy">
-        <div class="overlay"><h3>Feminino</h3><span>Ver Coleção</span></div>
-      </div>
-      <div class="categoria-card" onclick="irParaCategoria('masculino')">
-        <img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1000&auto=format&fit=crop" alt="Masculino" loading="lazy">
-        <div class="overlay"><h3>Masculino</h3><span>Ver Coleção</span></div>
-      </div>
-    </div>
-  </section>
+  <!-- SEÇÃO DE CATEGORIAS REMOVIDA DAQUI -->
 
   <section class="vitrine-section">
     <div class="vitrine-header">
@@ -383,14 +346,12 @@
       <div class="tamanhos-container" id="modal-tamanhos"></div>
       <div class="aviso-tamanho" id="aviso-tamanho">✨ Selecione um tamanho disponível</div>
 
-      <!-- BLOCO DE PREÇO (VAI SUMIR SE INDISPONÍVEL) -->
       <div class="modal-precos" id="bloco-precos">
         <span class="preco-antigo" id="modal-preco-antigo"></span>
         <span class="preco-atual" id="modal-preco-atual"></span>
         <div class="aviso-pix">à vista no Pix</div>
       </div>
 
-      <!-- BLOCO DE AVISO DE INDISPONÍVEL (VAI APARECER SE INDISPONÍVEL) -->
       <div class="modal-precos-indisponivel" id="bloco-indisponivel" style="display: none;">
         <strong>⏳ Produto Esgotado</strong>
         <span>Consulte o valor e a disponibilidade na reposição.</span>
@@ -504,7 +465,6 @@
   const btnAddCarrinho = document.getElementById('btn-add-carrinho');
   const btnComprarAgora = document.getElementById('btn-comprar-agora');
   
-  // Elementos do bloco de preço para indisponível
   const blocoPrecos = document.getElementById('bloco-precos');
   const blocoIndisponivel = document.getElementById('bloco-indisponivel');
   const avisoFrete = document.getElementById('aviso-frete');
@@ -554,7 +514,6 @@
   function fmt(v) { return 'R$ ' + v.toFixed(2).replace('.', ','); }
   function esc(s) { return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
-  // --- CONTROLE DE ABAS ---
   function mostrarCatalogo() {
     document.getElementById('aba-catalogo').classList.add('ativo');
     document.getElementById('aba-quem-somos').classList.remove('ativo');
@@ -705,7 +664,6 @@
         }
       }
 
-      // AQUI ESTÁ O AJUSTE DO PREÇO NA VITRINE
       let precoHtml = '';
       if (p.indisponivel) {
         precoHtml = '<span class="preco-indisponivel">Indisponível</span>';
@@ -813,7 +771,6 @@
     });
     document.getElementById('modal-tamanhos').innerHTML = tamHtml;
 
-    // LÓGICA PARA INDISPONÍVEL NO MODAL
     if(p.indisponivel) {
        btnAddCarrinho.disabled = true;
        btnComprarAgora.disabled = true;
@@ -864,7 +821,6 @@
     if(window.location.hash) history.replaceState(null, null, ' ');
   };
 
-  // --- CARRINHO ---
   function calcularTotal() {
     let qtdTotal = 0;
     let subtotal = 0;
