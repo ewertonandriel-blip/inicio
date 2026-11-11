@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>THRUST PARFUMS</title>
+<title>THRUST PARFUMS — Catálogo 50ml</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230d0d0d%22/><text x=%2250%22 y=%2275%22 font-size=%2270%22 font-family=%22serif%22 font-weight=%22bold%22 fill=%22%23f5d97a%22 text-anchor=%22middle%22>T</text></svg>">
 <style>
@@ -136,7 +136,6 @@
   .btn-comprar-agora { background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); color: #0d0d0d; font-weight: 700; }
   .btn-comprar-agora:hover { box-shadow: 0 0 20px rgba(212,175,55,0.5); }
   
-  /* BOTÕES DESABILITADOS NO MODAL */
   .btn-add-carrinho:disabled, .btn-comprar-agora:disabled { background: #333; color: #666; border-color: #444; cursor: not-allowed; box-shadow: none; }
   
   .info-adicional { border-top: 1px solid var(--borda); padding-top: 20px; }
@@ -465,7 +464,6 @@
   const whatsFab = document.getElementById('whatsFab');
   const btnTopo = document.getElementById('btnTopo');
   
-  // Elementos do Modal
   const btnAddCarrinho = document.getElementById('btn-add-carrinho');
   const btnComprarAgora = document.getElementById('btn-comprar-agora');
 
@@ -480,10 +478,21 @@
       });
 
       window.irParaInicio();
+      verificarHashtag(); // Verifica se o link veio com um ID
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
       listaProdutos.innerHTML = '<div style="color:red; text-align:center; grid-column:1/-1;">Erro ao carregar o catálogo.</div>';
     }
+  }
+
+  // --- NOVA FUNÇÃO: ABRE O PERFUME SE VIER PELO LINK DIRETO ---
+  function verificarHashtag() {
+    setTimeout(function() {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && window.abrirModal) {
+        window.abrirModal(hash);
+      }
+    }, 500); // Pequeno delay para garantir que tudo carregou
   }
 
   function fmt(v) { return 'R$ ' + v.toFixed(2).replace('.', ','); }
@@ -520,7 +529,8 @@
     if (navTodos) navTodos.classList.add('active');
     
     renderizarProdutos('todos', '');
-    window.scrollTo(0, 0);
+    // Não rola para o topo se estiver abrindo via hashtag
+    if(!window.location.hash) window.scrollTo(0, 0);
   };
 
   window.abrirMenuMobile = function() {
@@ -631,7 +641,7 @@
       let selo = p.vendido ? '<div class="selo-vendas">Top</div>' : '';
       let seloInd = p.indisponivel ? '<div class="selo-indisponivel">Indisponível</div>' : '';
       
-      // Pega o menor preço ou o 50ml
+      // Pega o menor preço ou o 50ml para mostrar na vitrine
       let precoVitrine = 0;
       if (p.tamanhos) {
         if (p.tamanhos["50ml"]) precoVitrine = p.tamanhos["50ml"];
@@ -659,15 +669,23 @@
     let p = perfumes.find(function(item) { return item.id === id; });
     if (!p || p.indisponivel) return;
 
+    // Pega o preço do 50ml por padrão, ou o primeiro que achar
     let preco = 0;
-    if (p.tamanhos && p.tamanhos["50ml"]) preco = p.tamanhos["50ml"];
-    else if (p.tamanhos) {
-      let keys = Object.keys(p.tamanhos);
-      if(keys.length > 0) preco = p.tamanhos[keys[0]];
+    let nomeTam = "50ml";
+    
+    if (p.tamanhos) {
+      if (p.tamanhos["50ml"]) {
+        preco = p.tamanhos["50ml"];
+        nomeTam = "50ml";
+      } else {
+        let keys = Object.keys(p.tamanhos);
+        if(keys.length > 0) {
+          nomeTam = keys[0];
+          preco = p.tamanhos[keys[0]];
+        }
+      }
     }
 
-    let nomeTam = p.tamanhos && p.tamanhos["50ml"] ? "50ml" : (p.tamanhos ? Object.keys(p.tamanhos)[0] : "50ml");
-    
     let key = p.id + '-' + nomeTam;
     
     if(!carrinho[key]) {
@@ -720,7 +738,6 @@
       (p.notas && p.notas.coracao ? '<span><strong>Coração:</strong> ' + esc(p.notas.coracao) + '</span>' : '') +
       (p.notas && p.notas.fundo ? '<span><strong>Fundo:</strong> ' + esc(p.notas.fundo) + '</span>' : '');
 
-    // Gera os botões de tamanho
     let tamHtml = '';
     let tamanhosDisponiveis = p.tamanhos || {};
     
@@ -735,7 +752,6 @@
     });
     document.getElementById('modal-tamanhos').innerHTML = tamHtml;
 
-    // Configura botões de ação (Comprar/Add)
     if(p.indisponivel) {
        btnAddCarrinho.disabled = true;
        btnComprarAgora.disabled = true;
@@ -774,6 +790,8 @@
   window.fecharModal = function() {
     modalProduto.classList.remove('ativo');
     document.body.style.overflow = 'auto';
+    // Limpa a hashtag da URL para não abrir de novo se a página for recarregada
+    if(window.location.hash) history.replaceState(null, null, ' ');
   };
 
   // --- CARRINHO ---
