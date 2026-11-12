@@ -121,6 +121,8 @@
   .btn-tamanho.active { border: 2px solid var(--dourado); background-color: rgba(212,175,55,0.1); color: var(--dourado-claro); }
   .btn-tamanho.desabilitado { opacity: 0.35; cursor: not-allowed; background: #151515; pointer-events: none; text-decoration: line-through; }
   .btn-tamanho.desabilitado::after { content: "EM BREVE"; position: absolute; top: -8px; right: -4px; background: var(--dourado); color: #0d0d0d; font-size: 0.45rem; padding: 2px 5px; border-radius: 8px; font-weight: 800; letter-spacing: 0.5px; text-decoration: none; }
+  .btn-tamanho.esgotado { opacity: 0.4; cursor: not-allowed; background: #151515; pointer-events: none; }
+  .btn-tamanho.esgotado::after { content: "ESGOTADO"; position: absolute; top: -8px; right: -4px; background: #c94a4a; color: #fff; font-size: 0.45rem; padding: 2px 5px; border-radius: 8px; font-weight: 800; letter-spacing: 0.5px; text-decoration: none; }
   .aviso-tamanho { font-size: 0.68rem; color: var(--dourado); font-style: italic; margin-bottom: 16px; }
   .modal-precos { margin-bottom: 20px; }
   .modal-precos .preco-antigo { font-size: 0.85rem; }
@@ -170,6 +172,7 @@
   .item-carrinho .ctrl { display: flex; align-items: center; gap: 6px; }
   .item-carrinho .ctrl button { width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--dourado); background: transparent; color: var(--dourado); cursor: pointer; font-weight: 700; display: flex; align-items: center; justify-content: center; }
   .item-carrinho .ctrl button:active { background: var(--dourado); color: #0d0d0d; }
+  .item-carrinho .ctrl button:disabled { opacity: 0.3; cursor: not-allowed; }
   .item-carrinho .ctrl span { min-width: 18px; text-align: center; font-weight: 600; color: #fff; }
   .item-carrinho .preco-item { font-weight: 700; min-width: 70px; text-align: right; color: var(--dourado); font-size: .85rem; }
   .carrinho-vazio { text-align: center; color: #777; font-size: 0.9rem; padding: 30px 10px; font-style: italic; }
@@ -259,6 +262,18 @@
   .quem-somos .sub { text-align: center; color: var(--dourado); font-style: italic; font-size: .88rem; margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid var(--borda); }
   .quem-somos p { color: #bbb; font-size: .92rem; line-height: 1.7; margin-bottom: 16px; text-align: justify; }
   .quem-somos p strong { color: var(--dourado-claro); font-weight: 700; }
+
+  /* MODAL AVISO CARRINHO (ESGOTOU EM TEMPO REAL) */
+  .modal-esgotou-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.92); z-index: 6000; justify-content: center; align-items: center; padding: 20px; }
+  .modal-esgotou-overlay.ativo { display: flex; }
+  .modal-esgotou-content { background: var(--fundo-card); padding: 30px 25px; border-radius: 12px; border: 1px solid var(--dourado); text-align: center; max-width: 400px; width: 100%; box-shadow: 0 20px 60px rgba(212,175,55,0.3); }
+  .modal-esgotou-content .icone-aviso { font-size: 3rem; margin-bottom: 15px; }
+  .modal-esgotou-content h3 { color: var(--dourado-claro); font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 10px; }
+  .modal-esgotou-content p { color: #bbb; font-size: 0.85rem; margin-bottom: 20px; line-height: 1.5; }
+  .modal-esgotou-content p strong { color: var(--dourado-claro); }
+  .modal-esgotou-content .btn-whats-aviso { background: var(--verde-whats); color: #fff; border: none; padding: 16px 25px; border-radius: 30px; font-weight: 800; font-size: 0.9rem; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; transition: 0.2s; }
+  .modal-esgotou-content .btn-whats-aviso:hover { box-shadow: 0 0 25px rgba(37,211,102,0.6); transform: scale(1.02); }
+  .modal-esgotou-content .btn-fechar-aviso { background: transparent; border: 1px solid #666; color: #aaa; padding: 10px 20px; border-radius: 30px; font-size: 0.8rem; cursor: pointer; width: 100%; }
 </style>
 </head>
 <body>
@@ -404,6 +419,20 @@
   </div>
 </div>
 
+<!-- MODAL AVISO: ESGOTOU EM TEMPO REAL -->
+<div class="modal-esgotou-overlay" id="modalEsgotou">
+  <div class="modal-esgotou-content">
+    <div class="icone-aviso">⏳</div>
+    <h3>Produto esgotou!</h3>
+    <p id="mensagemEsgotou">O item <strong>X</strong> esgotou enquanto você finalizava o pedido. Removemos do carrinho. Quer que eu te avise quando repor?</p>
+    <button class="btn-whats-aviso" id="btnWhatsEsgotou" onclick="abrirWhatsEsgotou()">
+      <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:#fff;display:inline;vertical-align:middle;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Falar com Ewerton no WhatsApp
+    </button>
+    <button class="btn-fechar-aviso" onclick="fecharModalEsgotou()">Fechar</button>
+  </div>
+</div>
+
 <!-- BARRA CARRINHO FLUTUANTE -->
 <div class="barra-carrinho" id="barraCarrinho">
   <div class="barra-carrinho-conteudo" onclick="abrirCarrinho()">
@@ -455,15 +484,18 @@
   let produtoSelecionado = null;
   let tamanhoSelecionado = { label: "50ml", preco: 0 };
   let perfumesCarregados = false;
+  let esgotouPendenteMsg = '';
 
   const whats = "5511946927675";
   const DESCONTO_MIN = 3;
   const DESCONTO_PCT = 0.05;
+  const TAMANHOS = ['30ml', '50ml', '100ml'];
 
   const listaProdutos = document.getElementById('lista-produtos');
   const modalProduto = document.getElementById('modalProduto');
   const modalCarrinho = document.getElementById('modalCarrinho');
   const modalAviso = document.getElementById('modalAviso');
+  const modalEsgotou = document.getElementById('modalEsgotou');
   const searchBar = document.getElementById('searchBar');
   const navMenu = document.getElementById('navMenu');
   const barraCarrinho = document.getElementById('barraCarrinho');
@@ -477,6 +509,47 @@
   const blocoIndisponivel = document.getElementById('bloco-indisponivel');
   const avisoFrete = document.getElementById('aviso-frete');
 
+  /* ============================================================
+     NORMALIZAÇÃO DE ESTOQUE
+     Converte estoque número (antigo) para objeto por tamanho.
+     Regra: número vira { "50ml": N, <outros tamanhos habilitados>: 0 }
+     ============================================================ */
+  function normalizarEstoque(p) {
+    if (p.estoque && typeof p.estoque === 'object') {
+      return p.estoque;
+    }
+    const num = (typeof p.estoque === 'number') ? p.estoque : 0;
+    const obj = { "50ml": num };
+    if (p.tamanhos) {
+      Object.keys(p.tamanhos).forEach(tam => {
+        if (tam !== "50ml") obj[tam] = 0;
+      });
+    }
+    return obj;
+  }
+
+  function estoqueDoTamanho(p, tamanho) {
+    const est = normalizarEstoque(p);
+    return typeof est[tamanho] === 'number' ? est[tamanho] : 0;
+  }
+
+  function totalEstoque(p) {
+    const est = normalizarEstoque(p);
+    return Object.values(est).reduce((a, b) => a + (typeof b === 'number' ? b : 0), 0);
+  }
+
+  function temAlgumEstoque(p) {
+    return totalEstoque(p) > 0;
+  }
+
+  function tamanhosDisponiveis(p) {
+    const est = normalizarEstoque(p);
+    return TAMANHOS.filter(tam => (est[tam] || 0) > 0);
+  }
+
+  /* ============================================================
+     CARREGAMENTO EM TEMPO REAL
+     ============================================================ */
   function carregarPerfumes() {
     const q = query(collection(db, "perfumes"), orderBy("nome"));
     
@@ -486,17 +559,25 @@
         perfumes.push({ id: doc.id, ...doc.data() });
       });
 
-      // Primeira carga: inicializa tela e checa hashtag
       if (!perfumesCarregados) {
         perfumesCarregados = true;
         window.irParaInicio();
         verificarHashtag();
       } else {
-        // Atualizações em tempo real: re-renderiza mantendo filtro/busca atuais
         const catAtivaBtn = document.querySelector('.filtro-btn.active');
         const cat = catAtivaBtn ? catAtivaBtn.dataset.cat : 'todos';
         const termo = document.getElementById('campoBusca').value.trim().toLowerCase();
         renderizarProdutos(cat, termo);
+        // Valida carrinho em tempo real
+        validarCarrinhoEmTempoReal();
+        // Se modal aberto, atualiza
+        if (produtoSelecionado) {
+          const atualizado = perfumes.find(p => p.id === produtoSelecionado.id);
+          if (atualizado) {
+            produtoSelecionado = atualizado;
+            atualizarModalTamanhos();
+          }
+        }
       }
     }, (error) => {
       console.error("Erro ao buscar dados:", error);
@@ -504,6 +585,70 @@
     });
   }
 
+  /* ============================================================
+     VALIDAÇÃO EM TEMPO REAL DO CARRINHO (#4 + #6)
+     Se item esgotou ou quantidade > estoque, ajusta/remove
+     ============================================================ */
+  function validarCarrinhoEmTempoReal() {
+    let mudou = false;
+    let esgotados = [];
+
+    for (const key in carrinho) {
+      const item = carrinho[key];
+      const p = perfumes.find(x => x.id === item.id);
+      
+      if (!p) {
+        // Produto sumiu do catálogo
+        delete carrinho[key];
+        mudou = true;
+        continue;
+      }
+
+      const est = estoqueDoTamanho(p, item.tamanho);
+      
+      if (est === 0) {
+        // Esgotou o tamanho
+        esgotados.push({ nome: item.nome, tamanho: item.tamanho });
+        delete carrinho[key];
+        mudou = true;
+      } else if (item.qtd > est) {
+        // Reduz para o máximo disponível
+        carrinho[key].qtd = est;
+        mudou = true;
+      }
+    }
+
+    if (mudou) {
+      atualizarBadge();
+      if (modalCarrinho.classList.contains('ativo')) renderizarCarrinho();
+      
+      if (esgotados.length > 0) {
+        const nomes = esgotados.map(e => e.nome + ' (' + e.tamanho + ')').join(', ');
+        mostrarAvisoEsgotou(nomes);
+      }
+    }
+  }
+
+  function mostrarAvisoEsgotou(nomesItens) {
+    esgotouPendenteMsg = 'Olá! O perfume ' + nomesItens + ' esgotou enquanto eu finalizava o pedido. Pode me avisar quando repor?';
+    document.getElementById('mensagemEsgotou').innerHTML = 
+      'O item <strong>' + nomesItens + '</strong> esgotou enquanto você finalizava o pedido e foi removido do carrinho. Quer que eu te avise quando repor?';
+    modalEsgotou.classList.add('ativo');
+    document.body.style.overflow = 'hidden';
+  }
+
+  window.abrirWhatsEsgotou = function() {
+    window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent(esgotouPendenteMsg), '_blank');
+  };
+
+  window.fecharModalEsgotou = function() {
+    modalEsgotou.classList.remove('ativo');
+    document.body.style.overflow = 'auto';
+  };
+
+  /* ============================================================
+     HASHTAG / LINK DIRETO
+     ============================================================ */
   function verificarHashtag() {
     setTimeout(function() {
       const hash = window.location.hash.replace('#', '');
@@ -548,7 +693,6 @@
 
   window.irParaInicio = function() {
     mostrarCatalogo();
-    let catAtual = 'todos';
 
     document.querySelectorAll('.filtro-btn').forEach(function(b) { b.classList.remove('active'); });
     let btnTodos = document.querySelector('.filtro-btn[data-cat="todos"]');
@@ -639,6 +783,11 @@
     renderizarProdutos(cat, termoBusca);
   };
 
+  /* ============================================================
+     RENDERIZAÇÃO DA VITRINE
+     Estoque baixo = exatamente 1 unidade (qualquer tamanho)
+     Indisponível = todos os tamanhos zerados OU p.indisponivel
+     ============================================================ */
   function renderizarProdutos(categoriaFiltro, termoBusca) {
     let lista = perfumes.slice();
     
@@ -669,12 +818,20 @@
         imgHtml = '<div class="card-frasco-placeholder">THRUST</div>';
       }
       
+      const semEstoque = !temAlgumEstoque(p);
+      const esgotado = p.indisponivel || semEstoque;
+
       let selo = p.vendido ? '<div class="selo-vendas">Top</div>' : '';
-      let seloInd = p.indisponivel ? '<div class="selo-indisponivel">Indisponível</div>' : '';
+      let seloInd = esgotado ? '<div class="selo-indisponivel">Indisponível</div>' : '';
       
+      // Estoque baixo: exatamente 1 unidade em algum tamanho disponível
       let seloEstoque = '';
-      if (p.estoque !== undefined && p.estoque > 0 && p.estoque <= 3) {
-        seloEstoque = '<div class="selo-estoque-baixo">🔥 Apenas ' + p.estoque + ' un.</div>';
+      if (!esgotado) {
+        const est = normalizarEstoque(p);
+        const algumTamanhoCom1 = Object.keys(est).some(tam => est[tam] === 1);
+        if (algumTamanhoCom1) {
+          seloEstoque = '<div class="selo-estoque-baixo">🔥 Apenas 1 un.</div>';
+        }
       }
       
       let precoVitrine = 0;
@@ -687,47 +844,46 @@
       }
 
       let precoHtml = '';
-      if (p.indisponivel) {
+      if (esgotado) {
         precoHtml = '<span class="preco-indisponivel">Indisponível</span>';
       } else {
         precoHtml = '<span class="preco-atual">' + fmt(precoVitrine) + '</span>';
       }
 
-      return '<div class="card-produto ' + (p.indisponivel ? 'esgotado' : '') + '" onclick="abrirModal(\'' + p.id + '\')">' +
+      return '<div class="card-produto ' + (esgotado ? 'esgotado' : '') + '" onclick="abrirModal(\'' + p.id + '\')">' +
         '<div class="card-imagem">' + selo + seloInd + seloEstoque + imgHtml + '</div>' +
-        (p.indisponivel ? '' : '<button class="btn-add-fast" onclick="event.stopPropagation(); adicionarDireto(\'' + p.id + '\')" title="Adicionar rápido">+</button>') +
+        (esgotado ? '' : '<button class="btn-add-fast" onclick="event.stopPropagation(); adicionarDireto(\'' + p.id + '\')" title="Adicionar rápido">+</button>') +
         '<h3>' + esc(p.nome) + '</h3>' +
         '<div class="card-inspiracao">Inspirado em "' + esc(p.insp) + '"</div>' +
         '<div class="card-ml">50 ml</div>' +
         '<div class="card-precos">' +
           precoHtml +
         '</div>' +
-        '<button class="btn-ver-produto">' + (p.indisponivel ? 'Ver Detalhes' : 'Ver Produto') + '</button>' +
+        '<button class="btn-ver-produto">' + (esgotado ? 'Ver Detalhes' : 'Ver Produto') + '</button>' +
       '</div>';
     }).join('');
   }
 
+  /* ============================================================
+     ADIÇÃO RÁPIDA (+ no card)
+     ============================================================ */
   window.adicionarDireto = function(id) {
     let p = perfumes.find(function(item) { return item.id === id; });
-    if (!p || p.indisponivel) return;
+    if (!p) return;
+    if (p.indisponivel) return;
+    if (!temAlgumEstoque(p)) return;
 
-    let preco = 0;
-    let nomeTam = "50ml";
-    
-    if (p.tamanhos) {
-      if (p.tamanhos["50ml"]) {
-        preco = p.tamanhos["50ml"];
-        nomeTam = "50ml";
-      } else {
-        let keys = Object.keys(p.tamanhos);
-        if(keys.length > 0) {
-          nomeTam = keys[0];
-          preco = p.tamanhos[keys[0]];
-        }
-      }
+    // Escolhe o primeiro tamanho com estoque > 0 (prioridade 50ml)
+    let nomeTam = null;
+    if (estoqueDoTamanho(p, '50ml') > 0) nomeTam = '50ml';
+    else {
+      nomeTam = tamanhosDisponiveis(p)[0];
     }
+    if (!nomeTam) return;
 
-    let key = p.id + '-' + nomeTam;
+    const preco = p.tamanhos[nomeTam];
+    const key = p.id + '-' + nomeTam;
+    const est = estoqueDoTamanho(p, nomeTam);
     
     if(!carrinho[key]) {
       carrinho[key] = {
@@ -738,6 +894,22 @@
         precoUnit: preco,
         qtd: 0
       };
+    }
+    
+    if (carrinho[key].qtd >= est) {
+      // Já atingiu o máximo
+      let btn = event.target;
+      if(btn) {
+        btn.innerHTML = '!';
+        btn.style.background = '#c94a4a';
+        btn.style.color = '#fff';
+        setTimeout(function(){
+          btn.innerHTML = '+';
+          btn.style.background = '';
+          btn.style.color = '';
+        }, 1200);
+      }
+      return;
     }
     
     carrinho[key].qtd += 1;
@@ -756,6 +928,9 @@
     }
   };
 
+  /* ============================================================
+     MODAL DETALHES
+     ============================================================ */
   window.abrirModal = function(id) {
     let p = perfumes.find(function(item) { return item.id === id; });
     if (!p) return;
@@ -779,21 +954,43 @@
       (p.notas && p.notas.coracao ? '<span><strong>Coração:</strong> ' + esc(p.notas.coracao) + '</span>' : '') +
       (p.notas && p.notas.fundo ? '<span><strong>Fundo:</strong> ' + esc(p.notas.fundo) + '</span>' : '');
 
+    atualizarModalTamanhos();
+
+    modalProduto.classList.add('ativo');
+    document.body.style.overflow = 'hidden';
+  };
+
+  function atualizarModalTamanhos() {
+    const p = produtoSelecionado;
+    if (!p) return;
+
+    const semEstoque = !temAlgumEstoque(p);
+    const esgotadoGeral = p.indisponivel || semEstoque;
+
     let tamHtml = '';
-    let tamanhosDisponiveis = p.tamanhos || {};
+    const tamanhosDisponiveisObj = p.tamanhos || {};
+    const est = normalizarEstoque(p);
     
-    let opcoesFixas = ['30ml', '50ml', '100ml'];
-    opcoesFixas.forEach(function(tam) {
-      if (tamanhosDisponiveis[tam]) {
-        let disabled = p.indisponivel ? 'style="pointer-events:none; opacity:0.5;"' : '';
-        tamHtml += '<div class="btn-tamanho" data-tam="'+tam+'" data-preco="'+tamanhosDisponiveis[tam]+'" onclick="selecionarTamanho(this)" '+disabled+'>' + tam + '<small>' + fmt(tamanhosDisponiveis[tam]) + '</small></div>';
+    TAMANHOS.forEach(function(tam) {
+      if (tamanhosDisponiveisObj[tam]) {
+        // Tamanho cadastrado
+        const estTam = est[tam] || 0;
+        
+        if (esgotadoGeral) {
+          tamHtml += '<div class="btn-tamanho desabilitado">' + tam + '<small>Indisponível</small></div>';
+        } else if (estTam === 0) {
+          tamHtml += '<div class="btn-tamanho esgotado" data-tam="'+tam+'" data-preco="'+tamanhosDisponiveisObj[tam]+'">' + tam + '<small>' + fmt(tamanhosDisponiveisObj[tam]) + '</small></div>';
+        } else {
+          tamHtml += '<div class="btn-tamanho" data-tam="'+tam+'" data-preco="'+tamanhosDisponiveisObj[tam]+'" onclick="selecionarTamanho(this)">' + tam + '<small>' + fmt(tamanhosDisponiveisObj[tam]) + '</small></div>';
+        }
       } else {
+        // Não cadastrado
         tamHtml += '<div class="btn-tamanho desabilitado">' + tam + '<small>Em breve</small></div>';
       }
     });
     document.getElementById('modal-tamanhos').innerHTML = tamHtml;
 
-    if(p.indisponivel) {
+    if(esgotadoGeral) {
        btnAddCarrinho.disabled = true;
        btnComprarAgora.disabled = true;
        btnAddCarrinho.innerText = "Produto Indisponível";
@@ -803,6 +1000,7 @@
        blocoIndisponivel.style.display = 'block';
        avisoFrete.style.display = 'none';
        document.getElementById('aviso-tamanho').style.display = 'none';
+       tamanhoSelecionado = null;
     } else {
        btnAddCarrinho.disabled = false;
        btnComprarAgora.disabled = false;
@@ -813,18 +1011,23 @@
        blocoIndisponivel.style.display = 'none';
        avisoFrete.style.display = 'flex';
        document.getElementById('aviso-tamanho').style.display = 'block';
-    }
 
-    let tamInicial = document.querySelector('#modal-tamanhos .btn-tamanho:not(.desabilitado)');
-    if(tamInicial && !p.indisponivel) {
-      selecionarTamanho(tamInicial);
-    } else {
-      tamanhoSelecionado = null;
+       // Seleciona primeiro tamanho com estoque (ou o anteriormente selecionado se ainda válido)
+       let tamInicial = null;
+       if (tamanhoSelecionado) {
+         const elAnterior = document.querySelector('#modal-tamanhos .btn-tamanho[data-tam="'+tamanhoSelecionado.label+'"]:not(.esgotado):not(.desabilitado)');
+         if (elAnterior) tamInicial = elAnterior;
+       }
+       if (!tamInicial) {
+         tamInicial = document.querySelector('#modal-tamanhos .btn-tamanho:not(.esgotado):not(.desabilitado)');
+       }
+       if (tamInicial) {
+         selecionarTamanho(tamInicial);
+       } else {
+         tamanhoSelecionado = null;
+       }
     }
-
-    modalProduto.classList.add('ativo');
-    document.body.style.overflow = 'hidden';
-  };
+  }
 
   window.selecionarTamanho = function(el) {
     document.querySelectorAll('#modal-tamanhos .btn-tamanho').forEach(function(b){ b.classList.remove('active'); });
@@ -843,6 +1046,9 @@
     if(window.location.hash) history.replaceState(null, null, ' ');
   };
 
+  /* ============================================================
+     CARRINHO
+     ============================================================ */
   function calcularTotal() {
     let qtdTotal = 0;
     let subtotal = 0;
@@ -873,7 +1079,11 @@
   }
 
   window.adicionarAoCarrinho = function() {
-    if (!produtoSelecionado || !tamanhoSelecionado || produtoSelecionado.indisponivel) return;
+    if (!produtoSelecionado || !tamanhoSelecionado) return;
+    if (produtoSelecionado.indisponivel) return;
+    
+    const est = estoqueDoTamanho(produtoSelecionado, tamanhoSelecionado.label);
+    if (est === 0) return;
     
     let key = produtoSelecionado.id + '-' + tamanhoSelecionado.label;
     
@@ -886,6 +1096,23 @@
         precoUnit: tamanhoSelecionado.preco,
         qtd: 0
       };
+    }
+    
+    if (carrinho[key].qtd >= est) {
+      // Máximo atingido
+      let btn = document.getElementById('btn-add-carrinho');
+      let txt = btn.innerText;
+      btn.innerText = '⚠️ Máximo: ' + est + ' un.';
+      btn.style.backgroundColor = '#c94a4a';
+      btn.style.color = '#fff';
+      btn.style.borderColor = '#c94a4a';
+      setTimeout(function(){
+        btn.innerText = txt;
+        btn.style.backgroundColor = '';
+        btn.style.color = '';
+        btn.style.borderColor = '';
+      }, 1800);
+      return;
     }
     
     carrinho[key].qtd += 1;
@@ -906,7 +1133,11 @@
   };
 
   window.comprarAgora = function() {
-    if (!produtoSelecionado || !tamanhoSelecionado || produtoSelecionado.indisponivel) return;
+    if (!produtoSelecionado || !tamanhoSelecionado) return;
+    if (produtoSelecionado.indisponivel) return;
+    const est = estoqueDoTamanho(produtoSelecionado, tamanhoSelecionado.label);
+    if (est === 0) return;
+
     let msg = 'Olá! Tenho interesse no perfume *' + produtoSelecionado.nome +
               '* (inspirado em ' + produtoSelecionado.insp + ') — ' + tamanhoSelecionado.label + ' — ' + fmt(tamanhoSelecionado.preco) + '.\n\nPode me dar mais informações?';
     window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent(msg), '_blank');
@@ -946,15 +1177,18 @@
     
     lista.innerHTML = ids.map(function(key) {
       let item = carrinho[key];
+      const p = perfumes.find(x => x.id === item.id);
+      const est = p ? estoqueDoTamanho(p, item.tamanho) : 0;
+      const noMaximo = item.qtd >= est;
       return '<div class="item-carrinho">' +
         '<div class="info-item">' +
           '<strong>' + esc(item.nome) + '</strong>' +
-          '<small>Insp. ' + esc(item.insp) + ' · ' + item.tamanho + '</small>' +
+          '<small>Insp. ' + esc(item.insp) + ' · ' + item.tamanho + (est > 0 && est <= 3 ? ' · 🔥 restam ' + est : '') + '</small>' +
         '</div>' +
         '<div class="ctrl">' +
           '<button onclick="alterarQtdCarrinho(\'' + key + '\', -1)">−</button>' +
           '<span>' + item.qtd + '</span>' +
-          '<button onclick="alterarQtdCarrinho(\'' + key + '\', 1)">+</button>' +
+          '<button onclick="alterarQtdCarrinho(\'' + key + '\', 1)" ' + (noMaximo ? 'disabled' : '') + '>+</button>' +
         '</div>' +
         '<div class="preco-item">' + fmt(item.qtd * item.precoUnit) + '</div>' +
       '</div>';
@@ -983,7 +1217,17 @@
 
   window.alterarQtdCarrinho = function(key, delta) {
     if(!carrinho[key]) return;
-    let novo = carrinho[key].qtd + delta;
+    const item = carrinho[key];
+    const p = perfumes.find(x => x.id === item.id);
+    const est = p ? estoqueDoTamanho(p, item.tamanho) : 0;
+    
+    let novo = item.qtd + delta;
+    
+    if (delta > 0 && novo > est) {
+      // Não passa do estoque
+      return;
+    }
+    
     if (novo <= 0) delete carrinho[key];
     else carrinho[key].qtd = novo;
     atualizarBadge();
