@@ -8,7 +8,7 @@
 <!-- SEO E OPEN GRAPH PARA WHATSAPP -->
 <meta property="og:title" content="THRUST PARFUMS — Catálogo Premium">
 <meta property="og:description" content="Perfumes inspirados nas grandes marcas, com matéria-prima premium. Confira nosso catálogo exclusivo!">
-<meta property="og:image" content="https://i.ibb.co/3kzm1J6/Logo-Thrust-Parfums.jpg"> <!-- SUBSTITUA PELA SUA IMAGEM DE CAPA -->
+<meta property="og:image" content="https://i.ibb.co/3kzm1J6/Logo-Thrust-Parfums.jpg">
 <meta property="og:url" content="https://thrustperfumes.store/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
@@ -88,7 +88,6 @@
   
   .selo-vendas { position: absolute; top: 8px; left: 8px; background: linear-gradient(135deg, var(--dourado), var(--dourado-claro)); color: #0d0d0d; font-size: 0.55rem; font-weight: 800; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; letter-spacing: 0.5px; z-index: 2; box-shadow: 0 3px 10px rgba(212,175,55,0.5); }
   .selo-indisponivel { position: absolute; top: 8px; right: 8px; background: #c94a4a; color: #fff; font-size: 0.55rem; font-weight: 800; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; letter-spacing: 0.5px; z-index: 2; box-shadow: 0 3px 10px rgba(201,74,74,0.5); }
-  /* NOVO SELO DE ESTOQUE BAIXO */
   .selo-estoque-baixo { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); background: rgba(255, 152, 0, 0.9); color: #fff; font-size: 0.55rem; font-weight: 800; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; letter-spacing: 0.5px; z-index: 2; white-space: nowrap; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
   
   .card-produto h3 { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; color: var(--dourado-claro); }
@@ -437,7 +436,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-  import { getFirestore, collection, getDocs, query, orderBy, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+  import { getFirestore, collection, onSnapshot, query, orderBy, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCtdszBtbQiaZnWcLLKBPnwo_3yHRtp2mA",
@@ -455,6 +454,7 @@
   let carrinho = {};
   let produtoSelecionado = null;
   let tamanhoSelecionado = { label: "50ml", preco: 0 };
+  let perfumesCarregados = false;
 
   const whats = "5511946927675";
   const DESCONTO_MIN = 3;
@@ -477,22 +477,31 @@
   const blocoIndisponivel = document.getElementById('bloco-indisponivel');
   const avisoFrete = document.getElementById('aviso-frete');
 
-  async function carregarPerfumes() {
-    try {
-      const q = query(collection(db, "perfumes"), orderBy("nome"));
-      const querySnapshot = await getDocs(q);
-      
+  function carregarPerfumes() {
+    const q = query(collection(db, "perfumes"), orderBy("nome"));
+    
+    onSnapshot(q, (querySnapshot) => {
       perfumes = [];
       querySnapshot.forEach((doc) => {
         perfumes.push({ id: doc.id, ...doc.data() });
       });
 
-      window.irParaInicio();
-      verificarHashtag(); 
-    } catch (error) {
+      // Primeira carga: inicializa tela e checa hashtag
+      if (!perfumesCarregados) {
+        perfumesCarregados = true;
+        window.irParaInicio();
+        verificarHashtag();
+      } else {
+        // Atualizações em tempo real: re-renderiza mantendo filtro/busca atuais
+        const catAtivaBtn = document.querySelector('.filtro-btn.active');
+        const cat = catAtivaBtn ? catAtivaBtn.dataset.cat : 'todos';
+        const termo = document.getElementById('campoBusca').value.trim().toLowerCase();
+        renderizarProdutos(cat, termo);
+      }
+    }, (error) => {
       console.error("Erro ao buscar dados:", error);
       listaProdutos.innerHTML = '<div style="color:red; text-align:center; grid-column:1/-1;">Erro ao carregar o catálogo.</div>';
-    }
+    });
   }
 
   function verificarHashtag() {
@@ -663,7 +672,6 @@
       let selo = p.vendido ? '<div class="selo-vendas">Top</div>' : '';
       let seloInd = p.indisponivel ? '<div class="selo-indisponivel">Indisponível</div>' : '';
       
-      // NOVO: SELO DE ESTOQUE BAIXO
       let seloEstoque = '';
       if (p.estoque !== undefined && p.estoque > 0 && p.estoque <= 3) {
         seloEstoque = '<div class="selo-estoque-baixo">🔥 Apenas ' + p.estoque + ' un.</div>';
@@ -992,21 +1000,21 @@
     ids.forEach(function(key) {
       let item = carrinho[key];
       msg += '• ' + item.qtd + 'x ' + item.nome + ' (insp. ' + item.insp + ') ' + item.tamanho + ' — ' + fmt(item.qtd * item.precoUnit) + '\n';
-      listaPedido.push({ nome: item.nome, tamanho: item.tamanho, qtd: item.qtd, preco: item.precoUnit });
+      listaPedido.push({ id: item.id, nome: item.nome, tamanho: item.tamanho, qtd: item.qtd, preco: item.precoUnit });
     });
     msg += '\nSubtotal: ' + fmt(r.subtotal);
     if (r.temDesconto) msg += '\nDesconto (5%): − ' + fmt(r.desconto);
     msg += '\nTotal: ' + fmt(r.total);
     msg += '\n\nForma de pagamento: (Pix / Cartão)';
     
-    // NOVO: SALVA O PEDIDO NO FIREBASE
     try {
       await addDoc(collection(db, "pedidos"), {
         itens: listaPedido,
         total: r.total,
         subtotal: r.subtotal,
         desconto: r.desconto,
-        data: new Date()
+        data: new Date(),
+        concretizada: false
       });
     } catch(e) { console.error("Erro ao salvar pedido", e); }
 
