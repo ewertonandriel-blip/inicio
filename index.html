@@ -151,6 +151,8 @@
   .btn-mini-ver:hover { background: rgba(212,175,55,0.15); }
   .btn-mini-finalizar { flex: 1; background: var(--verde-whats); color: #fff; border: none; padding: 9px; border-radius: 20px; font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: 0.2s; font-family: inherit; }
   .btn-mini-finalizar:hover { background: #1a9e4a; }
+  .btn-continuar-modal { background: none; border: none; color: #888; padding: 10px; margin-top: 8px; width: 100%; cursor: pointer; font-size: 0.75rem; text-decoration: underline; font-family: inherit; transition: 0.2s; }
+  .btn-continuar-modal:hover { color: var(--dourado-claro); }
 
   .info-adicional { border-top: 1px solid var(--borda); padding-top: 20px; }
   .info-adicional p { font-size: 0.8rem; margin-bottom: 12px; color: #bbb; line-height: 1.5; }
@@ -191,6 +193,26 @@
   .linha-total { display: flex; justify-content: space-between; font-size: .9rem; color: #bbb; margin-bottom: 6px; }
   .linha-total.desconto { color: #25D366; font-weight: 600; }
   .linha-total.total-geral { font-size: 1.15rem; font-weight: 800; color: var(--dourado-claro); padding-top: 8px; margin-top: 8px; border-top: 1px solid var(--borda); font-family: 'Playfair Display', serif; }
+
+  /* CUPOM */
+  .cupom-area { background: rgba(212,175,55,0.05); border: 1px solid rgba(212,175,55,0.3); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; }
+  .cupom-titulo { font-size: 0.72rem; font-weight: 700; color: var(--dourado-claro); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .cupom-linha { display: flex; gap: 6px; }
+  .cupom-linha input { flex: 1; padding: 10px 12px; border-radius: 6px; border: 1px solid #444; background: #0d0d0d; color: #fff; font-family: inherit; font-size: 0.8rem; outline: none; text-transform: uppercase; letter-spacing: 0.5px; min-width: 0; }
+  .cupom-linha input:focus { border-color: var(--dourado); }
+  .cupom-linha input:disabled { opacity: 0.6; }
+  .btn-aplicar-cupom { background: transparent; border: 1px solid var(--dourado); color: var(--dourado); padding: 10px 14px; border-radius: 6px; font-size: 0.72rem; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; font-family: inherit; transition: 0.2s; white-space: nowrap; }
+  .btn-aplicar-cupom:hover { background: var(--dourado); color: #0d0d0d; }
+  .btn-aplicar-cupom:disabled { opacity: 0.5; cursor: not-allowed; }
+  .cupom-msg { font-size: 0.7rem; margin-top: 6px; font-weight: 600; line-height: 1.3; display: none; }
+  .cupom-msg.sucesso { color: #25D366; display: block; }
+  .cupom-msg.erro { color: #ff6b6b; display: block; }
+  .cupom-aplicado-box { background: rgba(37,211,102,0.08); border: 1px solid var(--verde-whats); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .cupom-aplicado-box .info { flex: 1; min-width: 0; }
+  .cupom-aplicado-box .info strong { font-size: 0.8rem; color: #25D366; font-weight: 800; display: block; }
+  .cupom-aplicado-box .info small { font-size: 0.68rem; color: #888; }
+  .cupom-aplicado-box button { background: none; border: 1px solid #c94a4a; color: #ff6b6b; padding: 6px 10px; border-radius: 6px; font-size: 0.68rem; cursor: pointer; font-weight: 700; font-family: inherit; white-space: nowrap; }
+  .cupom-aplicado-box button:hover { background: #c94a4a; color: #fff; }
 
   .btn-finalizar-whats { background-color: var(--verde-whats); color: #fff; width: 100%; padding: 16px; border: none; border-radius: 30px; font-size: 0.85rem; font-weight: 700; cursor: pointer; margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
   .btn-finalizar-whats:active { background: #1a9e4a; }
@@ -401,6 +423,8 @@
         </div>
       </div>
 
+      <button class="btn-continuar-modal" id="btnContinuarModal" onclick="fecharModal()">← Continuar comprando</button>
+
       <div class="info-adicional">
         <p id="modal-descricao"></p>
         <div class="notas-olfativas" id="modal-notas"></div>
@@ -469,7 +493,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-  import { getFirestore, collection, onSnapshot, query, orderBy, addDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+  import { getFirestore, collection, onSnapshot, query, orderBy, addDoc, getDocs, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCtdszBtbQiaZnWcLLKBPnwo_3yHRtp2mA",
@@ -489,6 +513,7 @@
   let tamanhoSelecionado = { label: "50ml", preco: 0 };
   let perfumesCarregados = false;
   let esgotouPendenteMsg = '';
+  let cupomAplicado = null; // { codigo, percentual }
 
   const whats = "5511946927675";
   const DESCONTO_MIN = 3;
@@ -1055,10 +1080,32 @@
       qtdTotal += carrinho[k].qtd;
       subtotal += (carrinho[k].qtd * carrinho[k].precoUnit);
     }
-    let temDesconto = qtdTotal >= DESCONTO_MIN;
-    let desconto = temDesconto ? subtotal * DESCONTO_PCT : 0;
+    
+    // Desconto automático 5% se >= 3 itens
+    let descontoAutoPct = qtdTotal >= DESCONTO_MIN ? DESCONTO_PCT : 0;
+    
+    // Cupom
+    let cupomPct = cupomAplicado ? (cupomAplicado.percentual / 100) : 0;
+    
+    // Maior desconto entre os dois (não cumulativo)
+    let usarCupom = cupomPct > descontoAutoPct;
+    let pctAplicado = Math.max(descontoAutoPct, cupomPct);
+    let desconto = subtotal * pctAplicado;
     let total = subtotal - desconto;
-    return { qtdTotal: qtdTotal, subtotal: subtotal, desconto: desconto, total: total, temDesconto: temDesconto };
+    
+    return {
+      qtdTotal: qtdTotal,
+      subtotal: subtotal,
+      desconto: desconto,
+      total: total,
+      temDesconto: desconto > 0,
+      descontoAuto: subtotal * descontoAutoPct,
+      descontoCupom: subtotal * cupomPct,
+      descontoAutoPct: descontoAutoPct * 100,
+      cupomPct: cupomPct * 100,
+      usarCupom: usarCupom,
+      temCupom: !!cupomAplicado
+    };
   }
 
   function atualizarBadge() {
@@ -1168,7 +1215,6 @@
       });
     } catch(e) { console.error("Erro ao salvar pedido", e); }
 
-    // Abre WhatsApp direto com a mensagem contendo o número do pedido
     window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent(msg), '_blank');
   };
 
@@ -1188,6 +1234,80 @@
     setTimeout(function() {
       document.querySelector('.vitrine-section').scrollIntoView({ behavior: 'smooth' });
     }, 100);
+  };
+
+  window.aplicarCupom = async function() {
+    const input = document.getElementById('cupomInput');
+    const msgEl = document.getElementById('cupomMsg');
+    const btn = document.getElementById('btnAplicarCupom');
+    if (!input) return;
+    
+    const codigo = input.value.trim().toUpperCase();
+    
+    if (!codigo) {
+      msgEl.className = 'cupom-msg erro';
+      msgEl.innerText = 'Digite um código.';
+      return;
+    }
+    
+    btn.disabled = true;
+    btn.innerText = 'Validando...';
+    msgEl.className = 'cupom-msg';
+    
+    try {
+      const q = query(collection(db, "cupons"), where("codigo", "==", codigo));
+      const snap = await getDocs(q);
+      
+      if (snap.empty) {
+        msgEl.className = 'cupom-msg erro';
+        msgEl.innerText = '❌ Cupom inválido.';
+        return;
+      }
+      
+      let cupomData = null;
+      let cupomId = null;
+      snap.forEach(d => { cupomData = d.data(); cupomId = d.id; });
+      
+      // Verifica ativo
+      if (!cupomData.ativo) {
+        msgEl.className = 'cupom-msg erro';
+        msgEl.innerText = '❌ Este cupom não está mais ativo.';
+        return;
+      }
+      
+      // Verifica limite de uso
+      if (cupomData.limiteUso && cupomData.usos >= cupomData.limiteUso) {
+        msgEl.className = 'cupom-msg erro';
+        msgEl.innerText = '❌ Este cupom já foi resgatado.';
+        return;
+      }
+      
+      // Aplica
+      cupomAplicado = {
+        id: cupomId,
+        codigo: cupomData.codigo,
+        percentual: cupomData.percentual
+      };
+      
+      msgEl.className = 'cupom-msg sucesso';
+      msgEl.innerText = '✓ Cupom de ' + cupomData.percentual + '% aplicado!';
+      
+      // Re-renderiza carrinho pra atualizar totais
+      setTimeout(() => renderizarCarrinho(), 300);
+      
+    } catch (err) {
+      console.error(err);
+      msgEl.className = 'cupom-msg erro';
+      msgEl.innerText = 'Erro ao validar. Tente novamente.';
+    } finally {
+      btn.disabled = false;
+      btn.innerText = 'Aplicar';
+    }
+  };
+
+  window.removerCupom = function() {
+    cupomAplicado = null;
+    renderizarCarrinho();
   };
 
   function renderizarCarrinho() {
@@ -1224,18 +1344,50 @@
     }).join('');
 
     let htmlRodape = '';
+    
+    // Aviso de desconto automático (5% com 3+ itens)
     if (!r.temDesconto) {
       let faltam = DESCONTO_MIN - r.qtdTotal;
       htmlRodape += '<button class="aviso-desconto" onclick="fecharCarrinhoEComprar()">Adicione mais ' + faltam + ' ' +
         (faltam === 1 ? 'unidade' : 'unidades') + ' e ganhe <strong>5% de desconto</strong>!</button>';
-    } else {
-      htmlRodape += '<div class="aviso-desconto" style="cursor:default; pointer-events:none; border-style:dashed;">🎉 <strong>5% de desconto</strong> aplicado automaticamente!</div>';
+    } else if (r.descontoAutoPct > 0) {
+      htmlRodape += '<div class="aviso-desconto" style="cursor:default; pointer-events:none; border-style:dashed;">🎉 <strong>5% de desconto</strong> automático (3+ itens)</div>';
     }
+
+    // Área de cupom
+    if (cupomAplicado) {
+      htmlRodape += '<div class="cupom-aplicado-box">' +
+        '<div class="info">' +
+          '<strong>🎟️ Cupom ' + esc(cupomAplicado.codigo) + '</strong>' +
+          '<small>' + cupomAplicado.percentual + '% de desconto aplicado</small>' +
+        '</div>' +
+        '<button onclick="removerCupom()">Remover</button>' +
+      '</div>';
+    } else {
+      htmlRodape += '<div class="cupom-area">' +
+        '<div class="cupom-titulo">🎟️ Tem um cupom?</div>' +
+        '<div class="cupom-linha">' +
+          '<input type="text" id="cupomInput" placeholder="Digite o código" maxlength="30" autocomplete="off">' +
+          '<button class="btn-aplicar-cupom" id="btnAplicarCupom" onclick="aplicarCupom()">Aplicar</button>' +
+        '</div>' +
+        '<div class="cupom-msg" id="cupomMsg"></div>' +
+      '</div>';
+    }
+
+    // Linhas de total
     htmlRodape += '<div class="linha-total"><span>Subtotal (' + r.qtdTotal + ' ' +
       (r.qtdTotal === 1 ? 'item' : 'itens') + '):</span><span>' + fmt(r.subtotal) + '</span></div>';
+    
     if (r.temDesconto) {
-      htmlRodape += '<div class="linha-total desconto"><span>Desconto (5%):</span><span>− ' + fmt(r.desconto) + '</span></div>';
+      let labelDesc = '';
+      if (r.usarCupom && r.cupomPct > 0) {
+        labelDesc = 'Desconto cupom (' + cupomAplicado.percentual + '%):';
+      } else {
+        labelDesc = 'Desconto (5%):';
+      }
+      htmlRodape += '<div class="linha-total desconto"><span>' + labelDesc + '</span><span>− ' + fmt(r.desconto) + '</span></div>';
     }
+    
     htmlRodape += '<div class="linha-total total-geral"><span>Total:</span><span>' + fmt(r.total) + '</span></div>';
 
     htmlRodape += '<button class="btn-finalizar-whats" onclick="finalizarWhats()">Finalizar no WhatsApp</button>';
@@ -1277,30 +1429,45 @@
       listaPedido.push({ id: item.id, nome: item.nome, tamanho: item.tamanho, qtd: item.qtd, preco: item.precoUnit });
     });
     msg += '\nSubtotal: ' + fmt(r.subtotal);
-    if (r.temDesconto) msg += '\nDesconto (5%): − ' + fmt(r.desconto);
+    if (r.temDesconto) {
+      if (r.usarCupom && cupomAplicado) {
+        msg += '\nDesconto cupom ' + cupomAplicado.codigo + ' (' + cupomAplicado.percentual + '%): − ' + fmt(r.desconto);
+      } else {
+        msg += '\nDesconto (5%): − ' + fmt(r.desconto);
+      }
+    }
     msg += '\nTotal: ' + fmt(r.total);
     msg += '\n\nForma de pagamento: (Pix / Cartão)';
     
+    const pedidoData = {
+      numero: numeroPedido,
+      itens: listaPedido,
+      total: r.total,
+      subtotal: r.subtotal,
+      desconto: r.desconto,
+      data: new Date(),
+      concretizada: false,
+      cancelada: false
+    };
+    
+    // Registra cupom usado (se foi o maior desconto)
+    if (r.usarCupom && cupomAplicado) {
+      pedidoData.cupomCodigo = cupomAplicado.codigo;
+      pedidoData.cupomPercentual = cupomAplicado.percentual;
+      pedidoData.cupomId = cupomAplicado.id;
+    }
+    
     try {
-      await addDoc(collection(db, "pedidos"), {
-        numero: numeroPedido,
-        itens: listaPedido,
-        total: r.total,
-        subtotal: r.subtotal,
-        desconto: r.desconto,
-        data: new Date(),
-        concretizada: false,
-        cancelada: false
-      });
+      await addDoc(collection(db, "pedidos"), pedidoData);
     } catch(e) { console.error("Erro ao salvar pedido", e); }
 
-    // Limpa carrinho e fecha modais
+    // Limpa carrinho e cupom
     carrinho = {};
+    cupomAplicado = null;
     atualizarBadge();
     fecharCarrinho();
     fecharModal();
     
-    // Abre WhatsApp direto com a mensagem contendo o número do pedido
     window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent(msg), '_blank');
   };
 
