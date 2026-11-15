@@ -116,6 +116,11 @@
   .btn-tamanho.desabilitado::after { content: "EM BREVE"; position: absolute; top: -8px; right: -4px; background: var(--dourado); color: #0d0d0d; font-size: 0.45rem; padding: 2px 5px; border-radius: 8px; font-weight: 800; letter-spacing: 0.5px; text-decoration: none; }
   .btn-tamanho.esgotado { opacity: 0.4; cursor: not-allowed; background: #151515; pointer-events: none; }
   .btn-tamanho.esgotado::after { content: "ESGOTADO"; position: absolute; top: -8px; right: -4px; background: #c94a4a; color: #fff; font-size: 0.45rem; padding: 2px 5px; border-radius: 8px; font-weight: 800; letter-spacing: 0.5px; text-decoration: none; }
+
+  /* AVISO DE ESTOQUE BAIXO NO MODAL */
+  .aviso-estoque-modal { background: rgba(255,152,0,0.1); border: 1px solid #ff9800; border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; color: #ff9800; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 8px; line-height: 1.4; }
+  .aviso-estoque-modal .icone { font-size: 1rem; }
+
   .aviso-tamanho { font-size: 0.68rem; color: var(--dourado); font-style: italic; margin-bottom: 16px; }
   .modal-precos { margin-bottom: 20px; }
   .modal-precos .preco-antigo { font-size: 0.85rem; }
@@ -387,6 +392,11 @@
       <h2 class="modal-titulo" id="modal-titulo"></h2>
       <div class="modal-insp" id="modal-inspiracao"></div>
 
+      <div class="aviso-estoque-modal" id="avisoEstoqueModal" style="display: none;">
+        <span class="icone">🔥</span>
+        <span id="textoAvisoEstoque"></span>
+      </div>
+
       <div class="tamanhos-container" id="modal-tamanhos"></div>
       <div class="aviso-tamanho" id="aviso-tamanho">✨ Selecione um tamanho disponível</div>
 
@@ -570,6 +580,16 @@
   function tamanhosDisponiveis(p) {
     const est = normalizarEstoque(p);
     return TAMANHOS.filter(tam => (est[tam] || 0) > 0);
+  }
+
+  function tamanhosCadastrados(p) {
+    return p.tamanhos ? Object.keys(p.tamanhos) : [];
+  }
+
+  function menorTamanhoComEstoque(p) {
+    const disp = tamanhosDisponiveis(p);
+    if (disp.length === 0) return null;
+    return disp.sort((a, b) => TAMANHOS.indexOf(a) - TAMANHOS.indexOf(b))[0];
   }
 
   function carregarPerfumes() {
@@ -829,21 +849,45 @@
       let selo = p.vendido ? '<div class="selo-vendas">Top</div>' : '';
       let seloInd = esgotado ? '<div class="selo-indisponivel">Indisponível</div>' : '';
       
+      // Regra: "Apenas 1 un." no card SÓ quando o produto tem APENAS 1 tamanho cadastrado
+      // e esse tamanho tem estoque 1.
       let seloEstoque = '';
       if (!esgotado) {
+        const cads = tamanhosCadastrados(p);
         const est = normalizarEstoque(p);
-        const algumTamanhoCom1 = Object.keys(est).some(tam => est[tam] === 1);
-        if (algumTamanhoCom1) {
-          seloEstoque = '<div class="selo-estoque-baixo">🔥 Apenas 1 un.</div>';
+        if (cads.length === 1) {
+          // Só 1 tamanho cadastrado — mostra no card se estiver com 1 unidade
+          if (est[cads[0]] === 1) {
+            seloEstoque = '<div class="selo-estoque-baixo">🔥 Apenas 1 un.</div>';
+          }
         }
       }
       
+      // Define o menor tamanho com estoque e seu preço
+      let menorTam = menorTamanhoComEstoque(p);
+      let labelMl = '';
       let precoVitrine = 0;
-      if (p.tamanhos) {
-        if (p.tamanhos["50ml"]) precoVitrine = p.tamanhos["50ml"];
-        else {
-          let keys = Object.keys(p.tamanhos);
-          if(keys.length > 0) precoVitrine = p.tamanhos[keys[0]];
+      
+      if (menorTam) {
+        labelMl = menorTam;
+        precoVitrine = p.tamanhos[menorTam] || 0;
+      } else {
+        // Produto esgotado: mostra o menor tamanho cadastrado como referência
+        const cads = tamanhosCadastrados(p).sort((a, b) => TAMANHOS.indexOf(a) - TAMANHOS.indexOf(b));
+        if (cads.length > 0) {
+          labelMl = cads[0];
+          precoVitrine = p.tamanhos[cads[0]] || 0;
+        }
+      }
+      
+      // Texto do tamanho: "A partir de X ml" se tiver mais de 1 tamanho cadastrado, senão "X ml"
+      let textoMl = '';
+      if (labelMl) {
+        const cads = tamanhosCadastrados(p);
+        if (cads.length > 1) {
+          textoMl = 'A partir de ' + labelMl;
+        } else {
+          textoMl = labelMl;
         }
       }
 
@@ -859,7 +903,7 @@
         (esgotado ? '' : '<button class="btn-add-fast" onclick="event.stopPropagation(); adicionarDireto(\'' + p.id + '\')" title="Adicionar rápido">+</button>') +
         '<h3>' + esc(p.nome) + '</h3>' +
         '<div class="card-inspiracao">Inspirado em "' + esc(p.insp) + '"</div>' +
-        '<div class="card-ml">50 ml</div>' +
+        '<div class="card-ml">' + textoMl + '</div>' +
         '<div class="card-precos">' +
           precoHtml +
         '</div>' +
@@ -874,11 +918,7 @@
     if (p.indisponivel) return;
     if (!temAlgumEstoque(p)) return;
 
-    let nomeTam = null;
-    if (estoqueDoTamanho(p, '50ml') > 0) nomeTam = '50ml';
-    else {
-      nomeTam = tamanhosDisponiveis(p)[0];
-    }
+    let nomeTam = menorTamanhoComEstoque(p);
     if (!nomeTam) return;
 
     const preco = p.tamanhos[nomeTam];
@@ -950,12 +990,43 @@
       (p.notas && p.notas.coracao ? '<span><strong>Coração:</strong> ' + esc(p.notas.coracao) + '</span>' : '') +
       (p.notas && p.notas.fundo ? '<span><strong>Fundo:</strong> ' + esc(p.notas.fundo) + '</span>' : '');
 
+    atualizarAvisoEstoqueModal();
     atualizarModalTamanhos();
     atualizarMiniCarrinho();
 
     modalProduto.classList.add('ativo');
     document.body.style.overflow = 'hidden';
   };
+
+  function atualizarAvisoEstoqueModal() {
+    const aviso = document.getElementById('avisoEstoqueModal');
+    const texto = document.getElementById('textoAvisoEstoque');
+    const p = produtoSelecionado;
+    if (!p) { aviso.style.display = 'none'; return; }
+
+    const est = normalizarEstoque(p);
+    const cads = tamanhosCadastrados(p).sort((a, b) => TAMANHOS.indexOf(a) - TAMANHOS.indexOf(b));
+    
+    // Encontra tamanhos com exatamente 1 unidade
+    let tamanhosComUm = [];
+    cads.forEach(tam => {
+      if (est[tam] === 1) tamanhosComUm.push(tam);
+    });
+
+    // Regra: se só tem 1 tamanho cadastrado E esse tamanho está com 1 unidade, mostra no modal também (redundância proposital)
+    // Se tem mais de 1 tamanho, mostra no modal apenas os com 1 unidade
+    if (tamanhosComUm.length === 0) {
+      aviso.style.display = 'none';
+      return;
+    }
+
+    aviso.style.display = 'flex';
+    if (tamanhosComUm.length === 1) {
+      texto.innerText = 'Apenas 1 unidade disponível no tamanho ' + tamanhosComUm[0];
+    } else {
+      texto.innerText = 'Estoque baixo: apenas 1 unidade nos tamanhos ' + tamanhosComUm.join(', ');
+    }
+  }
 
   function atualizarModalTamanhos() {
     const p = produtoSelecionado;
@@ -1336,7 +1407,6 @@
 
     let htmlRodape = '';
     
-    // Aviso de desconto automático — SÓ aparece se NÃO houver cupom aplicado
     if (!cupomAplicado) {
       if (r.qtdTotal < DESCONTO_MIN) {
         let faltam = DESCONTO_MIN - r.qtdTotal;
@@ -1347,7 +1417,6 @@
       }
     }
 
-    // Área de cupom
     if (cupomAplicado) {
       htmlRodape += '<div class="cupom-aplicado-box">' +
         '<div class="info">' +
@@ -1367,7 +1436,6 @@
       '</div>';
     }
 
-    // Linhas de total
     htmlRodape += '<div class="linha-total"><span>Subtotal (' + r.qtdTotal + ' ' +
       (r.qtdTotal === 1 ? 'item' : 'itens') + '):</span><span>' + fmt(r.subtotal) + '</span></div>';
     
