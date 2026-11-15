@@ -117,7 +117,6 @@
   .btn-tamanho.esgotado { opacity: 0.4; cursor: not-allowed; background: #151515; pointer-events: none; }
   .btn-tamanho.esgotado::after { content: "ESGOTADO"; position: absolute; top: -8px; right: -4px; background: #c94a4a; color: #fff; font-size: 0.45rem; padding: 2px 5px; border-radius: 8px; font-weight: 800; letter-spacing: 0.5px; text-decoration: none; }
 
-  /* AVISO DE ESTOQUE BAIXO NO MODAL */
   .aviso-estoque-modal { background: rgba(255,152,0,0.1); border: 1px solid #ff9800; border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; color: #ff9800; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 8px; line-height: 1.4; }
   .aviso-estoque-modal .icone { font-size: 1rem; }
 
@@ -849,21 +848,17 @@
       let selo = p.vendido ? '<div class="selo-vendas">Top</div>' : '';
       let seloInd = esgotado ? '<div class="selo-indisponivel">Indisponível</div>' : '';
       
-      // Regra: "Apenas 1 un." no card SÓ quando o produto tem APENAS 1 tamanho cadastrado
-      // e esse tamanho tem estoque 1.
       let seloEstoque = '';
       if (!esgotado) {
         const cads = tamanhosCadastrados(p);
         const est = normalizarEstoque(p);
         if (cads.length === 1) {
-          // Só 1 tamanho cadastrado — mostra no card se estiver com 1 unidade
           if (est[cads[0]] === 1) {
             seloEstoque = '<div class="selo-estoque-baixo">🔥 Apenas 1 un.</div>';
           }
         }
       }
       
-      // Define o menor tamanho com estoque e seu preço
       let menorTam = menorTamanhoComEstoque(p);
       let labelMl = '';
       let precoVitrine = 0;
@@ -872,7 +867,6 @@
         labelMl = menorTam;
         precoVitrine = p.tamanhos[menorTam] || 0;
       } else {
-        // Produto esgotado: mostra o menor tamanho cadastrado como referência
         const cads = tamanhosCadastrados(p).sort((a, b) => TAMANHOS.indexOf(a) - TAMANHOS.indexOf(b));
         if (cads.length > 0) {
           labelMl = cads[0];
@@ -880,11 +874,11 @@
         }
       }
       
-      // Texto do tamanho: "A partir de X ml" se tiver mais de 1 tamanho cadastrado, senão "X ml"
+      // CORREÇÃO: "A partir de" SÓ se houver 2+ tamanhos COM ESTOQUE
       let textoMl = '';
       if (labelMl) {
-        const cads = tamanhosCadastrados(p);
-        if (cads.length > 1) {
+        const disp = tamanhosDisponiveis(p);
+        if (disp.length > 1) {
           textoMl = 'A partir de ' + labelMl;
         } else {
           textoMl = labelMl;
@@ -1007,14 +1001,11 @@
     const est = normalizarEstoque(p);
     const cads = tamanhosCadastrados(p).sort((a, b) => TAMANHOS.indexOf(a) - TAMANHOS.indexOf(b));
     
-    // Encontra tamanhos com exatamente 1 unidade
     let tamanhosComUm = [];
     cads.forEach(tam => {
       if (est[tam] === 1) tamanhosComUm.push(tam);
     });
 
-    // Regra: se só tem 1 tamanho cadastrado E esse tamanho está com 1 unidade, mostra no modal também (redundância proposital)
-    // Se tem mais de 1 tamanho, mostra no modal apenas os com 1 unidade
     if (tamanhosComUm.length === 0) {
       aviso.style.display = 'none';
       return;
