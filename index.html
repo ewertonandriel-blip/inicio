@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CATÁLOGO THRUST PARFUMS</title>
 
-<!-- SEO E OPEN GRAPH PARA WHATSAPP -->
 <meta property="og:title" content="THRUST PARFUMS — Catálogo Premium">
 <meta property="og:description" content="Perfumes inspirados nas grandes marcas, com matéria-prima premium. Confira nosso catálogo exclusivo!">
 <meta property="og:image" content="https://i.ibb.co/3kzm1J6/Logo-Thrust-Parfums.jpg">
@@ -26,7 +25,6 @@
   h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; }
   a { text-decoration: none; color: inherit; }
   
-  /* HEADER */
   .top-header { background: linear-gradient(180deg, #000 0%, #1a1a1a 100%); padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--dourado); position: sticky; top: 0; z-index: 100; }
   .menu-toggle { display: block; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--dourado-claro); padding: 5px; }
   .logo-area { display: flex; align-items: center; justify-content: center; flex: 1; cursor: pointer; user-select: none; transition: opacity .2s; }
@@ -37,7 +35,6 @@
   .icon-btn { background: none; border: none; cursor: pointer; font-size: 1.3rem; color: var(--dourado-claro); position: relative; padding: 6px; display: flex; align-items: center; }
   .cart-badge { background-color: var(--dourado); color: #0d0d0d; font-size: 0.65rem; font-weight: 800; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; position: absolute; top: -2px; right: -2px; border: 2px solid #000; }
 
-  /* MENU MOBILE */
   .mobile-menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 2000; }
   .mobile-menu { position: fixed; top: 0; left: -290px; width: 280px; height: 100%; background-color: #111; z-index: 2001; transition: left 0.3s ease; padding: 30px 20px; box-shadow: 2px 0 20px rgba(212,175,55,0.2); overflow-y: auto; border-right: 1px solid var(--dourado); }
   .mobile-menu.open { left: 0; }
@@ -45,7 +42,6 @@
   .mobile-menu a { display: block; padding: 15px 0; border-bottom: 1px solid var(--borda); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1.5px; color: #ccc; font-weight: 500; }
   .mobile-menu a:hover { color: var(--dourado); }
 
-  /* BUSCA */
   .search-bar { width: 100%; padding: 14px 20px; background-color: #111; border-bottom: 1px solid var(--borda); }
   .search-bar input { width: 100%; padding: 12px 20px 12px 44px; border-radius: 30px; border: 2px solid var(--dourado); background-color: #1a1a1a; font-family: 'Montserrat', sans-serif; font-size: 0.85rem; outline: none; color: #fff; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9a227' width='16' height='16'><path d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/></svg>"); background-repeat: no-repeat; background-position: 16px center; transition: .3s; }
   .search-bar input::placeholder { color: #777; }
@@ -57,7 +53,6 @@
   .nav-menu a:hover, .nav-menu a.active { color: var(--dourado); }
   .nav-menu.oculto { display: none !important; }
 
-  /* BENEFÍCIOS */
   .beneficios { display: grid; grid-template-columns: 1fr 1fr; background-color: #111; border-bottom: 1px solid var(--borda); }
   .beneficio-item { text-align: center; padding: 15px 5px; border-right: 1px solid var(--borda); border-bottom: 1px solid var(--borda); }
   .beneficio-item:nth-child(2n) { border-right: none; }
@@ -65,7 +60,6 @@
   .beneficio-item h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; color: var(--dourado-claro); }
   .beneficio-item p { font-size: 0.55rem; text-transform: uppercase; color: #888; letter-spacing: 0.5px; }
 
-  /* VITRINE */
   .vitrine-section { max-width: 1300px; margin: 0 auto; padding: 20px 15px 60px; }
   .vitrine-header { display: flex; flex-direction: column; align-items: flex-start; border-bottom: 1px solid var(--borda); padding-bottom: 15px; margin-bottom: 25px; gap: 10px; }
   .vitrine-titulo { font-size: 1.5rem; color: var(--dourado-claro); }
@@ -133,13 +127,32 @@
   .modal-precos-indisponivel span { color: #bbb; font-size: 0.8rem; }
   .aviso-frete-modal { background: rgba(212,175,55,0.08); border: 1px dashed rgba(212,175,55,0.4); border-radius: 8px; padding: 10px 12px; font-size: 0.78rem; color: #ccc; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
   .aviso-frete-modal span { color: var(--dourado-claro); font-weight: bold; }
-  .botoes-acao { display: flex; flex-direction: column; gap: 10px; margin-bottom: 25px; }
+  .botoes-acao { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
   .btn-add-carrinho, .btn-comprar-agora { width: 100%; padding: 15px; border: none; border-radius: 30px; font-weight: 600; cursor: pointer; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 1px; transition: 0.3s; font-family: 'Montserrat', sans-serif; }
   .btn-add-carrinho { background-color: transparent; border: 1px solid var(--dourado); color: var(--dourado); }
   .btn-add-carrinho:hover { background-color: rgba(212,175,55,0.1); }
   .btn-comprar-agora { background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); color: #0d0d0d; font-weight: 700; }
   .btn-comprar-agora:hover { box-shadow: 0 0 20px rgba(212,175,55,0.5); }
   .btn-add-carrinho:disabled, .btn-comprar-agora:disabled { background: #333; color: #666; border-color: #444; cursor: not-allowed; box-shadow: none; }
+
+  /* MINI CARRINHO DENTRO DO MODAL */
+  .mini-carrinho-modal { background: rgba(212,175,55,0.06); border: 1px solid var(--dourado); border-radius: 10px; padding: 12px 14px; margin-bottom: 20px; display: none; }
+  .mini-carrinho-modal.ativo { display: block; animation: slideDown 0.25s ease; }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+  .mini-carrinho-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px dashed rgba(212,175,55,0.4); }
+  .mini-carrinho-header .titulo { font-size: 0.72rem; font-weight: 700; color: var(--dourado-claro); text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 6px; }
+  .mini-carrinho-header .total { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 800; color: var(--dourado-claro); }
+  .mini-carrinho-lista { max-height: 140px; overflow-y: auto; margin-bottom: 8px; }
+  .mini-carrinho-linha { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; font-size: 0.72rem; gap: 8px; }
+  .mini-carrinho-linha .nome-item { color: #ddd; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .mini-carrinho-linha .nome-item strong { color: var(--dourado-claro); font-weight: 600; }
+  .mini-carrinho-linha .preco-mini { color: var(--dourado); font-weight: 700; white-space: nowrap; }
+  .mini-carrinho-rodape { display: flex; gap: 8px; }
+  .btn-mini-ver { flex: 1; background: transparent; border: 1px solid var(--dourado); color: var(--dourado); padding: 9px; border-radius: 20px; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: 0.2s; font-family: inherit; }
+  .btn-mini-ver:hover { background: rgba(212,175,55,0.15); }
+  .btn-mini-finalizar { flex: 1; background: var(--verde-whats); color: #fff; border: none; padding: 9px; border-radius: 20px; font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; transition: 0.2s; font-family: inherit; }
+  .btn-mini-finalizar:hover { background: #1a9e4a; }
+
   .info-adicional { border-top: 1px solid var(--borda); padding-top: 20px; }
   .info-adicional p { font-size: 0.8rem; margin-bottom: 12px; color: #bbb; line-height: 1.5; }
   .info-adicional strong { color: var(--dourado); font-weight: 600; }
@@ -147,7 +160,6 @@
   .notas-olfativas span { display: block; margin-bottom: 6px; }
   .notas-olfativas strong { color: var(--dourado); text-transform: uppercase; font-size: 0.65rem; letter-spacing: 1px; margin-right: 5px; }
 
-  /* MODAL AVISO DE ITEM INEXISTENTE */
   .modal-aviso-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); z-index: 5000; justify-content: center; align-items: center; padding: 20px; }
   .modal-aviso-overlay.ativo { display: flex; }
   .modal-aviso-content { background: var(--fundo-card); padding: 30px 25px; border-radius: 12px; border: 1px solid #c94a4a; text-align: center; max-width: 400px; width: 100%; box-shadow: 0 20px 60px rgba(201,74,74,0.3); }
@@ -157,7 +169,6 @@
   .modal-aviso-content button { background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); color: #0d0d0d; border: none; padding: 14px 25px; border-radius: 30px; font-weight: bold; font-size: 0.85rem; cursor: pointer; width: 100%; }
   .modal-aviso-content button:hover { box-shadow: 0 0 20px rgba(212,175,55,0.4); }
 
-  /* CARRINHO */
   .modal-carrinho-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); z-index: 4000; justify-content: center; align-items: center; padding: 15px; }
   .modal-carrinho-overlay.ativo { display: flex; }
   .modal-carrinho-content { background-color: var(--fundo-card); padding: 25px 20px; border-radius: 10px; border: 1px solid var(--dourado); width: 100%; max-width: 500px; max-height: 88vh; overflow-y: auto; position: relative; box-shadow: 0 20px 60px rgba(212,175,55,0.3); }
@@ -186,7 +197,6 @@
   .btn-finalizar-whats:disabled { background: #333; color: #666; cursor: not-allowed; }
   .btn-continuar { background: none; border: none; color: #888; margin-top: 15px; cursor: pointer; width: 100%; text-decoration: underline; font-size: 0.8rem; font-family: inherit; }
 
-  /* BARRA CARRINHO FLUTUANTE */
   .barra-carrinho { position: fixed; bottom: 0; left: 0; right: 0; z-index: 25; padding: 0 12px 12px; pointer-events: none; transform: translateY(120%); transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
   .barra-carrinho.ativo { transform: translateY(0); }
   .barra-carrinho-conteudo { pointer-events: auto; background: linear-gradient(135deg, var(--dourado) 0%, var(--dourado-claro) 50%, var(--dourado) 100%); border-radius: 14px; display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; box-shadow: 0 -4px 30px rgba(212,175,55,0.55), 0 6px 20px rgba(0,0,0,0.4); cursor: pointer; gap: 10px; border: 1px solid rgba(255,255,255,0.3); }
@@ -201,12 +211,10 @@
   .barra-carrinho-btn:active { transform: scale(0.96); }
   .barra-carrinho-btn svg { width: 14px; height: 14px; fill: var(--dourado-claro); }
 
-  /* BOTÃO VOLTAR AO TOPO */
   .btn-topo { position: fixed; bottom: 160px; right: 16px; z-index: 20; width: 44px; height: 44px; border-radius: 50%; background: rgba(26,26,26,0.8); border: 1px solid var(--dourado); color: var(--dourado-claro); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; pointer-events: none; transition: all 0.3s ease; backdrop-filter: blur(4px); box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
   .btn-topo.visivel { opacity: 1; pointer-events: auto; }
   .btn-topo:active { background: var(--dourado); color: #0d0d0d; transform: scale(0.9); }
 
-  /* DESKTOP */
   @media (min-width: 768px) {
     .menu-toggle { display: none; }
     .top-header { padding: 15px 40px; }
@@ -245,16 +253,16 @@
     .mobile-menu-overlay, .mobile-menu { display: none !important; }
   }
 
-  /* FABS */
-  .whats-fab { position: fixed; bottom: 20px; right: 16px; z-index: 20; width: 56px; height: 56px; border-radius: 50%; background: var(--verde-whats); display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(37,211,102,.5); text-decoration: none; transition: bottom .35s cubic-bezier(0.4, 0, 0.2, 1), transform .3s; }
-  .whats-fab svg { width: 32px; height: 32px; fill: #fff; }
+  /* WHATSAPP FAB DOURADO */
+  .whats-fab { position: fixed; bottom: 20px; right: 16px; z-index: 20; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--dourado) 0%, var(--dourado-claro) 50%, var(--dourado) 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(212,175,55,0.5), 0 0 0 1px rgba(255,255,255,0.15) inset; text-decoration: none; transition: bottom .35s cubic-bezier(0.4, 0, 0.2, 1), transform .3s; }
+  .whats-fab:hover { transform: scale(1.05); }
+  .whats-fab svg { width: 30px; height: 30px; fill: #0d0d0d; }
   .whats-fab.recuado { bottom: 92px; }
   @media (min-width: 768px) {
     .whats-fab.recuado { bottom: 20px; }
     .whats-fab { bottom: 20px; }
   }
 
-  /* QUEM SOMOS */
   .aba-conteudo { display: none; }
   .aba-conteudo.ativo { display: block; }
   .quem-somos { padding: 30px 22px 50px; max-width: 700px; margin: 0 auto; }
@@ -263,7 +271,6 @@
   .quem-somos p { color: #bbb; font-size: .92rem; line-height: 1.7; margin-bottom: 16px; text-align: justify; }
   .quem-somos p strong { color: var(--dourado-claro); font-weight: 700; }
 
-  /* MODAL AVISO CARRINHO (ESGOTOU EM TEMPO REAL) */
   .modal-esgotou-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.92); z-index: 6000; justify-content: center; align-items: center; padding: 20px; }
   .modal-esgotou-overlay.ativo { display: flex; }
   .modal-esgotou-content { background: var(--fundo-card); padding: 30px 25px; border-radius: 12px; border: 1px solid var(--dourado); text-align: center; max-width: 400px; width: 100%; box-shadow: 0 20px 60px rgba(212,175,55,0.3); }
@@ -278,7 +285,6 @@
 </head>
 <body>
 
-<!-- MENU MOBILE -->
 <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="fecharMenuMobile()"></div>
 <div class="mobile-menu" id="mobileMenu">
   <button class="close-menu" onclick="fecharMenuMobile()">✕</button>
@@ -289,7 +295,6 @@
   <a href="#" onclick="abrirWhats(); return false;">Contato</a>
 </div>
 
-<!-- HEADER -->
 <header class="top-header">
   <button class="menu-toggle" onclick="abrirMenuMobile()">☰</button>
   <div class="logo-area" onclick="irParaInicio()">
@@ -302,12 +307,10 @@
   </div>
 </header>
 
-<!-- BUSCA -->
 <div class="search-bar" id="searchBar">
   <input type="text" id="campoBusca" placeholder="O que você está buscando?" oninput="buscar()">
 </div>
 
-<!-- MENU DESKTOP -->
 <nav class="nav-menu" id="navMenu">
   <a href="#" data-nav="todos" onclick="irParaCategoria('todos'); return false;">Todos</a>
   <a href="#" data-nav="feminino" onclick="irParaCategoria('feminino'); return false;">Feminino</a>
@@ -317,7 +320,6 @@
   <a href="#" data-nav="contato" onclick="abrirWhats(); return false;">Contato</a>
 </nav>
 
-<!-- ABA CATÁLOGO -->
 <div class="aba-conteudo ativo" id="aba-catalogo">
 
   <div class="beneficios">
@@ -343,7 +345,6 @@
   </section>
 </div>
 
-<!-- ABA QUEM SOMOS -->
 <div class="aba-conteudo" id="aba-quem-somos">
   <div class="quem-somos">
     <h2>Nossa História &amp; Objetivo</h2>
@@ -356,7 +357,6 @@
   </div>
 </div>
 
-<!-- MODAL DETALHES -->
 <div class="modal-overlay" id="modalProduto">
   <div class="modal-content">
     <div class="modal-imagem" id="modal-imagem"></div>
@@ -389,6 +389,19 @@
         <button class="btn-comprar-agora" id="btn-comprar-agora" onclick="comprarAgora()">Comprar agora</button>
       </div>
 
+      <!-- MINI CARRINHO DENTRO DO MODAL -->
+      <div class="mini-carrinho-modal" id="miniCarrinhoModal">
+        <div class="mini-carrinho-header">
+          <div class="titulo">🛒 Seu pedido (<span id="miniQtd">0</span>)</div>
+          <div class="total" id="miniTotal">R$ 0,00</div>
+        </div>
+        <div class="mini-carrinho-lista" id="miniLista"></div>
+        <div class="mini-carrinho-rodape">
+          <button class="btn-mini-ver" onclick="abrirCarrinho()">Ver carrinho</button>
+          <button class="btn-mini-finalizar" onclick="finalizarWhats()">Finalizar</button>
+        </div>
+      </div>
+
       <div class="info-adicional">
         <p id="modal-descricao"></p>
         <div class="notas-olfativas" id="modal-notas"></div>
@@ -397,7 +410,6 @@
   </div>
 </div>
 
-<!-- MODAL: AVISO DE PRODUTO INEXISTENTE -->
 <div class="modal-aviso-overlay" id="modalAviso">
   <div class="modal-aviso-content">
     <div class="icone-aviso">🤔</div>
@@ -407,7 +419,6 @@
   </div>
 </div>
 
-<!-- MODAL CARRINHO -->
 <div class="modal-carrinho-overlay" id="modalCarrinho">
   <div class="modal-carrinho-content">
     <div class="modal-carrinho-header">
@@ -419,7 +430,6 @@
   </div>
 </div>
 
-<!-- MODAL AVISO: ESGOTOU EM TEMPO REAL -->
 <div class="modal-esgotou-overlay" id="modalEsgotou">
   <div class="modal-esgotou-content">
     <div class="icone-aviso">⏳</div>
@@ -433,7 +443,6 @@
   </div>
 </div>
 
-<!-- BARRA CARRINHO FLUTUANTE -->
 <div class="barra-carrinho" id="barraCarrinho">
   <div class="barra-carrinho-conteudo" onclick="abrirCarrinho()">
     <div class="barra-carrinho-info">
@@ -453,12 +462,9 @@
   </div>
 </div>
 
-<!-- BOTÃO VOLTAR AO TOPO -->
-<button class="btn-topo" id="btnTopo" onclick="voltarAoTopo()" title="Voltar ao topo">
-  ↑
-</button>
+<button class="btn-topo" id="btnTopo" onclick="voltarAoTopo()" title="Voltar ao topo">↑</button>
 
-<!-- WHATSAPP FAB -->
+<!-- WHATSAPP FAB DOURADO -->
 <a class="whats-fab" id="whatsFab" href="#" target="_blank" onclick="return abrirWhats();">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
@@ -509,11 +515,6 @@
   const blocoIndisponivel = document.getElementById('bloco-indisponivel');
   const avisoFrete = document.getElementById('aviso-frete');
 
-  /* ============================================================
-     NORMALIZAÇÃO DE ESTOQUE
-     Converte estoque número (antigo) para objeto por tamanho.
-     Regra: número vira { "50ml": N, <outros tamanhos habilitados>: 0 }
-     ============================================================ */
   function normalizarEstoque(p) {
     if (p.estoque && typeof p.estoque === 'object') {
       return p.estoque;
@@ -547,9 +548,6 @@
     return TAMANHOS.filter(tam => (est[tam] || 0) > 0);
   }
 
-  /* ============================================================
-     CARREGAMENTO EM TEMPO REAL
-     ============================================================ */
   function carregarPerfumes() {
     const q = query(collection(db, "perfumes"), orderBy("nome"));
     
@@ -568,9 +566,7 @@
         const cat = catAtivaBtn ? catAtivaBtn.dataset.cat : 'todos';
         const termo = document.getElementById('campoBusca').value.trim().toLowerCase();
         renderizarProdutos(cat, termo);
-        // Valida carrinho em tempo real
         validarCarrinhoEmTempoReal();
-        // Se modal aberto, atualiza
         if (produtoSelecionado) {
           const atualizado = perfumes.find(p => p.id === produtoSelecionado.id);
           if (atualizado) {
@@ -585,10 +581,6 @@
     });
   }
 
-  /* ============================================================
-     VALIDAÇÃO EM TEMPO REAL DO CARRINHO (#4 + #6)
-     Se item esgotou ou quantidade > estoque, ajusta/remove
-     ============================================================ */
   function validarCarrinhoEmTempoReal() {
     let mudou = false;
     let esgotados = [];
@@ -598,7 +590,6 @@
       const p = perfumes.find(x => x.id === item.id);
       
       if (!p) {
-        // Produto sumiu do catálogo
         delete carrinho[key];
         mudou = true;
         continue;
@@ -607,12 +598,10 @@
       const est = estoqueDoTamanho(p, item.tamanho);
       
       if (est === 0) {
-        // Esgotou o tamanho
         esgotados.push({ nome: item.nome, tamanho: item.tamanho });
         delete carrinho[key];
         mudou = true;
       } else if (item.qtd > est) {
-        // Reduz para o máximo disponível
         carrinho[key].qtd = est;
         mudou = true;
       }
@@ -646,9 +635,6 @@
     document.body.style.overflow = 'auto';
   };
 
-  /* ============================================================
-     HASHTAG / LINK DIRETO
-     ============================================================ */
   function verificarHashtag() {
     setTimeout(function() {
       const hash = window.location.hash.replace('#', '');
@@ -783,11 +769,6 @@
     renderizarProdutos(cat, termoBusca);
   };
 
-  /* ============================================================
-     RENDERIZAÇÃO DA VITRINE
-     Estoque baixo = exatamente 1 unidade (qualquer tamanho)
-     Indisponível = todos os tamanhos zerados OU p.indisponivel
-     ============================================================ */
   function renderizarProdutos(categoriaFiltro, termoBusca) {
     let lista = perfumes.slice();
     
@@ -824,7 +805,6 @@
       let selo = p.vendido ? '<div class="selo-vendas">Top</div>' : '';
       let seloInd = esgotado ? '<div class="selo-indisponivel">Indisponível</div>' : '';
       
-      // Estoque baixo: exatamente 1 unidade em algum tamanho disponível
       let seloEstoque = '';
       if (!esgotado) {
         const est = normalizarEstoque(p);
@@ -864,16 +844,12 @@
     }).join('');
   }
 
-  /* ============================================================
-     ADIÇÃO RÁPIDA (+ no card)
-     ============================================================ */
   window.adicionarDireto = function(id) {
     let p = perfumes.find(function(item) { return item.id === id; });
     if (!p) return;
     if (p.indisponivel) return;
     if (!temAlgumEstoque(p)) return;
 
-    // Escolhe o primeiro tamanho com estoque > 0 (prioridade 50ml)
     let nomeTam = null;
     if (estoqueDoTamanho(p, '50ml') > 0) nomeTam = '50ml';
     else {
@@ -897,7 +873,6 @@
     }
     
     if (carrinho[key].qtd >= est) {
-      // Já atingiu o máximo
       let btn = event.target;
       if(btn) {
         btn.innerHTML = '!';
@@ -914,6 +889,7 @@
     
     carrinho[key].qtd += 1;
     atualizarBadge();
+    atualizarMiniCarrinho();
     
     let btn = event.target;
     if(btn) {
@@ -928,9 +904,6 @@
     }
   };
 
-  /* ============================================================
-     MODAL DETALHES
-     ============================================================ */
   window.abrirModal = function(id) {
     let p = perfumes.find(function(item) { return item.id === id; });
     if (!p) return;
@@ -955,6 +928,7 @@
       (p.notas && p.notas.fundo ? '<span><strong>Fundo:</strong> ' + esc(p.notas.fundo) + '</span>' : '');
 
     atualizarModalTamanhos();
+    atualizarMiniCarrinho();
 
     modalProduto.classList.add('ativo');
     document.body.style.overflow = 'hidden';
@@ -973,7 +947,6 @@
     
     TAMANHOS.forEach(function(tam) {
       if (tamanhosDisponiveisObj[tam]) {
-        // Tamanho cadastrado
         const estTam = est[tam] || 0;
         
         if (esgotadoGeral) {
@@ -984,7 +957,6 @@
           tamHtml += '<div class="btn-tamanho" data-tam="'+tam+'" data-preco="'+tamanhosDisponiveisObj[tam]+'" onclick="selecionarTamanho(this)">' + tam + '<small>' + fmt(tamanhosDisponiveisObj[tam]) + '</small></div>';
         }
       } else {
-        // Não cadastrado
         tamHtml += '<div class="btn-tamanho desabilitado">' + tam + '<small>Em breve</small></div>';
       }
     });
@@ -1012,7 +984,6 @@
        avisoFrete.style.display = 'flex';
        document.getElementById('aviso-tamanho').style.display = 'block';
 
-       // Seleciona primeiro tamanho com estoque (ou o anteriormente selecionado se ainda válido)
        let tamInicial = null;
        if (tamanhoSelecionado) {
          const elAnterior = document.querySelector('#modal-tamanhos .btn-tamanho[data-tam="'+tamanhoSelecionado.label+'"]:not(.esgotado):not(.desabilitado)');
@@ -1046,9 +1017,34 @@
     if(window.location.hash) history.replaceState(null, null, ' ');
   };
 
-  /* ============================================================
-     CARRINHO
-     ============================================================ */
+  /* ATUALIZA O MINI CARRINHO DENTRO DO MODAL */
+  function atualizarMiniCarrinho() {
+    const mini = document.getElementById('miniCarrinhoModal');
+    if (!mini) return;
+    
+    const ids = Object.keys(carrinho);
+    if (ids.length === 0) {
+      mini.classList.remove('ativo');
+      return;
+    }
+    
+    mini.classList.add('ativo');
+    const r = calcularTotal();
+    
+    document.getElementById('miniQtd').innerText = r.qtdTotal;
+    document.getElementById('miniTotal').innerText = fmt(r.total);
+    
+    let listaHtml = '';
+    ids.forEach(function(key) {
+      const item = carrinho[key];
+      listaHtml += '<div class="mini-carrinho-linha">' +
+        '<span class="nome-item"><strong>' + item.qtd + 'x</strong> ' + esc(item.nome) + ' · ' + item.tamanho + '</span>' +
+        '<span class="preco-mini">' + fmt(item.qtd * item.precoUnit) + '</span>' +
+      '</div>';
+    });
+    document.getElementById('miniLista').innerHTML = listaHtml;
+  }
+
   function calcularTotal() {
     let qtdTotal = 0;
     let subtotal = 0;
@@ -1076,6 +1072,8 @@
       barraCarrinho.classList.remove('ativo');
       whatsFab.classList.remove('recuado');
     }
+    
+    atualizarMiniCarrinho();
   }
 
   window.adicionarAoCarrinho = function() {
@@ -1099,7 +1097,6 @@
     }
     
     if (carrinho[key].qtd >= est) {
-      // Máximo atingido
       let btn = document.getElementById('btn-add-carrinho');
       let txt = btn.innerText;
       btn.innerText = '⚠️ Máximo: ' + est + ' un.';
@@ -1224,7 +1221,6 @@
     let novo = item.qtd + delta;
     
     if (delta > 0 && novo > est) {
-      // Não passa do estoque
       return;
     }
     
@@ -1258,7 +1254,8 @@
         subtotal: r.subtotal,
         desconto: r.desconto,
         data: new Date(),
-        concretizada: false
+        concretizada: false,
+        cancelada: false
       });
     } catch(e) { console.error("Erro ao salvar pedido", e); }
 
