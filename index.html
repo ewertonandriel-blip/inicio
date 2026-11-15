@@ -194,7 +194,6 @@
   .linha-total.desconto { color: #25D366; font-weight: 600; }
   .linha-total.total-geral { font-size: 1.15rem; font-weight: 800; color: var(--dourado-claro); padding-top: 8px; margin-top: 8px; border-top: 1px solid var(--borda); font-family: 'Playfair Display', serif; }
 
-  /* CUPOM */
   .cupom-area { background: rgba(212,175,55,0.05); border: 1px solid rgba(212,175,55,0.3); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; }
   .cupom-titulo { font-size: 0.72rem; font-weight: 700; color: var(--dourado-claro); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
   .cupom-linha { display: flex; gap: 6px; }
@@ -513,7 +512,7 @@
   let tamanhoSelecionado = { label: "50ml", preco: 0 };
   let perfumesCarregados = false;
   let esgotouPendenteMsg = '';
-  let cupomAplicado = null; // { codigo, percentual }
+  let cupomAplicado = null;
 
   const whats = "5511946927675";
   const DESCONTO_MIN = 3;
@@ -1081,13 +1080,9 @@
       subtotal += (carrinho[k].qtd * carrinho[k].precoUnit);
     }
     
-    // Desconto automático 5% se >= 3 itens
     let descontoAutoPct = qtdTotal >= DESCONTO_MIN ? DESCONTO_PCT : 0;
-    
-    // Cupom
     let cupomPct = cupomAplicado ? (cupomAplicado.percentual / 100) : 0;
     
-    // Maior desconto entre os dois (não cumulativo)
     let usarCupom = cupomPct > descontoAutoPct;
     let pctAplicado = Math.max(descontoAutoPct, cupomPct);
     let desconto = subtotal * pctAplicado;
@@ -1268,21 +1263,18 @@
       let cupomId = null;
       snap.forEach(d => { cupomData = d.data(); cupomId = d.id; });
       
-      // Verifica ativo
       if (!cupomData.ativo) {
         msgEl.className = 'cupom-msg erro';
         msgEl.innerText = '❌ Este cupom não está mais ativo.';
         return;
       }
       
-      // Verifica limite de uso
       if (cupomData.limiteUso && cupomData.usos >= cupomData.limiteUso) {
         msgEl.className = 'cupom-msg erro';
         msgEl.innerText = '❌ Este cupom já foi resgatado.';
         return;
       }
       
-      // Aplica
       cupomAplicado = {
         id: cupomId,
         codigo: cupomData.codigo,
@@ -1292,7 +1284,6 @@
       msgEl.className = 'cupom-msg sucesso';
       msgEl.innerText = '✓ Cupom de ' + cupomData.percentual + '% aplicado!';
       
-      // Re-renderiza carrinho pra atualizar totais
       setTimeout(() => renderizarCarrinho(), 300);
       
     } catch (err) {
@@ -1345,13 +1336,15 @@
 
     let htmlRodape = '';
     
-    // Aviso de desconto automático (5% com 3+ itens)
-    if (!r.temDesconto) {
-      let faltam = DESCONTO_MIN - r.qtdTotal;
-      htmlRodape += '<button class="aviso-desconto" onclick="fecharCarrinhoEComprar()">Adicione mais ' + faltam + ' ' +
-        (faltam === 1 ? 'unidade' : 'unidades') + ' e ganhe <strong>5% de desconto</strong>!</button>';
-    } else if (r.descontoAutoPct > 0) {
-      htmlRodape += '<div class="aviso-desconto" style="cursor:default; pointer-events:none; border-style:dashed;">🎉 <strong>5% de desconto</strong> automático (3+ itens)</div>';
+    // Aviso de desconto automático — SÓ aparece se NÃO houver cupom aplicado
+    if (!cupomAplicado) {
+      if (r.qtdTotal < DESCONTO_MIN) {
+        let faltam = DESCONTO_MIN - r.qtdTotal;
+        htmlRodape += '<button class="aviso-desconto" onclick="fecharCarrinhoEComprar()">Adicione mais ' + faltam + ' ' +
+          (faltam === 1 ? 'unidade' : 'unidades') + ' e ganhe <strong>5% de desconto</strong>!</button>';
+      } else {
+        htmlRodape += '<div class="aviso-desconto" style="cursor:default; pointer-events:none; border-style:dashed;">🎉 <strong>5% de desconto</strong> automático (3+ itens)</div>';
+      }
     }
 
     // Área de cupom
@@ -1450,7 +1443,6 @@
       cancelada: false
     };
     
-    // Registra cupom usado (se foi o maior desconto)
     if (r.usarCupom && cupomAplicado) {
       pedidoData.cupomCodigo = cupomAplicado.codigo;
       pedidoData.cupomPercentual = cupomAplicado.percentual;
@@ -1461,7 +1453,6 @@
       await addDoc(collection(db, "pedidos"), pedidoData);
     } catch(e) { console.error("Erro ao salvar pedido", e); }
 
-    // Limpa carrinho e cupom
     carrinho = {};
     cupomAplicado = null;
     atualizarBadge();
