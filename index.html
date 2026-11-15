@@ -97,7 +97,6 @@
   .btn-add-fast { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); border: none; color: #0d0d0d; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.4); z-index: 5; transition: transform 0.2s, box-shadow 0.2s; }
   .btn-add-fast:active { transform: scale(0.85); box-shadow: 0 1px 3px rgba(0,0,0,0.5); }
 
-  /* MODAL DETALHES */
   .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--fundo-site); z-index: 3000; justify-content: center; align-items: flex-start; overflow-y: auto; -webkit-overflow-scrolling: touch; }
   .modal-overlay.ativo { display: flex; }
   .modal-content { background-color: var(--fundo-site); width: 100%; min-height: 100%; display: flex; flex-direction: column; position: relative; }
@@ -134,8 +133,8 @@
   .btn-comprar-agora { background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); color: #0d0d0d; font-weight: 700; }
   .btn-comprar-agora:hover { box-shadow: 0 0 20px rgba(212,175,55,0.5); }
   .btn-add-carrinho:disabled, .btn-comprar-agora:disabled { background: #333; color: #666; border-color: #444; cursor: not-allowed; box-shadow: none; }
+  .btn-comprar-agora.oculto { display: none; }
 
-  /* MINI CARRINHO DENTRO DO MODAL */
   .mini-carrinho-modal { background: rgba(212,175,55,0.06); border: 1px solid var(--dourado); border-radius: 10px; padding: 12px 14px; margin-bottom: 20px; display: none; }
   .mini-carrinho-modal.ativo { display: block; animation: slideDown 0.25s ease; }
   @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
@@ -192,6 +191,7 @@
   .linha-total { display: flex; justify-content: space-between; font-size: .9rem; color: #bbb; margin-bottom: 6px; }
   .linha-total.desconto { color: #25D366; font-weight: 600; }
   .linha-total.total-geral { font-size: 1.15rem; font-weight: 800; color: var(--dourado-claro); padding-top: 8px; margin-top: 8px; border-top: 1px solid var(--borda); font-family: 'Playfair Display', serif; }
+
   .btn-finalizar-whats { background-color: var(--verde-whats); color: #fff; width: 100%; padding: 16px; border: none; border-radius: 30px; font-size: 0.85rem; font-weight: 700; cursor: pointer; margin-top: 16px; display: flex; align-items: center; justify-content: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
   .btn-finalizar-whats:active { background: #1a9e4a; }
   .btn-finalizar-whats:disabled { background: #333; color: #666; cursor: not-allowed; }
@@ -243,6 +243,7 @@
     .tamanhos-container { flex-wrap: nowrap; }
     .botoes-acao { flex-direction: row; }
     .btn-add-carrinho, .btn-comprar-agora { flex: 1; width: auto; }
+    .botoes-acao.sem-comprar .btn-add-carrinho { flex: 1; }
     .barra-carrinho { left: auto; right: 20px; bottom: 90px; padding: 0; max-width: 380px; }
     .barra-carrinho-conteudo { padding: 14px 16px; border-radius: 16px; }
     .barra-carrinho-total { font-size: 1.15rem; }
@@ -253,7 +254,6 @@
     .mobile-menu-overlay, .mobile-menu { display: none !important; }
   }
 
-  /* WHATSAPP FAB DOURADO */
   .whats-fab { position: fixed; bottom: 20px; right: 16px; z-index: 20; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--dourado) 0%, var(--dourado-claro) 50%, var(--dourado) 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 6px 20px rgba(212,175,55,0.5), 0 0 0 1px rgba(255,255,255,0.15) inset; text-decoration: none; transition: bottom .35s cubic-bezier(0.4, 0, 0.2, 1), transform .3s; }
   .whats-fab:hover { transform: scale(1.05); }
   .whats-fab svg { width: 30px; height: 30px; fill: #0d0d0d; }
@@ -281,6 +281,22 @@
   .modal-esgotou-content .btn-whats-aviso { background: var(--verde-whats); color: #fff; border: none; padding: 16px 25px; border-radius: 30px; font-weight: 800; font-size: 0.9rem; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; transition: 0.2s; }
   .modal-esgotou-content .btn-whats-aviso:hover { box-shadow: 0 0 25px rgba(37,211,102,0.6); transform: scale(1.02); }
   .modal-esgotou-content .btn-fechar-aviso { background: transparent; border: 1px solid #666; color: #aaa; padding: 10px 20px; border-radius: 30px; font-size: 0.8rem; cursor: pointer; width: 100%; }
+
+  /* MODAL DE SUCESSO (PEDIDO GERADO) */
+  .modal-sucesso-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.92); z-index: 6500; justify-content: center; align-items: center; padding: 20px; }
+  .modal-sucesso-overlay.ativo { display: flex; }
+  .modal-sucesso-content { background: var(--fundo-card); padding: 30px 25px; border-radius: 12px; border: 1px solid var(--dourado); text-align: center; max-width: 420px; width: 100%; box-shadow: 0 20px 60px rgba(212,175,55,0.4); }
+  .modal-sucesso-content .icone-sucesso { font-size: 3rem; margin-bottom: 15px; }
+  .modal-sucesso-content h3 { color: var(--dourado-claro); font-family: 'Playfair Display', serif; font-size: 1.4rem; margin-bottom: 8px; }
+  .modal-sucesso-content p { color: #bbb; font-size: 0.85rem; margin-bottom: 20px; line-height: 1.5; }
+  .numero-pedido-box { background: linear-gradient(135deg, rgba(212,175,55,0.15), rgba(245,217,122,0.1)); border: 2px solid var(--dourado); border-radius: 12px; padding: 18px; margin-bottom: 20px; }
+  .numero-pedido-box small { display: block; color: var(--dourado); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 6px; }
+  .numero-pedido-box strong { display: block; color: var(--dourado-claro); font-size: 1.4rem; font-family: 'Playfair Display', serif; font-weight: 800; letter-spacing: 1px; word-break: break-all; }
+  .btn-copiar-pedido { background: rgba(212,175,55,0.15); border: 1px solid var(--dourado); color: var(--dourado-claro); padding: 10px 18px; border-radius: 30px; font-size: 0.78rem; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; transition: 0.2s; font-family: inherit; }
+  .btn-copiar-pedido:hover { background: var(--dourado); color: #0d0d0d; }
+  .modal-sucesso-content .btn-whats-sucesso { background: var(--verde-whats); color: #fff; border: none; padding: 15px 25px; border-radius: 30px; font-weight: 800; font-size: 0.85rem; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; transition: 0.2s; }
+  .modal-sucesso-content .btn-whats-sucesso:hover { box-shadow: 0 0 25px rgba(37,211,102,0.5); }
+  .modal-sucesso-content .btn-fechar-sucesso { background: transparent; border: 1px solid #666; color: #aaa; padding: 10px 20px; border-radius: 30px; font-size: 0.78rem; cursor: pointer; width: 100%; }
 </style>
 </head>
 <body>
@@ -384,12 +400,11 @@
         🚚 <span>Enviamos para todo o Brasil</span> via Correios. Combine o frete no WhatsApp.
       </div>
 
-      <div class="botoes-acao">
+      <div class="botoes-acao" id="botoesAcao">
         <button class="btn-add-carrinho" id="btn-add-carrinho" onclick="adicionarAoCarrinho()">🛒 Adicionar ao carrinho</button>
         <button class="btn-comprar-agora" id="btn-comprar-agora" onclick="comprarAgora()">Comprar agora</button>
       </div>
 
-      <!-- MINI CARRINHO DENTRO DO MODAL -->
       <div class="mini-carrinho-modal" id="miniCarrinhoModal">
         <div class="mini-carrinho-header">
           <div class="titulo">🛒 Seu pedido (<span id="miniQtd">0</span>)</div>
@@ -398,7 +413,7 @@
         <div class="mini-carrinho-lista" id="miniLista"></div>
         <div class="mini-carrinho-rodape">
           <button class="btn-mini-ver" onclick="abrirCarrinho()">Ver carrinho</button>
-          <button class="btn-mini-finalizar" onclick="finalizarWhats()">Finalizar</button>
+          <button class="btn-mini-finalizar" onclick="abrirCarrinho()">Finalizar</button>
         </div>
       </div>
 
@@ -443,6 +458,27 @@
   </div>
 </div>
 
+<!-- MODAL DE SUCESSO / NÚMERO DO PEDIDO -->
+<div class="modal-sucesso-overlay" id="modalSucesso">
+  <div class="modal-sucesso-content">
+    <div class="icone-sucesso">🎉</div>
+    <h3>Pedido gerado!</h3>
+    <p>Guarde o número do seu pedido. Ele já foi enviado na mensagem do WhatsApp.</p>
+    <div class="numero-pedido-box">
+      <small>Número do Pedido</small>
+      <strong id="numeroPedidoGerado">TH-000000-0000</strong>
+      <button class="btn-copiar-pedido" onclick="copiarNumeroPedido()">
+        📋 Copiar número
+      </button>
+    </div>
+    <button class="btn-whats-sucesso" onclick="abrirWhatsPedido()">
+      <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:#fff;display:inline;vertical-align:middle;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Enviar no WhatsApp
+    </button>
+    <button class="btn-fechar-sucesso" onclick="fecharModalSucesso()">Fechar</button>
+  </div>
+</div>
+
 <div class="barra-carrinho" id="barraCarrinho">
   <div class="barra-carrinho-conteudo" onclick="abrirCarrinho()">
     <div class="barra-carrinho-info">
@@ -464,7 +500,6 @@
 
 <button class="btn-topo" id="btnTopo" onclick="voltarAoTopo()" title="Voltar ao topo">↑</button>
 
-<!-- WHATSAPP FAB DOURADO -->
 <a class="whats-fab" id="whatsFab" href="#" target="_blank" onclick="return abrirWhats();">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
@@ -491,6 +526,7 @@
   let tamanhoSelecionado = { label: "50ml", preco: 0 };
   let perfumesCarregados = false;
   let esgotouPendenteMsg = '';
+  let pedidoGeradoAtual = null; // { numero, msg, telefone }
 
   const whats = "5511946927675";
   const DESCONTO_MIN = 3;
@@ -502,6 +538,7 @@
   const modalCarrinho = document.getElementById('modalCarrinho');
   const modalAviso = document.getElementById('modalAviso');
   const modalEsgotou = document.getElementById('modalEsgotou');
+  const modalSucesso = document.getElementById('modalSucesso');
   const searchBar = document.getElementById('searchBar');
   const navMenu = document.getElementById('navMenu');
   const barraCarrinho = document.getElementById('barraCarrinho');
@@ -510,22 +547,30 @@
   
   const btnAddCarrinho = document.getElementById('btn-add-carrinho');
   const btnComprarAgora = document.getElementById('btn-comprar-agora');
+  const botoesAcao = document.getElementById('botoesAcao');
   
   const blocoPrecos = document.getElementById('bloco-precos');
   const blocoIndisponivel = document.getElementById('bloco-indisponivel');
   const avisoFrete = document.getElementById('aviso-frete');
 
+  /* ============================================================
+     GERADOR DE NÚMERO DE PEDIDO
+     Formato: TH-YYMMDD-XXXX (4 dígitos aleatórios)
+     ============================================================ */
+  function gerarNumeroPedido() {
+    const agora = new Date();
+    const yy = String(agora.getFullYear()).slice(-2);
+    const mm = String(agora.getMonth() + 1).padStart(2, '0');
+    const dd = String(agora.getDate()).padStart(2, '0');
+    const aleatorio = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
+    return 'TH-' + yy + mm + dd + '-' + aleatorio;
+  }
+
   function normalizarEstoque(p) {
-    if (p.estoque && typeof p.estoque === 'object') {
-      return p.estoque;
-    }
+    if (p.estoque && typeof p.estoque === 'object') return p.estoque;
     const num = (typeof p.estoque === 'number') ? p.estoque : 0;
     const obj = { "50ml": num };
-    if (p.tamanhos) {
-      Object.keys(p.tamanhos).forEach(tam => {
-        if (tam !== "50ml") obj[tam] = 0;
-      });
-    }
+    if (p.tamanhos) Object.keys(p.tamanhos).forEach(tam => { if (tam !== "50ml") obj[tam] = 0; });
     return obj;
   }
 
@@ -539,9 +584,7 @@
     return Object.values(est).reduce((a, b) => a + (typeof b === 'number' ? b : 0), 0);
   }
 
-  function temAlgumEstoque(p) {
-    return totalEstoque(p) > 0;
-  }
+  function temAlgumEstoque(p) { return totalEstoque(p) > 0; }
 
   function tamanhosDisponiveis(p) {
     const est = normalizarEstoque(p);
@@ -889,7 +932,6 @@
     
     carrinho[key].qtd += 1;
     atualizarBadge();
-    atualizarMiniCarrinho();
     
     let btn = event.target;
     if(btn) {
@@ -1017,7 +1059,6 @@
     if(window.location.hash) history.replaceState(null, null, ' ');
   };
 
-  /* ATUALIZA O MINI CARRINHO DENTRO DO MODAL */
   function atualizarMiniCarrinho() {
     const mini = document.getElementById('miniCarrinhoModal');
     if (!mini) return;
@@ -1025,10 +1066,15 @@
     const ids = Object.keys(carrinho);
     if (ids.length === 0) {
       mini.classList.remove('ativo');
+      btnComprarAgora.classList.remove('oculto');
+      botoesAcao.classList.remove('sem-comprar');
       return;
     }
     
     mini.classList.add('ativo');
+    btnComprarAgora.classList.add('oculto');
+    botoesAcao.classList.add('sem-comprar');
+    
     const r = calcularTotal();
     
     document.getElementById('miniQtd').innerText = r.qtdTotal;
@@ -1129,15 +1175,47 @@
     }, 1500);
   };
 
-  window.comprarAgora = function() {
+  /* ============================================================
+     COMPRAR AGORA — gera número de pedido e salva no Firestore
+     ============================================================ */
+  window.comprarAgora = async function() {
     if (!produtoSelecionado || !tamanhoSelecionado) return;
     if (produtoSelecionado.indisponivel) return;
     const est = estoqueDoTamanho(produtoSelecionado, tamanhoSelecionado.label);
     if (est === 0) return;
 
-    let msg = 'Olá! Tenho interesse no perfume *' + produtoSelecionado.nome +
-              '* (inspirado em ' + produtoSelecionado.insp + ') — ' + tamanhoSelecionado.label + ' — ' + fmt(tamanhoSelecionado.preco) + '.\n\nPode me dar mais informações?';
-    window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent(msg), '_blank');
+    const numeroPedido = gerarNumeroPedido();
+    const itemPedido = {
+      id: produtoSelecionado.id,
+      nome: produtoSelecionado.nome,
+      tamanho: tamanhoSelecionado.label,
+      qtd: 1,
+      preco: tamanhoSelecionado.preco
+    };
+    const subtotal = tamanhoSelecionado.preco;
+    const desconto = 0;
+    const total = subtotal;
+
+    const msg = 'Olá! Pedido *# ' + numeroPedido + '* na THRUST PARFUMS:\n\n' +
+      '• 1x ' + produtoSelecionado.nome + ' (insp. ' + produtoSelecionado.insp + ') ' + tamanhoSelecionado.label + ' — ' + fmt(tamanhoSelecionado.preco) + '\n' +
+      '\nTotal: ' + fmt(total) +
+      '\n\nForma de pagamento: (Pix / Cartão)';
+
+    try {
+      await addDoc(collection(db, "pedidos"), {
+        numero: numeroPedido,
+        itens: [itemPedido],
+        total: total,
+        subtotal: subtotal,
+        desconto: desconto,
+        data: new Date(),
+        concretizada: false,
+        cancelada: false
+      });
+    } catch(e) { console.error("Erro ao salvar pedido", e); }
+
+    pedidoGeradoAtual = { numero: numeroPedido, msg: msg };
+    abrirModalSucesso();
   };
 
   window.abrirCarrinho = function() {
@@ -1230,11 +1308,16 @@
     renderizarCarrinho();
   };
 
+  /* ============================================================
+     FINALIZAR WHATSAPP — gera número de pedido e salva
+     ============================================================ */
   window.finalizarWhats = async function() {
     let ids = Object.keys(carrinho);
     if (ids.length === 0) return;
+    
+    const numeroPedido = gerarNumeroPedido();
     let r = calcularTotal();
-    let msg = 'Olá! Gostaria de fazer o seguinte pedido na THRUST PARFUMS:\n\n';
+    let msg = 'Olá! Pedido *# ' + numeroPedido + '* na THRUST PARFUMS:\n\n';
     let listaPedido = [];
     
     ids.forEach(function(key) {
@@ -1249,6 +1332,7 @@
     
     try {
       await addDoc(collection(db, "pedidos"), {
+        numero: numeroPedido,
         itens: listaPedido,
         total: r.total,
         subtotal: r.subtotal,
@@ -1259,12 +1343,66 @@
       });
     } catch(e) { console.error("Erro ao salvar pedido", e); }
 
-    window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent(msg), '_blank');
+    pedidoGeradoAtual = { numero: numeroPedido, msg: msg };
+    
+    // Limpa carrinho
+    carrinho = {};
+    atualizarBadge();
+    fecharCarrinho();
+    fecharModal();
+    
+    abrirModalSucesso();
   };
 
   window.abrirWhats = function() {
     window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent('Olá! Gostaria de saber mais sobre os perfumes THRUST PARFUMS'), '_blank');
     return false;
+  };
+
+  /* ============================================================
+     MODAL DE SUCESSO
+     ============================================================ */
+  function abrirModalSucesso() {
+    if (!pedidoGeradoAtual) return;
+    document.getElementById('numeroPedidoGerado').innerText = pedidoGeradoAtual.numero;
+    modalSucesso.classList.add('ativo');
+    document.body.style.overflow = 'hidden';
+  }
+
+  window.fecharModalSucesso = function() {
+    modalSucesso.classList.remove('ativo');
+    document.body.style.overflow = 'auto';
+  };
+
+  window.abrirWhatsPedido = function() {
+    if (!pedidoGeradoAtual) return;
+    window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent(pedidoGeradoAtual.msg), '_blank');
+  };
+
+  window.copiarNumeroPedido = function() {
+    if (!pedidoGeradoAtual) return;
+    const numero = pedidoGeradoAtual.numero;
+    navigator.clipboard.writeText(numero).then(() => {
+      const btn = document.querySelector('.btn-copiar-pedido');
+      const txt = btn.innerHTML;
+      btn.innerHTML = '✓ Copiado!';
+      btn.style.background = '#25D366';
+      btn.style.color = '#fff';
+      btn.style.borderColor = '#25D366';
+      setTimeout(() => {
+        btn.innerHTML = txt;
+        btn.style.background = '';
+        btn.style.color = '';
+        btn.style.borderColor = '';
+      }, 1500);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = numero;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+    });
   };
 
   window.voltarAoTopo = function() {
