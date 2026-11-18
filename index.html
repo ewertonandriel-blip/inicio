@@ -1254,10 +1254,6 @@
     document.getElementById('miniLista').innerHTML = listaHtml;
   }
 
-  /* ============================================================
-     CÁLCULO DE DESCONTO
-     Suporta: % ou R$ fixo. Aplica o maior entre automático 5% e cupom.
-     ============================================================ */
   function calcularTotal() {
     let qtdTotal = 0;
     let subtotal = 0;
@@ -1266,24 +1262,20 @@
       subtotal += (carrinho[k].qtd * carrinho[k].precoUnit);
     }
     
-    // Desconto automático 5% se >=3 itens
     let descontoAutoValor = qtdTotal >= DESCONTO_MIN ? subtotal * DESCONTO_PCT : 0;
     
-    // Desconto cupom (pode ser % ou R$)
     let descontoCupomValor = 0;
     if (cupomAplicado) {
       if (cupomAplicado.tipo === 'fixo') {
         descontoCupomValor = Math.min(subtotal, cupomAplicado.valor);
       } else {
-        // percentual
         descontoCupomValor = subtotal * (cupomAplicado.valor / 100);
       }
     }
     
-    // Aplica o MAIOR desconto entre automático e cupom
     let usarCupom = descontoCupomValor > descontoAutoValor;
     let desconto = Math.max(descontoAutoValor, descontoCupomValor);
-    desconto = Math.min(subtotal, desconto); // nunca menor que 0
+    desconto = Math.min(subtotal, desconto);
     let total = subtotal - desconto;
     if (total < 0) total = 0;
     
@@ -1429,17 +1421,20 @@
     }, 100);
   };
 
+  /* ============================================================
+     APLICAR CUPOM - aceita código OU nome personalizado
+     ============================================================ */
   window.aplicarCupom = async function() {
     const input = document.getElementById('cupomInput');
     const msgEl = document.getElementById('cupomMsg');
     const btn = document.getElementById('btnAplicarCupom');
     if (!input) return;
     
-    const codigo = input.value.trim().toUpperCase();
+    const textoDigitado = input.value.trim();
     
-    if (!codigo) {
+    if (!textoDigitado) {
       msgEl.className = 'cupom-msg erro';
-      msgEl.innerText = 'Digite um código.';
+      msgEl.innerText = 'Digite um código ou nome de cupom.';
       return;
     }
     
@@ -1448,18 +1443,36 @@
     msgEl.className = 'cupom-msg';
     
     try {
-      const q = query(collection(db, "cupons"), where("codigo", "==", codigo));
-      const snap = await getDocs(q);
+      let cupomData = null;
+      let cupomId = null;
       
-      if (snap.empty) {
+      // 1ª tentativa: busca pelo CÓDIGO (uppercase, sem espaços)
+      const codigoUpper = textoDigitado.toUpperCase().replace(/\s+/g, '');
+      const qCodigo = query(collection(db, "cupons"), where("codigo", "==", codigoUpper));
+      const snapCodigo = await getDocs(qCodigo);
+      
+      if (!snapCodigo.empty) {
+        snapCodigo.forEach(d => { cupomData = d.data(); cupomId = d.id; });
+      } else {
+        // 2ª tentativa: busca pelo NOME personalizado (case-insensitive pelo texto exato)
+        // Firestore não suporta LIKE, então buscamos todos e filtramos no cliente
+        const snapTodos = await getDocs(collection(db, "cupons"));
+        const textoLower = textoDigitado.toLowerCase().trim();
+        snapTodos.forEach(d => {
+          if (cupomData) return;
+          const data = d.data();
+          if (data.nome && data.nome.toLowerCase().trim() === textoLower) {
+            cupomData = data;
+            cupomId = d.id;
+          }
+        });
+      }
+      
+      if (!cupomData) {
         msgEl.className = 'cupom-msg erro';
         msgEl.innerText = '❌ Cupom inválido.';
         return;
       }
-      
-      let cupomData = null;
-      let cupomId = null;
-      snap.forEach(d => { cupomData = d.data(); cupomId = d.id; });
       
       if (!cupomData.ativo) {
         msgEl.className = 'cupom-msg erro';
@@ -1473,7 +1486,6 @@
         return;
       }
       
-      // Compatibilidade: cupons antigos têm só "percentual"; novos têm "tipoDesconto" e "valorDesconto"
       let tipo = cupomData.tipoDesconto || 'percentual';
       let valor = cupomData.valorDesconto != null ? cupomData.valorDesconto : (cupomData.percentual || 0);
       
@@ -1486,12 +1498,13 @@
       };
       
       let textoAplicado = '';
-      if (tipo === 'fixo') {
+      if (cupomData.nome) {
+        textoAplicado = '✓ ' + cupomData.nome + ' aplicado!';
+      } else if (tipo === 'fixo') {
         textoAplicado = '✓ Cupom de ' + fmt(valor) + ' aplicado!';
       } else {
         textoAplicado = '✓ Cupom de ' + valor + '% aplicado!';
       }
-      if (cupomData.nome) textoAplicado = '✓ ' + cupomData.nome + ' aplicado!';
       
       msgEl.className = 'cupom-msg sucesso';
       msgEl.innerText = textoAplicado;
@@ -1521,7 +1534,7 @@
       }
       const input = document.getElementById('cupomInput');
       if (input) {
-        input.value = texto.trim().toUpperCase();
+        input.value = texto.trim();
         mostrarToast('✓ Cupom colado!');
       }
     } catch (e) {
@@ -1597,7 +1610,7 @@
       htmlRodape += '<div class="cupom-area">' +
         '<div class="cupom-titulo">🎟️ Tem um cupom?</div>' +
         '<div class="cupom-linha">' +
-          '<input type="text" id="cupomInput" placeholder="Digite o código" maxlength="30" autocomplete="off">' +
+          '<input type="text" id="cupomInput" placeholder="Código ou nome do cupom" maxlength="60" autocomplete="off">' +
           '<button class="btn-colar-cupom" onclick="colarCupom()" title="Colar da área de transferência">📋</button>' +
           '<button class="btn-aplicar-cupom" id="btnAplicarCupom" onclick="aplicarCupom()">Aplicar</button>' +
         '</div>' +
