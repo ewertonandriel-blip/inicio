@@ -210,7 +210,7 @@
   .cupom-area { background: rgba(212,175,55,0.05); border: 1px solid rgba(212,175,55,0.3); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; }
   .cupom-titulo { font-size: 0.72rem; font-weight: 700; color: var(--dourado-claro); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
   .cupom-linha { display: flex; gap: 6px; }
-  .cupom-linha input { flex: 1; padding: 10px 12px; border-radius: 6px; border: 1px solid #444; background: #0d0d0d; color: #fff; font-family: inherit; font-size: 0.8rem; outline: none; text-transform: uppercase; letter-spacing: 0.5px; min-width: 0; }
+  .cupom-linha input { flex: 1; padding: 10px 12px; border-radius: 6px; border: 1px solid #444; background: #0d0d0d; color: #fff; font-family: inherit; font-size: 0.8rem; outline: none; letter-spacing: 0.5px; min-width: 0; }
   .cupom-linha input:focus { border-color: var(--dourado); }
   .cupom-linha input:disabled { opacity: 0.6; }
   .btn-colar-cupom { background: transparent; border: 1px solid #4a90e2; color: #4a90e2; padding: 10px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; white-space: nowrap; display: flex; align-items: center; justify-content: center; gap: 4px; }
@@ -549,7 +549,7 @@
   let cupomAplicado = null;
   let ordenacaoAtual = 'padrao';
 
-  const whats = "5511946927675";
+  const whats = "5511956659281";
   const DESCONTO_MIN = 3;
   const DESCONTO_PCT = 0.05;
   const TAMANHOS = ['30ml', '50ml', '100ml'];
@@ -1421,9 +1421,6 @@
     }, 100);
   };
 
-  /* ============================================================
-     APLICAR CUPOM - aceita código OU nome personalizado
-     ============================================================ */
   window.aplicarCupom = async function() {
     const input = document.getElementById('cupomInput');
     const msgEl = document.getElementById('cupomMsg');
@@ -1446,7 +1443,7 @@
       let cupomData = null;
       let cupomId = null;
       
-      // 1ª tentativa: busca pelo CÓDIGO (uppercase, sem espaços)
+      // 1ª tentativa: busca pelo CÓDIGO
       const codigoUpper = textoDigitado.toUpperCase().replace(/\s+/g, '');
       const qCodigo = query(collection(db, "cupons"), where("codigo", "==", codigoUpper));
       const snapCodigo = await getDocs(qCodigo);
@@ -1454,8 +1451,7 @@
       if (!snapCodigo.empty) {
         snapCodigo.forEach(d => { cupomData = d.data(); cupomId = d.id; });
       } else {
-        // 2ª tentativa: busca pelo NOME personalizado (case-insensitive pelo texto exato)
-        // Firestore não suporta LIKE, então buscamos todos e filtramos no cliente
+        // 2ª tentativa: busca pelo NOME personalizado
         const snapTodos = await getDocs(collection(db, "cupons"));
         const textoLower = textoDigitado.toLowerCase().trim();
         snapTodos.forEach(d => {
