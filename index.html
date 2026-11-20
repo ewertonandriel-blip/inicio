@@ -5,14 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CATÁLOGO THRUST PARFUMS</title>
 
+<meta name="description" content="Perfumes inspirados nas grandes marcas, com matéria-prima premium e concentração Parfum 30%. Confira nosso catálogo exclusivo!">
 <meta property="og:title" content="THRUST PARFUMS — Catálogo Premium">
 <meta property="og:description" content="Perfumes inspirados nas grandes marcas, com matéria-prima premium. Confira nosso catálogo exclusivo!">
 <meta property="og:image" content="https://i.ibb.co/3kzm1J6/Logo-Thrust-Parfums.jpg">
 <meta property="og:url" content="https://thrustperfumes.store/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0d0d0d">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230d0d0d%22/><text x=%2250%22 y=%2275%22 font-size=%2270%22 font-family=%22serif%22 font-weight=%22bold%22 fill=%22%23f5d97a%22 text-anchor=%22middle%22>T</text></svg>">
 <style>
   :root {
@@ -24,15 +26,15 @@
   body { background-color: var(--fundo-site); color: var(--preto); font-family: 'Montserrat', sans-serif; font-weight: 400; line-height: 1.6; overflow-x: hidden; padding-bottom: 90px; }
   h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; }
   a { text-decoration: none; color: inherit; }
-  
+
   .top-header { background: linear-gradient(180deg, #000 0%, #1a1a1a 100%); padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--dourado); position: sticky; top: 0; z-index: 100; }
   .menu-toggle { display: block; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--dourado-claro); padding: 5px; }
   .logo-area { display: flex; align-items: center; justify-content: center; flex: 1; cursor: pointer; user-select: none; transition: opacity .2s; }
   .logo-area:hover { opacity: .85; }
   .logo-area h1 { font-family: 'Playfair Display', serif; font-size: 1.5rem; letter-spacing: 5px; font-weight: 700; background: linear-gradient(180deg, var(--dourado-claro) 0%, var(--dourado) 50%, #8a6d1a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .logo-area h1 small { display: block; font-size: .5rem; letter-spacing: 6px; font-family: 'Montserrat', sans-serif; font-weight: 500; color: var(--dourado); margin-top: -2px; text-align: center; -webkit-text-fill-color: var(--dourado); background: none; }
-  .icons-header { display: flex; align-items: center; gap: 8px; }
-  .icon-btn { background: none; border: none; cursor: pointer; font-size: 1.3rem; color: var(--dourado-claro); position: relative; padding: 6px; display: flex; align-items: center; }
+  .icons-header { display: flex; align-items: center; gap: 6px; }
+  .icon-btn { background: none; border: none; cursor: pointer; font-size: 1.25rem; color: var(--dourado-claro); position: relative; padding: 6px; display: flex; align-items: center; }
   .cart-badge { background-color: var(--dourado); color: #0d0d0d; font-size: 0.65rem; font-weight: 800; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; position: absolute; top: -2px; right: -2px; border: 2px solid #000; }
 
   .mobile-menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); z-index: 2000; }
@@ -43,9 +45,12 @@
   .mobile-menu a:hover { color: var(--dourado); }
 
   .search-bar { width: 100%; padding: 14px 20px; background-color: #111; border-bottom: 1px solid var(--borda); }
-  .search-bar input { width: 100%; padding: 12px 20px 12px 44px; border-radius: 30px; border: 2px solid var(--dourado); background-color: #1a1a1a; font-family: 'Montserrat', sans-serif; font-size: 0.85rem; outline: none; color: #fff; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9a227' width='16' height='16'><path d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/></svg>"); background-repeat: no-repeat; background-position: 16px center; transition: .3s; }
+  .search-wrap { position: relative; max-width: 1300px; margin: 0 auto; }
+  .search-bar input { width: 100%; padding: 12px 40px 12px 44px; border-radius: 30px; border: 2px solid var(--dourado); background-color: #1a1a1a; font-family: 'Montserrat', sans-serif; font-size: 0.85rem; outline: none; color: #fff; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23c9a227' width='16' height='16'><path d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/></svg>"); background-repeat: no-repeat; background-position: 16px center; transition: .3s; }
   .search-bar input::placeholder { color: #777; }
   .search-bar input:focus { border-color: var(--dourado-claro); box-shadow: 0 0 15px rgba(212,175,55,.3); }
+  .search-clear { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: none; border: none; color: #888; font-size: 1rem; cursor: pointer; display: none; padding: 4px; }
+  .search-clear.visivel { display: block; }
   .search-bar.oculto { display: none; }
 
   .nav-menu { display: none; background-color: #111; padding: 15px 40px; justify-content: center; gap: 30px; border-bottom: 1px solid var(--borda); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; }
@@ -97,32 +102,36 @@
   .ordenacao-select:focus, .ordenacao-select:hover { border-color: var(--dourado); }
 
   .grid-produtos { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-  .loading-text { text-align: center; color: var(--dourado); padding: 40px; grid-column: 1/-1; font-style: italic; }
-  
+
+  /* SKELETON LOADING */
+  .skeleton-card { background-color: var(--fundo-card); border-radius: 10px; padding: 10px; border: 1px solid var(--borda); display: flex; flex-direction: column; gap: 10px; }
+  .skeleton-box { background: linear-gradient(90deg, #1f1f1f 25%, #2a2a2a 50%, #1f1f1f 75%); background-size: 200% 100%; animation: shimmer 1.4s infinite; border-radius: 6px; }
+  @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
   .card-produto { background-color: var(--fundo-card); text-align: center; cursor: pointer; position: relative; transition: 0.3s; display: flex; flex-direction: column; border-radius: 10px; padding: 10px; border: 1px solid var(--borda); }
   .card-produto:hover { border-color: var(--dourado); box-shadow: 0 8px 25px rgba(212,175,55,0.2); transform: translateY(-3px); }
-  .card-produto.esgotado { opacity: 0.6; filter: grayscale(0.8); }
+  .card-produto.esgotado { opacity: 0.65; filter: grayscale(0.75); }
   .card-imagem { background-color: #fafafa; height: 160px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; position: relative; overflow: hidden; }
   .card-imagem img { max-width: 80%; max-height: 85%; object-fit: contain; transition: transform .5s; }
   .card-produto:hover .card-imagem img { transform: scale(1.06); }
   .card-frasco-placeholder { width: 80px; height: 110px; background: linear-gradient(135deg, #f0e6d3 0%, #d4b87a 100%); border-radius: 6px 6px 3px 3px; position: relative; display: flex; align-items: center; justify-content: center; color: #6d5420; font-weight: 800; font-size: 0.55rem; box-shadow: 0 5px 15px rgba(0,0,0,0.15); }
   .card-frasco-placeholder::before { content: ''; position: absolute; top: -10px; width: 25px; height: 12px; background: #d4b87a; border-radius: 3px 3px 0 0; }
-  
+
   .selo-vendas { position: absolute; top: 8px; left: 8px; background: linear-gradient(135deg, var(--dourado), var(--dourado-claro)); color: #0d0d0d; font-size: 0.55rem; font-weight: 800; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; letter-spacing: 0.5px; z-index: 2; box-shadow: 0 3px 10px rgba(212,175,55,0.5); }
   .selo-indisponivel { position: absolute; top: 8px; right: 8px; background: #c94a4a; color: #fff; font-size: 0.55rem; font-weight: 800; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; letter-spacing: 0.5px; z-index: 2; box-shadow: 0 3px 10px rgba(201,74,74,0.5); }
-  .selo-estoque-baixo { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); background: rgba(255, 152, 0, 0.9); color: #fff; font-size: 0.55rem; font-weight: 800; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; letter-spacing: 0.5px; z-index: 2; white-space: nowrap; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
-  
+  .selo-estoque-baixo { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); background: rgba(255, 152, 0, 0.92); color: #fff; font-size: 0.55rem; font-weight: 800; text-transform: uppercase; padding: 2px 8px; border-radius: 10px; letter-spacing: 0.5px; z-index: 2; white-space: nowrap; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+
   .card-produto h3 { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; color: var(--dourado-claro); }
   .card-inspiracao { font-size: 0.6rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
   .card-precos { margin-bottom: 10px; margin-top: auto; }
   .preco-antigo { text-decoration: line-through; color: #666; font-size: 0.7rem; margin-right: 4px; }
   .preco-atual { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .preco-indisponivel { font-size: 0.85rem; color: #c94a4a; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-  
+
   .card-ml { display: inline-block; font-size: 0.6rem; font-weight: 700; color: var(--dourado); background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.4); padding: 2px 8px; border-radius: 20px; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
   .btn-ver-produto { background: none; border: 1px solid var(--dourado); color: var(--dourado); padding: 8px 15px; border-radius: 30px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; width: 100%; display: flex; align-items: center; justify-content: center; gap: 5px; }
   .btn-ver-produto:hover, .btn-ver-produto:active { background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); color: #0d0d0d; border-color: var(--dourado-claro); box-shadow: 0 0 15px rgba(212,175,55,0.5); }
-  .btn-add-fast { position: absolute; top: 8px; right: 8px; width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); border: none; color: #0d0d0d; font-size: 1.1rem; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.4); z-index: 5; transition: transform 0.2s, box-shadow 0.2s; }
+  .btn-add-fast { position: absolute; top: 8px; right: 8px; width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(180deg, var(--dourado-claro), var(--dourado)); border: none; color: #0d0d0d; font-size: 1.15rem; font-weight: bold; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 3px 8px rgba(0,0,0,0.4); z-index: 5; transition: transform 0.2s, box-shadow 0.2s; }
   .btn-add-fast:active { transform: scale(0.85); box-shadow: 0 1px 3px rgba(0,0,0,0.5); }
 
   .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--fundo-site); z-index: 3000; justify-content: center; align-items: flex-start; overflow-y: auto; -webkit-overflow-scrolling: touch; }
@@ -153,9 +162,12 @@
   .modal-precos .preco-antigo { font-size: 0.85rem; }
   .modal-precos .preco-atual { font-size: 1.9rem; }
   .aviso-pix { font-size: 0.7rem; color: #888; margin-top: 3px; }
-  .modal-precos-indisponivel { background: rgba(201, 74, 74, 0.1); border: 1px dashed #c94a4a; border-radius: 8px; padding: 15px; margin-bottom: 20px; text-align: center; }
+  .modal-precos-indisponivel { background: rgba(201, 74, 74, 0.1); border: 1px dashed #c94a4a; border-radius: 8px; padding: 15px; margin-bottom: 15px; text-align: center; }
   .modal-precos-indisponivel strong { color: #ff6b6b; font-size: 1.1rem; display: block; margin-bottom: 5px; }
-  .modal-precos-indisponivel span { color: #bbb; font-size: 0.8rem; }
+  .modal-precos-indisponivel span { color: #bbb; font-size: 0.8rem; display: block; margin-bottom: 12px; }
+  .btn-avise-whats { background: var(--verde-whats); color: #fff; border: none; padding: 12px 18px; border-radius: 30px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; font-family: 'Montserrat', sans-serif; width: 100%; transition: 0.2s; }
+  .btn-avise-whats:hover { background: #1ea853; }
+
   .aviso-frete-modal { background: rgba(212,175,55,0.08); border: 1px dashed rgba(212,175,55,0.4); border-radius: 8px; padding: 10px 12px; font-size: 0.78rem; color: #ccc; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
   .aviso-frete-modal span { color: var(--dourado-claro); font-weight: bold; }
   .botoes-acao { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
@@ -245,9 +257,11 @@
   .cupom-msg.sucesso { color: #25D366; display: block; }
   .cupom-msg.erro { color: #ff6b6b; display: block; }
   .cupom-aplicado-box { background: rgba(37,211,102,0.08); border: 1px solid var(--verde-whats); border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .cupom-aplicado-box.substituido { background: rgba(255,152,0,0.08); border-color: #ff9800; }
   .cupom-aplicado-box .info { flex: 1; min-width: 0; }
   .cupom-aplicado-box .info strong { font-size: 0.8rem; color: #25D366; font-weight: 800; display: block; }
-  .cupom-aplicado-box .info small { font-size: 0.68rem; color: #888; }
+  .cupom-aplicado-box.substituido .info strong { color: #ff9800; }
+  .cupom-aplicado-box .info small { font-size: 0.68rem; color: #999; display: block; }
   .cupom-aplicado-box button { background: none; border: 1px solid #c94a4a; color: #ff6b6b; padding: 6px 10px; border-radius: 6px; font-size: 0.68rem; cursor: pointer; font-weight: 700; font-family: inherit; white-space: nowrap; }
   .cupom-aplicado-box button:hover { background: #c94a4a; color: #fff; }
 
@@ -255,6 +269,13 @@
   .btn-finalizar-whats:active { background: #1a9e4a; }
   .btn-finalizar-whats:disabled { background: #333; color: #666; cursor: not-allowed; }
   .btn-continuar { background: none; border: none; color: #888; margin-top: 15px; cursor: pointer; width: 100%; text-decoration: underline; font-size: 0.8rem; font-family: inherit; }
+
+  .meus-pedidos-card { background: #111; border: 1px solid var(--borda); border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+  .meus-pedidos-card .topo { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; margin-bottom: 6px; }
+  .meus-pedidos-card .cod { color: var(--dourado-claro); font-weight: 800; }
+  .meus-pedidos-card .dt { color: #777; font-size: 0.7rem; }
+  .meus-pedidos-card .resumo { font-size: 0.75rem; color: #bbb; margin-bottom: 8px; }
+  .meus-pedidos-card button { background: rgba(37,211,102,0.12); border: 1px solid var(--verde-whats); color: var(--verde-whats); padding: 8px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; cursor: pointer; width: 100%; font-family: inherit; }
 
   .barra-carrinho { position: fixed; bottom: 0; left: 0; right: 0; z-index: 25; padding: 0 12px 12px; pointer-events: none; transform: translateY(120%); transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
   .barra-carrinho.ativo { transform: translateY(0); }
@@ -354,24 +375,29 @@
   <a href="#" onclick="irParaCategoria('feminino'); return false;">Perfumaria Feminina</a>
   <a href="#" onclick="irParaCategoria('masculino'); return false;">Perfumaria Masculina</a>
   <a href="#" onclick="irParaCategoria('compartilhado'); return false;">Compartilhados</a>
+  <a href="#" onclick="abrirMeusPedidos(); fecharMenuMobile(); return false;">Meus Pedidos</a>
   <a href="#" onclick="abrirQuemSomos(); return false;">Quem Somos</a>
   <a href="#" onclick="abrirWhats(); return false;">Contato</a>
 </div>
 
 <header class="top-header">
-  <button class="menu-toggle" onclick="abrirMenuMobile()">☰</button>
+  <button class="menu-toggle" onclick="abrirMenuMobile()" aria-label="Abrir menu">☰</button>
   <div class="logo-area" onclick="irParaInicio()">
     <h1>THRUST<small>PARFUMS</small></h1>
   </div>
   <div class="icons-header">
-    <button class="icon-btn" onclick="abrirCarrinho()" title="Carrinho">
+    <button class="icon-btn" id="btnMeusPedidosHeader" onclick="abrirMeusPedidos()" title="Meus Pedidos Recentes" style="display:none; font-size:1.1rem;">📋</button>
+    <button class="icon-btn" onclick="abrirCarrinho()" title="Carrinho" aria-label="Abrir carrinho">
       🛒 <span class="cart-badge" id="contador">0</span>
     </button>
   </div>
 </header>
 
 <div class="search-bar" id="searchBar">
-  <input type="text" id="campoBusca" placeholder="O que você está buscando?" oninput="buscar()">
+  <div class="search-wrap">
+    <input type="text" id="campoBusca" placeholder="Buscar por perfume, inspiração ou nota (ex: baunilha, oud)..." oninput="buscar()">
+    <button class="search-clear" id="btnLimparBusca" onclick="limparBusca()" title="Limpar busca">✕</button>
+  </div>
 </div>
 
 <nav class="nav-menu" id="navMenu">
@@ -392,7 +418,6 @@
     <div class="beneficio-item"><h4>Artesanal</h4><p>Feito Um a Um</p></div>
   </div>
 
-  <!-- SEÇÃO EM BREVE (MACERAÇÃO) -->
   <section class="em-breve-section" id="emBreveSection" style="display:none;">
     <div class="em-breve-header">
       <h3>⏳ Em Breve</h3>
@@ -422,7 +447,10 @@
       </div>
     </div>
     <div class="grid-produtos" id="lista-produtos">
-      <div class="loading-text">Carregando catálogo...</div>
+      <div class="skeleton-card"><div class="skeleton-box" style="height:160px"></div><div class="skeleton-box" style="height:16px;width:70%;margin:0 auto"></div><div class="skeleton-box" style="height:12px;width:50%;margin:0 auto"></div><div class="skeleton-box" style="height:32px;border-radius:30px"></div></div>
+      <div class="skeleton-card"><div class="skeleton-box" style="height:160px"></div><div class="skeleton-box" style="height:16px;width:70%;margin:0 auto"></div><div class="skeleton-box" style="height:12px;width:50%;margin:0 auto"></div><div class="skeleton-box" style="height:32px;border-radius:30px"></div></div>
+      <div class="skeleton-card"><div class="skeleton-box" style="height:160px"></div><div class="skeleton-box" style="height:16px;width:70%;margin:0 auto"></div><div class="skeleton-box" style="height:12px;width:50%;margin:0 auto"></div><div class="skeleton-box" style="height:32px;border-radius:30px"></div></div>
+      <div class="skeleton-card"><div class="skeleton-box" style="height:160px"></div><div class="skeleton-box" style="height:16px;width:70%;margin:0 auto"></div><div class="skeleton-box" style="height:12px;width:50%;margin:0 auto"></div><div class="skeleton-box" style="height:32px;border-radius:30px"></div></div>
     </div>
   </section>
 </div>
@@ -443,7 +471,7 @@
   <div class="modal-content">
     <div class="modal-imagem" id="modal-imagem"></div>
     <div class="modal-info">
-      <button class="btn-fechar" onclick="fecharModal()">✕</button>
+      <button class="btn-fechar" onclick="fecharModal()" aria-label="Fechar detalhes">✕</button>
       <div class="modal-categoria" id="modal-categoria">FEMININO</div>
       <h2 class="modal-titulo" id="modal-titulo"></h2>
       <div class="modal-insp" id="modal-inspiracao"></div>
@@ -464,7 +492,8 @@
 
       <div class="modal-precos-indisponivel" id="bloco-indisponivel" style="display: none;">
         <strong>⏳ Produto Esgotado</strong>
-        <span>Consulte o valor e a disponibilidade na reposição.</span>
+        <span>Consulte o valor e a disponibilidade na próxima reposição.</span>
+        <button class="btn-avise-whats" onclick="avisarReposicaoModal()">💬 Avise-me no WhatsApp quando repor</button>
       </div>
 
       <div class="aviso-frete-modal" id="aviso-frete">
@@ -515,10 +544,20 @@
   <div class="modal-carrinho-content">
     <div class="modal-carrinho-header">
       <h2>Meu Pedido</h2>
-      <button class="btn-fechar-carrinho" onclick="fecharCarrinho()">✕</button>
+      <button class="btn-fechar-carrinho" onclick="fecharCarrinho()" aria-label="Fechar carrinho">✕</button>
     </div>
     <div id="itens-carrinho"></div>
     <div id="rodape-carrinho"></div>
+  </div>
+</div>
+
+<div class="modal-carrinho-overlay" id="modalMeusPedidos">
+  <div class="modal-carrinho-content">
+    <div class="modal-carrinho-header">
+      <h2>📋 Meus Pedidos Recentes</h2>
+      <button class="btn-fechar-carrinho" onclick="fecharMeusPedidos()" aria-label="Fechar">✕</button>
+    </div>
+    <div id="lista-meus-pedidos"></div>
   </div>
 </div>
 
@@ -526,7 +565,7 @@
   <div class="modal-esgotou-content">
     <div class="icone-aviso">⏳</div>
     <h3>Produto esgotou!</h3>
-    <p id="mensagemEsgotou">O item <strong>X</strong> esgotou enquanto você finalizava o pedido. Removemos do carrinho. Quer que eu te avise quando repor?</p>
+    <p id="mensagemEsgotou"></p>
     <button class="btn-whats-aviso" id="btnWhatsEsgotou" onclick="abrirWhatsEsgotou()">
       <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:#fff;display:inline;vertical-align:middle;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       Falar com Ewerton no WhatsApp
@@ -556,13 +595,13 @@
 
 <button class="btn-topo" id="btnTopo" onclick="voltarAoTopo()" title="Voltar ao topo">↑</button>
 
-<a class="whats-fab" id="whatsFab" href="#" target="_blank" onclick="return abrirWhats();">
+<a class="whats-fab" id="whatsFab" href="#" target="_blank" onclick="return abrirWhats();" aria-label="Contato WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-  import { getFirestore, collection, onSnapshot, query, orderBy, addDoc, getDocs, where } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+  import { getFirestore, collection, onSnapshot, query, orderBy, addDoc, getDocs, where, limit } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCtdszBtbQiaZnWcLLKBPnwo_3yHRtp2mA",
@@ -575,7 +614,11 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-  
+
+  const STORAGE_CART = 'thrust_carrinho_v1';
+  const STORAGE_CUPOM = 'thrust_cupom_v1';
+  const STORAGE_PEDIDOS = 'thrust_meus_pedidos_v1';
+
   let perfumes = [];
   let carrinho = {};
   let produtoSelecionado = null;
@@ -594,6 +637,7 @@
   const listaProdutos = document.getElementById('lista-produtos');
   const modalProduto = document.getElementById('modalProduto');
   const modalCarrinho = document.getElementById('modalCarrinho');
+  const modalMeusPedidos = document.getElementById('modalMeusPedidos');
   const modalAviso = document.getElementById('modalAviso');
   const modalEsgotou = document.getElementById('modalEsgotou');
   const searchBar = document.getElementById('searchBar');
@@ -601,34 +645,140 @@
   const barraCarrinho = document.getElementById('barraCarrinho');
   const whatsFab = document.getElementById('whatsFab');
   const btnTopo = document.getElementById('btnTopo');
-  
+
   const btnAddCarrinho = document.getElementById('btn-add-carrinho');
   const btnComprarAgora = document.getElementById('btn-comprar-agora');
   const botoesAcao = document.getElementById('botoesAcao');
-  
+
   const blocoPrecos = document.getElementById('bloco-precos');
   const blocoIndisponivel = document.getElementById('bloco-indisponivel');
   const avisoFrete = document.getElementById('aviso-frete');
 
   /* ============================================================
-     COMPARTILHAR
+     HELPERS DE SEGURANÇA, FORMATAÇÃO E LOCALSTORAGE
+     ============================================================ */
+  function fmt(v) { return 'R$ ' + Number(v || 0).toFixed(2).replace('.', ','); }
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function safeImgUrl(url) {
+    if (!url || typeof url !== 'string') return '';
+    const trimmed = url.trim();
+    if (/^https?:\/\//i.test(trimmed)) return trimmed;
+    return '';
+  }
+  function normalizarTexto(s) {
+    return String(s || '')
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .trim();
+  }
+
+  function salvarEstadoLocal() {
+    try {
+      localStorage.setItem(STORAGE_CART, JSON.stringify(carrinho));
+      if (cupomAplicado) localStorage.setItem(STORAGE_CUPOM, JSON.stringify(cupomAplicado));
+      else localStorage.removeItem(STORAGE_CUPOM);
+    } catch (e) {}
+  }
+
+  function restaurarEstadoLocal() {
+    try {
+      const c = localStorage.getItem(STORAGE_CART);
+      if (c) {
+        const parsed = JSON.parse(c);
+        if (parsed && typeof parsed === 'object') carrinho = parsed;
+      }
+      const cup = localStorage.getItem(STORAGE_CUPOM);
+      if (cup) {
+        const parsedCup = JSON.parse(cup);
+        if (parsedCup && parsedCup.codigo) cupomAplicado = parsedCup;
+      }
+    } catch (e) {
+      carrinho = {};
+      cupomAplicado = null;
+    }
+    atualizarBotaoMeusPedidos();
+  }
+
+  function salvarPedidoLocal(numero, total, resumoTexto, msgWhats) {
+    try {
+      const lista = JSON.parse(localStorage.getItem(STORAGE_PEDIDOS) || '[]');
+      lista.unshift({
+        numero,
+        total,
+        resumo: resumoTexto,
+        msgWhats,
+        dataISO: new Date().toISOString()
+      });
+      localStorage.setItem(STORAGE_PEDIDOS, JSON.stringify(lista.slice(0, 5)));
+      atualizarBotaoMeusPedidos();
+    } catch (e) {}
+  }
+
+  function atualizarBotaoMeusPedidos() {
+    try {
+      const lista = JSON.parse(localStorage.getItem(STORAGE_PEDIDOS) || '[]');
+      const btn = document.getElementById('btnMeusPedidosHeader');
+      if (btn) btn.style.display = lista.length > 0 ? 'flex' : 'none';
+    } catch (e) {}
+  }
+
+  window.abrirMeusPedidos = function() {
+    const container = document.getElementById('lista-meus-pedidos');
+    let lista = [];
+    try { lista = JSON.parse(localStorage.getItem(STORAGE_PEDIDOS) || '[]'); } catch (e) {}
+
+    if (lista.length === 0) {
+      container.innerHTML = '<p class="carrinho-vazio">Você ainda não gerou nenhum pedido neste aparelho.</p>';
+    } else {
+      container.innerHTML = lista.map((p, idx) => {
+        const dt = p.dataISO ? new Date(p.dataISO).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
+        return '<div class="meus-pedidos-card">' +
+          '<div class="topo"><span class="cod"># ' + esc(p.numero) + ' · ' + fmt(p.total) + '</span><span class="dt">' + esc(dt) + '</span></div>' +
+          '<div class="resumo">' + esc(p.resumo) + '</div>' +
+          '<button onclick="reenviarPedidoWhats(' + idx + ')">💬 Abrir no WhatsApp novamente</button>' +
+        '</div>';
+      }).join('');
+    }
+    modalMeusPedidos.classList.add('ativo');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.fecharMeusPedidos = function() {
+    modalMeusPedidos.classList.remove('ativo');
+    document.body.style.overflow = 'auto';
+  };
+
+  window.reenviarPedidoWhats = function(idx) {
+    try {
+      const lista = JSON.parse(localStorage.getItem(STORAGE_PEDIDOS) || '[]');
+      if (lista[idx] && lista[idx].msgWhats) {
+        window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent(lista[idx].msgWhats), '_blank');
+      }
+    } catch (e) {}
+  };
+
+  /* ============================================================
+     COMPARTILHAR & TOAST
      ============================================================ */
   window.compartilharProduto = async function(id) {
     const p = perfumes.find(x => x.id === id);
     if (!p) return;
-    
+
     const url = window.location.origin + window.location.pathname + '#' + id;
     const texto = p.nome + ' — inspirado em ' + p.insp + ' na THRUST PARFUMS';
-    
+
     if (navigator.share) {
       try {
         await navigator.share({ title: p.nome, text: texto, url: url });
-      } catch(e) { /* usuário cancelou */ }
+      } catch (e) {}
     } else {
       try {
         await navigator.clipboard.writeText(url);
         mostrarToast('✓ Link copiado!');
-      } catch(e) {
+      } catch (e) {
         const ta = document.createElement('textarea');
         ta.value = url;
         document.body.appendChild(ta);
@@ -649,7 +799,7 @@
     if (!toast) {
       toast = document.createElement('div');
       toast.id = 'thrustToast';
-      toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#f5d97a;border:1px solid #c9a227;border-radius:30px;padding:12px 22px;font-size:0.8rem;font-weight:700;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,0.7);transition:opacity 0.3s,transform 0.3s;opacity:0;pointer-events:none;font-family:Montserrat,sans-serif;';
+      toast.style.cssText = 'position:fixed;bottom:100px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#f5d97a;border:1px solid #c9a227;border-radius:30px;padding:12px 22px;font-size:0.8rem;font-weight:700;z-index:9999;box-shadow:0 10px 30px rgba(0,0,0,0.7);transition:opacity 0.3s,transform 0.3s;opacity:0;pointer-events:none;font-family:Montserrat,sans-serif;text-align:center;';
       document.body.appendChild(toast);
     }
     toast.innerText = msg;
@@ -669,7 +819,7 @@
     ordenacaoAtual = valor;
     const catAtivaBtn = document.querySelector('.filtro-btn.active');
     const cat = catAtivaBtn ? catAtivaBtn.dataset.cat : 'todos';
-    const termo = document.getElementById('campoBusca').value.trim().toLowerCase();
+    const termo = document.getElementById('campoBusca').value;
     renderizarProdutos(cat, termo);
   };
 
@@ -684,7 +834,7 @@
   function aplicarOrdenacao(lista) {
     let arr = lista.slice();
     if (ordenacaoAtual === 'vendidos') {
-      arr.sort((a,b) => (b.vendido?1:0) - (a.vendido?1:0) || a.nome.localeCompare(b.nome));
+      arr.sort((a,b) => (b.vendido ? 1 : 0) - (a.vendido ? 1 : 0) || a.nome.localeCompare(b.nome));
     } else if (ordenacaoAtual === 'preco-asc') {
       arr.sort((a,b) => precoMinimo(a) - precoMinimo(b));
     } else if (ordenacaoAtual === 'preco-desc') {
@@ -692,8 +842,8 @@
     } else if (ordenacaoAtual === 'novidades') {
       arr.sort((a,b) => {
         const da = a.criadoEm && a.criadoEm.toDate ? a.criadoEm.toDate().getTime() : (a.criadoEm ? new Date(a.criadoEm).getTime() : 0);
-        const db = b.criadoEm && b.criadoEm.toDate ? b.criadoEm.toDate().getTime() : (b.criadoEm ? new Date(b.criadoEm).getTime() : 0);
-        return db - da;
+        const dbTime = b.criadoEm && b.criadoEm.toDate ? b.criadoEm.toDate().getTime() : (b.criadoEm ? new Date(b.criadoEm).getTime() : 0);
+        return dbTime - da;
       });
     } else {
       arr.sort((a,b) => a.nome.localeCompare(b.nome));
@@ -726,7 +876,7 @@
 
   function tamanhosDisponiveis(p) {
     const est = normalizarEstoque(p);
-    return TAMANHOS.filter(tam => (est[tam] || 0) > 0);
+    return TAMANHOS.filter(tam => (est[tam] || 0) > 0 && p.tamanhos && p.tamanhos[tam] > 0);
   }
 
   function tamanhosCadastrados(p) {
@@ -749,27 +899,28 @@
   }
 
   /* ============================================================
-     CARREGAMENTO
+     CARREGAMENTO FIRESTORE
      ============================================================ */
   function carregarPerfumes() {
     const q = query(collection(db, "perfumes"), orderBy("nome"));
-    
+
     onSnapshot(q, (querySnapshot) => {
       perfumes = [];
-      querySnapshot.forEach((doc) => {
-        perfumes.push({ id: doc.id, ...doc.data() });
+      querySnapshot.forEach((docSnap) => {
+        perfumes.push({ id: docSnap.id, ...docSnap.data() });
       });
 
       if (!perfumesCarregados) {
         perfumesCarregados = true;
+        validarCarrinhoEmTempoReal(true);
         window.irParaInicio();
         verificarHashtag();
       } else {
         const catAtivaBtn = document.querySelector('.filtro-btn.active');
         const cat = catAtivaBtn ? catAtivaBtn.dataset.cat : 'todos';
-        const termo = document.getElementById('campoBusca').value.trim().toLowerCase();
+        const termo = document.getElementById('campoBusca').value;
         renderizarProdutos(cat, termo);
-        validarCarrinhoEmTempoReal();
+        validarCarrinhoEmTempoReal(false);
         if (produtoSelecionado) {
           const atualizado = perfumes.find(p => p.id === produtoSelecionado.id);
           if (atualizado) {
@@ -780,19 +931,17 @@
       }
     }, (error) => {
       console.error("Erro ao buscar dados:", error);
-      listaProdutos.innerHTML = '<div style="color:red; text-align:center; grid-column:1/-1;">Erro ao carregar o catálogo.</div>';
+      listaProdutos.innerHTML = '<div style="color:#ff6b6b; text-align:center; grid-column:1/-1; padding:30px;">Erro ao carregar o catálogo. Recarregue a página.</div>';
     });
   }
 
-  /* ============================================================
-     CARREGAR MACERAÇÃO (EM BREVE)
-     ============================================================ */
   function carregarMaceracao() {
-    const q = query(collection(db, "maceracao"), orderBy("criadoEm", "desc"));
+    // Query segura que casa com a regra `allow read: if isAdmin() || resource.data.pausado == false;` sem precisar de índice composto
+    const q = query(collection(db, "maceracao"), where("pausado", "==", false));
     onSnapshot(q, (snapshot) => {
       maceracaoLista = [];
-      snapshot.forEach((doc) => {
-        maceracaoLista.push({ id: doc.id, ...doc.data() });
+      snapshot.forEach((docSnap) => {
+        maceracaoLista.push({ id: docSnap.id, ...docSnap.data() });
       });
       renderizarEmBreve();
     }, (error) => {
@@ -807,12 +956,11 @@
 
   function calcularDiasMac(m) {
     const inicio = dataMacItem(m);
-    if (!inicio) return { decorridos: 0, restantes: m.diasTotais || 0, pronto: false };
+    if (!inicio || isNaN(inicio.getTime())) return { decorridos: 0, restantes: m.diasTotais || 0, pronto: false };
     const agora = new Date();
-    inicio.setHours(0,0,0,0);
-    agora.setHours(0,0,0,0);
-    const diffMs = agora - inicio;
-    const decorridos = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const utcInicio = Date.UTC(inicio.getUTCFullYear(), inicio.getUTCMonth(), inicio.getUTCDate());
+    const utcAgora = Date.UTC(agora.getFullYear(), agora.getMonth(), agora.getDate());
+    const decorridos = Math.max(0, Math.round((utcAgora - utcInicio) / 86400000));
     const tot = m.diasTotais || 0;
     const restantes = Math.max(0, tot - decorridos);
     const pronto = decorridos >= tot;
@@ -824,16 +972,12 @@
     const scroll = document.getElementById('emBreveScroll');
 
     const ativos = maceracaoLista.filter(m => !m.pausado);
-
     if (ativos.length === 0) {
       section.style.display = 'none';
       return;
     }
 
     section.style.display = 'block';
-
-    // Ordena: prontos por último (ou primeiro? Vou colocar os em maceração primeiro, prontos depois)
-    // Ordena por dias restantes (mais próximo de ficar pronto primeiro)
     const ordenados = ativos.slice().sort((a, b) => {
       const ca = calcularDiasMac(a);
       const cb = calcularDiasMac(b);
@@ -844,10 +988,13 @@
 
     scroll.innerHTML = ordenados.map(m => {
       const calc = calcularDiasMac(m);
+      const imgUrl = safeImgUrl(m.img);
+      const nomeSafe = esc(m.nome);
+      const inspSafe = esc(m.insp);
 
       let imgHtml;
-      if (m.img && m.img.trim() !== '') {
-        imgHtml = '<img src="' + m.img + '" alt="' + m.nome + '" onerror="this.outerHTML=\'<div class=&quot;placeholder&quot;>THRUST</div>\'">';
+      if (imgUrl) {
+        imgHtml = '<img src="' + esc(imgUrl) + '" alt="' + nomeSafe + '" loading="lazy" onerror="this.outerHTML=\'<div class=&quot;placeholder&quot;>THRUST</div>\'">';
       } else {
         imgHtml = '<div class="placeholder">THRUST</div>';
       }
@@ -865,30 +1012,37 @@
       return '<div class="card-em-breve' + classePronto + '">' +
         seloHtml +
         '<div class="img-box">' + imgHtml + '</div>' +
-        '<div class="nome">' + m.nome + '</div>' +
-        '<div class="insp">Insp. ' + m.insp + '</div>' +
+        '<div class="nome">' + nomeSafe + '</div>' +
+        '<div class="insp">Insp. ' + inspSafe + '</div>' +
         diasHtml +
       '</div>';
     }).join('');
   }
 
-  function validarCarrinhoEmTempoReal() {
+  function validarCarrinhoEmTempoReal(silencioso) {
     let mudou = false;
     let esgotados = [];
 
     for (const key in carrinho) {
       const item = carrinho[key];
       const p = perfumes.find(x => x.id === item.id);
-      
-      if (!p) {
+
+      if (!p || p.indisponivel || !p.tamanhos || !p.tamanhos[item.tamanho]) {
+        if (p) esgotados.push({ nome: item.nome, tamanho: item.tamanho });
         delete carrinho[key];
         mudou = true;
         continue;
       }
 
+      // Atualiza preço unitário caso tenha sido ajustado no painel
+      const precoAtual = p.tamanhos[item.tamanho];
+      if (precoAtual && item.precoUnit !== precoAtual) {
+        carrinho[key].precoUnit = precoAtual;
+        mudou = true;
+      }
+
       const est = estoqueDoTamanho(p, item.tamanho);
-      
-      if (est === 0) {
+      if (est <= 0) {
         esgotados.push({ nome: item.nome, tamanho: item.tamanho });
         delete carrinho[key];
         mudou = true;
@@ -899,20 +1053,25 @@
     }
 
     if (mudou) {
-      atualizarBadge();
+      salvarEstadoLocal();
+    }
+    atualizarBadge();
+
+    if (mudou) {
       if (modalCarrinho.classList.contains('ativo')) renderizarCarrinho();
-      
-      if (esgotados.length > 0) {
+      if (!silencioso && esgotados.length > 0) {
         const nomes = esgotados.map(e => e.nome + ' (' + e.tamanho + ')').join(', ');
         mostrarAvisoEsgotou(nomes);
+      } else if (silencioso && esgotados.length > 0) {
+        mostrarToast('Alguns itens do carrinho anterior esgotaram e foram removidos.');
       }
     }
   }
 
   function mostrarAvisoEsgotou(nomesItens) {
     esgotouPendenteMsg = 'Olá! O perfume ' + nomesItens + ' esgotou enquanto eu finalizava o pedido. Pode me avisar quando repor?';
-    document.getElementById('mensagemEsgotou').innerHTML = 
-      'O item <strong>' + nomesItens + '</strong> esgotou enquanto você finalizava o pedido e foi removido do carrinho. Quer que eu te avise quando repor?';
+    document.getElementById('mensagemEsgotou').innerHTML =
+      'O item <strong>' + esc(nomesItens) + '</strong> esgotou enquanto você finalizava o pedido e foi removido do carrinho. Quer que eu te avise quando repor?';
     modalEsgotou.classList.add('ativo');
     document.body.style.overflow = 'hidden';
   }
@@ -928,20 +1087,18 @@
 
   function verificarHashtag() {
     setTimeout(function() {
-      const hash = window.location.hash.replace('#', '');
-      
+      const hash = window.location.hash.replace('#', '').trim();
       if (hash) {
         const produtoExiste = perfumes.find(p => p.id === hash);
-        
         if (produtoExiste) {
           window.abrirModal(hash);
         } else {
           modalAviso.classList.add('ativo');
           document.body.style.overflow = 'hidden';
-          history.replaceState(null, null, ' '); 
+          history.replaceState(null, null, window.location.pathname);
         }
       }
-    }, 600); 
+    }, 350);
   }
 
   window.fecharAviso = function() {
@@ -949,9 +1106,6 @@
     document.body.style.overflow = 'auto';
     window.scrollTo(0, 0);
   };
-
-  function fmt(v) { return 'R$ ' + v.toFixed(2).replace('.', ','); }
-  function esc(s) { return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
   function mostrarCatalogo() {
     document.getElementById('aba-catalogo').classList.add('ativo');
@@ -970,19 +1124,17 @@
 
   window.irParaInicio = function() {
     mostrarCatalogo();
-
-    document.querySelectorAll('.filtro-btn').forEach(function(b) { b.classList.remove('active'); });
-    let btnTodos = document.querySelector('.filtro-btn[data-cat="todos"]');
+    document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('active'));
+    const btnTodos = document.querySelector('.filtro-btn[data-cat="todos"]');
     if (btnTodos) btnTodos.classList.add('active');
-    
+
     document.getElementById('titulo-vitrine').innerText = 'Todos os Perfumes';
-    
-    document.querySelectorAll('.nav-menu a').forEach(function(a){ a.classList.remove('active'); });
-    let navTodos = document.querySelector('.nav-menu a[data-nav="todos"]');
+    document.querySelectorAll('.nav-menu a').forEach(a => a.classList.remove('active'));
+    const navTodos = document.querySelector('.nav-menu a[data-nav="todos"]');
     if (navTodos) navTodos.classList.add('active');
-    
-    renderizarProdutos('todos', '');
-    if(!window.location.hash) window.scrollTo(0, 0);
+
+    renderizarProdutos('todos', document.getElementById('campoBusca').value);
+    if (!window.location.hash) window.scrollTo(0, 0);
   };
 
   window.abrirMenuMobile = function() {
@@ -999,17 +1151,18 @@
   window.irParaCategoria = function(categoria) {
     mostrarCatalogo();
     document.getElementById('campoBusca').value = '';
+    document.getElementById('btnLimparBusca').classList.remove('visivel');
 
-    document.querySelectorAll('.filtro-btn').forEach(function(btn) {
+    document.querySelectorAll('.filtro-btn').forEach(btn => {
       btn.classList.remove('active');
       if (btn.dataset.cat === categoria) btn.classList.add('active');
     });
 
-    document.querySelectorAll('.nav-menu a').forEach(function(a){ a.classList.remove('active'); });
-    let nav = document.querySelector('.nav-menu a[data-nav="' + categoria + '"]');
+    document.querySelectorAll('.nav-menu a').forEach(a => a.classList.remove('active'));
+    const nav = document.querySelector('.nav-menu a[data-nav="' + categoria + '"]');
     if (nav) nav.classList.add('active');
 
-    let titulos = { todos: 'Todos os Perfumes', feminino: 'Perfumaria Feminina', masculino: 'Perfumaria Masculina', compartilhado: 'Compartilhados' };
+    const titulos = { todos: 'Todos os Perfumes', feminino: 'Perfumaria Feminina', masculino: 'Perfumaria Masculina', compartilhado: 'Compartilhados' };
     document.getElementById('titulo-vitrine').innerText = titulos[categoria] || 'Vitrine';
 
     renderizarProdutos(categoria, '');
@@ -1021,55 +1174,74 @@
 
   window.abrirQuemSomos = function() {
     mostrarQuemSomos();
-    document.querySelectorAll('.nav-menu a').forEach(function(a){ a.classList.remove('active'); });
-    let nav = document.querySelector('.nav-menu a[data-nav="quem-somos"]');
+    document.querySelectorAll('.nav-menu a').forEach(a => a.classList.remove('active'));
+    const nav = document.querySelector('.nav-menu a[data-nav="quem-somos"]');
     if (nav) nav.classList.add('active');
     fecharMenuMobile();
   };
 
   window.filtrarVitrine = function(categoria, event) {
-    document.querySelectorAll('.filtro-btn').forEach(function(btn){ btn.classList.remove('active'); });
+    document.querySelectorAll('.filtro-btn').forEach(btn => btn.classList.remove('active'));
     if (event && event.target) event.target.classList.add('active');
 
-    document.querySelectorAll('.nav-menu a').forEach(function(a){ a.classList.remove('active'); });
-    let nav = document.querySelector('.nav-menu a[data-nav="' + categoria + '"]');
+    document.querySelectorAll('.nav-menu a').forEach(a => a.classList.remove('active'));
+    const nav = document.querySelector('.nav-menu a[data-nav="' + categoria + '"]');
     if (nav) nav.classList.add('active');
 
-    let titulos = { todos: 'Todos os Perfumes', feminino: 'Perfumaria Feminina', masculino: 'Perfumaria Masculina', compartilhado: 'Compartilhados' };
+    const titulos = { todos: 'Todos os Perfumes', feminino: 'Perfumaria Feminina', masculino: 'Perfumaria Masculina', compartilhado: 'Compartilhados' };
     document.getElementById('titulo-vitrine').innerText = titulos[categoria] || 'Vitrine';
-    renderizarProdutos(categoria, document.getElementById('campoBusca').value.trim().toLowerCase());
+    renderizarProdutos(categoria, document.getElementById('campoBusca').value);
   };
 
-    window.buscar = function() {
-    let termoBusca = document.getElementById('campoBusca').value.trim().toLowerCase();
+  window.limparBusca = function() {
+    document.getElementById('campoBusca').value = '';
+    document.getElementById('btnLimparBusca').classList.remove('visivel');
+    window.buscar();
+  };
+
+  window.buscar = function() {
+    const raw = document.getElementById('campoBusca').value;
+    const btnLimpar = document.getElementById('btnLimparBusca');
+    if (raw.trim()) btnLimpar.classList.add('visivel');
+    else btnLimpar.classList.remove('visivel');
+
     let catAtivaBtn = document.querySelector('.filtro-btn.active');
     let cat = catAtivaBtn ? catAtivaBtn.dataset.cat : 'todos';
-    
-    if (termoBusca && cat !== 'todos') {
+
+    if (raw.trim() && cat !== 'todos') {
       cat = 'todos';
-      document.querySelectorAll('.filtro-btn').forEach(function(btn){ btn.classList.remove('active'); });
-      let btnTodos = document.querySelector('.filtro-btn[data-cat="todos"]');
+      document.querySelectorAll('.filtro-btn').forEach(btn => btn.classList.remove('active'));
+      const btnTodos = document.querySelector('.filtro-btn[data-cat="todos"]');
       if (btnTodos) btnTodos.classList.add('active');
-      
-      document.querySelectorAll('.nav-menu a').forEach(function(a){ a.classList.remove('active'); });
-      let navTodos = document.querySelector('.nav-menu a[data-nav="todos"]');
+
+      document.querySelectorAll('.nav-menu a').forEach(a => a.classList.remove('active'));
+      const navTodos = document.querySelector('.nav-menu a[data-nav="todos"]');
       if (navTodos) navTodos.classList.add('active');
     }
-    
-    document.getElementById('titulo-vitrine').innerText = termoBusca ? 'Resultados da busca' : 'Todos os Perfumes';
-    renderizarProdutos(cat, termoBusca);
+
+    document.getElementById('titulo-vitrine').innerText = raw.trim() ? 'Resultados da busca' : 'Todos os Perfumes';
+    renderizarProdutos(cat, raw);
   };
 
   function renderizarProdutos(categoriaFiltro, termoBusca) {
     let lista = perfumes.slice();
-    
+
     if (categoriaFiltro && categoriaFiltro !== 'todos') {
-      lista = lista.filter(function(p){ return p.cat === categoriaFiltro; });
+      lista = lista.filter(p => p.cat === categoriaFiltro);
     }
-    
-    if (termoBusca) {
-      lista = lista.filter(function(p){
-        return p.nome.toLowerCase().includes(termoBusca) || p.insp.toLowerCase().includes(termoBusca);
+
+    const qNorm = normalizarTexto(termoBusca);
+    if (qNorm) {
+      lista = lista.filter(p => {
+        const textoCompleto = [
+          p.nome,
+          p.insp,
+          p.desc,
+          p.notas && p.notas.topo,
+          p.notas && p.notas.coracao,
+          p.notas && p.notas.fundo
+        ].map(normalizarTexto).join(' ');
+        return textoCompleto.includes(qNorm);
       });
     }
 
@@ -1084,34 +1256,36 @@
   }
 
   function gerarCardProduto(p) {
+    const imgUrl = safeImgUrl(p.img);
+    const nomeSafe = esc(p.nome);
+    const inspSafe = esc(p.insp);
+
     let imgHtml;
-    if (p.img && p.img !== 'COLE_O_LINK_AQUI') {
-      imgHtml = '<img src="' + p.img + '" alt="' + esc(p.nome) + '" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=&quot;card-frasco-placeholder&quot;>THRUST</div>\'">';
+    if (imgUrl && p.img !== 'COLE_O_LINK_AQUI') {
+      imgHtml = '<img src="' + esc(imgUrl) + '" alt="' + nomeSafe + '" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=&quot;card-frasco-placeholder&quot;>THRUST</div>\'">';
     } else {
       imgHtml = '<div class="card-frasco-placeholder">THRUST</div>';
     }
-    
+
     const semEstoque = !temAlgumEstoque(p);
     const esgotado = p.indisponivel || semEstoque;
 
     let selo = p.vendido ? '<div class="selo-vendas">Top</div>' : '';
     let seloInd = esgotado ? '<div class="selo-indisponivel">Indisponível</div>' : '';
-    
+
     let seloEstoque = '';
     if (!esgotado) {
-      const cads = tamanhosCadastrados(p);
+      const disp = tamanhosDisponiveis(p);
       const est = normalizarEstoque(p);
-      if (cads.length === 1) {
-        if (est[cads[0]] === 1) {
-          seloEstoque = '<div class="selo-estoque-baixo">🔥 Apenas 1 un.</div>';
-        }
+      if (disp.length === 1 && est[disp[0]] === 1) {
+        seloEstoque = '<div class="selo-estoque-baixo">🔥 Apenas 1 un.</div>';
       }
     }
-    
-    let menorTam = menorTamanhoComEstoque(p);
+
+    const menorTam = menorTamanhoComEstoque(p);
     let labelMl = '';
     let precoVitrine = 0;
-    
+
     if (menorTam) {
       labelMl = menorTam;
       precoVitrine = p.tamanhos[menorTam] || 0;
@@ -1122,49 +1296,41 @@
         precoVitrine = p.tamanhos[cads[0]] || 0;
       }
     }
-    
+
     let textoMl = '';
     if (labelMl) {
       const disp = tamanhosDisponiveis(p);
-      if (disp.length > 1) {
-        textoMl = 'A partir de ' + labelMl;
-      } else {
-        textoMl = labelMl;
-      }
+      textoMl = disp.length > 1 ? 'A partir de ' + labelMl : labelMl;
     }
 
-    let precoHtml = '';
-    if (esgotado) {
-      precoHtml = '<span class="preco-indisponivel">Indisponível</span>';
-    } else {
-      precoHtml = '<span class="preco-atual">' + fmt(precoVitrine) + '</span>';
-    }
+    const precoHtml = esgotado
+      ? '<span class="preco-indisponivel">Indisponível</span>'
+      : '<span class="preco-atual">' + fmt(precoVitrine) + '</span>';
 
-    return '<div class="card-produto ' + (esgotado ? 'esgotado' : '') + '" onclick="abrirModal(\'' + p.id + '\')">' +
+    return '<div class="card-produto ' + (esgotado ? 'esgotado' : '') + '" onclick="abrirModal(\'' + esc(p.id) + '\')">' +
       '<div class="card-imagem">' + selo + seloInd + seloEstoque + imgHtml + '</div>' +
-      (esgotado ? '' : '<button class="btn-add-fast" onclick="event.stopPropagation(); adicionarDireto(\'' + p.id + '\')" title="Adicionar rápido">+</button>') +
-      '<h3>' + esc(p.nome) + '</h3>' +
-      '<div class="card-inspiracao">Inspirado em "' + esc(p.insp) + '"</div>' +
-      '<div class="card-ml">' + textoMl + '</div>' +
+      (esgotado ? '' : '<button class="btn-add-fast" onclick="event.stopPropagation(); adicionarDireto(event, \'' + esc(p.id) + '\')" title="Adicionar rápido" aria-label="Adicionar ' + nomeSafe + '">+</button>') +
+      '<h3>' + nomeSafe + '</h3>' +
+      '<div class="card-inspiracao">Inspirado em "' + inspSafe + '"</div>' +
+      '<div class="card-ml">' + esc(textoMl) + '</div>' +
       '<div class="card-precos">' + precoHtml + '</div>' +
       '<button class="btn-ver-produto">' + (esgotado ? 'Ver Detalhes' : 'Ver Produto') + '</button>' +
     '</div>';
   }
 
-  window.adicionarDireto = function(id) {
-    let p = perfumes.find(function(item) { return item.id === id; });
-    if (!p) return;
-    if (p.indisponivel) return;
-    if (!temAlgumEstoque(p)) return;
+  window.adicionarDireto = function(ev, id) {
+    const p = perfumes.find(item => item.id === id);
+    if (!p || p.indisponivel || !temAlgumEstoque(p)) return;
 
-    let nomeTam = menorTamanhoComEstoque(p);
+    const nomeTam = menorTamanhoComEstoque(p);
     if (!nomeTam) return;
 
     const preco = p.tamanhos[nomeTam];
     const key = p.id + '-' + nomeTam;
     const est = estoqueDoTamanho(p, nomeTam);
-    
-    if(!carrinho[key]) {
+    const btn = ev && ev.currentTarget ? ev.currentTarget : null;
+
+    if (!carrinho[key]) {
       carrinho[key] = {
         id: p.id,
         nome: p.nome,
@@ -1174,56 +1340,52 @@
         qtd: 0
       };
     }
-    
+
     if (carrinho[key].qtd >= est) {
-      let btn = event.target;
-      if(btn) {
+      if (btn) {
         btn.innerHTML = '!';
         btn.style.background = '#c94a4a';
         btn.style.color = '#fff';
-        setTimeout(function(){
-          btn.innerHTML = '+';
-          btn.style.background = '';
-          btn.style.color = '';
-        }, 1200);
+        setTimeout(() => { btn.innerHTML = '+'; btn.style.background = ''; btn.style.color = ''; }, 1200);
       }
+      mostrarToast('⚠️ Limite de estoque atingido para ' + p.nome + ' (' + nomeTam + ')');
       return;
     }
-    
+
     carrinho[key].qtd += 1;
+    salvarEstadoLocal();
     atualizarBadge();
-    
-    let btn = event.target;
-    if(btn) {
+    mostrarToast('✓ ' + p.nome + ' (' + nomeTam + ') adicionado!');
+
+    if (btn) {
       btn.innerHTML = '✓';
       btn.style.background = '#25D366';
       btn.style.color = '#fff';
-      setTimeout(function(){
-        btn.innerHTML = '+';
-        btn.style.background = '';
-        btn.style.color = '';
-      }, 1000);
+      setTimeout(() => { btn.innerHTML = '+'; btn.style.background = ''; btn.style.color = ''; }, 1000);
     }
   };
 
   window.abrirModal = function(id) {
-    let p = perfumes.find(function(item) { return item.id === id; });
+    const p = perfumes.find(item => item.id === id);
     if (!p) return;
     produtoSelecionado = p;
+    tamanhoSelecionado = null;
 
+    const imgUrl = safeImgUrl(p.img);
     let imgHtml;
-    if (p.img && p.img !== 'COLE_O_LINK_AQUI') {
-      imgHtml = '<img src="' + p.img + '" alt="' + esc(p.nome) + '" onerror="this.parentNode.innerHTML=\'<div class=&quot;card-frasco-placeholder&quot;>THRUST</div>\'">';
+    if (imgUrl && p.img !== 'COLE_O_LINK_AQUI') {
+      imgHtml = '<img src="' + esc(imgUrl) + '" alt="' + esc(p.nome) + '" onerror="this.parentNode.innerHTML=\'<div class=&quot;card-frasco-placeholder&quot;>THRUST</div>\'">';
     } else {
       imgHtml = '<div class="card-frasco-placeholder">THRUST</div>';
     }
+
     document.getElementById('modal-imagem').innerHTML = imgHtml;
-    document.getElementById('modal-categoria').innerText = p.cat.toUpperCase();
+    document.getElementById('modal-categoria').innerText = (p.cat || '').toUpperCase();
     document.getElementById('modal-titulo').innerText = p.nome;
     document.getElementById('modal-inspiracao').innerText = 'Inspirado em "' + p.insp + '"';
     document.getElementById('modal-preco-antigo').innerText = '';
-    document.getElementById('modal-descricao').innerHTML = '<strong>Sobre a fragrância:</strong> ' + (p.desc || 'Não informada.');
-    
+    document.getElementById('modal-descricao').innerHTML = '<strong>Sobre a fragrância:</strong> ' + esc(p.desc || 'Não informada.');
+
     document.getElementById('modal-notas').innerHTML =
       (p.notas && p.notas.topo ? '<span><strong>Topo:</strong> ' + esc(p.notas.topo) + '</span>' : '') +
       (p.notas && p.notas.coracao ? '<span><strong>Coração:</strong> ' + esc(p.notas.coracao) + '</span>' : '') +
@@ -1237,19 +1399,21 @@
     document.body.style.overflow = 'hidden';
   };
 
+  window.avisarReposicaoModal = function() {
+    if (!produtoSelecionado) return;
+    const msg = 'Olá! Vi o perfume "' + produtoSelecionado.nome + '" (insp. ' + produtoSelecionado.insp + ') esgotado no catálogo. Pode me avisar quando houver reposição?';
+    window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent(msg), '_blank');
+  };
+
   function atualizarAvisoEstoqueModal() {
     const aviso = document.getElementById('avisoEstoqueModal');
     const texto = document.getElementById('textoAvisoEstoque');
     const p = produtoSelecionado;
-    if (!p) { aviso.style.display = 'none'; return; }
+    if (!p || p.indisponivel) { aviso.style.display = 'none'; return; }
 
     const est = normalizarEstoque(p);
     const cads = tamanhosCadastrados(p).sort((a, b) => TAMANHOS.indexOf(a) - TAMANHOS.indexOf(b));
-    
-    let tamanhosComUm = [];
-    cads.forEach(tam => {
-      if (est[tam] === 1) tamanhosComUm.push(tam);
-    });
+    const tamanhosComUm = cads.filter(tam => est[tam] === 1);
 
     if (tamanhosComUm.length === 0) {
       aviso.style.display = 'none';
@@ -1257,11 +1421,9 @@
     }
 
     aviso.style.display = 'flex';
-    if (tamanhosComUm.length === 1) {
-      texto.innerText = 'Apenas 1 unidade disponível no tamanho ' + tamanhosComUm[0];
-    } else {
-      texto.innerText = 'Estoque baixo: apenas 1 unidade nos tamanhos ' + tamanhosComUm.join(', ');
-    }
+    texto.innerText = tamanhosComUm.length === 1
+      ? 'Apenas 1 unidade disponível no tamanho ' + tamanhosComUm[0]
+      : 'Estoque baixo: apenas 1 unidade nos tamanhos ' + tamanhosComUm.join(', ');
   }
 
   function atualizarModalTamanhos() {
@@ -1274,11 +1436,10 @@
     let tamHtml = '';
     const tamanhosDisponiveisObj = p.tamanhos || {};
     const est = normalizarEstoque(p);
-    
+
     TAMANHOS.forEach(function(tam) {
       if (tamanhosDisponiveisObj[tam]) {
         const estTam = est[tam] || 0;
-        
         if (esgotadoGeral) {
           tamHtml += '<div class="btn-tamanho desabilitado">' + tam + '<small>Indisponível</small></div>';
         } else if (estTam === 0) {
@@ -1292,48 +1453,44 @@
     });
     document.getElementById('modal-tamanhos').innerHTML = tamHtml;
 
-    if(esgotadoGeral) {
-       btnAddCarrinho.disabled = true;
-       btnComprarAgora.disabled = true;
-       btnAddCarrinho.innerText = "Produto Indisponível";
-       btnComprarAgora.innerText = "Indisponível";
-       
-       blocoPrecos.style.display = 'none';
-       blocoIndisponivel.style.display = 'block';
-       avisoFrete.style.display = 'none';
-       document.getElementById('aviso-tamanho').style.display = 'none';
-       tamanhoSelecionado = null;
-    } else {
-       btnAddCarrinho.disabled = false;
-       btnComprarAgora.disabled = false;
-       btnAddCarrinho.innerText = "🛒 Adicionar ao carrinho";
-       btnComprarAgora.innerText = "Comprar agora";
-       
-       blocoPrecos.style.display = 'block';
-       blocoIndisponivel.style.display = 'none';
-       avisoFrete.style.display = 'flex';
-       document.getElementById('aviso-tamanho').style.display = 'block';
+    if (esgotadoGeral) {
+      btnAddCarrinho.disabled = true;
+      btnComprarAgora.disabled = true;
+      btnAddCarrinho.innerText = "Produto Indisponível";
+      btnComprarAgora.innerText = "Indisponível";
 
-       let tamInicial = null;
-       if (tamanhoSelecionado) {
-         const elAnterior = document.querySelector('#modal-tamanhos .btn-tamanho[data-tam="'+tamanhoSelecionado.label+'"]:not(.esgotado):not(.desabilitado)');
-         if (elAnterior) tamInicial = elAnterior;
-       }
-       if (!tamInicial) {
-         tamInicial = document.querySelector('#modal-tamanhos .btn-tamanho:not(.esgotado):not(.desabilitado)');
-       }
-       if (tamInicial) {
-         selecionarTamanho(tamInicial);
-       } else {
-         tamanhoSelecionado = null;
-       }
+      blocoPrecos.style.display = 'none';
+      blocoIndisponivel.style.display = 'block';
+      avisoFrete.style.display = 'none';
+      document.getElementById('aviso-tamanho').style.display = 'none';
+      tamanhoSelecionado = null;
+    } else {
+      btnAddCarrinho.disabled = false;
+      btnComprarAgora.disabled = false;
+      btnAddCarrinho.innerText = "🛒 Adicionar ao carrinho";
+      btnComprarAgora.innerText = "Comprar agora";
+
+      blocoPrecos.style.display = 'block';
+      blocoIndisponivel.style.display = 'none';
+      avisoFrete.style.display = 'flex';
+      document.getElementById('aviso-tamanho').style.display = 'block';
+
+      let tamInicial = null;
+      if (tamanhoSelecionado) {
+        tamInicial = document.querySelector('#modal-tamanhos .btn-tamanho[data-tam="'+tamanhoSelecionado.label+'"]:not(.esgotado):not(.desabilitado)');
+      }
+      if (!tamInicial) {
+        tamInicial = document.querySelector('#modal-tamanhos .btn-tamanho:not(.esgotado):not(.desabilitado)');
+      }
+      if (tamInicial) selecionarTamanho(tamInicial);
+      else tamanhoSelecionado = null;
     }
   }
 
   window.selecionarTamanho = function(el) {
-    document.querySelectorAll('#modal-tamanhos .btn-tamanho').forEach(function(b){ b.classList.remove('active'); });
+    document.querySelectorAll('#modal-tamanhos .btn-tamanho').forEach(b => b.classList.remove('active'));
     el.classList.add('active');
-    
+
     tamanhoSelecionado = {
       label: el.getAttribute('data-tam'),
       preco: parseFloat(el.getAttribute('data-preco'))
@@ -1344,13 +1501,13 @@
   window.fecharModal = function() {
     modalProduto.classList.remove('ativo');
     document.body.style.overflow = 'auto';
-    if(window.location.hash) history.replaceState(null, null, ' ');
+    if (window.location.hash) history.replaceState(null, null, window.location.pathname);
   };
 
   function atualizarMiniCarrinho() {
     const mini = document.getElementById('miniCarrinhoModal');
     if (!mini) return;
-    
+
     const ids = Object.keys(carrinho);
     if (ids.length === 0) {
       mini.classList.remove('ativo');
@@ -1358,67 +1515,61 @@
       botoesAcao.classList.remove('sem-comprar');
       return;
     }
-    
+
     mini.classList.add('ativo');
     btnComprarAgora.classList.add('oculto');
     botoesAcao.classList.add('sem-comprar');
-    
+
     const r = calcularTotal();
-    
     document.getElementById('miniQtd').innerText = r.qtdTotal;
     document.getElementById('miniTotal').innerText = fmt(r.total);
-    
-    let listaHtml = '';
-    ids.forEach(function(key) {
+
+    document.getElementById('miniLista').innerHTML = ids.map(key => {
       const item = carrinho[key];
-      listaHtml += '<div class="mini-carrinho-linha">' +
-        '<span class="nome-item"><strong>' + item.qtd + 'x</strong> ' + esc(item.nome) + ' · ' + item.tamanho + '</span>' +
+      return '<div class="mini-carrinho-linha">' +
+        '<span class="nome-item"><strong>' + item.qtd + 'x</strong> ' + esc(item.nome) + ' · ' + esc(item.tamanho) + '</span>' +
         '<span class="preco-mini">' + fmt(item.qtd * item.precoUnit) + '</span>' +
       '</div>';
-    });
-    document.getElementById('miniLista').innerHTML = listaHtml;
+    }).join('');
   }
 
   function calcularTotal() {
     let qtdTotal = 0;
     let subtotal = 0;
-    for (let k in carrinho) {
+    for (const k in carrinho) {
       qtdTotal += carrinho[k].qtd;
       subtotal += (carrinho[k].qtd * carrinho[k].precoUnit);
     }
-    
-    let descontoAutoValor = qtdTotal >= DESCONTO_MIN ? subtotal * DESCONTO_PCT : 0;
-    
+
+    const descontoAutoValor = qtdTotal >= DESCONTO_MIN ? subtotal * DESCONTO_PCT : 0;
+
     let descontoCupomValor = 0;
     if (cupomAplicado) {
-      if (cupomAplicado.tipo === 'fixo') {
-        descontoCupomValor = Math.min(subtotal, cupomAplicado.valor);
-      } else {
-        descontoCupomValor = subtotal * (cupomAplicado.valor / 100);
-      }
+      descontoCupomValor = cupomAplicado.tipo === 'fixo'
+        ? Math.min(subtotal, cupomAplicado.valor)
+        : subtotal * (cupomAplicado.valor / 100);
     }
-    
-    let usarCupom = descontoCupomValor > descontoAutoValor;
+
+    const usarCupom = !!cupomAplicado && (descontoCupomValor >= descontoAutoValor);
     let desconto = Math.max(descontoAutoValor, descontoCupomValor);
     desconto = Math.min(subtotal, desconto);
-    let total = subtotal - desconto;
-    if (total < 0) total = 0;
-    
+    const total = Math.max(0, subtotal - desconto);
+
     return {
-      qtdTotal: qtdTotal,
-      subtotal: subtotal,
-      desconto: desconto,
-      total: total,
+      qtdTotal,
+      subtotal,
+      desconto,
+      total,
       temDesconto: desconto > 0,
       descontoAuto: descontoAutoValor,
       descontoCupom: descontoCupomValor,
-      usarCupom: usarCupom,
+      usarCupom,
       temCupom: !!cupomAplicado
     };
   }
 
   function atualizarBadge() {
-    let r = calcularTotal();
+    const r = calcularTotal();
     document.getElementById('contador').innerText = r.qtdTotal;
     document.getElementById('miniBadge').innerText = r.qtdTotal;
     document.getElementById('barraQtd').innerText = r.qtdTotal + ' ' + (r.qtdTotal === 1 ? 'item' : 'itens');
@@ -1431,20 +1582,18 @@
       barraCarrinho.classList.remove('ativo');
       whatsFab.classList.remove('recuado');
     }
-    
     atualizarMiniCarrinho();
   }
 
   window.adicionarAoCarrinho = function() {
     if (!produtoSelecionado || !tamanhoSelecionado) return;
     if (produtoSelecionado.indisponivel) return;
-    
+
     const est = estoqueDoTamanho(produtoSelecionado, tamanhoSelecionado.label);
     if (est === 0) return;
-    
-    let key = produtoSelecionado.id + '-' + tamanhoSelecionado.label;
-    
-    if(!carrinho[key]) {
+
+    const key = produtoSelecionado.id + '-' + tamanhoSelecionado.label;
+    if (!carrinho[key]) {
       carrinho[key] = {
         id: produtoSelecionado.id,
         nome: produtoSelecionado.nome,
@@ -1454,38 +1603,28 @@
         qtd: 0
       };
     }
-    
+
+    const btn = document.getElementById('btn-add-carrinho');
     if (carrinho[key].qtd >= est) {
-      let btn = document.getElementById('btn-add-carrinho');
-      let txt = btn.innerText;
+      const txt = btn.innerText;
       btn.innerText = '⚠️ Máximo: ' + est + ' un.';
       btn.style.backgroundColor = '#c94a4a';
       btn.style.color = '#fff';
       btn.style.borderColor = '#c94a4a';
-      setTimeout(function(){
-        btn.innerText = txt;
-        btn.style.backgroundColor = '';
-        btn.style.color = '';
-        btn.style.borderColor = '';
-      }, 1800);
+      setTimeout(() => { btn.innerText = txt; btn.style.backgroundColor = ''; btn.style.color = ''; btn.style.borderColor = ''; }, 1800);
       return;
     }
-    
+
     carrinho[key].qtd += 1;
+    salvarEstadoLocal();
     atualizarBadge();
-    
-    let btn = document.getElementById('btn-add-carrinho');
-    let txt = btn.innerText;
+
+    const txt = btn.innerText;
     btn.innerText = '✓ Adicionado!';
     btn.style.backgroundColor = '#25D366';
     btn.style.color = '#fff';
     btn.style.borderColor = '#25D366';
-    setTimeout(function(){
-      btn.innerText = txt;
-      btn.style.backgroundColor = '';
-      btn.style.color = '';
-      btn.style.borderColor = '';
-    }, 1500);
+    setTimeout(() => { btn.innerText = txt; btn.style.backgroundColor = ''; btn.style.color = ''; btn.style.borderColor = ''; }, 1500);
   };
 
   window.comprarAgora = async function() {
@@ -1493,6 +1632,10 @@
     if (produtoSelecionado.indisponivel) return;
     const est = estoqueDoTamanho(produtoSelecionado, tamanhoSelecionado.label);
     if (est === 0) return;
+
+    const btn = document.getElementById('btn-comprar-agora');
+    btn.disabled = true;
+    btn.innerText = 'Gerando pedido...';
 
     const numeroPedido = gerarNumeroPedido();
     const itemPedido = {
@@ -1516,14 +1659,20 @@
       await addDoc(collection(db, "pedidos"), {
         numero: numeroPedido,
         itens: [itemPedido],
-        total: total,
-        subtotal: subtotal,
-        desconto: desconto,
+        total,
+        subtotal,
+        desconto,
         data: new Date(),
         concretizada: false,
         cancelada: false
       });
-    } catch(e) { console.error("Erro ao salvar pedido", e); }
+      salvarPedidoLocal(numeroPedido, total, '1x ' + produtoSelecionado.nome + ' (' + tamanhoSelecionado.label + ')', msg);
+    } catch (e) {
+      console.error("Erro ao salvar pedido:", e);
+    } finally {
+      btn.disabled = false;
+      btn.innerText = 'Comprar agora';
+    }
 
     window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent(msg), '_blank');
   };
@@ -1551,85 +1700,75 @@
     const msgEl = document.getElementById('cupomMsg');
     const btn = document.getElementById('btnAplicarCupom');
     if (!input) return;
-    
+
     const textoDigitado = input.value.trim();
-    
     if (!textoDigitado) {
       msgEl.className = 'cupom-msg erro';
       msgEl.innerText = 'Digite um código ou nome de cupom.';
       return;
     }
-    
+
     btn.disabled = true;
     btn.innerText = 'Validando...';
     msgEl.className = 'cupom-msg';
-    
+
     try {
       let cupomData = null;
       let cupomId = null;
-      
+
       const codigoUpper = textoDigitado.toUpperCase().replace(/\s+/g, '');
-      const qCodigo = query(collection(db, "cupons"), where("codigo", "==", codigoUpper));
+      const qCodigo = query(collection(db, "cupons"), where("codigo", "==", codigoUpper), limit(1));
       const snapCodigo = await getDocs(qCodigo);
-      
+
       if (!snapCodigo.empty) {
         snapCodigo.forEach(d => { cupomData = d.data(); cupomId = d.id; });
       } else {
-        const snapTodos = await getDocs(collection(db, "cupons"));
-        const textoLower = textoDigitado.toLowerCase().trim();
-        snapTodos.forEach(d => {
-          if (cupomData) return;
-          const data = d.data();
-          if (data.nome && data.nome.toLowerCase().trim() === textoLower) {
-            cupomData = data;
-            cupomId = d.id;
-          }
-        });
+        // Busca indexada por nomeBusca (sem expor/baixar toda a coleção cupons)
+        const nomeNorm = normalizarTexto(textoDigitado);
+        const qNome = query(collection(db, "cupons"), where("nomeBusca", "==", nomeNorm), limit(1));
+        const snapNome = await getDocs(qNome);
+        if (!snapNome.empty) {
+          snapNome.forEach(d => { cupomData = d.data(); cupomId = d.id; });
+        }
       }
-      
+
       if (!cupomData) {
         msgEl.className = 'cupom-msg erro';
         msgEl.innerText = '❌ Cupom inválido.';
         return;
       }
-      
       if (!cupomData.ativo) {
         msgEl.className = 'cupom-msg erro';
         msgEl.innerText = '❌ Este cupom não está mais ativo.';
         return;
       }
-      
-      if (cupomData.limiteUso && cupomData.usos >= cupomData.limiteUso) {
+      if (cupomData.limiteUso && (cupomData.usos || 0) >= cupomData.limiteUso) {
         msgEl.className = 'cupom-msg erro';
-        msgEl.innerText = '❌ Este cupom já foi resgatado.';
+        msgEl.innerText = '❌ Este cupom já atingiu o limite de resgates.';
         return;
       }
-      
-      let tipo = cupomData.tipoDesconto || 'percentual';
-      let valor = cupomData.valorDesconto != null ? cupomData.valorDesconto : (cupomData.percentual || 0);
-      
+
+      const tipo = cupomData.tipoDesconto || 'percentual';
+      const valor = cupomData.valorDesconto != null ? cupomData.valorDesconto : (cupomData.percentual || 0);
+
       cupomAplicado = {
         id: cupomId,
         codigo: cupomData.codigo,
         nome: cupomData.nome || '',
-        tipo: tipo,
-        valor: valor
+        tipo,
+        valor
       };
-      
+      salvarEstadoLocal();
+
       let textoAplicado = '';
-      if (cupomData.nome) {
-        textoAplicado = '✓ ' + cupomData.nome + ' aplicado!';
-      } else if (tipo === 'fixo') {
-        textoAplicado = '✓ Cupom de ' + fmt(valor) + ' aplicado!';
-      } else {
-        textoAplicado = '✓ Cupom de ' + valor + '% aplicado!';
-      }
-      
+      if (cupomData.nome) textoAplicado = '✓ ' + cupomData.nome + ' aplicado!';
+      else if (tipo === 'fixo') textoAplicado = '✓ Cupom de ' + fmt(valor) + ' aplicado!';
+      else textoAplicado = '✓ Cupom de ' + valor + '% aplicado!';
+
       msgEl.className = 'cupom-msg sucesso';
       msgEl.innerText = textoAplicado;
-      
-      setTimeout(() => renderizarCarrinho(), 300);
-      
+
+      setTimeout(() => renderizarCarrinho(), 250);
     } catch (err) {
       console.error(err);
       msgEl.className = 'cupom-msg erro';
@@ -1657,20 +1796,20 @@
         mostrarToast('✓ Cupom colado!');
       }
     } catch (e) {
-      console.error(e);
-      mostrarToast('⚠️ Não foi possível colar. Tente Ctrl+V.');
+      mostrarToast('⚠️ Não foi possível colar. Use Ctrl+V.');
     }
   };
 
   window.removerCupom = function() {
     cupomAplicado = null;
+    salvarEstadoLocal();
     renderizarCarrinho();
   };
 
   function renderizarCarrinho() {
-    let lista = document.getElementById('itens-carrinho');
-    let rodape = document.getElementById('rodape-carrinho');
-    let ids = Object.keys(carrinho);
+    const lista = document.getElementById('itens-carrinho');
+    const rodape = document.getElementById('rodape-carrinho');
+    const ids = Object.keys(carrinho);
 
     if (ids.length === 0) {
       lista.innerHTML = '<p class="carrinho-vazio">Seu carrinho está vazio 🛒</p>';
@@ -1679,32 +1818,32 @@
       return;
     }
 
-    let r = calcularTotal();
-    
+    const r = calcularTotal();
+
     lista.innerHTML = ids.map(function(key) {
-      let item = carrinho[key];
+      const item = carrinho[key];
       const p = perfumes.find(x => x.id === item.id);
       const est = p ? estoqueDoTamanho(p, item.tamanho) : 0;
       const noMaximo = item.qtd >= est;
       return '<div class="item-carrinho">' +
         '<div class="info-item">' +
           '<strong>' + esc(item.nome) + '</strong>' +
-          '<small>Insp. ' + esc(item.insp) + ' · ' + item.tamanho + (est > 0 && est <= 3 ? ' · 🔥 restam ' + est : '') + '</small>' +
+          '<small>Insp. ' + esc(item.insp) + ' · ' + esc(item.tamanho) + (est > 0 && est <= 3 ? ' · 🔥 restam ' + est : '') + '</small>' +
         '</div>' +
         '<div class="ctrl">' +
-          '<button onclick="alterarQtdCarrinho(\'' + key + '\', -1)">−</button>' +
+          '<button onclick="alterarQtdCarrinho(\'' + esc(key) + '\', -1)">−</button>' +
           '<span>' + item.qtd + '</span>' +
-          '<button onclick="alterarQtdCarrinho(\'' + key + '\', 1)" ' + (noMaximo ? 'disabled' : '') + '>+</button>' +
+          '<button onclick="alterarQtdCarrinho(\'' + esc(key) + '\', 1)" ' + (noMaximo ? 'disabled' : '') + '>+</button>' +
         '</div>' +
         '<div class="preco-item">' + fmt(item.qtd * item.precoUnit) + '</div>' +
       '</div>';
     }).join('');
 
     let htmlRodape = '';
-    
-    if (!cupomAplicado) {
+
+    if (!cupomAplicado || !r.usarCupom) {
       if (r.qtdTotal < DESCONTO_MIN) {
-        let faltam = DESCONTO_MIN - r.qtdTotal;
+        const faltam = DESCONTO_MIN - r.qtdTotal;
         htmlRodape += '<button class="aviso-desconto" onclick="fecharCarrinhoEComprar()">Adicione mais ' + faltam + ' ' +
           (faltam === 1 ? 'unidade' : 'unidades') + ' e ganhe <strong>5% de desconto</strong>!</button>';
       } else {
@@ -1713,18 +1852,22 @@
     }
 
     if (cupomAplicado) {
-      let nomeCupom = cupomAplicado.nome || cupomAplicado.codigo;
-      let descCupom = cupomAplicado.tipo === 'fixo' 
-        ? fmt(cupomAplicado.valor) + ' de desconto' 
+      const nomeCupom = cupomAplicado.nome || cupomAplicado.codigo;
+      const descCupom = cupomAplicado.tipo === 'fixo'
+        ? fmt(cupomAplicado.valor) + ' de desconto'
         : cupomAplicado.valor + '% de desconto';
-      
-      htmlRodape += '<div class="cupom-aplicado-box">' +
-        '<div class="info">' +
-          '<strong>🎟️ ' + esc(nomeCupom) + '</strong>' +
-          '<small>' + descCupom + ' aplicado</small>' +
-        '</div>' +
-        '<button onclick="removerCupom()">Remover</button>' +
-      '</div>';
+
+      if (r.usarCupom) {
+        htmlRodape += '<div class="cupom-aplicado-box">' +
+          '<div class="info"><strong>🎟️ ' + esc(nomeCupom) + '</strong><small>' + descCupom + ' aplicado</small></div>' +
+          '<button onclick="removerCupom()">Remover</button>' +
+        '</div>';
+      } else {
+        htmlRodape += '<div class="cupom-aplicado-box substituido">' +
+          '<div class="info"><strong>⚡ 5% automático é maior que ' + esc(nomeCupom) + '</strong><small>Aplicamos o maior desconto para você (' + fmt(r.descontoAuto) + ' vs ' + fmt(r.descontoCupom) + ').</small></div>' +
+          '<button onclick="removerCupom()">Remover</button>' +
+        '</div>';
+      }
     } else {
       htmlRodape += '<div class="cupom-area">' +
         '<div class="cupom-titulo">🎟️ Tem um cupom?</div>' +
@@ -1739,65 +1882,65 @@
 
     htmlRodape += '<div class="linha-total"><span>Subtotal (' + r.qtdTotal + ' ' +
       (r.qtdTotal === 1 ? 'item' : 'itens') + '):</span><span>' + fmt(r.subtotal) + '</span></div>';
-    
+
     if (r.temDesconto) {
-      let labelDesc = '';
+      let labelDesc = 'Desconto (5%):';
       if (r.usarCupom && cupomAplicado) {
-        if (cupomAplicado.tipo === 'fixo') {
-          labelDesc = 'Desconto cupom (' + (cupomAplicado.nome || cupomAplicado.codigo) + '):';
-        } else {
-          labelDesc = 'Desconto cupom ' + cupomAplicado.valor + '%:';
-        }
-      } else {
-        labelDesc = 'Desconto (5%):';
+        labelDesc = cupomAplicado.tipo === 'fixo'
+          ? 'Desconto cupom (' + esc(cupomAplicado.nome || cupomAplicado.codigo) + '):'
+          : 'Desconto cupom ' + cupomAplicado.valor + '%:';
       }
       htmlRodape += '<div class="linha-total desconto"><span>' + labelDesc + '</span><span>− ' + fmt(r.desconto) + '</span></div>';
     }
-    
-    htmlRodape += '<div class="linha-total total-geral"><span>Total:</span><span>' + fmt(r.total) + '</span></div>';
 
-    htmlRodape += '<button class="btn-finalizar-whats" onclick="finalizarWhats()">Finalizar no WhatsApp</button>';
+    htmlRodape += '<div class="linha-total total-geral"><span>Total:</span><span>' + fmt(r.total) + '</span></div>';
+    htmlRodape += '<button class="btn-finalizar-whats" id="btnFinalizarWhats" onclick="finalizarWhats()">Finalizar no WhatsApp</button>';
     htmlRodape += '<button class="btn-continuar" onclick="fecharCarrinho()">Continuar comprando</button>';
 
     rodape.innerHTML = htmlRodape;
   }
 
   window.alterarQtdCarrinho = function(key, delta) {
-    if(!carrinho[key]) return;
+    if (!carrinho[key]) return;
     const item = carrinho[key];
     const p = perfumes.find(x => x.id === item.id);
     const est = p ? estoqueDoTamanho(p, item.tamanho) : 0;
-    
-    let novo = item.qtd + delta;
-    
-    if (delta > 0 && novo > est) {
-      return;
-    }
-    
+
+    const novo = item.qtd + delta;
+    if (delta > 0 && novo > est) return;
+
     if (novo <= 0) delete carrinho[key];
     else carrinho[key].qtd = novo;
+
+    salvarEstadoLocal();
     atualizarBadge();
     renderizarCarrinho();
   };
 
   window.finalizarWhats = async function() {
-    let ids = Object.keys(carrinho);
+    const ids = Object.keys(carrinho);
     if (ids.length === 0) return;
-    
+
+    const btn = document.getElementById('btnFinalizarWhats');
+    if (btn) { btn.disabled = true; btn.innerText = 'Enviando pedido...'; }
+
     const numeroPedido = gerarNumeroPedido();
-    let r = calcularTotal();
+    const r = calcularTotal();
     let msg = 'Olá! Pedido *# ' + numeroPedido + '* na THRUST PARFUMS:\n\n';
-    let listaPedido = [];
-    
+    const listaPedido = [];
+    const resumoNomes = [];
+
     ids.forEach(function(key) {
-      let item = carrinho[key];
+      const item = carrinho[key];
       msg += '• ' + item.qtd + 'x ' + item.nome + ' (insp. ' + item.insp + ') ' + item.tamanho + ' — ' + fmt(item.qtd * item.precoUnit) + '\n';
       listaPedido.push({ id: item.id, nome: item.nome, insp: item.insp, tamanho: item.tamanho, qtd: item.qtd, preco: item.precoUnit });
+      resumoNomes.push(item.qtd + 'x ' + item.nome + ' (' + item.tamanho + ')');
     });
+
     msg += '\nSubtotal: ' + fmt(r.subtotal);
     if (r.temDesconto) {
       if (r.usarCupom && cupomAplicado) {
-        let desc = cupomAplicado.tipo === 'fixo' 
+        const desc = cupomAplicado.tipo === 'fixo'
           ? 'Desconto cupom ' + (cupomAplicado.nome || cupomAplicado.codigo) + ': − ' + fmt(r.desconto)
           : 'Desconto cupom ' + cupomAplicado.codigo + ' (' + cupomAplicado.valor + '%): − ' + fmt(r.desconto);
         msg += '\n' + desc;
@@ -1807,7 +1950,7 @@
     }
     msg += '\nTotal: ' + fmt(r.total);
     msg += '\n\nForma de pagamento: (Pix / Cartão)';
-    
+
     const pedidoData = {
       numero: numeroPedido,
       itens: listaPedido,
@@ -1818,7 +1961,7 @@
       concretizada: false,
       cancelada: false
     };
-    
+
     if (r.usarCupom && cupomAplicado) {
       pedidoData.cupomCodigo = cupomAplicado.codigo;
       pedidoData.cupomNome = cupomAplicado.nome || '';
@@ -1826,17 +1969,21 @@
       pedidoData.cupomValor = cupomAplicado.valor;
       pedidoData.cupomId = cupomAplicado.id;
     }
-    
+
     try {
       await addDoc(collection(db, "pedidos"), pedidoData);
-    } catch(e) { console.error("Erro ao salvar pedido", e); }
+      salvarPedidoLocal(numeroPedido, r.total, resumoNomes.join(', '), msg);
+    } catch (e) {
+      console.error("Erro ao salvar pedido:", e);
+    }
 
     carrinho = {};
     cupomAplicado = null;
+    salvarEstadoLocal();
     atualizarBadge();
     fecharCarrinho();
     fecharModal();
-    
+
     window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent(msg), '_blank');
   };
 
@@ -1850,20 +1997,25 @@
   };
 
   window.addEventListener('scroll', function() {
-    if (window.scrollY > 300) {
-      btnTopo.classList.add('visivel');
-    } else {
-      btnTopo.classList.remove('visivel');
+    if (window.scrollY > 300) btnTopo.classList.add('visivel');
+    else btnTopo.classList.remove('visivel');
+  });
+
+  window.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      if (modalProduto.classList.contains('ativo')) fecharModal();
+      if (modalCarrinho.classList.contains('ativo')) fecharCarrinho();
+      if (modalMeusPedidos.classList.contains('ativo')) fecharMeusPedidos();
+      if (modalAviso.classList.contains('ativo')) fecharAviso();
+      if (modalEsgotou.classList.contains('ativo')) fecharModalEsgotou();
     }
   });
 
-  modalProduto.addEventListener('click', function(e) {
-    if (e.target === modalProduto) fecharModal();
-  });
-  modalCarrinho.addEventListener('click', function(e) {
-    if (e.target === modalCarrinho) fecharCarrinho();
-  });
+  modalProduto.addEventListener('click', function(e) { if (e.target === modalProduto) fecharModal(); });
+  modalCarrinho.addEventListener('click', function(e) { if (e.target === modalCarrinho) fecharCarrinho(); });
+  modalMeusPedidos.addEventListener('click', function(e) { if (e.target === modalMeusPedidos) fecharMeusPedidos(); });
 
+  restaurarEstadoLocal();
   carregarPerfumes();
   carregarMaceracao();
 </script>
