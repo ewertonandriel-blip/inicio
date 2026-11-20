@@ -60,6 +60,29 @@
   .beneficio-item h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; color: var(--dourado-claro); }
   .beneficio-item p { font-size: 0.55rem; text-transform: uppercase; color: #888; letter-spacing: 0.5px; }
 
+  /* SEÇÃO EM BREVE (MACERAÇÃO) */
+  .em-breve-section { max-width: 1300px; margin: 0 auto; padding: 20px 15px 0; }
+  .em-breve-header { display: flex; align-items: center; gap: 10px; padding-bottom: 12px; margin-bottom: 15px; border-bottom: 1px solid var(--borda); }
+  .em-breve-header h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #ffc107; }
+  .em-breve-header .badge { font-size: 0.6rem; font-weight: 800; color: #0d0d0d; background: linear-gradient(135deg, #ffc107, #ff9800); padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .em-breve-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: thin; scrollbar-color: var(--dourado) #111; }
+  .em-breve-scroll::-webkit-scrollbar { height: 6px; }
+  .em-breve-scroll::-webkit-scrollbar-thumb { background: var(--dourado); border-radius: 20px; }
+  .em-breve-scroll::-webkit-scrollbar-track { background: #111; }
+
+  .card-em-breve { flex: 0 0 160px; background: #1a1a1a; border: 1px solid rgba(255,193,7,0.35); border-radius: 10px; padding: 10px; text-align: center; position: relative; transition: 0.2s; }
+  .card-em-breve:hover { border-color: #ffc107; }
+  .card-em-breve.pronto { border-color: rgba(37,211,102,0.5); }
+  .card-em-breve .img-box { background: #fafafa; height: 110px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; overflow: hidden; }
+  .card-em-breve .img-box img { max-width: 85%; max-height: 85%; object-fit: contain; }
+  .card-em-breve .img-box .placeholder { width: 60px; height: 80px; background: linear-gradient(135deg, #f0e6d3 0%, #d4b87a 100%); border-radius: 5px 5px 3px 3px; color: #6d5420; font-weight: 800; font-size: 0.5rem; display: flex; align-items: center; justify-content: center; }
+  .card-em-breve .selo-em-breve { position: absolute; top: 8px; left: 8px; background: linear-gradient(135deg, #ffc107, #ff9800); color: #0d0d0d; font-size: 0.5rem; font-weight: 800; padding: 2px 7px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; z-index: 2; }
+  .card-em-breve .selo-em-breve.pronto { background: linear-gradient(135deg, #25D366, #4caf50); color: #fff; }
+  .card-em-breve .nome { font-family: 'Playfair Display', serif; font-size: 0.82rem; font-weight: 700; color: var(--dourado-claro); margin-bottom: 2px; line-height: 1.2; }
+  .card-em-breve .insp { font-size: 0.58rem; color: #888; font-style: italic; margin-bottom: 6px; line-height: 1.3; }
+  .card-em-breve .dias { font-size: 0.65rem; font-weight: 700; color: #ff9800; background: rgba(255,152,0,0.1); border: 1px solid rgba(255,152,0,0.3); padding: 3px 6px; border-radius: 6px; display: inline-block; }
+  .card-em-breve.pronto .dias { color: #25D366; background: rgba(37,211,102,0.1); border-color: rgba(37,211,102,0.4); }
+
   .vitrine-section { max-width: 1300px; margin: 0 auto; padding: 20px 15px 60px; }
   .vitrine-header { display: flex; flex-direction: column; align-items: flex-start; border-bottom: 1px solid var(--borda); padding-bottom: 15px; margin-bottom: 25px; gap: 10px; }
   .vitrine-titulo { font-size: 1.5rem; color: var(--dourado-claro); }
@@ -285,6 +308,10 @@
     .barra-carrinho-total { font-size: 1.15rem; }
     .barra-carrinho-btn { padding: 14px 22px; }
     .btn-topo { bottom: 180px; right: 25px; width: 50px; height: 50px; }
+    .card-em-breve { flex: 0 0 190px; }
+    .card-em-breve .img-box { height: 140px; }
+    .card-em-breve .nome { font-size: 0.95rem; }
+    .em-breve-header h3 { font-size: 1.5rem; }
   }
   @media (min-width: 768px) {
     .mobile-menu-overlay, .mobile-menu { display: none !important; }
@@ -364,6 +391,15 @@
     <div class="beneficio-item"><h4>Alta</h4><p>Fixação e Projeção</p></div>
     <div class="beneficio-item"><h4>Artesanal</h4><p>Feito Um a Um</p></div>
   </div>
+
+  <!-- SEÇÃO EM BREVE (MACERAÇÃO) -->
+  <section class="em-breve-section" id="emBreveSection" style="display:none;">
+    <div class="em-breve-header">
+      <h3>⏳ Em Breve</h3>
+      <span class="badge">Em Maceração</span>
+    </div>
+    <div class="em-breve-scroll" id="emBreveScroll"></div>
+  </section>
 
   <section class="vitrine-section">
     <div class="vitrine-header">
@@ -548,6 +584,7 @@
   let esgotouPendenteMsg = '';
   let cupomAplicado = null;
   let ordenacaoAtual = 'padrao';
+  let maceracaoLista = [];
 
   const whats = "5511956659281";
   const DESCONTO_MIN = 3;
@@ -747,6 +784,94 @@
     });
   }
 
+  /* ============================================================
+     CARREGAR MACERAÇÃO (EM BREVE)
+     ============================================================ */
+  function carregarMaceracao() {
+    const q = query(collection(db, "maceracao"), orderBy("criadoEm", "desc"));
+    onSnapshot(q, (snapshot) => {
+      maceracaoLista = [];
+      snapshot.forEach((doc) => {
+        maceracaoLista.push({ id: doc.id, ...doc.data() });
+      });
+      renderizarEmBreve();
+    }, (error) => {
+      console.error("Erro ao carregar maceração:", error);
+    });
+  }
+
+  function dataMacItem(m) {
+    if (!m.dataInicio) return null;
+    return m.dataInicio.toDate ? m.dataInicio.toDate() : new Date(m.dataInicio);
+  }
+
+  function calcularDiasMac(m) {
+    const inicio = dataMacItem(m);
+    if (!inicio) return { decorridos: 0, restantes: m.diasTotais || 0, pronto: false };
+    const agora = new Date();
+    inicio.setHours(0,0,0,0);
+    agora.setHours(0,0,0,0);
+    const diffMs = agora - inicio;
+    const decorridos = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const tot = m.diasTotais || 0;
+    const restantes = Math.max(0, tot - decorridos);
+    const pronto = decorridos >= tot;
+    return { decorridos, restantes, pronto };
+  }
+
+  function renderizarEmBreve() {
+    const section = document.getElementById('emBreveSection');
+    const scroll = document.getElementById('emBreveScroll');
+
+    const ativos = maceracaoLista.filter(m => !m.pausado);
+
+    if (ativos.length === 0) {
+      section.style.display = 'none';
+      return;
+    }
+
+    section.style.display = 'block';
+
+    // Ordena: prontos por último (ou primeiro? Vou colocar os em maceração primeiro, prontos depois)
+    // Ordena por dias restantes (mais próximo de ficar pronto primeiro)
+    const ordenados = ativos.slice().sort((a, b) => {
+      const ca = calcularDiasMac(a);
+      const cb = calcularDiasMac(b);
+      if (ca.pronto && !cb.pronto) return 1;
+      if (!ca.pronto && cb.pronto) return -1;
+      return ca.restantes - cb.restantes;
+    });
+
+    scroll.innerHTML = ordenados.map(m => {
+      const calc = calcularDiasMac(m);
+
+      let imgHtml;
+      if (m.img && m.img.trim() !== '') {
+        imgHtml = '<img src="' + m.img + '" alt="' + m.nome + '" onerror="this.outerHTML=\'<div class=&quot;placeholder&quot;>THRUST</div>\'">';
+      } else {
+        imgHtml = '<div class="placeholder">THRUST</div>';
+      }
+
+      let seloHtml, diasHtml, classePronto = '';
+      if (calc.pronto) {
+        classePronto = ' pronto';
+        seloHtml = '<div class="selo-em-breve pronto">✅ Pronto</div>';
+        diasHtml = '<div class="dias">Chegou!</div>';
+      } else {
+        seloHtml = '<div class="selo-em-breve">⏳ Em breve</div>';
+        diasHtml = '<div class="dias">' + calc.restantes + ' ' + (calc.restantes === 1 ? 'dia' : 'dias') + '</div>';
+      }
+
+      return '<div class="card-em-breve' + classePronto + '">' +
+        seloHtml +
+        '<div class="img-box">' + imgHtml + '</div>' +
+        '<div class="nome">' + m.nome + '</div>' +
+        '<div class="insp">Insp. ' + m.insp + '</div>' +
+        diasHtml +
+      '</div>';
+    }).join('');
+  }
+
   function validarCarrinhoEmTempoReal() {
     let mudou = false;
     let esgotados = [];
@@ -915,7 +1040,7 @@
     renderizarProdutos(categoria, document.getElementById('campoBusca').value.trim().toLowerCase());
   };
 
-  window.buscar = function() {
+    window.buscar = function() {
     let termoBusca = document.getElementById('campoBusca').value.trim().toLowerCase();
     let catAtivaBtn = document.querySelector('.filtro-btn.active');
     let cat = catAtivaBtn ? catAtivaBtn.dataset.cat : 'todos';
@@ -1443,7 +1568,6 @@
       let cupomData = null;
       let cupomId = null;
       
-      // 1ª tentativa: busca pelo CÓDIGO
       const codigoUpper = textoDigitado.toUpperCase().replace(/\s+/g, '');
       const qCodigo = query(collection(db, "cupons"), where("codigo", "==", codigoUpper));
       const snapCodigo = await getDocs(qCodigo);
@@ -1451,7 +1575,6 @@
       if (!snapCodigo.empty) {
         snapCodigo.forEach(d => { cupomData = d.data(); cupomId = d.id; });
       } else {
-        // 2ª tentativa: busca pelo NOME personalizado
         const snapTodos = await getDocs(collection(db, "cupons"));
         const textoLower = textoDigitado.toLowerCase().trim();
         snapTodos.forEach(d => {
@@ -1742,6 +1865,7 @@
   });
 
   carregarPerfumes();
+  carregarMaceracao();
 </script>
 </body>
 </html>
