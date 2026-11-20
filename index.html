@@ -23,7 +23,9 @@
     --borda: rgba(212,175,55,0.25); --verde-whats: #25D366;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  body { background-color: var(--fundo-site); color: var(--preto); font-family: 'Montserrat', sans-serif; font-weight: 400; line-height: 1.6; overflow-x: hidden; padding-bottom: 90px; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { background-color: var(--fundo-site); color: var(--preto); font-family: 'Montserrat', sans-serif; font-weight: 400; line-height: 1.6; overflow-x: hidden; padding-bottom: max(90px, calc(75px + env(safe-area-inset-bottom))); }
+  button, a, .card-produto, .logo-area { touch-action: manipulation; }
   h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; }
   a { text-decoration: none; color: inherit; }
 
@@ -70,7 +72,8 @@
   .em-breve-header { display: flex; align-items: center; gap: 10px; padding-bottom: 12px; margin-bottom: 15px; border-bottom: 1px solid var(--borda); }
   .em-breve-header h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #ffc107; }
   .em-breve-header .badge { font-size: 0.6rem; font-weight: 800; color: #0d0d0d; background: linear-gradient(135deg, #ffc107, #ff9800); padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .em-breve-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: thin; scrollbar-color: var(--dourado) #111; }
+  .em-breve-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: thin; scrollbar-color: var(--dourado) #111; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
+  .card-em-breve { scroll-snap-align: start; }
   .em-breve-scroll::-webkit-scrollbar { height: 6px; }
   .em-breve-scroll::-webkit-scrollbar-thumb { background: var(--dourado); border-radius: 20px; }
   .em-breve-scroll::-webkit-scrollbar-track { background: #111; }
@@ -141,7 +144,7 @@
   .modal-imagem img { max-width: 60%; max-height: 85%; object-fit: contain; }
   .modal-imagem .card-frasco-placeholder { width: 140px; height: 180px; }
   .modal-info { width: 100%; padding: 25px 20px; position: relative; }
-  .btn-fechar { position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.7); border: 1px solid var(--dourado); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-weight: bold; color: var(--dourado-claro); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; z-index: 10; }
+  .btn-fechar { position: fixed; top: 14px; right: 14px; background: rgba(0,0,0,0.8); border: 1px solid var(--dourado); width: 42px; height: 42px; border-radius: 50%; cursor: pointer; font-weight: bold; color: var(--dourado-claro); font-size: 1.2rem; display: flex; align-items: center; justify-content: center; z-index: 20; backdrop-filter: blur(4px); }
   .modal-categoria { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--dourado); margin-bottom: 8px; }
   .modal-titulo { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; color: var(--dourado-claro); line-height: 1.2; }
   .modal-insp { font-size: 0.8rem; color: #888; font-style: italic; margin-bottom: 20px; }
@@ -295,6 +298,10 @@
   .btn-topo.visivel { opacity: 1; pointer-events: auto; }
   .btn-topo:active { background: var(--dourado); color: #0d0d0d; transform: scale(0.9); }
 
+  @media (max-width: 767px) {
+    .search-bar input, .cupom-linha input, .ordenacao-select { font-size: 16px; }
+    .barra-carrinho { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+  }
   @media (min-width: 768px) {
     .menu-toggle { display: none; }
     .top-header { padding: 15px 40px; }
@@ -318,7 +325,7 @@
     .modal-imagem { width: 45%; height: auto; }
     .modal-imagem .card-frasco-placeholder { width: 180px; height: 240px; }
     .modal-info { width: 55%; padding: 40px; overflow-y: auto; }
-    .btn-fechar { top: 20px; right: 20px; }
+    .btn-fechar { position: absolute; top: 20px; right: 20px; }
     .modal-titulo { font-size: 2.2rem; }
     .tamanhos-container { flex-wrap: nowrap; }
     .botoes-acao { flex-direction: row; }
@@ -971,19 +978,21 @@
     const section = document.getElementById('emBreveSection');
     const scroll = document.getElementById('emBreveScroll');
 
-    const ativos = maceracaoLista.filter(m => !m.pausado);
+    // Sai do catálogo automaticamente quando pausado, já incluído no catálogo ou quando os dias de maceração acabam (calc.pronto)
+    const ativos = maceracaoLista.filter(m => {
+      if (m.pausado || m.publicadoNoCatalogo) return false;
+      const calc = calcularDiasMac(m);
+      return !calc.pronto;
+    });
     if (ativos.length === 0) {
       section.style.display = 'none';
+      scroll.innerHTML = '';
       return;
     }
 
     section.style.display = 'block';
     const ordenados = ativos.slice().sort((a, b) => {
-      const ca = calcularDiasMac(a);
-      const cb = calcularDiasMac(b);
-      if (ca.pronto && !cb.pronto) return 1;
-      if (!ca.pronto && cb.pronto) return -1;
-      return ca.restantes - cb.restantes;
+      return calcularDiasMac(a).restantes - calcularDiasMac(b).restantes;
     });
 
     scroll.innerHTML = ordenados.map(m => {
@@ -999,17 +1008,10 @@
         imgHtml = '<div class="placeholder">THRUST</div>';
       }
 
-      let seloHtml, diasHtml, classePronto = '';
-      if (calc.pronto) {
-        classePronto = ' pronto';
-        seloHtml = '<div class="selo-em-breve pronto">✅ Pronto</div>';
-        diasHtml = '<div class="dias">Chegou!</div>';
-      } else {
-        seloHtml = '<div class="selo-em-breve">⏳ Em breve</div>';
-        diasHtml = '<div class="dias">' + calc.restantes + ' ' + (calc.restantes === 1 ? 'dia' : 'dias') + '</div>';
-      }
+      const seloHtml = '<div class="selo-em-breve">⏳ Em breve</div>';
+      const diasHtml = '<div class="dias">' + calc.restantes + ' ' + (calc.restantes === 1 ? 'dia' : 'dias') + '</div>';
 
-      return '<div class="card-em-breve' + classePronto + '">' +
+      return '<div class="card-em-breve">' +
         seloHtml +
         '<div class="img-box">' + imgHtml + '</div>' +
         '<div class="nome">' + nomeSafe + '</div>' +
@@ -2014,6 +2016,10 @@
   modalProduto.addEventListener('click', function(e) { if (e.target === modalProduto) fecharModal(); });
   modalCarrinho.addEventListener('click', function(e) { if (e.target === modalCarrinho) fecharCarrinho(); });
   modalMeusPedidos.addEventListener('click', function(e) { if (e.target === modalMeusPedidos) fecharMeusPedidos(); });
+
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible') renderizarEmBreve();
+  });
 
   restaurarEstadoLocal();
   carregarPerfumes();
