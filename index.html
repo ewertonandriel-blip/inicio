@@ -13,9 +13,15 @@
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0d0d0d">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="THRUST">
 
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230d0d0d%22/><text x=%2250%22 y=%2275%22 font-size=%2270%22 font-family=%22serif%22 font-weight=%22bold%22 fill=%22%23f5d97a%22 text-anchor=%22middle%22>T</text></svg>">
 <style>
   :root {
     --fundo-site: #0d0d0d; --fundo-card: #1a1a1a; --fundo-topo: #000; --preto: #f5f5f5;
@@ -85,7 +91,7 @@
   .em-breve-scroll { display: flex; flex-wrap: nowrap; gap: 12px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; scroll-behavior: smooth; touch-action: pan-x; }
   .em-breve-scroll::-webkit-scrollbar { display: none; }
 
-  .card-em-breve { flex: 0 0 152px; scroll-snap-align: start; background: #1a1a1a; border: 1px solid rgba(255,193,7,0.35); border-radius: 10px; padding: 10px; text-align: center; position: relative; transition: 0.2s; display: flex; flex-direction: column; }
+  .card-em-breve { flex: 0 0 162px; scroll-snap-align: start; background: #1a1a1a; border: 1px solid rgba(255,193,7,0.35); border-radius: 10px; padding: 10px; text-align: center; position: relative; transition: 0.2s; display: flex; flex-direction: column; }
   .card-em-breve:hover { border-color: #ffc107; }
   .card-em-breve.pronto { border-color: rgba(37,211,102,0.5); }
   .card-em-breve .img-box { background: #fafafa; height: 110px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; overflow: hidden; }
@@ -95,20 +101,29 @@
   .card-em-breve .selo-em-breve.pronto { background: linear-gradient(135deg, #25D366, #4caf50); color: #fff; }
   .card-em-breve .nome { font-family: 'Playfair Display', serif; font-size: 0.82rem; font-weight: 700; color: var(--dourado-claro); margin-bottom: 2px; line-height: 1.2; }
   .card-em-breve .insp { font-size: 0.58rem; color: #888; font-style: italic; margin-bottom: 6px; line-height: 1.3; }
-  .card-em-breve .dias { font-size: 0.65rem; font-weight: 700; color: #ff9800; background: rgba(255,152,0,0.1); border: 1px solid rgba(255,152,0,0.3); padding: 4px 8px; border-radius: 6px; display: inline-block; margin: auto auto 0; }
+  .card-em-breve .dias { font-size: 0.65rem; font-weight: 700; color: #ff9800; background: rgba(255,152,0,0.1); border: 1px solid rgba(255,152,0,0.3); padding: 4px 8px; border-radius: 6px; display: inline-block; margin: auto auto 7px; }
   .card-em-breve.pronto .dias { color: #25D366; background: rgba(37,211,102,0.1); border-color: rgba(37,211,102,0.4); }
+  .btn-mac-avise { background: rgba(37,211,102,0.12); border: 1px solid rgba(37,211,102,0.55); color: #25D366; border-radius: 20px; padding: 6px 8px; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; font-weight: 700; cursor: pointer; transition: 0.2s; line-height: 1.2; width: 100%; }
+  .btn-mac-avise:hover, .btn-mac-avise:active { background: #25D366; color: #0d0d0d; }
 
   .em-breve-dots { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 10px; }
   .em-breve-dot { width: 6px; height: 6px; border-radius: 50%; border: none; padding: 0; background: #333; cursor: pointer; transition: all 0.25s ease; }
   .em-breve-dot.ativo { width: 18px; border-radius: 10px; background: #ffc107; }
 
+  .promo-combo-bar { max-width: 1300px; margin: 16px auto 0; padding: 0 15px; }
+  .promo-combo-inner { background: linear-gradient(135deg, rgba(201,162,39,0.14), rgba(245,217,122,0.06)); border: 1px solid rgba(212,175,55,0.45); border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; font-size: 0.74rem; color: #e6d8ad; line-height: 1.35; }
+  .promo-combo-inner strong { color: var(--dourado-claro); font-weight: 800; }
+
   .vitrine-section { max-width: 1300px; margin: 0 auto; padding: 20px 15px 60px; }
   .vitrine-header { display: flex; flex-direction: column; align-items: flex-start; border-bottom: 1px solid var(--borda); padding-bottom: 15px; margin-bottom: 25px; gap: 10px; }
   .vitrine-titulo { font-size: 1.5rem; color: var(--dourado-claro); }
-  .filtros-vitrine { display: flex; gap: 15px; overflow-x: auto; width: 100%; padding-bottom: 5px; scrollbar-width: none; align-items: center; flex-wrap: wrap; }
+  .filtros-vitrine { display: flex; gap: 12px; overflow-x: auto; width: 100%; padding-bottom: 5px; scrollbar-width: none; align-items: center; flex-wrap: wrap; }
   .filtros-vitrine::-webkit-scrollbar { display: none; }
   .filtro-btn { background: none; border: none; font-family: 'Montserrat', sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #777; cursor: pointer; padding-bottom: 5px; border-bottom: 1px solid transparent; transition: 0.3s; white-space: nowrap; }
   .filtro-btn.active, .filtro-btn:hover { color: var(--dourado); border-bottom: 1px solid var(--dourado); }
+  .filtro-disponiveis-btn { background: #171717; border: 1px solid rgba(212,175,55,0.35); color: #bbb; font-family: 'Montserrat', sans-serif; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 5px 11px; border-radius: 20px; cursor: pointer; transition: 0.2s; white-space: nowrap; }
+  .filtro-disponiveis-btn:hover { border-color: var(--dourado); color: var(--dourado-claro); }
+  .filtro-disponiveis-btn.ativo { background: rgba(37,211,102,0.15); border-color: #25D366; color: #25D366; }
 
   .ordenacao-wrapper { display: flex; align-items: center; gap: 8px; }
   .ordenacao-label { font-size: 0.65rem; color: #888; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
@@ -220,8 +235,11 @@
   .info-adicional p { font-size: 0.8rem; margin-bottom: 12px; color: #bbb; line-height: 1.5; }
   .info-adicional strong { color: var(--dourado); font-weight: 600; }
   .notas-olfativas { margin-top: 15px; font-size: 0.75rem; color: #aaa; line-height: 1.6; }
-  .notas-olfativas span { display: block; margin-bottom: 6px; }
-  .notas-olfativas strong { color: var(--dourado); text-transform: uppercase; font-size: 0.65rem; letter-spacing: 1px; margin-right: 5px; }
+  .notas-olfativas .notas-linha { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 8px; }
+  .notas-olfativas strong { color: var(--dourado); text-transform: uppercase; font-size: 0.65rem; letter-spacing: 1px; margin-right: 2px; }
+  .nota-chip { background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.35); color: #e2cfa0; padding: 4px 10px; border-radius: 16px; font-size: 0.7rem; font-family: 'Montserrat', sans-serif; font-weight: 600; cursor: pointer; transition: 0.2s; }
+  .nota-chip:hover, .nota-chip:active { background: var(--dourado); color: #0d0d0d; border-color: var(--dourado-claro); }
+  .notas-dica { font-size: 0.65rem; color: #777; font-style: italic; margin-top: 4px; }
 
   .modal-aviso-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); z-index: 5000; justify-content: center; align-items: center; padding: 20px; }
   .modal-aviso-overlay.ativo { display: flex; }
@@ -384,9 +402,22 @@
   .modal-esgotou-content .btn-whats-aviso { background: var(--verde-whats); color: #fff; border: none; padding: 16px 25px; border-radius: 30px; font-weight: 800; font-size: 0.9rem; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; transition: 0.2s; }
   .modal-esgotou-content .btn-whats-aviso:hover { box-shadow: 0 0 25px rgba(37,211,102,0.6); transform: scale(1.02); }
   .modal-esgotou-content .btn-fechar-aviso { background: transparent; border: 1px solid #666; color: #aaa; padding: 10px 20px; border-radius: 30px; font-size: 0.8rem; cursor: pointer; width: 100%; }
+
+  .offline-banner { display: none; background: #c94a4a; color: #fff; text-align: center; padding: 8px 14px; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.3px; position: sticky; top: 0; z-index: 4500; }
+  .offline-banner.ativo { display: block; }
+  .btn-instalar-pwa { background: rgba(212,175,55,0.14); border: 1px solid rgba(212,175,55,0.55); color: var(--dourado-claro); padding: 6px 11px; border-radius: 20px; font-size: 0.66rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; cursor: pointer; display: none; align-items: center; gap: 5px; transition: 0.2s; font-family: 'Montserrat', sans-serif; white-space: nowrap; }
+  .btn-instalar-pwa.visivel { display: inline-flex; }
+  .btn-instalar-pwa:hover { background: var(--dourado); color: #0d0d0d; }
+  .btn-instalar-menu { display: none; width: 100%; text-align: left; background: rgba(212,175,55,0.1); border: 1px solid rgba(212,175,55,0.4); color: var(--dourado-claro); padding: 12px 14px; border-radius: 8px; margin-top: 16px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; font-family: 'Montserrat', sans-serif; }
+  .btn-instalar-menu.visivel { display: block; }
+  .ios-steps { text-align: left; color: #ccc; font-size: 0.82rem; line-height: 1.65; margin: 14px 0 20px; background: #111; border: 1px solid var(--borda); border-radius: 10px; padding: 14px; }
+  .ios-steps li { margin-left: 18px; margin-bottom: 6px; }
+  .ios-steps strong { color: var(--dourado-claro); }
 </style>
 <script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
 <body>
+
+<div class="offline-banner" id="offlineBanner">📡 Você está sem internet. Exibindo catálogo salvo — reconecte para enviar pedidos.</div>
 
 <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="fecharMenuMobile()"></div>
 <div class="mobile-menu" id="mobileMenu">
@@ -397,6 +428,7 @@
   <a href="#" onclick="abrirMeusPedidos(); fecharMenuMobile(); return false;">Meus Pedidos</a>
   <a href="#" onclick="abrirQuemSomos(); return false;">Quem Somos</a>
   <a href="#" onclick="abrirWhats(); return false;">Contato</a>
+  <button type="button" class="btn-instalar-menu" id="btnInstalarPwaMenu" onclick="instalarPwa(); fecharMenuMobile();">📲 Instalar App</button>
 </div>
 
 <header class="top-header">
@@ -412,6 +444,7 @@
     <h1 style="display:none;">THRUST<small>PARFUMS</small></h1>
   </div>
   <div class="icons-header">
+    <button type="button" class="btn-instalar-pwa" id="btnInstalarPwaHeader" onclick="instalarPwa()" title="Instalar App">📲 App</button>
     <button class="icon-btn" id="btnMeusPedidosHeader" onclick="abrirMeusPedidos()" title="Meus Pedidos Recentes" style="display:none; font-size:1.1rem;">📋</button>
     <button class="icon-btn" onclick="abrirCarrinho()" title="Carrinho" aria-label="Abrir carrinho">
       🛒 <span class="cart-badge" id="contador">0</span>
@@ -461,6 +494,12 @@
     <div class="em-breve-dots" id="emBreveDots" style="display:none;"></div>
   </section>
 
+  <div class="promo-combo-bar" id="promoComboBar">
+    <div class="promo-combo-inner">
+      🎁 <span><strong>Combo Progressivo:</strong> Leve <strong>3+ perfumes</strong> e ganhe <strong>5% OFF</strong> automático no carrinho</span>
+    </div>
+  </div>
+
   <section class="vitrine-section">
     <div class="vitrine-header">
       <h3 class="vitrine-titulo" id="titulo-vitrine">Todos os Perfumes</h3>
@@ -469,6 +508,7 @@
         <button class="filtro-btn" data-cat="feminino" onclick="filtrarVitrine('feminino', event)">Feminino</button>
         <button class="filtro-btn" data-cat="masculino" onclick="filtrarVitrine('masculino', event)">Masculino</button>
         <button class="filtro-btn" data-cat="compartilhado" onclick="filtrarVitrine('compartilhado', event)">Compartilhado</button>
+        <button type="button" class="filtro-disponiveis-btn" id="btnFiltroDisponiveis" onclick="toggleApenasDisponiveis()" aria-pressed="false">✓ Só disponíveis</button>
       </div>
       <div class="ordenacao-wrapper">
         <span class="ordenacao-label">Ordenar:</span>
@@ -609,6 +649,20 @@
   </div>
 </div>
 
+<div class="modal-esgotou-overlay" id="modalInstalarIOS">
+  <div class="modal-esgotou-content">
+    <div class="icone-aviso">📲</div>
+    <h3>Instalar App THRUST</h3>
+    <p>Adicione o catálogo à tela inicial do seu aparelho para abrir em tela cheia e com carregamento instantâneo:</p>
+    <ol class="ios-steps">
+      <li>No Safari, toque no botão <strong>Compartilhar</strong> (ícone com seta para cima na barra inferior).</li>
+      <li>Role para baixo e toque em <strong>Adicionar à Tela de Início</strong>.</li>
+      <li>Confirme tocando em <strong>Adicionar</strong> no canto superior direito.</li>
+    </ol>
+    <button class="btn-fechar-aviso" onclick="fecharModalInstalarIOS()">Entendi</button>
+  </div>
+</div>
+
 <div class="barra-carrinho" id="barraCarrinho">
   <div class="barra-carrinho-conteudo" onclick="abrirCarrinho()">
     <div class="barra-carrinho-info">
@@ -650,6 +704,15 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
+  const LOJA_CONFIG = {
+    marca: "THRUST PARFUMS",
+    url: "https://thrustperfumes.store/",
+    whatsapp: "5511956659281",
+    logoUrl: "https://i.ibb.co/ZRywfV21/logo3.png",
+    descontoMinQtd: 3,
+    descontoPct: 0.05
+  };
+
   const STORAGE_CART = 'thrust_carrinho_v1';
   const STORAGE_CUPOM = 'thrust_cupom_v1';
   const STORAGE_PEDIDOS = 'thrust_meus_pedidos_v1';
@@ -662,11 +725,12 @@
   let esgotouPendenteMsg = '';
   let cupomAplicado = null;
   let ordenacaoAtual = 'padrao';
+  let apenasDisponiveis = false;
   let maceracaoLista = [];
 
-  const whats = "5511956659281";
-  const DESCONTO_MIN = 3;
-  const DESCONTO_PCT = 0.05;
+  const whats = LOJA_CONFIG.whatsapp;
+  const DESCONTO_MIN = LOJA_CONFIG.descontoMinQtd;
+  const DESCONTO_PCT = LOJA_CONFIG.descontoPct;
   const TAMANHOS = ['30ml', '50ml', '100ml'];
 
   const listaProdutos = document.getElementById('lista-produtos');
@@ -1113,6 +1177,7 @@
       const seloHtml = '<div class="selo-em-breve">⏳ Em breve</div>';
       const textoFalta = calc.restantes === 1 ? 'Falta 1 dia' : 'Faltam ' + calc.restantes + ' dias';
       const diasHtml = '<div class="dias">' + textoFalta + '</div>';
+      const btnAviseHtml = '<button type="button" class="btn-mac-avise" data-nome="' + nomeSafe + '" data-insp="' + inspSafe + '" data-dias="' + calc.restantes + '" onclick="avisarMacQuandoPronto(this)">🔔 Avise-me quando pronto</button>';
 
       return '<div class="card-em-breve">' +
         seloHtml +
@@ -1120,11 +1185,22 @@
         '<div class="nome">' + nomeSafe + '</div>' +
         '<div class="insp">Insp. ' + inspSafe + '</div>' +
         diasHtml +
+        btnAviseHtml +
       '</div>';
     }).join('');
 
     requestAnimationFrame(atualizarControlesCarrossel);
   }
+
+  window.avisarMacQuandoPronto = function(btn) {
+    if (!btn) return;
+    const nome = btn.dataset.nome || '';
+    const insp = btn.dataset.insp || '';
+    const dias = parseInt(btn.dataset.dias || '0', 10);
+    const prazoTxt = dias === 1 ? 'falta 1 dia' : 'faltam ' + dias + ' dias';
+    const msg = 'Olá! Vi o perfume "' + nome + '" (insp. ' + insp + ') em maceração na vitrine (' + prazoTxt + '). Pode me avisar no WhatsApp quando ficar pronto?';
+    window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent(msg), '_blank');
+  };
 
   function validarCarrinhoEmTempoReal(silencioso) {
     let mudou = false;
@@ -1330,11 +1406,28 @@
     renderizarProdutos(cat, raw);
   };
 
+  window.toggleApenasDisponiveis = function() {
+    apenasDisponiveis = !apenasDisponiveis;
+    const btn = document.getElementById('btnFiltroDisponiveis');
+    if (btn) {
+      btn.classList.toggle('ativo', apenasDisponiveis);
+      btn.setAttribute('aria-pressed', String(apenasDisponiveis));
+    }
+    const catAtivaBtn = document.querySelector('.filtro-btn.active');
+    const cat = catAtivaBtn ? catAtivaBtn.dataset.cat : 'todos';
+    const termo = document.getElementById('campoBusca').value;
+    renderizarProdutos(cat, termo);
+  };
+
   function renderizarProdutos(categoriaFiltro, termoBusca) {
     let lista = perfumes.slice();
 
     if (categoriaFiltro && categoriaFiltro !== 'todos') {
       lista = lista.filter(p => p.cat === categoriaFiltro);
+    }
+
+    if (apenasDisponiveis) {
+      lista = lista.filter(p => !p.indisponivel && temAlgumEstoque(p));
     }
 
     const qNorm = normalizarTexto(termoBusca);
@@ -1493,10 +1586,26 @@
     document.getElementById('modal-preco-antigo').innerText = '';
     document.getElementById('modal-descricao').innerHTML = '<strong>Sobre a fragrância:</strong> ' + esc(p.desc || 'Não informada.');
 
-    document.getElementById('modal-notas').innerHTML =
-      (p.notas && p.notas.topo ? '<span><strong>Topo:</strong> ' + esc(p.notas.topo) + '</span>' : '') +
-      (p.notas && p.notas.coracao ? '<span><strong>Coração:</strong> ' + esc(p.notas.coracao) + '</span>' : '') +
-      (p.notas && p.notas.fundo ? '<span><strong>Fundo:</strong> ' + esc(p.notas.fundo) + '</span>' : '');
+    const renderizarLinhaNotas = (label, texto) => {
+      if (!texto || !String(texto).trim()) return '';
+      const chips = String(texto)
+        .split(/[,;•]+/)
+        .map(n => n.trim())
+        .filter(Boolean)
+        .map(n => '<button type="button" class="nota-chip" data-nota="' + esc(n) + '" onclick="buscarPorNota(this.dataset.nota)" title="Buscar perfumes com ' + esc(n) + '">' + esc(n) + '</button>')
+        .join('');
+      if (!chips) return '';
+      return '<div class="notas-linha"><strong>' + label + ':</strong>' + chips + '</div>';
+    };
+
+    const notasHtml =
+      renderizarLinhaNotas('Topo', p.notas && p.notas.topo) +
+      renderizarLinhaNotas('Coração', p.notas && p.notas.coracao) +
+      renderizarLinhaNotas('Fundo', p.notas && p.notas.fundo);
+
+    document.getElementById('modal-notas').innerHTML = notasHtml
+      ? notasHtml + '<div class="notas-dica">💡 Toque em uma nota para filtrar perfumes parecidos</div>'
+      : '';
 
     atualizarAvisoEstoqueModal();
     atualizarModalTamanhos();
@@ -1504,6 +1613,20 @@
 
     modalProduto.classList.add('ativo');
     document.body.style.overflow = 'hidden';
+  };
+
+  window.buscarPorNota = function(nota) {
+    if (!nota) return;
+    fecharModal();
+    mostrarCatalogo();
+    const campo = document.getElementById('campoBusca');
+    if (campo) campo.value = nota;
+    window.buscar();
+    mostrarToast('🔎 Filtrando por nota: ' + nota);
+    setTimeout(() => {
+      const vitrine = document.querySelector('.vitrine-section');
+      if (vitrine) vitrine.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
   };
 
   window.avisarReposicaoModal = function() {
@@ -2115,16 +2238,88 @@
       if (modalMeusPedidos.classList.contains('ativo')) fecharMeusPedidos();
       if (modalAviso.classList.contains('ativo')) fecharAviso();
       if (modalEsgotou.classList.contains('ativo')) fecharModalEsgotou();
+      if (document.getElementById('modalInstalarIOS').classList.contains('ativo')) fecharModalInstalarIOS();
     }
   });
 
   modalProduto.addEventListener('click', function(e) { if (e.target === modalProduto) fecharModal(); });
   modalCarrinho.addEventListener('click', function(e) { if (e.target === modalCarrinho) fecharCarrinho(); });
   modalMeusPedidos.addEventListener('click', function(e) { if (e.target === modalMeusPedidos) fecharMeusPedidos(); });
+  document.getElementById('modalInstalarIOS').addEventListener('click', function(e) {
+    if (e.target.id === 'modalInstalarIOS') fecharModalInstalarIOS();
+  });
 
   document.addEventListener('visibilitychange', function() {
     if (document.visibilityState === 'visible') renderizarEmBreve();
   });
+
+  /* ============================================================
+     PWA: INSTALAÇÃO, CONECTIVIDADE OFFLINE E SERVICE WORKER
+     ============================================================ */
+  let deferredPromptPwa = null;
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+  function atualizarBotoesPwa(mostrar) {
+    ['btnInstalarPwaHeader', 'btnInstalarPwaMenu'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('visivel', Boolean(mostrar && !isStandalone));
+    });
+  }
+
+  if (!isStandalone && isIos) {
+    atualizarBotoesPwa(true);
+  }
+
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPromptPwa = e;
+    atualizarBotoesPwa(true);
+  });
+
+  window.addEventListener('appinstalled', () => {
+    deferredPromptPwa = null;
+    atualizarBotoesPwa(false);
+    mostrarToast('✓ App THRUST instalado!');
+  });
+
+  window.instalarPwa = async function() {
+    if (deferredPromptPwa) {
+      deferredPromptPwa.prompt();
+      const { outcome } = await deferredPromptPwa.userChoice.catch(() => ({ outcome: 'dismissed' }));
+      if (outcome === 'accepted') atualizarBotoesPwa(false);
+      deferredPromptPwa = null;
+      return;
+    }
+    if (isIos) {
+      document.getElementById('modalInstalarIOS').classList.add('ativo');
+      document.body.style.overflow = 'hidden';
+      return;
+    }
+    mostrarToast('Use o menu do navegador ⋮ → "Instalar app"');
+  };
+
+  window.fecharModalInstalarIOS = function() {
+    document.getElementById('modalInstalarIOS').classList.remove('ativo');
+    document.body.style.overflow = 'auto';
+  };
+
+  function atualizarStatusOffline() {
+    const banner = document.getElementById('offlineBanner');
+    if (banner) banner.classList.toggle('ativo', !navigator.onLine);
+  }
+  window.addEventListener('online', () => {
+    atualizarStatusOffline();
+    mostrarToast('✓ Conexão restabelecida!');
+  });
+  window.addEventListener('offline', atualizarStatusOffline);
+  atualizarStatusOffline();
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
 
   restaurarEstadoLocal();
   carregarPerfumes();
