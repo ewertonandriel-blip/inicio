@@ -67,18 +67,24 @@
   .beneficio-item h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; color: var(--dourado-claro); }
   .beneficio-item p { font-size: 0.55rem; text-transform: uppercase; color: #888; letter-spacing: 0.5px; }
 
-  /* SEÇÃO EM BREVE (MACERAÇÃO) */
+  /* SEÇÃO EM BREVE (MACERAÇÃO - CARROSSEL LINHA ÚNICA) */
   .em-breve-section { max-width: 1300px; margin: 0 auto; padding: 20px 15px 0; }
-  .em-breve-header { display: flex; align-items: center; gap: 10px; padding-bottom: 12px; margin-bottom: 15px; border-bottom: 1px solid var(--borda); }
-  .em-breve-header h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #ffc107; }
-  .em-breve-header .badge { font-size: 0.6rem; font-weight: 800; color: #0d0d0d; background: linear-gradient(135deg, #ffc107, #ff9800); padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .em-breve-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: thin; scrollbar-color: var(--dourado) #111; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; }
-  .card-em-breve { scroll-snap-align: start; }
-  .em-breve-scroll::-webkit-scrollbar { height: 6px; }
-  .em-breve-scroll::-webkit-scrollbar-thumb { background: var(--dourado); border-radius: 20px; }
-  .em-breve-scroll::-webkit-scrollbar-track { background: #111; }
+  .em-breve-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid var(--borda); }
+  .em-breve-titulo-grupo { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .em-breve-header h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #ffc107; white-space: nowrap; }
+  .em-breve-header .badge { font-size: 0.6rem; font-weight: 800; color: #0d0d0d; background: linear-gradient(135deg, #ffc107, #ff9800); padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
+  .em-breve-nav { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .em-breve-seta { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,193,7,0.45); background: #1a1a1a; color: var(--dourado-claro); font-size: 1.25rem; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; padding-bottom: 2px; }
+  .em-breve-seta:hover:not(:disabled), .em-breve-seta:active:not(:disabled) { background: rgba(255,193,7,0.2); border-color: #ffc107; color: #fff; }
+  .em-breve-seta:disabled { opacity: 0.28; cursor: default; }
 
-  .card-em-breve { flex: 0 0 160px; background: #1a1a1a; border: 1px solid rgba(255,193,7,0.35); border-radius: 10px; padding: 10px; text-align: center; position: relative; transition: 0.2s; }
+  .em-breve-carousel-wrap { position: relative; }
+  .em-breve-carousel-wrap::after { content: ''; position: absolute; top: 0; right: 0; width: 28px; height: 100%; background: linear-gradient(to left, var(--fundo-site), transparent); pointer-events: none; opacity: 0; transition: opacity 0.2s; }
+  .em-breve-carousel-wrap.tem-mais-dir::after { opacity: 1; }
+  .em-breve-scroll { display: flex; flex-wrap: nowrap; gap: 12px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; scroll-behavior: smooth; touch-action: pan-x; }
+  .em-breve-scroll::-webkit-scrollbar { display: none; }
+
+  .card-em-breve { flex: 0 0 152px; scroll-snap-align: start; background: #1a1a1a; border: 1px solid rgba(255,193,7,0.35); border-radius: 10px; padding: 10px; text-align: center; position: relative; transition: 0.2s; display: flex; flex-direction: column; }
   .card-em-breve:hover { border-color: #ffc107; }
   .card-em-breve.pronto { border-color: rgba(37,211,102,0.5); }
   .card-em-breve .img-box { background: #fafafa; height: 110px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; overflow: hidden; }
@@ -88,8 +94,12 @@
   .card-em-breve .selo-em-breve.pronto { background: linear-gradient(135deg, #25D366, #4caf50); color: #fff; }
   .card-em-breve .nome { font-family: 'Playfair Display', serif; font-size: 0.82rem; font-weight: 700; color: var(--dourado-claro); margin-bottom: 2px; line-height: 1.2; }
   .card-em-breve .insp { font-size: 0.58rem; color: #888; font-style: italic; margin-bottom: 6px; line-height: 1.3; }
-  .card-em-breve .dias { font-size: 0.65rem; font-weight: 700; color: #ff9800; background: rgba(255,152,0,0.1); border: 1px solid rgba(255,152,0,0.3); padding: 3px 6px; border-radius: 6px; display: inline-block; }
+  .card-em-breve .dias { font-size: 0.65rem; font-weight: 700; color: #ff9800; background: rgba(255,152,0,0.1); border: 1px solid rgba(255,152,0,0.3); padding: 4px 8px; border-radius: 6px; display: inline-block; margin: auto auto 0; }
   .card-em-breve.pronto .dias { color: #25D366; background: rgba(37,211,102,0.1); border-color: rgba(37,211,102,0.4); }
+
+  .em-breve-dots { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 10px; }
+  .em-breve-dot { width: 6px; height: 6px; border-radius: 50%; border: none; padding: 0; background: #333; cursor: pointer; transition: all 0.25s ease; }
+  .em-breve-dot.ativo { width: 18px; border-radius: 10px; background: #ffc107; }
 
   .vitrine-section { max-width: 1300px; margin: 0 auto; padding: 20px 15px 60px; }
   .vitrine-header { display: flex; flex-direction: column; align-items: flex-start; border-bottom: 1px solid var(--borda); padding-bottom: 15px; margin-bottom: 25px; gap: 10px; }
@@ -427,10 +437,19 @@
 
   <section class="em-breve-section" id="emBreveSection" style="display:none;">
     <div class="em-breve-header">
-      <h3>⏳ Em Breve</h3>
-      <span class="badge">Em Maceração</span>
+      <div class="em-breve-titulo-grupo">
+        <h3>⏳ Em Breve</h3>
+        <span class="badge">Em Maceração</span>
+      </div>
+      <div class="em-breve-nav" id="emBreveNav" style="display:none;">
+        <button type="button" class="em-breve-seta" id="btnMacPrev" onclick="moverCarrosselEmBreve(-1)" aria-label="Perfumes anteriores">‹</button>
+        <button type="button" class="em-breve-seta" id="btnMacNext" onclick="moverCarrosselEmBreve(1)" aria-label="Próximos perfumes">›</button>
+      </div>
     </div>
-    <div class="em-breve-scroll" id="emBreveScroll"></div>
+    <div class="em-breve-carousel-wrap" id="emBreveWrap">
+      <div class="em-breve-scroll" id="emBreveScroll"></div>
+    </div>
+    <div class="em-breve-dots" id="emBreveDots" style="display:none;"></div>
   </section>
 
   <section class="vitrine-section">
@@ -974,6 +993,79 @@
     return { decorridos, restantes, pronto };
   }
 
+  let emBreveRaf = null;
+
+  window.moverCarrosselEmBreve = function(direcao) {
+    const scroll = document.getElementById('emBreveScroll');
+    if (!scroll) return;
+    const passo = Math.max(164, Math.floor(scroll.clientWidth * 0.78));
+    scroll.scrollBy({ left: direcao * passo, behavior: 'smooth' });
+  };
+
+  window.irParaPaginaCarrosselEmBreve = function(pagina, totalPaginas) {
+    const scroll = document.getElementById('emBreveScroll');
+    if (!scroll) return;
+    const maxScroll = Math.max(0, scroll.scrollWidth - scroll.clientWidth);
+    const destino = totalPaginas <= 1 ? 0 : (pagina / (totalPaginas - 1)) * maxScroll;
+    scroll.scrollTo({ left: destino, behavior: 'smooth' });
+  };
+
+  function atualizarControlesCarrossel() {
+    const scroll = document.getElementById('emBreveScroll');
+    const wrap = document.getElementById('emBreveWrap');
+    const nav = document.getElementById('emBreveNav');
+    const dotsEl = document.getElementById('emBreveDots');
+    const btnPrev = document.getElementById('btnMacPrev');
+    const btnNext = document.getElementById('btnMacNext');
+    if (!scroll || !wrap || !nav || !dotsEl) return;
+
+    const maxScroll = scroll.scrollWidth - scroll.clientWidth;
+    const temOverflow = maxScroll > 6;
+
+    nav.style.display = temOverflow ? 'flex' : 'none';
+    dotsEl.style.display = temOverflow ? 'flex' : 'none';
+
+    if (!temOverflow) {
+      wrap.classList.remove('tem-mais-dir');
+      dotsEl.innerHTML = '';
+      return;
+    }
+
+    const noInicio = scroll.scrollLeft <= 4;
+    const noFim = scroll.scrollLeft >= maxScroll - 4;
+    if (btnPrev) btnPrev.disabled = noInicio;
+    if (btnNext) btnNext.disabled = noFim;
+    wrap.classList.toggle('tem-mais-dir', !noFim);
+
+    const paginas = Math.max(2, Math.min(8, Math.ceil(scroll.scrollWidth / Math.max(1, scroll.clientWidth * 0.85))));
+    const paginaAtual = Math.min(paginas - 1, Math.round((scroll.scrollLeft / maxScroll) * (paginas - 1)));
+
+    let dotsHtml = '';
+    for (let i = 0; i < paginas; i++) {
+      dotsHtml += '<button type="button" class="em-breve-dot' + (i === paginaAtual ? ' ativo' : '') + '" onclick="irParaPaginaCarrosselEmBreve(' + i + ',' + paginas + ')" aria-label="Página ' + (i + 1) + '"></button>';
+    }
+    dotsEl.innerHTML = dotsHtml;
+  }
+
+  (function vincularEventosCarrossel() {
+    const scroll = document.getElementById('emBreveScroll');
+    if (!scroll) return;
+    scroll.addEventListener('scroll', () => {
+      if (emBreveRaf) return;
+      emBreveRaf = requestAnimationFrame(() => {
+        emBreveRaf = null;
+        atualizarControlesCarrossel();
+      });
+    }, { passive: true });
+    window.addEventListener('resize', () => {
+      if (emBreveRaf) return;
+      emBreveRaf = requestAnimationFrame(() => {
+        emBreveRaf = null;
+        atualizarControlesCarrossel();
+      });
+    });
+  })();
+
   function renderizarEmBreve() {
     const section = document.getElementById('emBreveSection');
     const scroll = document.getElementById('emBreveScroll');
@@ -987,6 +1079,7 @@
     if (ativos.length === 0) {
       section.style.display = 'none';
       scroll.innerHTML = '';
+      atualizarControlesCarrossel();
       return;
     }
 
@@ -1009,7 +1102,8 @@
       }
 
       const seloHtml = '<div class="selo-em-breve">⏳ Em breve</div>';
-      const diasHtml = '<div class="dias">' + calc.restantes + ' ' + (calc.restantes === 1 ? 'dia' : 'dias') + '</div>';
+      const textoFalta = calc.restantes === 1 ? 'Falta 1 dia' : 'Faltam ' + calc.restantes + ' dias';
+      const diasHtml = '<div class="dias">' + textoFalta + '</div>';
 
       return '<div class="card-em-breve">' +
         seloHtml +
@@ -1019,6 +1113,8 @@
         diasHtml +
       '</div>';
     }).join('');
+
+    requestAnimationFrame(atualizarControlesCarrossel);
   }
 
   function validarCarrinhoEmTempoReal(silencioso) {
