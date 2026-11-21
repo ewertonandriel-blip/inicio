@@ -306,8 +306,14 @@
   .meus-pedidos-card .topo { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; margin-bottom: 6px; }
   .meus-pedidos-card .cod { color: var(--dourado-claro); font-weight: 800; }
   .meus-pedidos-card .dt { color: #777; font-size: 0.7rem; }
-  .meus-pedidos-card .resumo { font-size: 0.75rem; color: #bbb; margin-bottom: 8px; }
-  .meus-pedidos-card button { background: rgba(37,211,102,0.12); border: 1px solid var(--verde-whats); color: var(--verde-whats); padding: 8px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; cursor: pointer; width: 100%; font-family: inherit; }
+  .meus-pedidos-card .resumo { font-size: 0.75rem; color: #bbb; margin-bottom: 10px; }
+  .meus-pedidos-acoes { display: flex; gap: 8px; align-items: center; }
+  .meus-pedidos-card .btn-reenviar-pedido { flex: 1; background: rgba(37,211,102,0.12); border: 1px solid var(--verde-whats); color: var(--verde-whats); padding: 9px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; }
+  .meus-pedidos-card .btn-reenviar-pedido:hover, .meus-pedidos-card .btn-reenviar-pedido:active { background: var(--verde-whats); color: #0d0d0d; }
+  .meus-pedidos-card .btn-remover-pedido-local { background: rgba(201,74,74,0.1); border: 1px solid rgba(201,74,74,0.6); color: #ff6b6b; padding: 9px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; cursor: pointer; font-family: inherit; transition: 0.2s; white-space: nowrap; }
+  .meus-pedidos-card .btn-remover-pedido-local:hover, .meus-pedidos-card .btn-remover-pedido-local:active { background: #c94a4a; color: #fff; }
+  .btn-limpar-meus-pedidos { background: transparent; border: 1px solid rgba(201,74,74,0.65); color: #ff6b6b; padding: 11px 14px; border-radius: 25px; font-size: 0.74rem; font-weight: 700; cursor: pointer; width: 100%; margin-top: 8px; font-family: inherit; transition: 0.2s; }
+  .btn-limpar-meus-pedidos:hover, .btn-limpar-meus-pedidos:active { background: #c94a4a; color: #fff; }
 
   .barra-carrinho { position: fixed; bottom: 0; left: 0; right: 0; z-index: 25; padding: 0 12px 12px; pointer-events: none; transform: translateY(120%); transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
   .barra-carrinho.ativo { transform: translateY(0); }
@@ -824,23 +830,33 @@
     } catch (e) {}
   }
 
-  window.abrirMeusPedidos = function() {
+  function renderizarListaMeusPedidos() {
     const container = document.getElementById('lista-meus-pedidos');
+    if (!container) return;
     let lista = [];
     try { lista = JSON.parse(localStorage.getItem(STORAGE_PEDIDOS) || '[]'); } catch (e) {}
 
     if (lista.length === 0) {
-      container.innerHTML = '<p class="carrinho-vazio">Você ainda não gerou nenhum pedido neste aparelho.</p>';
-    } else {
-      container.innerHTML = lista.map((p, idx) => {
-        const dt = p.dataISO ? new Date(p.dataISO).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
-        return '<div class="meus-pedidos-card">' +
-          '<div class="topo"><span class="cod"># ' + esc(p.numero) + ' · ' + fmt(p.total) + '</span><span class="dt">' + esc(dt) + '</span></div>' +
-          '<div class="resumo">' + esc(p.resumo) + '</div>' +
-          '<button onclick="reenviarPedidoWhats(' + idx + ')">💬 Abrir no WhatsApp novamente</button>' +
-        '</div>';
-      }).join('');
+      container.innerHTML = '<p class="carrinho-vazio">Nenhum pedido salvo neste aparelho.</p>';
+      return;
     }
+
+    container.innerHTML = lista.map((p, idx) => {
+      const dt = p.dataISO ? new Date(p.dataISO).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
+      return '<div class="meus-pedidos-card">' +
+        '<div class="topo"><span class="cod"># ' + esc(p.numero) + ' · ' + fmt(p.total) + '</span><span class="dt">' + esc(dt) + '</span></div>' +
+        '<div class="resumo">' + esc(p.resumo) + '</div>' +
+        '<div class="meus-pedidos-acoes">' +
+          '<button type="button" class="btn-reenviar-pedido" onclick="reenviarPedidoWhats(' + idx + ')">💬 Abrir no WhatsApp</button>' +
+          '<button type="button" class="btn-remover-pedido-local" onclick="removerPedidoLocal(' + idx + ')" title="Remover este pedido">🗑️ Limpar</button>' +
+        '</div>' +
+      '</div>';
+    }).join('') +
+    '<button type="button" class="btn-limpar-meus-pedidos" onclick="limparTodosPedidosLocais()">🗑️ Limpar todos os pedidos salvos</button>';
+  }
+
+  window.abrirMeusPedidos = function() {
+    renderizarListaMeusPedidos();
     modalMeusPedidos.classList.add('ativo');
     document.body.style.overflow = 'hidden';
   };
@@ -848,6 +864,27 @@
   window.fecharMeusPedidos = function() {
     modalMeusPedidos.classList.remove('ativo');
     document.body.style.overflow = 'auto';
+  };
+
+  window.removerPedidoLocal = function(idx) {
+    try {
+      const lista = JSON.parse(localStorage.getItem(STORAGE_PEDIDOS) || '[]');
+      lista.splice(idx, 1);
+      if (lista.length === 0) localStorage.removeItem(STORAGE_PEDIDOS);
+      else localStorage.setItem(STORAGE_PEDIDOS, JSON.stringify(lista));
+      atualizarBotaoMeusPedidos();
+      renderizarListaMeusPedidos();
+      mostrarToast('✓ Pedido removido deste aparelho');
+    } catch (e) {}
+  };
+
+  window.limparTodosPedidosLocais = function() {
+    try {
+      localStorage.removeItem(STORAGE_PEDIDOS);
+      atualizarBotaoMeusPedidos();
+      renderizarListaMeusPedidos();
+      mostrarToast('✓ Pedidos salvos limpos!');
+    } catch (e) {}
   };
 
   window.reenviarPedidoWhats = function(idx) {
