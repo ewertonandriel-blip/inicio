@@ -1,4 +1,4 @@
-const CACHE_NAME = 'thrust-parfums-v1';
+const CACHE_NAME = 'thrust-parfums-v2';
 const APP_SHELL = [
   './',
   './index.html',
