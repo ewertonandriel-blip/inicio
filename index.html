@@ -419,6 +419,37 @@
   .ios-steps { text-align: left; color: #ccc; font-size: 0.82rem; line-height: 1.65; margin: 14px 0 20px; background: #111; border: 1px solid var(--borda); border-radius: 10px; padding: 14px; }
   .ios-steps li { margin-left: 18px; margin-bottom: 6px; }
   .ios-steps strong { color: var(--dourado-claro); }
+
+  .modal-ficha-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.94); z-index: 6500; justify-content: center; align-items: center; padding: 14px; }
+  .modal-ficha-overlay.ativo { display: flex; }
+  .modal-ficha-content { background: var(--fundo-card); border: 1px solid var(--dourado); border-radius: 14px; width: 100%; max-width: 560px; max-height: 92dvh; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; padding: 22px 18px; box-shadow: 0 24px 70px rgba(212,175,55,0.28); }
+  .modal-ficha-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; border-bottom: 1px solid var(--borda); padding-bottom: 12px; margin-bottom: 14px; }
+  .modal-ficha-header button { background: none; border: none; color: var(--dourado); font-size: 1.5rem; cursor: pointer; min-width: 36px; min-height: 36px; display: flex; align-items: center; justify-content: center; }
+  .ficha-badge-ro { display: inline-block; background: rgba(212,175,55,0.14); border: 1px solid rgba(212,175,55,0.45); color: var(--dourado-claro); font-size: 0.62rem; font-weight: 800; letter-spacing: 0.8px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; margin-bottom: 6px; }
+  .ficha-insp-titulo { font-family: 'Playfair Display', serif; font-size: 1.35rem; color: #fff; line-height: 1.25; }
+  .ficha-insp-titulo span { color: var(--dourado-claro); }
+  .ficha-sub-dias { font-size: 0.75rem; color: #aaa; margin-top: 4px; line-height: 1.45; }
+  .ficha-bloco { background: #141414; border: 1px solid #292929; border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+  .ficha-bloco h4 { font-size: 0.7rem; color: var(--dourado); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+  .ficha-kv { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.78rem; }
+  .ficha-kv div small { display: block; font-size: 0.62rem; color: #888; text-transform: uppercase; }
+  .ficha-kv div strong { color: #eee; font-weight: 700; }
+  .ficha-formula-pre { background: #0b0b0b; border: 1px solid #252525; border-radius: 8px; padding: 10px; font-size: 0.76rem; color: #ddd; line-height: 1.6; white-space: pre-line; }
+  .ficha-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .ficha-tag { background: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.35); color: var(--dourado-claro); padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; }
+  .ficha-fornecedor-btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 14px; border-radius: 8px; font-size: 0.76rem; font-weight: 700; text-decoration: none; }
+  .ficha-fornecedor-btn.site { background: rgba(74,144,226,0.14); border: 1px solid #4a90e2; color: #7bb4f5; }
+  .ficha-fornecedor-btn.whats { background: rgba(37,211,102,0.14); border: 1px solid #25D366; color: #25D366; }
+  .ficha-diario-item { background: #0f0f0f; border-left: 3px solid var(--dourado); border-radius: 8px; padding: 9px 11px; margin-bottom: 6px; }
+  .ficha-diario-item .topo { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 3px; }
+  .ficha-diario-item .topo strong { color: var(--dourado-claro); font-size: 0.76rem; }
+  .ficha-diario-item .topo span { color: #777; font-size: 0.66rem; }
+  .ficha-diario-item p { color: #ccc; font-size: 0.75rem; line-height: 1.45; }
+  .ficha-vazia-box { text-align: center; padding: 20px 10px; }
+  .ficha-vazia-box .icone { font-size: 3rem; margin-bottom: 12px; }
+  .ficha-vazia-box h3 { color: var(--dourado-claro); font-family: 'Playfair Display', serif; font-size: 1.3rem; margin-bottom: 8px; }
+  .ficha-vazia-box p { color: #bbb; font-size: 0.85rem; line-height: 1.55; margin-bottom: 18px; }
+  .btn-ficha-catalogo { background: linear-gradient(135deg, var(--dourado), var(--dourado-claro)); color: #0d0d0d; border: none; padding: 13px 20px; border-radius: 30px; font-weight: 800; font-size: 0.82rem; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 0.8px; margin-top: 6px; }
 </style>
 <script src="/_aistudio-iframe.js?v=29045eb3"></script></head>
 <body>
@@ -669,6 +700,10 @@
   </div>
 </div>
 
+<div class="modal-ficha-overlay" id="modalFichaCompartilhada">
+  <div class="modal-ficha-content" id="conteudoFichaCompartilhada"></div>
+</div>
+
 <div class="barra-carrinho" id="barraCarrinho">
   <div class="barra-carrinho-conteudo" onclick="abrirCarrinho()">
     <div class="barra-carrinho-info">
@@ -696,7 +731,7 @@
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-  import { getFirestore, collection, onSnapshot, query, orderBy, addDoc, getDocs, where, limit } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+  import { getFirestore, collection, doc, getDoc, onSnapshot, query, orderBy, addDoc, getDocs, where, limit } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCtdszBtbQiaZnWcLLKBPnwo_3yHRtp2mA",
@@ -2276,6 +2311,7 @@
       if (modalAviso.classList.contains('ativo')) fecharAviso();
       if (modalEsgotou.classList.contains('ativo')) fecharModalEsgotou();
       if (document.getElementById('modalInstalarIOS').classList.contains('ativo')) fecharModalInstalarIOS();
+      if (document.getElementById('modalFichaCompartilhada').classList.contains('ativo')) fecharFichaCompartilhada();
     }
   });
 
@@ -2284,6 +2320,9 @@
   modalMeusPedidos.addEventListener('click', function(e) { if (e.target === modalMeusPedidos) fecharMeusPedidos(); });
   document.getElementById('modalInstalarIOS').addEventListener('click', function(e) {
     if (e.target.id === 'modalInstalarIOS') fecharModalInstalarIOS();
+  });
+  document.getElementById('modalFichaCompartilhada').addEventListener('click', function(e) {
+    if (e.target.id === 'modalFichaCompartilhada') fecharFichaCompartilhada();
   });
 
   document.addEventListener('visibilitychange', function() {
@@ -2358,9 +2397,215 @@
     });
   }
 
+  /* ============================================================
+     FICHA TÉCNICA COMPARTILHADA (SOMENTE LEITURA — APENAS INSPIRAÇÃO)
+     ============================================================ */
+  const BASES_VITRINE_INFO = {
+    "turbo-nickson": {
+      nome: "Base Turbo - Nickson",
+      detalhes: "90% Álcool 96 GL\n5% Água Deionizada\n2% Propanediol (Propilenoglicol)\n2% Iso-e Super\n1% Ambroxan 10%"
+    },
+    "turbo-leandro": {
+      nome: "Base Turbo - Leandro",
+      detalhes: "90,5% Álcool 96 GL\n4% Água Deionizada\n4% Blend Turbo\n1,5% Propanediol (Propilenoglicol)"
+    },
+    "clean-nickson": {
+      nome: "Base Clean - Nickson",
+      detalhes: "93% Álcool 96 GL\n5% Água Deionizada\n2% Propanediol (Propilenoglicol)"
+    },
+    "clean-leandro": {
+      nome: "Base Clean - Leandro",
+      detalhes: "94,5% Álcool 96 GL\n4% Água Deionizada\n1,5% Propanediol (Propilenoglicol)"
+    }
+  };
+
+  function safeExternalUrlVitrine(url) {
+    if (!url || typeof url !== 'string') return '';
+    const trimmed = url.trim();
+    if (!trimmed || /^(javascript|data|vbscript):/i.test(trimmed)) return '';
+    if (/^https?:\/\//i.test(trimmed)) return trimmed;
+    return 'https://' + trimmed;
+  }
+
+  function formatarDataFicha(val) {
+    if (!val) return '-';
+    const d = val.toDate ? val.toDate() : new Date(val);
+    if (isNaN(d.getTime())) return '-';
+    return `${String(d.getUTCDate()).padStart(2,'0')}/${String(d.getUTCMonth()+1).padStart(2,'0')}/${d.getUTCFullYear()}`;
+  }
+
+  window.fecharFichaCompartilhada = function() {
+    const modal = document.getElementById('modalFichaCompartilhada');
+    if (modal) modal.classList.remove('ativo');
+    document.body.style.overflow = 'auto';
+    if (window.location.search.includes('ficha=')) {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('ficha');
+      history.replaceState(null, '', url.pathname + url.search + url.hash);
+    }
+  };
+
+  async function verificarLinkFichaCompartilhada() {
+    const params = new URLSearchParams(window.location.search);
+    const fichaId = (params.get('ficha') || '').trim();
+    if (!fichaId) return;
+
+    const modal = document.getElementById('modalFichaCompartilhada');
+    const cont = document.getElementById('conteudoFichaCompartilhada');
+    if (!modal || !cont) return;
+
+    cont.innerHTML = '<div class="ficha-vazia-box"><div class="icone">🧪</div><h3>Carregando fórmula...</h3><p>Buscando os dados técnicos compartilhados.</p></div>';
+    modal.classList.add('ativo');
+    document.body.style.overflow = 'hidden';
+
+    const renderNaoExiste = () => {
+      cont.innerHTML = `
+        <div class="ficha-vazia-box">
+          <div class="icone">🚫</div>
+          <h3>Fórmula não encontrada</h3>
+          <p>Esta ficha técnica foi excluída pelo autor ou não existe mais.</p>
+          <button type="button" class="btn-ficha-catalogo" onclick="fecharFichaCompartilhada()">Ver Catálogo THRUST PARFUMS</button>
+        </div>
+      `;
+    };
+
+    try {
+      const snap = await getDoc(doc(db, "fichas_compartilhadas", fichaId));
+      if (!snap.exists()) {
+        renderNaoExiste();
+        return;
+      }
+
+      const f = snap.data() || {};
+      const calc = calcularDiasMac(f);
+      const tot = f.diasTotais || 0;
+      const excedidos = Math.max(0, calc.decorridos - tot);
+
+      let statusDiasTxt = `Início: ${formatarDataFicha(f.dataInicio)} · Dia ${calc.decorridos} (meta: ${tot}d)`;
+      if (f.publicadoNoCatalogo) {
+        const finalD = f.diasMaceradosFinal || calc.decorridos || tot;
+        statusDiasTxt = `Início: ${formatarDataFicha(f.dataInicio)} · Macerado por ${finalD} dias`;
+      } else if (tot > 0 && calc.decorridos > tot) {
+        statusDiasTxt = `Início: ${formatarDataFicha(f.dataInicio)} · Dia ${calc.decorridos} contínuos (+${excedidos}d após a meta de ${tot}d)`;
+      } else if (tot > 0 && calc.decorridos === tot) {
+        statusDiasTxt = `Início: ${formatarDataFicha(f.dataInicio)} · Meta de ${tot} dias atingida hoje!`;
+      }
+
+      const manipuladoTxt = f.manipulado === 'peso' ? '⚖️ Por Peso' : (f.manipulado === 'volume' ? '💧 Por Volume' : '—');
+      const generoTxt = f.genero === 'feminino' ? '👩 Feminino' : (f.genero === 'masculino' ? '👨 Masculino' : (f.genero === 'compartilhado' ? '🤝 Compartilhado' : '—'));
+      const resultadoTxt = f.resultado === 'aprovado' ? '✅ Aprovado' : (f.resultado === 'reprovado' ? '❌ Reprovado' : '⏳ Em Teste');
+
+      let fornecedorHtml = '<span style="color:#888;font-size:0.75rem;">Não informado</span>';
+      if (f.tipoOnde === 'site' && f.linkSite) {
+        const urlSegura = safeExternalUrlVitrine(f.linkSite);
+        if (urlSegura) {
+          fornecedorHtml = `<a href="${esc(urlSegura)}" target="_blank" rel="noopener noreferrer" class="ficha-fornecedor-btn site">🌐 Abrir Site do Fornecedor</a>`;
+        }
+      } else if (f.tipoOnde === 'vendedor' && f.whatsappVendedor) {
+        const whatsLimpo = String(f.whatsappVendedor).replace(/[^0-9]/g, '');
+        const msgWpp = encodeURIComponent(`Olá ${f.nomeVendedor || ''}, gostaria de informações sobre a essência inspirada em ${f.insp || ''}.`);
+        fornecedorHtml = `<a href="https://wa.me/55${esc(whatsLimpo)}?text=${msgWpp}" target="_blank" rel="noopener noreferrer" class="ficha-fornecedor-btn whats">💬 WhatsApp: ${esc(f.nomeVendedor || whatsLimpo)}</a>`;
+      }
+
+      let formulaHtml = '<span style="color:#888;font-size:0.75rem;">Base não informada</span>';
+      if (f.baseId === 'propria' && Array.isArray(f.ingredientesCustom) && f.ingredientesCustom.length > 0) {
+        const linhas = f.ingredientesCustom.map(i => `• ${esc(i.pct)}% — ${esc(i.nome)}`).join('\n');
+        formulaHtml = `<div class="ficha-formula-pre"><strong>${esc(f.baseNome || 'Base Própria')}</strong>\n${linhas}</div>`;
+      } else if (f.baseId) {
+        const baseObj = BASES_VITRINE_INFO[f.baseId];
+        if (baseObj) {
+          formulaHtml = `<div class="ficha-formula-pre"><strong>${esc(baseObj.nome)}</strong>\n${esc(baseObj.detalhes)}</div>`;
+        } else if (f.baseNome) {
+          formulaHtml = `<div class="ficha-formula-pre"><strong>${esc(f.baseNome)}</strong></div>`;
+        }
+      }
+
+      const notasHtml = (Array.isArray(f.notasOlfativas) && f.notasOlfativas.length > 0)
+        ? `<div class="ficha-tags">${f.notasOlfativas.map(n => `<span class="ficha-tag">${esc(n)}</span>`).join('')}</div>`
+        : '<span style="color:#888;font-size:0.75rem;">Nenhuma nota olfativa marcada</span>';
+
+      const avaliacaoBloco = (f.notaMedia > 0 || f.feedback)
+        ? `<div class="ficha-bloco">
+            <h4>⭐ Avaliação &amp; Feedback</h4>
+            ${f.notaMedia > 0 ? `
+              <div class="ficha-kv" style="margin-bottom:${f.feedback ? '8px' : '0'};">
+                <div><small>Similaridade</small><strong>${esc(f.notaSimilaridade)}/10</strong></div>
+                <div><small>Projeção</small><strong>${esc(f.notaProjecao)}/10</strong></div>
+                <div><small>Fixação</small><strong>${esc(f.notaFixacao)}/10</strong></div>
+                <div><small>Média Geral</small><strong style="color:var(--dourado-claro);">${Number(f.notaMedia).toFixed(1)}/10</strong></div>
+              </div>` : ''}
+            ${f.feedback ? `<div class="ficha-formula-pre" style="font-style:italic;">"${esc(f.feedback)}"</div>` : ''}
+          </div>`
+        : '';
+
+      const diario = Array.isArray(f.diario) ? f.diario : [];
+      const diarioBloco = diario.length > 0
+        ? `<div class="ficha-bloco">
+            <h4>📅 Diário de Maceração</h4>
+            ${diario.map(dItem => `
+              <div class="ficha-diario-item">
+                <div class="topo">
+                  <strong>${esc(dItem.titulo || 'Atualização')}</strong>
+                  <span>${esc(formatarDataFicha(dItem.data))}</span>
+                </div>
+                <p>${esc(dItem.texto)}</p>
+              </div>
+            `).join('')}
+          </div>`
+        : '';
+
+      cont.innerHTML = `
+        <div class="modal-ficha-header">
+          <div>
+            <span class="ficha-badge-ro">🧪 Ficha Técnica · Somente Leitura</span>
+            <h3 class="ficha-insp-titulo">Inspiração: <span>${esc(f.insp || 'Não informada')}</span></h3>
+            <div class="ficha-sub-dias">${esc(statusDiasTxt)}</div>
+          </div>
+          <button type="button" onclick="fecharFichaCompartilhada()" aria-label="Fechar ficha">✕</button>
+        </div>
+
+        <div class="ficha-bloco">
+          <h4>📊 Dados da Essência &amp; Lote</h4>
+          <div class="ficha-kv">
+            <div><small>Casa da Essência</small><strong>${esc(f.casaEssencia || '—')}</strong></div>
+            <div><small>Concentração</small><strong>${f.concentracao ? esc(f.concentracao) + '%' : '—'}</strong></div>
+            <div><small>Volume / Lote</small><strong>${esc(f.volumeLote || '—')}</strong></div>
+            <div><small>Manipulação</small><strong>${manipuladoTxt}</strong></div>
+            <div><small>Gênero</small><strong>${generoTxt}</strong></div>
+            <div><small>Resultado</small><strong>${resultadoTxt}</strong></div>
+          </div>
+        </div>
+
+        <div class="ficha-bloco">
+          <h4>🏪 Fornecedor da Essência</h4>
+          ${fornecedorHtml}
+        </div>
+
+        <div class="ficha-bloco">
+          <h4>🧪 Base Usada &amp; Fórmula</h4>
+          ${formulaHtml}
+        </div>
+
+        <div class="ficha-bloco">
+          <h4>🌿 Notas Olfativas</h4>
+          ${notasHtml}
+        </div>
+
+        ${avaliacaoBloco}
+        ${diarioBloco}
+
+        <button type="button" class="btn-ficha-catalogo" onclick="fecharFichaCompartilhada()">← Fechar e ver Catálogo THRUST PARFUMS</button>
+      `;
+    } catch (e) {
+      console.error("Erro ao abrir ficha compartilhada:", e);
+      renderNaoExiste();
+    }
+  }
+
   restaurarEstadoLocal();
   carregarPerfumes();
   carregarMaceracao();
+  verificarLinkFichaCompartilhada();
 </script>
 </body>
 </html>
