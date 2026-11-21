@@ -1217,7 +1217,7 @@
 
     // Sai do catálogo automaticamente quando pausado, já incluído no catálogo ou quando os dias de maceração acabam (calc.pronto)
     const ativos = maceracaoLista.filter(m => {
-      if (m.pausado || m.publicadoNoCatalogo) return false;
+      if (m.pausado || m.publicadoNoCatalogo || m.arquivadoHistorico) return false;
       const calc = calcularDiasMac(m);
       return !calc.pronto;
     });
@@ -2482,7 +2482,7 @@
       const excedidos = Math.max(0, calc.decorridos - tot);
 
       let statusDiasTxt = `Início: ${formatarDataFicha(f.dataInicio)} · Dia ${calc.decorridos} (meta: ${tot}d)`;
-      if (f.publicadoNoCatalogo) {
+      if (f.publicadoNoCatalogo || f.arquivadoHistorico) {
         const finalD = f.diasMaceradosFinal || calc.decorridos || tot;
         statusDiasTxt = `Início: ${formatarDataFicha(f.dataInicio)} · Macerado por ${finalD} dias`;
       } else if (tot > 0 && calc.decorridos > tot) {
