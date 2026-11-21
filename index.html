@@ -8,7 +8,7 @@
 <meta name="description" content="Perfumes inspirados nas grandes marcas, com matéria-prima premium e concentração Parfum 30%. Confira nosso catálogo exclusivo!">
 <meta property="og:title" content="THRUST PARFUMS — Catálogo Premium">
 <meta property="og:description" content="Perfumes inspirados nas grandes marcas, com matéria-prima premium. Confira nosso catálogo exclusivo!">
-<meta property="og:image" content="https://i.ibb.co/3kzm1J6/Logo-Thrust-Parfums.jpg">
+<meta property="og:image" content="https://i.ibb.co/ZRywfV21/logo3.png">
 <meta property="og:url" content="https://thrustperfumes.store/">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
@@ -29,10 +29,11 @@
   h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 600; }
   a { text-decoration: none; color: inherit; }
 
-  .top-header { background: linear-gradient(180deg, #000 0%, #1a1a1a 100%); padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--dourado); position: sticky; top: 0; z-index: 100; }
-  .menu-toggle { display: block; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--dourado-claro); padding: 5px; }
-  .logo-area { display: flex; align-items: center; justify-content: center; flex: 1; cursor: pointer; user-select: none; transition: opacity .2s; }
-  .logo-area:hover { opacity: .85; }
+  .top-header { background: linear-gradient(180deg, #000 0%, #1a1a1a 100%); padding: 6px 14px; display: flex; align-items: center; justify-content: space-between; gap: 8px; border-bottom: 2px solid var(--dourado); position: sticky; top: 0; z-index: 100; }
+  .menu-toggle { display: block; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--dourado-claro); padding: 6px; min-width: 40px; }
+  .logo-area { display: flex; align-items: center; justify-content: center; flex: 1; min-width: 0; cursor: pointer; user-select: none; transition: opacity .2s; }
+  .logo-area:hover { opacity: .88; }
+  .logo-img { height: 78px; max-width: 100%; width: auto; object-fit: contain; display: block; filter: drop-shadow(0 2px 10px rgba(212,175,55,0.28)); }
   .logo-area h1 { font-family: 'Playfair Display', serif; font-size: 1.5rem; letter-spacing: 5px; font-weight: 700; background: linear-gradient(180deg, var(--dourado-claro) 0%, var(--dourado) 50%, #8a6d1a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .logo-area h1 small { display: block; font-size: .5rem; letter-spacing: 6px; font-family: 'Montserrat', sans-serif; font-weight: 500; color: var(--dourado); margin-top: -2px; text-align: center; -webkit-text-fill-color: var(--dourado); background: none; }
   .icons-header { display: flex; align-items: center; gap: 6px; }
@@ -314,7 +315,8 @@
   }
   @media (min-width: 768px) {
     .menu-toggle { display: none; }
-    .top-header { padding: 15px 40px; }
+    .top-header { padding: 8px 40px; }
+    .logo-img { height: 96px; max-width: 340px; }
     .logo-area h1 { font-size: 1.9rem; }
     .nav-menu { display: flex; }
     .beneficios { grid-template-columns: repeat(4, 1fr); }
@@ -399,8 +401,15 @@
 
 <header class="top-header">
   <button class="menu-toggle" onclick="abrirMenuMobile()" aria-label="Abrir menu">☰</button>
-  <div class="logo-area" onclick="irParaInicio()">
-    <h1>THRUST<small>PARFUMS</small></h1>
+  <div class="logo-area" onclick="irParaInicio()" title="THRUST PARFUMS">
+    <!-- Para trocar a imagem do logo, altere o link em src="..." abaixo (ou suba logo.png no GitHub e use src="logo.png") -->
+    <img
+      class="logo-img"
+      src="https://i.ibb.co/ZRywfV21/logo3.png"
+      alt="THRUST PARFUMS"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+    >
+    <h1 style="display:none;">THRUST<small>PARFUMS</small></h1>
   </div>
   <div class="icons-header">
     <button class="icon-btn" id="btnMeusPedidosHeader" onclick="abrirMeusPedidos()" title="Meus Pedidos Recentes" style="display:none; font-size:1.1rem;">📋</button>
