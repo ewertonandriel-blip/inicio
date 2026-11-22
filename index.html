@@ -74,6 +74,15 @@
   .beneficio-item h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; color: var(--dourado-claro); }
   .beneficio-item p { font-size: 0.55rem; text-transform: uppercase; color: #888; letter-spacing: 0.5px; }
 
+  /* BANNER DE VENDAS PAUSADAS */
+  .banner-vendas-pausadas { display: none; background: linear-gradient(135deg, rgba(255,152,0,0.2), rgba(201,74,74,0.18)); border-bottom: 2px solid #ff9800; padding: 14px 16px; text-align: center; }
+  .banner-vendas-pausadas.ativo { display: block; animation: fadeInBanner 0.3s ease; }
+  @keyframes fadeInBanner { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+  .banner-vendas-pausadas-inner { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .banner-vendas-pausadas strong { color: #ffb74d; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.8px; }
+  .banner-vendas-pausadas p { color: #f5f5f5; font-size: 0.82rem; line-height: 1.45; font-weight: 600; }
+  .aviso-pausa-inline { display: flex; align-items: center; gap: 9px; background: rgba(255,152,0,0.14); border: 1px solid #ff9800; border-radius: 8px; padding: 11px 12px; margin-bottom: 14px; color: #ffcf87; font-size: 0.78rem; font-weight: 600; line-height: 1.4; text-align: left; }
+
   /* SEÇÃO EM BREVE (MACERAÇÃO - CARROSSEL LINHA ÚNICA) */
   .em-breve-section { max-width: 1300px; margin: 0 auto; padding: 20px 15px 0; }
   .em-breve-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid var(--borda); }
@@ -507,6 +516,13 @@
 
 <div class="aba-conteudo ativo" id="aba-catalogo">
 
+  <div class="banner-vendas-pausadas" id="bannerVendasPausadas" role="status" aria-live="polite">
+    <div class="banner-vendas-pausadas-inner">
+      <strong>⏸️ Vendas Pausadas Temporariamente</strong>
+      <p>As vendas se encontram pausadas no momento, por favor volte outro momento.</p>
+    </div>
+  </div>
+
   <div class="beneficios">
     <div class="beneficio-item"><h4>30%</h4><p>Concentração Parfum</p></div>
     <div class="beneficio-item"><h4>Premium</h4><p>Essências Selecionadas</p></div>
@@ -610,6 +626,11 @@
 
       <div class="aviso-frete-modal" id="aviso-frete">
         🚚 <span>Enviamos para todo o Brasil</span> via Correios. Combine o frete no WhatsApp.
+      </div>
+
+      <div class="aviso-pausa-inline" id="modalAvisoVendasPausadas" style="display:none;">
+        <span>⏸️</span>
+        <span>As vendas se encontram pausadas no momento, por favor volte outro momento.</span>
       </div>
 
       <div class="botoes-acao" id="botoesAcao">
@@ -768,6 +789,7 @@
   let ordenacaoAtual = 'padrao';
   let apenasDisponiveis = false;
   let maceracaoLista = [];
+  let vendasAtivas = true;
 
   const whats = LOJA_CONFIG.whatsapp;
   const DESCONTO_MIN = LOJA_CONFIG.descontoMinQtd;
@@ -1117,6 +1139,36 @@
       renderizarEmBreve();
     }, (error) => {
       console.error("Erro ao carregar maceração:", error);
+    });
+  }
+
+  function aplicarEstadoVendasLoja() {
+    const banner = document.getElementById('bannerVendasPausadas');
+    if (banner) banner.classList.toggle('ativo', !vendasAtivas);
+
+    if (perfumesCarregados) {
+      const catAtivaBtn = document.querySelector('.filtro-btn.active');
+      const cat = catAtivaBtn ? catAtivaBtn.dataset.cat : 'todos';
+      const termo = document.getElementById('campoBusca')?.value || '';
+      renderizarProdutos(cat, termo);
+    }
+
+    if (modalProduto && modalProduto.classList.contains('ativo') && produtoSelecionado) {
+      atualizarModalTamanhos();
+    }
+    if (modalCarrinho && modalCarrinho.classList.contains('ativo')) {
+      renderizarCarrinho();
+    }
+  }
+
+  function carregarStatusLoja() {
+    onSnapshot(doc(db, "loja_status", "geral"), (snap) => {
+      vendasAtivas = (snap.exists() && snap.data().vendasAtivas === false) ? false : true;
+      aplicarEstadoVendasLoja();
+    }, (error) => {
+      console.error("Erro ao carregar status da loja:", error);
+      vendasAtivas = true;
+      aplicarEstadoVendasLoja();
     });
   }
 
@@ -1581,7 +1633,7 @@
 
     return '<div class="card-produto ' + (esgotado ? 'esgotado' : '') + '" onclick="abrirModal(\'' + esc(p.id) + '\')">' +
       '<div class="card-imagem">' + selo + seloInd + seloEstoque + imgHtml + '</div>' +
-      (esgotado ? '' : '<button class="btn-add-fast" onclick="event.stopPropagation(); adicionarDireto(event, \'' + esc(p.id) + '\')" title="Adicionar rápido" aria-label="Adicionar ' + nomeSafe + '">+</button>') +
+      ((esgotado || !vendasAtivas) ? '' : '<button class="btn-add-fast" onclick="event.stopPropagation(); adicionarDireto(event, \'' + esc(p.id) + '\')" title="Adicionar rápido" aria-label="Adicionar ' + nomeSafe + '">+</button>') +
       '<h3>' + nomeSafe + '</h3>' +
       '<div class="card-inspiracao">Inspirado em "' + inspSafe + '"</div>' +
       '<div class="card-ml">' + esc(textoMl) + '</div>' +
@@ -1591,6 +1643,10 @@
   }
 
   window.adicionarDireto = function(ev, id) {
+    if (!vendasAtivas) {
+      mostrarToast('⏸️ As vendas se encontram pausadas no momento, por favor volte outro momento.');
+      return;
+    }
     const p = perfumes.find(item => item.id === id);
     if (!p || p.indisponivel || !temAlgumEstoque(p)) return;
 
@@ -1755,6 +1811,11 @@
     });
     document.getElementById('modal-tamanhos').innerHTML = tamHtml;
 
+    const avisoPausaModal = document.getElementById('modalAvisoVendasPausadas');
+    if (avisoPausaModal) {
+      avisoPausaModal.style.display = (!vendasAtivas && !esgotadoGeral) ? 'flex' : 'none';
+    }
+
     if (esgotadoGeral) {
       btnAddCarrinho.disabled = true;
       btnComprarAgora.disabled = true;
@@ -1767,10 +1828,17 @@
       document.getElementById('aviso-tamanho').style.display = 'none';
       tamanhoSelecionado = null;
     } else {
-      btnAddCarrinho.disabled = false;
-      btnComprarAgora.disabled = false;
-      btnAddCarrinho.innerText = "🛒 Adicionar ao carrinho";
-      btnComprarAgora.innerText = "Comprar agora";
+      if (vendasAtivas) {
+        btnAddCarrinho.disabled = false;
+        btnComprarAgora.disabled = false;
+        btnAddCarrinho.innerText = "🛒 Adicionar ao carrinho";
+        btnComprarAgora.innerText = "Comprar agora";
+      } else {
+        btnAddCarrinho.disabled = true;
+        btnComprarAgora.disabled = true;
+        btnAddCarrinho.innerText = "⏸️ Vendas Pausadas";
+        btnComprarAgora.innerText = "Indisponível no momento";
+      }
 
       blocoPrecos.style.display = 'block';
       blocoIndisponivel.style.display = 'none';
@@ -1888,6 +1956,10 @@
   }
 
   window.adicionarAoCarrinho = function() {
+    if (!vendasAtivas) {
+      mostrarToast('⏸️ As vendas se encontram pausadas no momento, por favor volte outro momento.');
+      return;
+    }
     if (!produtoSelecionado || !tamanhoSelecionado) return;
     if (produtoSelecionado.indisponivel) return;
 
@@ -1930,6 +2002,10 @@
   };
 
   window.comprarAgora = async function() {
+    if (!vendasAtivas) {
+      mostrarToast('⏸️ As vendas se encontram pausadas no momento, por favor volte outro momento.');
+      return;
+    }
     if (!produtoSelecionado || !tamanhoSelecionado) return;
     if (produtoSelecionado.indisponivel) return;
     const est = estoqueDoTamanho(produtoSelecionado, tamanhoSelecionado.label);
@@ -2115,7 +2191,8 @@
 
     if (ids.length === 0) {
       lista.innerHTML = '<p class="carrinho-vazio">Seu carrinho está vazio 🛒</p>';
-      rodape.innerHTML = '<button class="btn-finalizar-whats" disabled>Finalizar no WhatsApp</button>' +
+      rodape.innerHTML = (!vendasAtivas ? '<div class="aviso-pausa-inline"><span>⏸️</span><span>As vendas se encontram pausadas no momento, por favor volte outro momento.</span></div>' : '') +
+        '<button class="btn-finalizar-whats" disabled>' + (vendasAtivas ? 'Finalizar no WhatsApp' : '⏸️ Vendas Pausadas') + '</button>' +
         '<button class="btn-continuar" onclick="fecharCarrinho()">Continuar comprando</button>';
       return;
     }
@@ -2196,7 +2273,12 @@
     }
 
     htmlRodape += '<div class="linha-total total-geral"><span>Total:</span><span>' + fmt(r.total) + '</span></div>';
-    htmlRodape += '<button class="btn-finalizar-whats" id="btnFinalizarWhats" onclick="finalizarWhats()">Finalizar no WhatsApp</button>';
+    if (!vendasAtivas) {
+      htmlRodape += '<div class="aviso-pausa-inline" style="margin-top:8px;"><span>⏸️</span><span>As vendas se encontram pausadas no momento, por favor volte outro momento.</span></div>';
+      htmlRodape += '<button class="btn-finalizar-whats" id="btnFinalizarWhats" disabled>⏸️ Vendas Pausadas</button>';
+    } else {
+      htmlRodape += '<button class="btn-finalizar-whats" id="btnFinalizarWhats" onclick="finalizarWhats()">Finalizar no WhatsApp</button>';
+    }
     htmlRodape += '<button class="btn-continuar" onclick="fecharCarrinho()">Continuar comprando</button>';
 
     rodape.innerHTML = htmlRodape;
@@ -2220,6 +2302,10 @@
   };
 
   window.finalizarWhats = async function() {
+    if (!vendasAtivas) {
+      mostrarToast('⏸️ As vendas se encontram pausadas no momento, por favor volte outro momento.');
+      return;
+    }
     const ids = Object.keys(carrinho);
     if (ids.length === 0) return;
 
@@ -2603,6 +2689,7 @@
   }
 
   restaurarEstadoLocal();
+  carregarStatusLoja();
   carregarPerfumes();
   carregarMaceracao();
   verificarLinkFichaCompartilhada();
