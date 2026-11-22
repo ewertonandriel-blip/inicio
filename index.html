@@ -83,42 +83,6 @@
   .banner-vendas-pausadas p { color: #f5f5f5; font-size: 0.82rem; line-height: 1.45; font-weight: 600; }
   .aviso-pausa-inline { display: flex; align-items: center; gap: 9px; background: rgba(255,152,0,0.14); border: 1px solid #ff9800; border-radius: 8px; padding: 11px 12px; margin-bottom: 14px; color: #ffcf87; font-size: 0.78rem; font-weight: 600; line-height: 1.4; text-align: left; }
 
-  /* SEÇÃO EM BREVE (MACERAÇÃO - CARROSSEL LINHA ÚNICA) */
-  .em-breve-section { max-width: 1300px; margin: 0 auto; padding: 20px 15px 0; }
-  .em-breve-header { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-bottom: 12px; margin-bottom: 14px; border-bottom: 1px solid var(--borda); }
-  .em-breve-titulo-grupo { display: flex; align-items: center; gap: 10px; min-width: 0; }
-  .em-breve-header h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: #ffc107; white-space: nowrap; }
-  .em-breve-header .badge { font-size: 0.6rem; font-weight: 800; color: #0d0d0d; background: linear-gradient(135deg, #ffc107, #ff9800); padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; white-space: nowrap; }
-  .em-breve-nav { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-  .em-breve-seta { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,193,7,0.45); background: #1a1a1a; color: var(--dourado-claro); font-size: 1.25rem; line-height: 1; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; padding-bottom: 2px; }
-  .em-breve-seta:hover:not(:disabled), .em-breve-seta:active:not(:disabled) { background: rgba(255,193,7,0.2); border-color: #ffc107; color: #fff; }
-  .em-breve-seta:disabled { opacity: 0.28; cursor: default; }
-
-  .em-breve-carousel-wrap { position: relative; }
-  .em-breve-carousel-wrap::after { content: ''; position: absolute; top: 0; right: 0; width: 28px; height: 100%; background: linear-gradient(to left, var(--fundo-site), transparent); pointer-events: none; opacity: 0; transition: opacity 0.2s; }
-  .em-breve-carousel-wrap.tem-mais-dir::after { opacity: 1; }
-  .em-breve-scroll { display: flex; flex-wrap: nowrap; gap: 12px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; -webkit-overflow-scrolling: touch; scroll-snap-type: x proximity; scroll-behavior: smooth; touch-action: pan-x; }
-  .em-breve-scroll::-webkit-scrollbar { display: none; }
-
-  .card-em-breve { flex: 0 0 162px; scroll-snap-align: start; background: #1a1a1a; border: 1px solid rgba(255,193,7,0.35); border-radius: 10px; padding: 10px; text-align: center; position: relative; transition: 0.2s; display: flex; flex-direction: column; }
-  .card-em-breve:hover { border-color: #ffc107; }
-  .card-em-breve.pronto { border-color: rgba(37,211,102,0.5); }
-  .card-em-breve .img-box { background: #fafafa; height: 110px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; overflow: hidden; }
-  .card-em-breve .img-box img { max-width: 85%; max-height: 85%; object-fit: contain; }
-  .card-em-breve .img-box .placeholder { width: 60px; height: 80px; background: linear-gradient(135deg, #f0e6d3 0%, #d4b87a 100%); border-radius: 5px 5px 3px 3px; color: #6d5420; font-weight: 800; font-size: 0.5rem; display: flex; align-items: center; justify-content: center; }
-  .card-em-breve .selo-em-breve { position: absolute; top: 8px; left: 8px; background: linear-gradient(135deg, #ffc107, #ff9800); color: #0d0d0d; font-size: 0.5rem; font-weight: 800; padding: 2px 7px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; z-index: 2; }
-  .card-em-breve .selo-em-breve.pronto { background: linear-gradient(135deg, #25D366, #4caf50); color: #fff; }
-  .card-em-breve .nome { font-family: 'Playfair Display', serif; font-size: 0.82rem; font-weight: 700; color: var(--dourado-claro); margin-bottom: 2px; line-height: 1.2; }
-  .card-em-breve .insp { font-size: 0.58rem; color: #888; font-style: italic; margin-bottom: 6px; line-height: 1.3; }
-  .card-em-breve .dias { font-size: 0.65rem; font-weight: 700; color: #ff9800; background: rgba(255,152,0,0.1); border: 1px solid rgba(255,152,0,0.3); padding: 4px 8px; border-radius: 6px; display: inline-block; margin: auto auto 7px; }
-  .card-em-breve.pronto .dias { color: #25D366; background: rgba(37,211,102,0.1); border-color: rgba(37,211,102,0.4); }
-  .btn-mac-avise { background: rgba(37,211,102,0.12); border: 1px solid rgba(37,211,102,0.55); color: #25D366; border-radius: 20px; padding: 6px 8px; font-family: 'Montserrat', sans-serif; font-size: 0.6rem; font-weight: 700; cursor: pointer; transition: 0.2s; line-height: 1.2; width: 100%; }
-  .btn-mac-avise:hover, .btn-mac-avise:active { background: #25D366; color: #0d0d0d; }
-
-  .em-breve-dots { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 10px; }
-  .em-breve-dot { width: 6px; height: 6px; border-radius: 50%; border: none; padding: 0; background: #333; cursor: pointer; transition: all 0.25s ease; }
-  .em-breve-dot.ativo { width: 18px; border-radius: 10px; background: #ffc107; }
-
   .promo-combo-bar { max-width: 1300px; margin: 16px auto 0; padding: 0 15px; }
   .promo-combo-inner { background: linear-gradient(135deg, rgba(201,162,39,0.14), rgba(245,217,122,0.06)); border: 1px solid rgba(212,175,55,0.45); border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: center; gap: 8px; text-align: center; font-size: 0.74rem; color: #e6d8ad; line-height: 1.35; }
   .promo-combo-inner strong { color: var(--dourado-claro); font-weight: 800; }
@@ -530,23 +494,6 @@
     <div class="beneficio-item"><h4>Artesanal</h4><p>Feito Um a Um</p></div>
   </div>
 
-  <section class="em-breve-section" id="emBreveSection" style="display:none;">
-    <div class="em-breve-header">
-      <div class="em-breve-titulo-grupo">
-        <h3>⏳ Em Breve</h3>
-        <span class="badge">Em Maceração</span>
-      </div>
-      <div class="em-breve-nav" id="emBreveNav" style="display:none;">
-        <button type="button" class="em-breve-seta" id="btnMacPrev" onclick="moverCarrosselEmBreve(-1)" aria-label="Perfumes anteriores">‹</button>
-        <button type="button" class="em-breve-seta" id="btnMacNext" onclick="moverCarrosselEmBreve(1)" aria-label="Próximos perfumes">›</button>
-      </div>
-    </div>
-    <div class="em-breve-carousel-wrap" id="emBreveWrap">
-      <div class="em-breve-scroll" id="emBreveScroll"></div>
-    </div>
-    <div class="em-breve-dots" id="emBreveDots" style="display:none;"></div>
-  </section>
-
   <div class="promo-combo-bar" id="promoComboBar">
     <div class="promo-combo-inner">
       🎁 <span><strong>Combo Progressivo:</strong> Leve <strong>3+ perfumes</strong> e ganhe <strong>5% OFF</strong> automático no carrinho</span>
@@ -788,7 +735,6 @@
   let cupomAplicado = null;
   let ordenacaoAtual = 'padrao';
   let apenasDisponiveis = false;
-  let maceracaoLista = [];
   let vendasAtivas = true;
 
   const whats = LOJA_CONFIG.whatsapp;
@@ -1128,20 +1074,6 @@
     });
   }
 
-  function carregarMaceracao() {
-    // Query segura que casa com a regra `allow read: if isAdmin() || resource.data.pausado == false;` sem precisar de índice composto
-    const q = query(collection(db, "maceracao"), where("pausado", "==", false));
-    onSnapshot(q, (snapshot) => {
-      maceracaoLista = [];
-      snapshot.forEach((docSnap) => {
-        maceracaoLista.push({ id: docSnap.id, ...docSnap.data() });
-      });
-      renderizarEmBreve();
-    }, (error) => {
-      console.error("Erro ao carregar maceração:", error);
-    });
-  }
-
   function aplicarEstadoVendasLoja() {
     const banner = document.getElementById('bannerVendasPausadas');
     if (banner) banner.classList.toggle('ativo', !vendasAtivas);
@@ -1189,142 +1121,6 @@
     const pronto = decorridos >= tot;
     return { decorridos, restantes, pronto };
   }
-
-  let emBreveRaf = null;
-
-  window.moverCarrosselEmBreve = function(direcao) {
-    const scroll = document.getElementById('emBreveScroll');
-    if (!scroll) return;
-    const passo = Math.max(164, Math.floor(scroll.clientWidth * 0.78));
-    scroll.scrollBy({ left: direcao * passo, behavior: 'smooth' });
-  };
-
-  window.irParaPaginaCarrosselEmBreve = function(pagina, totalPaginas) {
-    const scroll = document.getElementById('emBreveScroll');
-    if (!scroll) return;
-    const maxScroll = Math.max(0, scroll.scrollWidth - scroll.clientWidth);
-    const destino = totalPaginas <= 1 ? 0 : (pagina / (totalPaginas - 1)) * maxScroll;
-    scroll.scrollTo({ left: destino, behavior: 'smooth' });
-  };
-
-  function atualizarControlesCarrossel() {
-    const scroll = document.getElementById('emBreveScroll');
-    const wrap = document.getElementById('emBreveWrap');
-    const nav = document.getElementById('emBreveNav');
-    const dotsEl = document.getElementById('emBreveDots');
-    const btnPrev = document.getElementById('btnMacPrev');
-    const btnNext = document.getElementById('btnMacNext');
-    if (!scroll || !wrap || !nav || !dotsEl) return;
-
-    const maxScroll = scroll.scrollWidth - scroll.clientWidth;
-    const temOverflow = maxScroll > 6;
-
-    nav.style.display = temOverflow ? 'flex' : 'none';
-    dotsEl.style.display = temOverflow ? 'flex' : 'none';
-
-    if (!temOverflow) {
-      wrap.classList.remove('tem-mais-dir');
-      dotsEl.innerHTML = '';
-      return;
-    }
-
-    const noInicio = scroll.scrollLeft <= 4;
-    const noFim = scroll.scrollLeft >= maxScroll - 4;
-    if (btnPrev) btnPrev.disabled = noInicio;
-    if (btnNext) btnNext.disabled = noFim;
-    wrap.classList.toggle('tem-mais-dir', !noFim);
-
-    const paginas = Math.max(2, Math.min(8, Math.ceil(scroll.scrollWidth / Math.max(1, scroll.clientWidth * 0.85))));
-    const paginaAtual = Math.min(paginas - 1, Math.round((scroll.scrollLeft / maxScroll) * (paginas - 1)));
-
-    let dotsHtml = '';
-    for (let i = 0; i < paginas; i++) {
-      dotsHtml += '<button type="button" class="em-breve-dot' + (i === paginaAtual ? ' ativo' : '') + '" onclick="irParaPaginaCarrosselEmBreve(' + i + ',' + paginas + ')" aria-label="Página ' + (i + 1) + '"></button>';
-    }
-    dotsEl.innerHTML = dotsHtml;
-  }
-
-  (function vincularEventosCarrossel() {
-    const scroll = document.getElementById('emBreveScroll');
-    if (!scroll) return;
-    scroll.addEventListener('scroll', () => {
-      if (emBreveRaf) return;
-      emBreveRaf = requestAnimationFrame(() => {
-        emBreveRaf = null;
-        atualizarControlesCarrossel();
-      });
-    }, { passive: true });
-    window.addEventListener('resize', () => {
-      if (emBreveRaf) return;
-      emBreveRaf = requestAnimationFrame(() => {
-        emBreveRaf = null;
-        atualizarControlesCarrossel();
-      });
-    });
-  })();
-
-  function renderizarEmBreve() {
-    const section = document.getElementById('emBreveSection');
-    const scroll = document.getElementById('emBreveScroll');
-
-    // Sai do catálogo automaticamente quando pausado, já incluído no catálogo ou quando os dias de maceração acabam (calc.pronto)
-    const ativos = maceracaoLista.filter(m => {
-      if (m.pausado || m.publicadoNoCatalogo || m.arquivadoHistorico) return false;
-      const calc = calcularDiasMac(m);
-      return !calc.pronto;
-    });
-    if (ativos.length === 0) {
-      section.style.display = 'none';
-      scroll.innerHTML = '';
-      atualizarControlesCarrossel();
-      return;
-    }
-
-    section.style.display = 'block';
-    const ordenados = ativos.slice().sort((a, b) => {
-      return calcularDiasMac(a).restantes - calcularDiasMac(b).restantes;
-    });
-
-    scroll.innerHTML = ordenados.map(m => {
-      const calc = calcularDiasMac(m);
-      const imgUrl = safeImgUrl(m.img);
-      const nomeSafe = esc(m.nome);
-      const inspSafe = esc(m.insp);
-
-      let imgHtml;
-      if (imgUrl) {
-        imgHtml = '<img src="' + esc(imgUrl) + '" alt="' + nomeSafe + '" loading="lazy" onerror="this.outerHTML=\'<div class=&quot;placeholder&quot;>THRUST</div>\'">';
-      } else {
-        imgHtml = '<div class="placeholder">THRUST</div>';
-      }
-
-      const seloHtml = '<div class="selo-em-breve">⏳ Em breve</div>';
-      const textoFalta = calc.restantes === 1 ? 'Falta 1 dia' : 'Faltam ' + calc.restantes + ' dias';
-      const diasHtml = '<div class="dias">' + textoFalta + '</div>';
-      const btnAviseHtml = '<button type="button" class="btn-mac-avise" data-nome="' + nomeSafe + '" data-insp="' + inspSafe + '" data-dias="' + calc.restantes + '" onclick="avisarMacQuandoPronto(this)">🔔 Avise-me quando pronto</button>';
-
-      return '<div class="card-em-breve">' +
-        seloHtml +
-        '<div class="img-box">' + imgHtml + '</div>' +
-        '<div class="nome">' + nomeSafe + '</div>' +
-        '<div class="insp">Insp. ' + inspSafe + '</div>' +
-        diasHtml +
-        btnAviseHtml +
-      '</div>';
-    }).join('');
-
-    requestAnimationFrame(atualizarControlesCarrossel);
-  }
-
-  window.avisarMacQuandoPronto = function(btn) {
-    if (!btn) return;
-    const nome = btn.dataset.nome || '';
-    const insp = btn.dataset.insp || '';
-    const dias = parseInt(btn.dataset.dias || '0', 10);
-    const prazoTxt = dias === 1 ? 'falta 1 dia' : 'faltam ' + dias + ' dias';
-    const msg = 'Olá! Vi o perfume "' + nome + '" (insp. ' + insp + ') em maceração na vitrine (' + prazoTxt + '). Pode me avisar no WhatsApp quando ficar pronto?';
-    window.open('https://wa.me/' + whats + '?text=' + encodeURIComponent(msg), '_blank');
-  };
 
   function validarCarrinhoEmTempoReal(silencioso) {
     let mudou = false;
@@ -2411,10 +2207,6 @@
     if (e.target.id === 'modalFichaCompartilhada') fecharFichaCompartilhada();
   });
 
-  document.addEventListener('visibilitychange', function() {
-    if (document.visibilityState === 'visible') renderizarEmBreve();
-  });
-
   /* ============================================================
      PWA: INSTALAÇÃO, CONECTIVIDADE OFFLINE E SERVICE WORKER
      ============================================================ */
@@ -2566,15 +2358,21 @@
       const calc = calcularDiasMac(f);
       const tot = f.diasTotais || 0;
       const excedidos = Math.max(0, calc.decorridos - tot);
+      const inicioF = dataMacItem(f);
+      let dataFinalStr = '';
+      if (inicioF && !isNaN(inicioF.getTime())) {
+        const dtFin = new Date(Date.UTC(inicioF.getUTCFullYear(), inicioF.getUTCMonth(), inicioF.getUTCDate()) + tot * 86400000);
+        dataFinalStr = ` · Data Final: ${String(dtFin.getUTCDate()).padStart(2,'0')}/${String(dtFin.getUTCMonth()+1).padStart(2,'0')}/${dtFin.getUTCFullYear()}`;
+      }
 
-      let statusDiasTxt = `Início: ${formatarDataFicha(f.dataInicio)} · Dia ${calc.decorridos} (meta: ${tot}d)`;
+      let statusDiasTxt = `Início: ${formatarDataFicha(f.dataInicio)}${dataFinalStr} · Dia ${calc.decorridos} (meta: ${tot}d)`;
       if (f.publicadoNoCatalogo || f.arquivadoHistorico) {
         const finalD = f.diasMaceradosFinal || calc.decorridos || tot;
-        statusDiasTxt = `Início: ${formatarDataFicha(f.dataInicio)} · Macerado por ${finalD} dias`;
+        statusDiasTxt = `Início: ${formatarDataFicha(f.dataInicio)}${dataFinalStr} · Macerado por ${finalD} dias`;
       } else if (tot > 0 && calc.decorridos > tot) {
-        statusDiasTxt = `Início: ${formatarDataFicha(f.dataInicio)} · Dia ${calc.decorridos} contínuos (+${excedidos}d após a meta de ${tot}d)`;
+        statusDiasTxt = `Início: ${formatarDataFicha(f.dataInicio)}${dataFinalStr} · Dia ${calc.decorridos} contínuos (+${excedidos}d após a meta de ${tot}d)`;
       } else if (tot > 0 && calc.decorridos === tot) {
-        statusDiasTxt = `Início: ${formatarDataFicha(f.dataInicio)} · Meta de ${tot} dias atingida hoje!`;
+        statusDiasTxt = `Início: ${formatarDataFicha(f.dataInicio)}${dataFinalStr} · Meta de ${tot} dias atingida hoje!`;
       }
 
       const manipuladoTxt = f.manipulado === 'peso' ? '⚖️ Por Peso' : (f.manipulado === 'volume' ? '💧 Por Volume' : '—');
@@ -2691,7 +2489,6 @@
   restaurarEstadoLocal();
   carregarStatusLoja();
   carregarPerfumes();
-  carregarMaceracao();
   verificarLinkFichaCompartilhada();
 </script>
 </body>
