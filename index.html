@@ -2279,6 +2279,10 @@
      FICHA TÉCNICA COMPARTILHADA (SOMENTE LEITURA — APENAS INSPIRAÇÃO)
      ============================================================ */
   const BASES_VITRINE_INFO = {
+    "turbo-nickson-v2": {
+      nome: "Base Turbo - Nickson",
+      detalhes: "92% Álcool 96 GL\n4% Água Deionizada\n1% Propanediol (Propilenoglicol)\n2% Iso-e Super\n1% Ambroxan 10%"
+    },
     "turbo-nickson": {
       nome: "Base Turbo - Nickson",
       detalhes: "90% Álcool 96 GL\n5% Água Deionizada\n2% Propanediol (Propilenoglicol)\n2% Iso-e Super\n1% Ambroxan 10%"
@@ -2395,10 +2399,12 @@
       if (f.baseId === 'propria' && Array.isArray(f.ingredientesCustom) && f.ingredientesCustom.length > 0) {
         const linhas = f.ingredientesCustom.map(i => `• ${esc(i.pct)}% — ${esc(i.nome)}`).join('\n');
         formulaHtml = `<div class="ficha-formula-pre"><strong>${esc(f.baseNome || 'Base Própria')}</strong>\n${linhas}</div>`;
-      } else if (f.baseId) {
+      } else if (f.baseId || f.baseDetalhes) {
         const baseObj = BASES_VITRINE_INFO[f.baseId];
-        if (baseObj) {
-          formulaHtml = `<div class="ficha-formula-pre"><strong>${esc(baseObj.nome)}</strong>\n${esc(baseObj.detalhes)}</div>`;
+        const nomeExib = f.baseNome || (baseObj ? baseObj.nome : 'Base');
+        const detExib = f.baseDetalhes || (baseObj ? baseObj.detalhes : '');
+        if (detExib) {
+          formulaHtml = `<div class="ficha-formula-pre"><strong>${esc(nomeExib)}</strong>\n${esc(detExib)}</div>`;
         } else if (f.baseNome) {
           formulaHtml = `<div class="ficha-formula-pre"><strong>${esc(f.baseNome)}</strong></div>`;
         }
